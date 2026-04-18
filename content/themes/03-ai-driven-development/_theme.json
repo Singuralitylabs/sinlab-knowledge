@@ -1,0 +1,11 @@
+{
+  "slug": "03-ai-driven-development",
+  "title": "AI駆動開発",
+  "shortTitle": "AI駆動開発",
+  "description": "AIコーディングツールの全体像を捉え、Claude Codeを軸にAI駆動開発を実践する。",
+  "icon": "Sparkles",
+  "color": "purple",
+  "order": 3,
+  "difficulty": "intermediate",
+  "estimatedHours": 12
+}

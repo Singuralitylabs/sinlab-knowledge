@@ -1,0 +1,10 @@
+{
+  "title": "Sinlab Skills",
+  "description": "Markdown / Git / Web開発 / AI駆動開発を体系的に学ぶ解説サイト",
+  "siteUrl": "https://sinlab-skills.vercel.app",
+  "author": "シンギュラリティ・ラボ",
+  "navigation": [{ "label": "テーマ", "href": "/themes" }, { "label": "About", "href": "/about" }],
+  "footer": {
+    "links": [{ "label": "GitHub", "href": "https://github.com/" }]
+  }
+}

@@ -1,0 +1,109 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import type { NavItem } from "@/components/layout/types";
+
+export interface HeaderProps {
+  siteTitle: string;
+  navigation: NavItem[];
+}
+
+export default function Header({ siteTitle, navigation }: HeaderProps) {
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  return (
+    <nav className="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/90 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+        <Link href="/" className="text-sm font-bold text-white hover:text-gray-200">
+          {siteTitle}
+        </Link>
+
+        {/* Desktop nav */}
+        <ul className="hidden gap-1 md:flex">
+          {navigation.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`rounded-md px-2.5 py-1.5 text-sm transition ${
+                    active
+                      ? "bg-white/15 font-semibold text-white"
+                      : "text-gray-400 hover:bg-white/10 hover:text-gray-200"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-white/10 hover:text-white md:hidden"
+          aria-label={isMenuOpen ? "メニューを閉じる" : "メニューを開く"}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <title>close</title>
+              <path
+                d="M5 5l10 10M15 5L5 15"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <title>menu</title>
+              <path
+                d="M3 5h14M3 10h14M3 15h14"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="border-t border-gray-800 px-6 py-2 md:hidden">
+          <ul className="space-y-1">
+            {navigation.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block rounded-md px-3 py-2 text-sm transition ${
+                      active
+                        ? "bg-white/15 font-semibold text-white"
+                        : "text-gray-400 hover:bg-white/10 hover:text-gray-200"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+    </nav>
+  );
+}
