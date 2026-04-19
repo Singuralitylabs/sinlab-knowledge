@@ -1,0 +1,8 @@
+{
+  "slug": "01-react-basics",
+  "title": "React基礎",
+  "description": "Reactのcomponents/props/hooks を学ぶ",
+  "order": 1,
+  "categories": [],
+  "status": "draft"
+}

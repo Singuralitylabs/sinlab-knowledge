@@ -63,9 +63,20 @@ try {
   pushIssue(SITE_JSON, error);
 }
 
-let lessonCount = 0;
+let lectureCount = 0;
+let detailCount = 0;
 let moduleCount = 0;
 let themeCount = 0;
+
+function validateMarkdownFile(filePath: string): void {
+  try {
+    const source = readFileSync(filePath, "utf-8");
+    parseLessonSource(source, filePath);
+  } catch (error) {
+    pushIssue(filePath, error);
+    throw error;
+  }
+}
 
 for (const themeName of listDirs(THEMES_DIR)) {
   const themeDir = path.join(THEMES_DIR, themeName);
@@ -92,14 +103,57 @@ for (const themeName of listDirs(THEMES_DIR)) {
     }
 
     const lessonsDir = path.join(moduleDir, "lessons");
-    for (const lessonFile of listMarkdown(lessonsDir)) {
-      const lessonPath = path.join(lessonsDir, lessonFile);
+    let entries: string[] = [];
+    try {
+      entries = readdirSync(lessonsDir);
+    } catch {
+      continue;
+    }
+
+    for (const entry of entries) {
+      if (entry.startsWith("_") || entry.startsWith(".")) continue;
+      const entryPath = path.join(lessonsDir, entry);
+      let stat: ReturnType<typeof statSync>;
       try {
-        const source = readFileSync(lessonPath, "utf-8");
-        parseLessonSource(source, lessonPath);
-        lessonCount++;
-      } catch (error) {
-        pushIssue(lessonPath, error);
+        stat = statSync(entryPath);
+      } catch {
+        continue;
+      }
+
+      if (stat.isFile() && entry.endsWith(".md")) {
+        // File-type lecture
+        try {
+          validateMarkdownFile(entryPath);
+          lectureCount++;
+        } catch {
+          /* already recorded */
+        }
+      } else if (stat.isDirectory()) {
+        // Directory-type lecture: index.md + sibling detail files
+        const indexPath = path.join(entryPath, "index.md");
+        try {
+          statSync(indexPath);
+          try {
+            validateMarkdownFile(indexPath);
+            lectureCount++;
+          } catch {
+            /* already recorded */
+          }
+        } catch {
+          pushIssue(entryPath, "Directory-type lecture is missing required `index.md`");
+          continue;
+        }
+
+        for (const detailFile of listMarkdown(entryPath)) {
+          if (detailFile === "index.md") continue;
+          const detailPath = path.join(entryPath, detailFile);
+          try {
+            validateMarkdownFile(detailPath);
+            detailCount++;
+          } catch {
+            /* already recorded */
+          }
+        }
       }
     }
   }
@@ -122,5 +176,5 @@ if (issues.length > 0) {
 }
 
 console.log(
-  `✓ Content OK — ${themeCount} theme(s), ${moduleCount} module(s), ${lessonCount} lesson(s)`,
+  `✓ Content OK — ${themeCount} theme(s), ${moduleCount} module(s), ${lectureCount} lecture(s), ${detailCount} detail(s)`,
 );

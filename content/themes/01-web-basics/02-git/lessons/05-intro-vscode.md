@@ -2,7 +2,6 @@
 title: "解説記事 (VS Code編)"
 order: 5
 type: lecture
-category: jissen
 difficulty: intermediate
 tags: [git, vscode, intermediate, concept]
 estimatedMinutes: 15

@@ -12,6 +12,7 @@ export interface LessonCardProps {
 
 const TYPE_LABELS: Record<string, string> = {
   lecture: "解説",
+  detail: "詳細",
   reference: "リファレンス",
   cheatsheet: "チートシート",
 };

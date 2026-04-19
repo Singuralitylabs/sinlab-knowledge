@@ -20,10 +20,22 @@ export function extractOrderPrefix(name: string): number | null {
 }
 
 /**
- * Returns the slug used in URLs from a content file/directory name.
- * The leading `NN-` prefix is preserved so that URLs encode order
- * (e.g. `/themes/01-web-basics/01-markdown/02-headings`).
+ * Returns the raw slug from a content file/directory name (with `.md` stripped).
+ * The leading `NN-` prefix is preserved — used internally for sorting and
+ * filesystem lookups, not for URL composition.
  */
 export function fileNameToSlug(fileName: string): string {
   return fileName.replace(/\.md$/, "");
+}
+
+/**
+ * Returns the URL-facing slug for a lecture or detail file/directory name.
+ * The leading `NN-` prefix is stripped so URLs read cleanly
+ * (e.g. `/themes/01-web-basics/02-git/intro-basics/what-is-git`).
+ *
+ * Theme and module segments keep their `NN-` prefix and should NOT use this
+ * helper.
+ */
+export function toUrlSlug(fileName: string): string {
+  return stripOrderPrefix(fileName);
 }

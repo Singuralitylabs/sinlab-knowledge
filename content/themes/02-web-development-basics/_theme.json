@@ -1,0 +1,12 @@
+{
+  "slug": "02-web-development-basics",
+  "title": "Web開発基礎",
+  "shortTitle": "Web開発基礎",
+  "description": "HTML / CSS / JavaScript。ブラウザで動く Web ページの土台を体系的に学ぶ。",
+  "icon": "Globe",
+  "color": "orange",
+  "order": 2,
+  "difficulty": "beginner",
+  "estimatedHours": 20,
+  "status": "draft"
+}

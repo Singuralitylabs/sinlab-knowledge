@@ -2,7 +2,6 @@
 title: "チーム開発の進め方"
 order: 6
 type: lecture
-category: team
 difficulty: intermediate
 tags: [git, github, intermediate, tutorial]
 estimatedMinutes: 30

@@ -7,7 +7,10 @@ export interface LessonNavProps {
 }
 
 function lessonHref(lesson: Lesson): string {
-  return `/themes/${lesson.themeSlug}/${lesson.moduleSlug}/${lesson.slug}`;
+  const base = `/themes/${lesson.themeSlug}/${lesson.moduleSlug}`;
+  return lesson.parentSlug
+    ? `${base}/${lesson.parentSlug}/${lesson.slug}`
+    : `${base}/${lesson.slug}`;
 }
 
 /**

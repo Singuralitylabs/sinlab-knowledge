@@ -1,0 +1,12 @@
+{
+  "slug": "03-web-development-advanced",
+  "title": "Web開発発展",
+  "shortTitle": "Web開発発展",
+  "description": "React・Next.js、スタイリング、データ取得、データベース連携、フォーム、本番デプロイまで。モダンフレームワーク前提の Web アプリ開発を体系化。",
+  "icon": "Code",
+  "color": "green",
+  "order": 3,
+  "difficulty": "intermediate",
+  "estimatedHours": 35,
+  "status": "draft"
+}

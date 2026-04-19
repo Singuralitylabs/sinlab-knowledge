@@ -6,9 +6,15 @@
  * (no string interpolation in JSX) so the JIT does not drop them.
  */
 
-export type ThemeColor = "blue" | "green" | "purple" | "gray";
+export type ThemeColor = "blue" | "green" | "purple" | "orange" | "gray";
 
-const KNOWN_COLORS: ReadonlySet<ThemeColor> = new Set(["blue", "green", "purple", "gray"]);
+const KNOWN_COLORS: ReadonlySet<ThemeColor> = new Set([
+  "blue",
+  "green",
+  "purple",
+  "orange",
+  "gray",
+]);
 
 export function normalizeThemeColor(color: string | undefined | null): ThemeColor {
   if (color && (KNOWN_COLORS as Set<string>).has(color)) {
@@ -70,6 +76,16 @@ export function getThemeColorClasses(color: string | undefined | null): ThemeCol
         bgSolid: "bg-purple-500",
         ring: "ring-purple-500/40",
       };
+    case "orange":
+      return {
+        bgSoft: "bg-orange-500/10",
+        border: "border-orange-500/30",
+        borderHover: "hover:border-orange-400/60",
+        text: "text-orange-300",
+        textStrong: "text-orange-200",
+        bgSolid: "bg-orange-500",
+        ring: "ring-orange-500/40",
+      };
     default:
       return {
         bgSoft: "bg-gray-500/10",
@@ -93,6 +109,7 @@ export function iconFallback(name: string | undefined | null): string {
     BookOpen: "📖",
     Code: "💻",
     Sparkles: "✨",
+    Globe: "🌐",
     FileText: "📄",
     Terminal: "⌨️",
     GitBranch: "🌿",

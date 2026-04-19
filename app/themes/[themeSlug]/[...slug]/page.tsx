@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import LessonCard from "@/components/content/LessonCard";
 import Prose from "@/components/content/Prose";
@@ -11,6 +12,7 @@ import { renderMarkdown } from "@/lib/content/mdx";
 import { getThemeColorClasses, iconFallback } from "@/lib/theme-color";
 import {
   getAdjacentLessonsInModule,
+  getDetail,
   getLesson,
   getModule,
   getTheme,
@@ -22,8 +24,10 @@ interface PageProps {
 }
 
 /**
- * Generate every module top page (`[themeSlug]/[moduleSlug]`) and lesson page
- * (`[themeSlug]/[moduleSlug]/[lessonSlug]`) at build time.
+ * Generate pages for:
+ *   - Module top (`[themeSlug]/[moduleSlug]`)
+ *   - Lecture (`[themeSlug]/[moduleSlug]/[lectureSlug]`)
+ *   - Detail sub-page (`[themeSlug]/[moduleSlug]/[lectureSlug]/[detailSlug]`)
  */
 export function generateStaticParams() {
   const params: { themeSlug: string; slug: string[] }[] = [];
@@ -32,6 +36,9 @@ export function generateStaticParams() {
       params.push({ themeSlug: theme.slug, slug: [mod.slug] });
       for (const lesson of mod.lessons) {
         params.push({ themeSlug: theme.slug, slug: [mod.slug, lesson.slug] });
+        for (const detail of lesson.details) {
+          params.push({ themeSlug: theme.slug, slug: [mod.slug, lesson.slug, detail.slug] });
+        }
       }
     }
   }
@@ -61,6 +68,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  if (slug.length === 3) {
+    const detail = getDetail(themeSlug, slug[0], slug[1], slug[2]);
+    if (!detail) return {};
+    return {
+      title: detail.frontmatter.title,
+      description: detail.frontmatter.description,
+    };
+  }
+
   return {};
 }
 
@@ -75,6 +91,15 @@ export default async function CatchAllPage({ params }: PageProps) {
 
   if (slug.length === 2) {
     return LessonView({ themeSlug, moduleSlug: slug[0], lessonSlug: slug[1] });
+  }
+
+  if (slug.length === 3) {
+    return DetailView({
+      themeSlug,
+      moduleSlug: slug[0],
+      lessonSlug: slug[1],
+      detailSlug: slug[2],
+    });
   }
 
   notFound();
@@ -114,14 +139,12 @@ function ModuleView({ themeSlug, moduleSlug }: { themeSlug: string; moduleSlug: 
         <div className="min-w-0">
           <h1 className="text-2xl font-bold tracking-tight text-white">{mod.meta.title}</h1>
           <p className="mt-1 text-sm text-gray-400">{mod.meta.description}</p>
-          <p className="mt-1 text-xs text-gray-500">{mod.lessons.length} レッスン</p>
+          <p className="mt-1 text-xs text-gray-500">{mod.lessons.length} 解説</p>
         </div>
       </header>
 
       <section>
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
-          レッスン
-        </h2>
+        <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-500">解説</h2>
         <ul className="grid gap-3 sm:grid-cols-2">
           {mod.lessons.map((lesson) => (
             <li key={lesson.slug}>
@@ -143,7 +166,7 @@ function ModuleView({ themeSlug, moduleSlug }: { themeSlug: string; moduleSlug: 
 }
 
 // ---------------------------------------------------------------------------
-// Lesson body page
+// Lecture body page (top-level lesson in a module)
 // ---------------------------------------------------------------------------
 
 async function LessonView({
@@ -164,6 +187,7 @@ async function LessonView({
   const { prev, next } = getAdjacentLessonsInModule(lesson);
 
   const headerMeta = lesson.frontmatter;
+  const colors = getThemeColorClasses(theme.meta.color);
 
   return (
     <DocLayout
@@ -188,6 +212,94 @@ async function LessonView({
       <header className="mt-6 mb-8">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
           {mod.meta.title}
+          {headerMeta.estimatedMinutes ? ` · ${headerMeta.estimatedMinutes}分` : ""}
+        </p>
+        {headerMeta.description ? (
+          <p className="mt-2 text-sm text-gray-400">{headerMeta.description}</p>
+        ) : null}
+      </header>
+
+      <Prose html={html} />
+
+      {lesson.details.length > 0 ? (
+        <section className="mt-12 border-t border-gray-800 pt-8">
+          <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            詳細サブページ ({lesson.details.length})
+          </h2>
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {lesson.details.map((detail) => (
+              <li key={detail.slug}>
+                <Link
+                  href={`/themes/${theme.slug}/${mod.slug}/${lesson.slug}/${detail.slug}`}
+                  className={`block rounded-lg border ${colors.border} ${colors.borderHover} bg-gray-900/40 px-4 py-3 text-sm text-gray-200 transition`}
+                >
+                  <span className={`${colors.text} text-xs`}>詳細</span>
+                  <span className="ml-2">{detail.frontmatter.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      <LessonNav prev={prev} next={next} />
+    </DocLayout>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Detail sub-page (under a directory-type lecture)
+// ---------------------------------------------------------------------------
+
+async function DetailView({
+  themeSlug,
+  moduleSlug,
+  lessonSlug,
+  detailSlug,
+}: {
+  themeSlug: string;
+  moduleSlug: string;
+  lessonSlug: string;
+  detailSlug: string;
+}) {
+  const theme = getTheme(themeSlug);
+  const mod = getModule(themeSlug, moduleSlug);
+  const lecture = getLesson(themeSlug, moduleSlug, lessonSlug);
+  const detail = getDetail(themeSlug, moduleSlug, lessonSlug, detailSlug);
+  if (!theme || !mod || !lecture || !detail) notFound();
+
+  const { html, toc } = await renderMarkdown(detail.body);
+  const { prev, next } = getAdjacentLessonsInModule(detail);
+
+  const headerMeta = detail.frontmatter;
+
+  return (
+    <DocLayout
+      sidebar={<Sidebar themeSlug={theme.slug} module={mod} currentLessonSlug={detail.slug} />}
+      toc={<TOC items={toc} />}
+    >
+      <Breadcrumb
+        items={[
+          { label: "テーマ", href: "/themes" },
+          { label: theme.meta.title, href: `/themes/${theme.slug}` },
+          { label: mod.meta.title, href: `/themes/${theme.slug}/${mod.slug}` },
+          {
+            label: lecture.frontmatter.title,
+            href: `/themes/${theme.slug}/${mod.slug}/${lecture.slug}`,
+          },
+          { label: headerMeta.title },
+        ]}
+      />
+
+      {headerMeta.status === "deprecated" ? (
+        <div className="mt-6 rounded-md border border-orange-500/40 bg-orange-500/10 px-4 py-3 text-sm text-orange-200">
+          このページは <strong>非推奨</strong> です。内容が古い可能性があります。
+        </div>
+      ) : null}
+
+      <header className="mt-6 mb-8">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+          {mod.meta.title} · {lecture.frontmatter.title}
           {headerMeta.estimatedMinutes ? ` · ${headerMeta.estimatedMinutes}分` : ""}
         </p>
         {headerMeta.description ? (

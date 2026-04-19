@@ -4,21 +4,5 @@
   "description": "Markdown記法を3カテゴリ (基礎/応用/拡張) で体系的に学習",
   "icon": "FileText",
   "order": 1,
-  "categories": [
-    {
-      "key": "kiso",
-      "label": "基礎編",
-      "description": "見出し、リスト、リンクなど"
-    },
-    {
-      "key": "ouyou",
-      "label": "応用編",
-      "description": "折りたたみ、脚注、数式など"
-    },
-    {
-      "key": "kakucho",
-      "label": "拡張編",
-      "description": "ハイライト、diff構文など"
-    }
-  ]
+  "categories": []
 }

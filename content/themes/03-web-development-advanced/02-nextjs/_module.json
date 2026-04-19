@@ -1,0 +1,8 @@
+{
+  "slug": "02-nextjs",
+  "title": "Next.js",
+  "description": "プロジェクト初期化とApp Routerを学ぶ",
+  "order": 2,
+  "categories": [],
+  "status": "draft"
+}

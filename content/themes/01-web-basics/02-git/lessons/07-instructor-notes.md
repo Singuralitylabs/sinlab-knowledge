@@ -2,7 +2,6 @@
 title: "講師向けメモ (チーム開発ハンズオン)"
 order: 7
 type: lecture
-category: team
 difficulty: intermediate
 tags: [git, instructor, concept]
 estimatedMinutes: 10

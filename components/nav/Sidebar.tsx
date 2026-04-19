@@ -4,7 +4,7 @@ import type { ContentModule, Lesson } from "@/lib/themes";
 export interface SidebarProps {
   themeSlug: string;
   module: ContentModule;
-  /** Current lesson slug to highlight (optional). */
+  /** Current lesson slug to highlight (lecture or detail). */
   currentLessonSlug?: string;
 }
 
@@ -55,8 +55,12 @@ function groupLessonsByCategory(module: ContentModule): CategoryGroup[] {
   return groups;
 }
 
-function lessonHref(themeSlug: string, lesson: Lesson): string {
+function lectureHref(themeSlug: string, lesson: Lesson): string {
   return `/themes/${themeSlug}/${lesson.moduleSlug}/${lesson.slug}`;
+}
+
+function detailHref(themeSlug: string, parentSlug: string, detail: Lesson): string {
+  return `/themes/${themeSlug}/${detail.moduleSlug}/${parentSlug}/${detail.slug}`;
 }
 
 export default function Sidebar({ themeSlug, module, currentLessonSlug }: SidebarProps) {
@@ -82,20 +86,42 @@ export default function Sidebar({ themeSlug, module, currentLessonSlug }: Sideba
             ) : null}
             <ul className="space-y-0.5 border-l border-gray-800">
               {group.lessons.map((lesson) => {
-                const isActive = lesson.slug === currentLessonSlug;
+                const isLectureActive = lesson.slug === currentLessonSlug;
                 return (
                   <li key={lesson.slug}>
                     <Link
-                      href={lessonHref(themeSlug, lesson)}
-                      aria-current={isActive ? "page" : undefined}
+                      href={lectureHref(themeSlug, lesson)}
+                      aria-current={isLectureActive ? "page" : undefined}
                       className={`-ml-px block border-l py-1.5 pl-3 transition ${
-                        isActive
+                        isLectureActive
                           ? "border-blue-400 font-semibold text-blue-300"
                           : "border-transparent text-gray-400 hover:border-gray-600 hover:text-gray-200"
                       }`}
                     >
                       {lesson.frontmatter.title}
                     </Link>
+                    {lesson.details.length > 0 ? (
+                      <ul className="space-y-0.5 border-l border-gray-800 pl-3">
+                        {lesson.details.map((detail) => {
+                          const isDetailActive = detail.slug === currentLessonSlug;
+                          return (
+                            <li key={detail.slug}>
+                              <Link
+                                href={detailHref(themeSlug, lesson.slug, detail)}
+                                aria-current={isDetailActive ? "page" : undefined}
+                                className={`-ml-px block border-l py-1 pl-3 text-[13px] transition ${
+                                  isDetailActive
+                                    ? "border-blue-400 font-semibold text-blue-300"
+                                    : "border-transparent text-gray-500 hover:border-gray-600 hover:text-gray-200"
+                                }`}
+                              >
+                                {detail.frontmatter.title}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    ) : null}
                   </li>
                 );
               })}

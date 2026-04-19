@@ -1,0 +1,8 @@
+{
+  "slug": "05-database",
+  "title": "データベース連携",
+  "description": "Supabaseで認証・DB・Realtimeを扱う",
+  "order": 5,
+  "categories": [],
+  "status": "draft"
+}

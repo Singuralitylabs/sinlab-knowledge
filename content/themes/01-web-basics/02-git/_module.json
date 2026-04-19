@@ -4,26 +4,5 @@
   "description": "Gitとチーム開発を、解説記事7本と個別リファレンス24本で体系的に学習",
   "icon": "GitBranch",
   "order": 2,
-  "categories": [
-    {
-      "key": "kiso",
-      "label": "基礎編",
-      "description": "Gitの基本コマンドとブランチ"
-    },
-    {
-      "key": "jissen",
-      "label": "実践編",
-      "description": "プルリクエスト、リベース、レビュー"
-    },
-    {
-      "key": "ouyou",
-      "label": "応用編",
-      "description": "履歴操作、スタッシュ、設定"
-    },
-    {
-      "key": "team",
-      "label": "チーム開発編",
-      "description": "ブランチ戦略、Issue、CI/CD"
-    }
-  ]
+  "categories": []
 }

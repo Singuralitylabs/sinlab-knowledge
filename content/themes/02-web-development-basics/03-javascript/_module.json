@@ -1,0 +1,8 @@
+{
+  "slug": "03-javascript",
+  "title": "JavaScript",
+  "description": "変数・関数・DOM・非同期処理を学ぶ",
+  "order": 3,
+  "categories": [],
+  "status": "draft"
+}

@@ -6,7 +6,14 @@ export type Difficulty = z.infer<typeof difficultySchema>;
 export const statusSchema = z.enum(["draft", "published", "deprecated"]);
 export type Status = z.infer<typeof statusSchema>;
 
-export const lessonTypeSchema = z.enum(["lecture", "reference", "cheatsheet"]);
+/**
+ * Lesson types used in frontmatter.
+ * - `lecture`: main reading content shown in module TOC (file-type or directory-type with `index.md`)
+ * - `detail`: deep-dive sub-page placed under a directory-type lecture
+ * - `cheatsheet`: quick-lookup reference (rarely used standalone)
+ * - `reference` (legacy): kept for backwards compat during migration; treat like `detail`
+ */
+export const lessonTypeSchema = z.enum(["lecture", "detail", "reference", "cheatsheet"]);
 export type LessonType = z.infer<typeof lessonTypeSchema>;
 
 export const navItemSchema = z.object({

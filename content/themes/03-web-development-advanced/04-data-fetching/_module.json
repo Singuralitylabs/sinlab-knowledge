@@ -1,0 +1,8 @@
+{
+  "slug": "04-data-fetching",
+  "title": "データ取得",
+  "description": "REST APIとServer Componentsの使い分けを学ぶ",
+  "order": 4,
+  "categories": [],
+  "status": "draft"
+}

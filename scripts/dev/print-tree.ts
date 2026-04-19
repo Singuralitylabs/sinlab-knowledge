@@ -15,6 +15,11 @@ for (const theme of getThemes()) {
       console.log(
         `    - ${lesson.slug} [${lesson.frontmatter.type}, order=${lesson.frontmatter.order}] ${lesson.frontmatter.title}`,
       );
+      for (const detail of lesson.details) {
+        console.log(
+          `      └─ ${detail.slug} [${detail.frontmatter.type}, order=${detail.frontmatter.order}] ${detail.frontmatter.title}`,
+        );
+      }
     }
   }
 }
@@ -27,10 +32,12 @@ for (const p of getAllLessonPaths()) {
 console.log("\n=== Render check (first lesson) ===");
 const first = getAllLessonPaths()[0];
 if (first) {
-  const lesson = getThemes()
+  const mod = getThemes()
     .find((t) => t.slug === first.themeSlug)
-    ?.modules.find((m) => m.slug === first.slug[0])
-    ?.lessons.find((l) => l.slug === first.slug[1]);
+    ?.modules.find((m) => m.slug === first.slug[0]);
+  const lecture = mod?.lessons.find((l) => l.slug === first.slug[1]);
+  const lesson =
+    first.slug.length === 3 ? lecture?.details.find((d) => d.slug === first.slug[2]) : lecture;
   if (lesson) {
     const rendered = await renderMarkdown(lesson.body);
     console.log("TOC:", rendered.toc);
