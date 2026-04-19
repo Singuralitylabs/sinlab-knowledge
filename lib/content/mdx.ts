@@ -171,6 +171,26 @@ function remarkDetailDirective(context: RenderContext) {
 }
 
 /**
+ * Rehype plugin that opens external links (`http://` or `https://`) in a new
+ * tab with safe `rel` attributes. Internal (relative) links stay same-tab so
+ * in-site navigation remains intact.
+ */
+function rehypeExternalLinks() {
+  return (tree: unknown) => {
+    visit(tree as never, "element", (node: unknown) => {
+      // biome-ignore lint/suspicious/noExplicitAny: hast element node
+      const n = node as any;
+      if (n.tagName !== "a") return;
+      const href = n.properties?.href;
+      if (typeof href !== "string") return;
+      if (!/^https?:\/\//.test(href)) return;
+      n.properties.target = "_blank";
+      n.properties.rel = "noopener noreferrer";
+    });
+  };
+}
+
+/**
  * Render Markdown source to HTML and extract a table of contents from H2/H3.
  * Uses the same toolchain as the original web-skill-lessons site, plus GFM
  * Alerts (`> [!NOTE]` etc.), slug ids for headings, and the
@@ -204,6 +224,7 @@ export async function renderMarkdown(
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeSlug)
+    .use(rehypeExternalLinks)
     .use(rehypePrettyCode, {
       theme: "github-light",
       keepBackground: true,
