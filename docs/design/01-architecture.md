@@ -1,4 +1,4 @@
-# Sinlab Skills — 設計ドキュメント (1) アーキテクチャ・コンテンツモデル
+# Sinlab Knowledge — 設計ドキュメント (1) アーキテクチャ・コンテンツモデル
 
 ## 0. 設計の核となる方針
 
@@ -165,7 +165,7 @@ sinlab-skills/
 
 ```json
 {
-  "title": "Sinlab Skills",
+  "title": "Sinlab Knowledge",
   "description": "Markdown / Git / Web開発 / AI駆動開発を体系的に学ぶ解説サイト",
   "siteUrl": "https://skills.sinlab.dev",
   "author": "シンギュラリティ・ラボ",

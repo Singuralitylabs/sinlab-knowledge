@@ -6,7 +6,7 @@ import { loadStaticPage } from "@/lib/pages";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Sinlab Skills について",
+  description: "Sinlab Knowledge について",
 };
 
 export default async function AboutPage() {

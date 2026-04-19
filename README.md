@@ -1,4 +1,4 @@
-# Sinlab Skills
+# Sinlab Knowledge
 
 Markdown / Git / Web開発 / AI駆動開発を体系的に学ぶ Web スキル解説サイト。
 

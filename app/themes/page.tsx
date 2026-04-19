@@ -4,7 +4,7 @@ import { getThemes } from "@/lib/themes";
 
 export const metadata: Metadata = {
   title: "テーマ一覧",
-  description: "Sinlab Skills の解説テーマ一覧",
+  description: "Sinlab Knowledge の解説テーマ一覧",
 };
 
 export default function ThemesPage() {

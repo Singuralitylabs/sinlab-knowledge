@@ -1,4 +1,4 @@
-# Sinlab Skills — 設計ドキュメント (3) 実装手順書
+# Sinlab Knowledge — 設計ドキュメント (3) 実装手順書
 
 このドキュメントは Phase 1 (MVP) を中心に、各ステップの **目的 / 実施内容 / 完了条件** を順序立てて定義する。Phase 2 / Phase 3 は概要のみ示し、Phase 1 完了後に詳細化する。
 
@@ -69,7 +69,7 @@ echo "node_modules\n.next\n.vercel\n.DS_Store\n.env*.local" > .gitignore
    - `check`: `biome check --write .` (auto-fix付き)
 6. `eslint.config.*` が残っていれば削除
 7. 不要ファイル削除: `app/page.tsx`, `app/globals.css` の自動生成サンプル
-8. `app/layout.tsx` をシンプル化、`app/page.tsx` に「Sinlab Skills」のプレースホルダ
+8. `app/layout.tsx` をシンプル化、`app/page.tsx` に「Sinlab Knowledge」のプレースホルダ
 9. `bun run dev` で `http://localhost:3000` 起動確認
 
 **完了条件 (Done)**

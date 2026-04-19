@@ -1,6 +1,6 @@
 /**
  * Migrate the legacy web-skill-lessons (Markdown + Git) docs into the
- * Sinlab Skills `content/themes/01-web-basics/` tree.
+ * Sinlab Knowledge `content/themes/01-web-basics/` tree.
  *
  * Usage:
  *   bun scripts/migrate/import-web-skill.ts

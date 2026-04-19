@@ -1,6 +1,6 @@
-# Sinlab Skills について
+# Sinlab Knowledge について
 
-**Sinlab Skills** は、シンギュラリティ・ラボが提供する Web スキル解説サイトです。
+**Sinlab Knowledge** は、シンギュラリティ・ラボが提供する Web スキル解説サイトです。
 
 ## このサイトの方針
 

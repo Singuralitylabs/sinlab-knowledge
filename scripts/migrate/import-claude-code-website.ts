@@ -1,6 +1,6 @@
 /**
  * Migrate the legacy `claude-code-website` (Next.js + JSX) feature pages into
- * the Sinlab Skills `content/themes/03-ai-driven-development/` tree.
+ * the Sinlab Knowledge `content/themes/03-ai-driven-development/` tree.
  *
  * Usage:
  *   bun scripts/migrate/import-claude-code-website.ts
