@@ -223,14 +223,13 @@ async function LessonView({
         </div>
       ) : null}
 
-      <header className="mt-6 mb-8">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
-          {mod.meta.title}
-        </p>
-        {headerMeta.description ? (
-          <p className="mt-2 text-sm text-gray-600">{headerMeta.description}</p>
-        ) : null}
-      </header>
+      {headerMeta.description ? (
+        <header className="mt-6 mb-8">
+          <p className="text-sm text-gray-600">{headerMeta.description}</p>
+        </header>
+      ) : (
+        <div className="mt-6" />
+      )}
 
       <Prose html={html} />
 
@@ -286,14 +285,13 @@ async function DetailView({
         </div>
       ) : null}
 
-      <header className="mt-6 mb-8">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
-          {mod.meta.title} · {lecture.frontmatter.title}
-        </p>
-        {headerMeta.description ? (
-          <p className="mt-2 text-sm text-gray-600">{headerMeta.description}</p>
-        ) : null}
-      </header>
+      {headerMeta.description ? (
+        <header className="mt-6 mb-8">
+          <p className="text-sm text-gray-600">{headerMeta.description}</p>
+        </header>
+      ) : (
+        <div className="mt-6" />
+      )}
 
       <Prose html={html} />
 
