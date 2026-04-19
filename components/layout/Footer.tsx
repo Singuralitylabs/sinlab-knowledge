@@ -1,17 +1,26 @@
 import Link from "next/link";
 import type { NavItem } from "@/components/layout/types";
 
+export interface FooterCopyright {
+  holder: string;
+  url?: string;
+}
+
 export interface FooterProps {
   siteTitle: string;
   description?: string;
   links: NavItem[];
+  copyright?: FooterCopyright;
 }
 
 function isExternal(href: string): boolean {
   return /^https?:\/\//.test(href);
 }
 
-export default function Footer({ siteTitle, description, links }: FooterProps) {
+export default function Footer({ siteTitle, description, links, copyright }: FooterProps) {
+  const year = new Date().getFullYear();
+  const copyrightName = copyright?.holder ?? siteTitle;
+
   return (
     <footer className="mt-16 border-t border-gray-200 bg-gray-50 px-6 py-10 text-sm text-gray-600">
       <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2">
@@ -52,7 +61,19 @@ export default function Footer({ siteTitle, description, links }: FooterProps) {
       </div>
 
       <div className="mx-auto mt-8 max-w-6xl border-t border-gray-200 pt-4 text-xs text-gray-500">
-        © {new Date().getFullYear()} {siteTitle}
+        © {year}{" "}
+        {copyright?.url ? (
+          <a
+            href={copyright.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-900 hover:underline"
+          >
+            {copyrightName}
+          </a>
+        ) : (
+          copyrightName
+        )}
       </div>
     </footer>
   );

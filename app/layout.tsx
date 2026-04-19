@@ -34,7 +34,12 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-white text-gray-900">
         <Header siteTitle={site.title} navigation={site.navigation} />
         <div className="flex-1">{children}</div>
-        <Footer siteTitle={site.title} description={site.description} links={site.footer.links} />
+        <Footer
+          siteTitle={site.title}
+          description={site.description}
+          links={site.footer.links}
+          copyright={site.footer.copyright}
+        />
       </body>
     </html>
   );

@@ -30,6 +30,12 @@ export const siteSchema = z.object({
   footer: z
     .object({
       links: z.array(navItemSchema).default([]),
+      copyright: z
+        .object({
+          holder: z.string(),
+          url: z.string().url().optional(),
+        })
+        .optional(),
     })
     .default({ links: [] }),
 });

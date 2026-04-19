@@ -5,6 +5,10 @@
   "author": "シンギュラリティ・ラボ",
   "navigation": [{ "label": "テーマ", "href": "/themes" }, { "label": "About", "href": "/about" }],
   "footer": {
-    "links": [{ "label": "GitHub", "href": "https://github.com/" }]
+    "links": [],
+    "copyright": {
+      "holder": "一般社団法人 未来技術推進協会",
+      "url": "https://future-tech-association.org/"
+    }
   }
 }
