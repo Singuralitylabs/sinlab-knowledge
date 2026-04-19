@@ -6,7 +6,6 @@ import Prose from "@/components/content/Prose";
 import DocLayout from "@/components/layout/DocLayout";
 import Breadcrumb from "@/components/nav/Breadcrumb";
 import LessonNav from "@/components/nav/LessonNav";
-import Sidebar from "@/components/nav/Sidebar";
 import TOC from "@/components/nav/TOC";
 import { renderMarkdown } from "@/lib/content/mdx";
 import { getThemeColorClasses, iconFallback } from "@/lib/theme-color";
@@ -190,10 +189,7 @@ async function LessonView({
   const colors = getThemeColorClasses(theme.meta.color);
 
   return (
-    <DocLayout
-      sidebar={<Sidebar themeSlug={theme.slug} module={mod} currentLessonSlug={lesson.slug} />}
-      toc={<TOC items={toc} />}
-    >
+    <DocLayout sidebar={<TOC items={toc} />}>
       <Breadcrumb
         items={[
           { label: "テーマ", href: "/themes" },
@@ -274,10 +270,7 @@ async function DetailView({
   const headerMeta = detail.frontmatter;
 
   return (
-    <DocLayout
-      sidebar={<Sidebar themeSlug={theme.slug} module={mod} currentLessonSlug={detail.slug} />}
-      toc={<TOC items={toc} />}
-    >
+    <DocLayout sidebar={<TOC items={toc} />}>
       <Breadcrumb
         items={[
           { label: "テーマ", href: "/themes" },
