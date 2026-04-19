@@ -143,7 +143,7 @@ function ModuleView({ themeSlug, moduleSlug }: { themeSlug: string; moduleSlug: 
 
       <section>
         <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-500">解説</h2>
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {mod.lessons.map((lesson) => (
             <li key={lesson.slug}>
               <LessonCard
