@@ -15,7 +15,7 @@
 | 01 | **Web基礎** | プログラミング初学者 | 2 | 63 (解説10 + 詳細53) |
 | 02 | **Web開発基礎** | Web基礎習得者・HTML/CSS/JS 初学者 | 3 | 22 (解説3 + 詳細19) |
 | 03 | **Web開発発展** | Web開発基礎習得者 | 7 | 21 (解説7 + 詳細14) |
-| 04 | **AI駆動開発** | 開発実践者・エンジニア | 3 | 19 (解説7 + 詳細12) |
+| 04 | **AI駆動開発** | 開発実践者・エンジニア | 3 | 19 (解説14 + 詳細5) |
 | 合計 | — | — | 15 | 約125 |
 
 各テーマは完全に独立しており、推奨閲覧順は設けない。`/themes` ページで4テーマを並列に提示する。
@@ -608,22 +608,21 @@ content/themes/04-ai-driven-development/
 │       │   └── 05-claude-code-overview.md
 │       └── 02-comparison-matrix.md # ファイル型解説 (詳細なし)
 └── 03-claude-code/                 # ★メインコンテンツ
-    └── lessons/
-        ├── 01-basics/              # ディレクトリ型解説 + 機能詳細7本
-        │   ├── index.md            # 解説: Claude Code とは・他ツールとの違い
-        │   ├── 01-commands.md
-        │   ├── 02-memory.md
-        │   ├── 03-skills.md
-        │   ├── 04-agents.md
-        │   ├── 05-mcp.md
-        │   ├── 06-hooks-plugins.md
-        │   └── 07-advanced.md
-        └── 02-getting-started.md   # ファイル型解説 (詳細なし)
+    └── lessons/                    # 解説9本 (全てファイル型、詳細なし)
+        ├── 01-basics.md            # Claude Code の概観・他ツールとの違い
+        ├── 02-getting-started.md   # インストールから初回起動まで
+        ├── 03-commands.md          # コマンド & ショートカット
+        ├── 04-memory.md            # メモリ & コンテキスト
+        ├── 05-skills.md            # Skills
+        ├── 06-agents.md            # サブエージェント / Agent Teams
+        ├── 07-mcp.md               # MCP (外部連携)
+        ├── 08-hooks-plugins.md     # Hooks & Plugins
+        └── 09-advanced.md          # 高度な機能
 ```
 
 **URLイメージ**:
-- 解説: `/themes/04-ai-driven-development/03-claude-code/basics`
-- 詳細: `/themes/04-ai-driven-development/03-claude-code/basics/commands`
+- 解説: `/themes/04-ai-driven-development/03-claude-code/skills`
+- モジュール TOC: `/themes/04-ai-driven-development/03-claude-code` で9機能のカードが並ぶ
 
 #### Module 01: 概論 (`01-overview`)
 
@@ -662,31 +661,36 @@ content/themes/04-ai-driven-development/
 
 > **移行元**: `website/claude-code-website/app/features/` 全カテゴリ。ページ内のTS配列 (`commandCategories` 等) を移行スクリプトでMD + フロントマターに変換。
 >
-> `basics` をディレクトリ型解説 (Claude Code の全体像とエコシステム) として配置し、7つの機能別リファレンスを詳細サブページに紐付ける。`getting-started` はインストール・初回起動の実務手順であり、basics から独立したファイル型解説として並列に配置。
+> 参考サイト (claude-code-website) は 8 カテゴリのフィーチャーカードを並べる構成だが、各カテゴリが十分に独立した読み物になるため、**全カテゴリをモジュール直下の解説 (lecture) として並列配置** する。モジュールページではカードグリッドに 9 枚のボタンが並ぶ形になる。
+>
+> 現時点では各解説をファイル型 (`NN-slug.md`) で始め、執筆量が増えてサブトピックを切り出したくなった解説のみディレクトリ型 (`NN-slug/index.md` + 配下に詳細) に昇格する方針。これにより「まず横並びで書き、必要になったら掘り下げる」運用が可能。
+>
+> モジュール TOC の視認性確保のため、`_module.json` の `categories` で以下のようにグルーピングする (フロントマターの `category` キーで紐付け):
+> - `overview`: 概観 — `basics`, `getting-started`
+> - `core`: コア機能 — `commands`, `memory`
+> - `extension`: 拡張機能 — `skills`, `agents`, `mcp`
+> - `automation`: 自動化 — `hooks-plugins`
+> - `advanced`: 高度な機能 — `advanced`
 
-**解説 (lecture, 2本) — モジュール TOC**
+**解説 (lecture, 9本) — モジュール TOC**
 
-| order | スラグ | タイトル | 元 | 詳細本数 |
+| order | スラグ | タイトル | カテゴリ | 元 (claude-code-website) |
 |---|---|---|---|---|
-| 01 | `basics` | Claude Code とは・他ツールとの違い | features/basics | 7 |
-| 02 | `getting-started` | インストールから初回起動まで | 新規執筆 | 0 |
-
-**詳細 (detail, 7本) — `01-basics/` 配下**
-
-| order | スラグ | タイトル | 元 (claude-code-website) |
-|---|---|---|---|
-| 01 | `commands` | コマンド一覧 (`/help`, `/init`, `/memory`, `/model`, `/cost` 等) | features/commands |
-| 02 | `memory` | メモリ機能とコンテキスト管理 | features/memory |
-| 03 | `skills` | カスタムスキル作成 | features/skills |
-| 04 | `agents` | サブエージェント | features/agents |
-| 05 | `mcp` | Model Context Protocol (Tools / Resources / Prompts) | features/mcp |
-| 06 | `hooks-plugins` | Hooks & Plugins | features/hooks-plugins |
-| 07 | `advanced` | Managed Agents / Batch API 等の高度な機能 | features/advanced |
+| 01 | `basics` | Claude Code の概観・他ツールとの違い | overview | features/basics |
+| 02 | `getting-started` | インストールから初回起動まで | overview | 新規執筆 |
+| 03 | `commands` | コマンド & ショートカット (`/help`, `/init`, `/memory` 等) | core | features/commands |
+| 04 | `memory` | メモリ & コンテキスト (CLAUDE.md / セッション管理) | core | features/memory |
+| 05 | `skills` | Skills (再利用可能なワークフロー定義) | extension | features/skills |
+| 06 | `agents` | サブエージェント / Agent Teams | extension | features/agents |
+| 07 | `mcp` | MCP (外部サービス連携プロトコル) | extension | features/mcp |
+| 08 | `hooks-plugins` | Hooks & Plugins (イベント駆動の自動化と再配布) | automation | features/hooks-plugins |
+| 09 | `advanced` | 権限モード / Extended Thinking / Managed Agents 等 | advanced | features/advanced |
 
 > **拡張余地**:
+> - 各解説が肥大化した場合はディレクトリ型に昇格し、サブトピック (例: `skills/01-skill-creator.md`, `agents/01-agent-teams.md`) を詳細として切り出す
 > - Module 04: AI駆動開発のベストプラクティス (新規) — レビュー、テスト、セキュリティ
 > - Module 05: 各ツールの深掘り (Cursor単独、Codex単独 等)
-> - Claude Code の更新に追従する形で Module 03 (特に `basics/` 配下の詳細) を継続的に拡充
+> - Claude Code の更新に追従する形で本モジュールを継続的に拡充
 
 ---
 
