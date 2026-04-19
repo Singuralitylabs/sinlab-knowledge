@@ -146,3 +146,105 @@ body {
 .prose .markdown-alert-caution .markdown-alert-title {
   color: rgb(185 28 28); /* red-700 */
 }
+
+/* ----------------------------------------------------------------------------
+ * Headings — colored accent bars replace the flat gray underline
+ * --------------------------------------------------------------------------*/
+
+.prose h2 {
+  position: relative;
+  padding-left: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(229 231 235); /* gray-200 */
+}
+
+.prose h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  bottom: 0.75rem;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgb(99 102 241), rgb(168 85 247)); /* indigo-500 → purple-500 */
+}
+
+.prose h3 {
+  position: relative;
+  padding-left: 0.625rem;
+}
+
+.prose h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 3px;
+  border-radius: 2px;
+  background: rgb(196 181 253); /* purple-300 */
+}
+
+/* ----------------------------------------------------------------------------
+ * Tables — colored header row + subtle zebra striping
+ * --------------------------------------------------------------------------*/
+
+.prose table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid rgb(229 231 235);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.prose thead {
+  background: linear-gradient(
+    180deg,
+    rgb(249 250 251),
+    rgb(243 244 246)
+  ); /* gray-50 → gray-100 */
+}
+
+.prose thead th {
+  font-weight: 600;
+  color: rgb(17 24 39); /* gray-900 */
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid rgb(209 213 219); /* gray-300 */
+}
+
+.prose tbody tr:nth-child(even) {
+  background: rgb(249 250 251 / 0.5); /* gray-50 @ 50% */
+}
+
+.prose tbody td {
+  padding: 0.625rem 0.875rem;
+  border-top: 1px solid rgb(243 244 246); /* gray-100 */
+}
+
+.prose tbody tr:first-child td {
+  border-top: none;
+}
+
+/* Inline code inside table cells — tone down so the row stays readable */
+.prose tbody td code,
+.prose thead th code {
+  background: rgb(255 255 255 / 0.8);
+  font-size: 0.85em;
+}
+
+/* ----------------------------------------------------------------------------
+ * Plain blockquotes (not GFM alerts) — keep clean but give them more presence
+ * --------------------------------------------------------------------------*/
+
+.prose blockquote:not(.markdown-alert) {
+  border-left-width: 3px;
+  background: rgb(249 250 251);
+  padding: 0.75rem 1rem;
+  border-radius: 0 0.375rem 0.375rem 0;
+  font-style: normal;
+}
+
+.prose blockquote:not(.markdown-alert) p:first-of-type::before,
+.prose blockquote:not(.markdown-alert) p:last-of-type::after {
+  content: none;
+}
