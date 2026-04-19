@@ -6,12 +6,6 @@ export interface ThemeCardProps {
   theme: Theme;
 }
 
-const DIFFICULTY_LABELS: Record<string, string> = {
-  beginner: "初級",
-  intermediate: "中級",
-  advanced: "上級",
-};
-
 export default function ThemeCard({ theme }: ThemeCardProps) {
   const colors = getThemeColorClasses(theme.meta.color);
   const lessonCount = theme.modules.reduce((sum, m) => sum + m.lessons.length, 0);
@@ -31,18 +25,13 @@ export default function ThemeCard({ theme }: ThemeCardProps) {
         >
           {iconFallback(theme.meta.icon)}
         </span>
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-gray-900">{theme.meta.title}</h2>
-            {isDraft ? (
-              <span className="rounded-full border border-gray-300 bg-white px-2 py-0.5 text-[11px] font-medium text-gray-600">
-                執筆予定
-              </span>
-            ) : null}
-          </div>
-          <p className={`text-xs font-medium ${colors.text}`}>
-            {DIFFICULTY_LABELS[theme.meta.difficulty] ?? theme.meta.difficulty}
-          </p>
+        <div className="min-w-0 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-gray-900">{theme.meta.title}</h2>
+          {isDraft ? (
+            <span className="rounded-full border border-gray-300 bg-white px-2 py-0.5 text-[11px] font-medium text-gray-600">
+              執筆予定
+            </span>
+          ) : null}
         </div>
       </div>
 
