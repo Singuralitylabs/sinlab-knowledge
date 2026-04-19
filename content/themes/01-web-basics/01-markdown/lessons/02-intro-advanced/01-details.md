@@ -239,7 +239,7 @@ function fetchUserData(userId) {
 
 ### エラーログの折りたたみ
 
-```html
+````html
 <details>
 <summary>エラーログ（クリックで展開）</summary>
 
@@ -252,7 +252,7 @@ Error: ENOENT: no such file or directory
 ```
 
 </details>
-```
+````
 
 ---
 
