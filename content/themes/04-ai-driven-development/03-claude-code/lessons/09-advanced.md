@@ -9,6 +9,8 @@ tags: [claude-code, ai-coding, advanced]
 estimatedMinutes: 12
 status: published
 ---
+# 高度な機能
+
 権限制御、思考モード、セッション移動など高度な制御
 
 ## このページで学べること
@@ -141,18 +143,8 @@ Tab で採用
 
 💡 Tip： サジェストはプロンプトキャッシュを再利用するため、追加のトークンコストはごくわずかです。 積極的に活用して作業効率を向上させましょう。
 
-← 前のページ
+## 関連ページ
 
-🧠 メモリ & コンテキスト
-
-セッションをまたいだ知識の永続化とコンテキスト管理
-
-機能一覧に戻る →
-
-機能の全体像
-
-Claude Code の全機能をカテゴリ別に確認
-
----
-
-**原典**: `claude-code-website/app/features/advanced/page.tsx`
+- [Permissions（権限モード）](https://code.claude.com/docs/en/permissions)
+- [Settings](https://code.claude.com/docs/en/settings)
+- [Common workflows（Extended Thinking ほか）](https://code.claude.com/docs/en/common-workflows)

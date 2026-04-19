@@ -9,6 +9,8 @@ tags: [claude-code, ai-coding, fundamentals, tutorial]
 estimatedMinutes: 8
 status: published
 ---
+# Claude Code を使い始める
+
 Claude Code を初めて使う人向けに、インストールから初回起動までを最短経路でまとめます。
 
 ## 動作環境
@@ -56,4 +58,8 @@ CLAUDE.md を生成しました。
 - **メモリとコンテキスト管理**: `CLAUDE.md` の書き方とコンテキスト最適化を学ぶ。
 - **MCP**: 外部ツールやデータソースとの接続を覚えると一気に表現力が広がる。
 
-> このレッスンは新規執筆です。Claude Code の更新に合わせて随時アップデートします。
+## 関連ページ
+
+- [Claude Code quickstart（公式ドキュメント）](https://code.claude.com/docs/en/quickstart)
+- [Claude Code setup（インストール・認証）](https://code.claude.com/docs/en/setup)
+- [Memory（`CLAUDE.md` の書き方）](https://code.claude.com/docs/en/memory)

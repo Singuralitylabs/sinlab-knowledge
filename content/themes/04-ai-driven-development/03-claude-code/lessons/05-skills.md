@@ -9,6 +9,8 @@ tags: [claude-code, ai-coding, skills]
 estimatedMinutes: 10
 status: published
 ---
+# Skills
+
 再利用可能なワークフローと知識をマークダウンで定義
 
 ## このページで学べること
@@ -73,6 +75,6 @@ description と会話内容が一致すると自動検出
 
 ## 関連ページ
 
----
-
-**原典**: `claude-code-website/app/features/skills/page.tsx`
+- [Skills（公式ドキュメント）](https://code.claude.com/docs/en/skills)
+- [Commands & bundled skills](https://code.claude.com/docs/en/commands)
+- [Plugins（Skills の配布）](https://code.claude.com/docs/en/plugins)

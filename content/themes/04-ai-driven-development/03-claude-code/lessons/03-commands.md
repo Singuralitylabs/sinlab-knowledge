@@ -9,6 +9,8 @@ tags: [claude-code, ai-coding, cheatsheet]
 estimatedMinutes: 10
 status: published
 ---
+# コマンド & ショートカット
+
 Claude Code の対話モードや CLI から呼び出せるコマンドを、カテゴリ別にまとめたチートシートです。
 
 ## スラッシュコマンド
@@ -63,6 +65,8 @@ Claude Code の対話モードや CLI から呼び出せるコマンドを、カ
 | `acceptEdits` | ファイル編集を自動承認 | `claude --allowedTools edit,write` | ファイル変更の都度確認が不要になります |
 | `plan` | 計画のみ作成し、実際の変更は行わない | `Shift + Tab で切り替え` | 大きな変更前に計画を確認したい時に便利 |
 
----
+## 関連ページ
 
-**原典**: `claude-code-website/app/features/commands/page.tsx`
+- [CLI reference（公式ドキュメント）](https://code.claude.com/docs/en/cli-reference)
+- [Commands & bundled skills](https://code.claude.com/docs/en/commands)
+- [Permissions（権限モード）](https://code.claude.com/docs/en/permissions)
