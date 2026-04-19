@@ -1,5 +1,5 @@
 ---
-title: "解説記事 (VS Code編)"
+title: "GUIでGitを使おう"
 order: 5
 type: lecture
 difficulty: intermediate

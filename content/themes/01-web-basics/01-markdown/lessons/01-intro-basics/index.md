@@ -1,5 +1,5 @@
 ---
-title: "解説記事 (基礎編)"
+title: "マークダウン基礎講座"
 order: 1
 type: lecture
 difficulty: beginner

@@ -1,5 +1,5 @@
 ---
-title: "解説記事 (チーム開発編)"
+title: "Git入門 チーム開発編"
 order: 4
 type: lecture
 difficulty: intermediate

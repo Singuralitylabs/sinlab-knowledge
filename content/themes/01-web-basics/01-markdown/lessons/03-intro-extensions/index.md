@@ -1,5 +1,5 @@
 ---
-title: "解説記事 (拡張編)"
+title: "マークダウン拡張記法リファレンス"
 order: 3
 type: lecture
 difficulty: beginner

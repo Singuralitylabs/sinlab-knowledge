@@ -1,5 +1,5 @@
 ---
-title: "解説記事 (基礎編)"
+title: "Git入門 基礎編"
 order: 1
 type: lecture
 difficulty: beginner
