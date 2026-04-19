@@ -1,4 +1,3 @@
-import Link from "next/link";
 import ThemeCard from "@/components/theme/ThemeCard";
 import { getSite } from "@/lib/site";
 import { getThemes } from "@/lib/themes";
@@ -14,20 +13,6 @@ export default function Home() {
           {site.title}
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600">{site.description}</p>
-        <div className="mt-8 flex justify-center gap-3">
-          <Link
-            href="/themes"
-            className="inline-flex items-center rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
-          >
-            テーマを見る
-          </Link>
-          <Link
-            href="/about"
-            className="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-400 hover:text-gray-900"
-          >
-            このサイトについて
-          </Link>
-        </div>
       </section>
 
       <section>
