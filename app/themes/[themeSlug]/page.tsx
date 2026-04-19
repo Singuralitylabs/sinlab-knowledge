@@ -47,7 +47,6 @@ export default async function ThemePage({ params }: ThemePageProps) {
           <p className="mt-2 text-sm text-gray-600">{theme.meta.description}</p>
           <p className="mt-2 text-xs text-gray-500">
             {theme.modules.length} モジュール / {lessonCount} レッスン
-            {theme.meta.estimatedHours ? ` / 約 ${theme.meta.estimatedHours} 時間` : ""}
           </p>
         </div>
       </header>

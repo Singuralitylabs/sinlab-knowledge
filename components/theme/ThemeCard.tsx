@@ -54,7 +54,6 @@ export default function ThemeCard({ theme }: ThemeCardProps) {
         <span>
           {moduleCount} モジュール / {lessonCount} レッスン
         </span>
-        {theme.meta.estimatedHours ? <span>約 {theme.meta.estimatedHours} 時間</span> : null}
       </div>
     </>
   );
