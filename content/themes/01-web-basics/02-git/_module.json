@@ -1,7 +1,7 @@
 {
   "slug": "02-git",
   "title": "Git",
-  "description": "Gitとチーム開発を、解説記事7本と個別リファレンス24本で体系的に学習",
+  "description": "Gitとチーム開発を、解説記事5本と個別リファレンス24本で体系的に学習",
   "icon": "GitBranch",
   "order": 2,
   "categories": []
