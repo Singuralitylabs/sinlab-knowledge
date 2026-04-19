@@ -125,8 +125,8 @@ sinlab-skills/
 │       ├── import-web-skill.ts       # → 01-web-basics/{markdown,git}
 │       ├── import-team-lessons.ts    # → 02-web-development/Module 01-05
 │       ├── import-deploy.ts          # → 02-web-development/06-deployment
-│       ├── import-ai-coding.ts       # → 03-ai-driven-development/{01-overview,02-tool-comparison}
-│       ├── import-claude-code-website.ts # → 03-ai-driven-development/03-claude-code
+│       ├── import-ai-coding.ts       # → 03-ai-driven-development/01-overview
+│       ├── import-claude-code-website.ts # → 03-ai-driven-development/02-claude-code
 │       └── shared/{frontmatter,filename}.ts
 │
 ├── public/

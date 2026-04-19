@@ -1,9 +1,9 @@
 {
-  "slug": "03-claude-code",
+  "slug": "02-claude-code",
   "title": "Claude Code",
   "description": "Claude Code の機能・コマンド・概念を体系的に解説",
   "icon": "Sparkles",
-  "order": 3,
+  "order": 2,
   "categories": [
     { "key": "overview", "label": "概観" },
     { "key": "core", "label": "コア機能" },

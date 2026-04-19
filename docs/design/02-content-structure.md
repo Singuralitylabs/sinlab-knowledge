@@ -15,8 +15,8 @@
 | 01 | **Web基礎** | プログラミング初学者 | 2 | 63 (解説10 + 詳細53) |
 | 02 | **Web開発基礎** | Web基礎習得者・HTML/CSS/JS 初学者 | 3 | 22 (解説3 + 詳細19) |
 | 03 | **Web開発発展** | Web開発基礎習得者 | 7 | 21 (解説7 + 詳細14) |
-| 04 | **AI駆動開発** | 開発実践者・エンジニア | 3 | 19 (解説14 + 詳細5) |
-| 合計 | — | — | 15 | 約125 |
+| 04 | **AI駆動開発** | 開発実践者・エンジニア | 2 | 12 (解説12 + 詳細0) |
+| 合計 | — | — | 14 | 約118 |
 
 各テーマは完全に独立しており、推奨閲覧順は設けない。`/themes` ページで4テーマを並列に提示する。
 
@@ -578,13 +578,15 @@ content/themes/02-web-development/
 }
 ```
 
-### モジュール構成 (3モジュール)
+### モジュール構成 (2モジュール)
 
 > **移行元**: `lessons/ai-coding-lessons/` + `website/claude-code-website/`
 >
-> ユーザー要望に基づき、**「概論 → ツール比較 → Claude Code 解説」** の流れで構成。**Claude Code の解説をメインコンテンツ** とする。
+> 「概論 → Claude Code 解説」の流れで構成し、**Claude Code の解説をメインコンテンツ** とする。
+>
+> **スコープ変更メモ**: かつて検討していた Module「ツール比較」(`02-tool-comparison`) は本テーマから除外した。理由は (1) 各ツールの機能・価格は変動が速く、読み物として古びやすい、(2) 今後 Claude Code 以外の AI コーディングサービス解説モジュールを個別に追加する可能性があり、横断比較は別枠の方が拡張しやすい、の 2 点。AI コーディングツールの俯瞰は Module 01 (概論) 内で簡潔に触れる方針。
 
-他テーマと同じ階層方針を採用する。解説はモジュール直下の `lessons/` に配置し、技術的な個別項目 (各ツール、Claude Code の機能群) はディレクトリ型解説の配下に詳細サブページとして配置する。詳細導線は Git 方式 (本文中「詳細はこちら」) を既定とする。
+他テーマと同じ階層方針を採用する。解説はモジュール直下の `lessons/` に配置し、Claude Code の各機能はモジュール直下の lecture として並列配置する。
 
 **ファイル配置イメージ**:
 
@@ -597,17 +599,7 @@ content/themes/04-ai-driven-development/
 │       ├── 01-introduction.md
 │       ├── 02-history.md
 │       └── 03-workflow-changes.md
-├── 02-tool-comparison/
-│   └── lessons/
-│       ├── 01-overview/            # ディレクトリ型解説 + 各ツール詳細5本
-│       │   ├── index.md            # 解説: 主要ツールの全体像と選び方
-│       │   ├── 01-github-copilot.md
-│       │   ├── 02-cursor.md
-│       │   ├── 03-codex.md
-│       │   ├── 04-gemini-cli.md
-│       │   └── 05-claude-code-overview.md
-│       └── 02-comparison-matrix.md # ファイル型解説 (詳細なし)
-└── 03-claude-code/                 # ★メインコンテンツ
+└── 02-claude-code/                 # ★メインコンテンツ
     └── lessons/                    # 解説9本 (全てファイル型、詳細なし)
         ├── 01-basics.md            # Claude Code の概観・他ツールとの違い
         ├── 02-getting-started.md   # インストールから初回起動まで
@@ -621,8 +613,8 @@ content/themes/04-ai-driven-development/
 ```
 
 **URLイメージ**:
-- 解説: `/themes/04-ai-driven-development/03-claude-code/skills`
-- モジュール TOC: `/themes/04-ai-driven-development/03-claude-code` で9機能のカードが並ぶ
+- 解説: `/themes/04-ai-driven-development/02-claude-code/skills`
+- モジュール TOC: `/themes/04-ai-driven-development/02-claude-code` で9機能のカードが並ぶ
 
 #### Module 01: 概論 (`01-overview`)
 
@@ -636,28 +628,7 @@ content/themes/04-ai-driven-development/
 | 02 | `history` | 主要ツールの登場と発展の系譜 | 新規執筆 |
 | 03 | `workflow-changes` | 開発ワークフローはどう変わるか | 新規執筆 |
 
-#### Module 02: ツール比較 (`02-tool-comparison`)
-
-> `overview` をディレクトリ型解説とし、5ツールの個別解説を詳細サブページに配置。`comparison-matrix` は個別ツールを読んだ上での総括ページとしてファイル型で並列に置く。
-
-**解説 (lecture, 2本) — モジュール TOC**
-
-| order | スラグ | タイトル | ステータス | 詳細本数 |
-|---|---|---|---|---|
-| 01 | `overview` | 主要ツールの全体像と選び方 | 新規執筆 | 5 |
-| 02 | `comparison-matrix` | 機能・価格・得意領域の比較マトリクス | 新規執筆 | 0 |
-
-**詳細 (detail, 5本) — `01-overview/` 配下**
-
-| order | スラグ | タイトル | 元 |
-|---|---|---|---|
-| 01 | `github-copilot` | GitHub Copilot — 補完中心の老舗 | `ai-coding-lessons/step01` + note記事から再編集 |
-| 02 | `cursor` | Cursor — IDE統合型エージェント | `ai-coding-lessons/step02` + note記事 |
-| 03 | `codex` | OpenAI Codex CLI | 同上 |
-| 04 | `gemini-cli` | Gemini CLI | 同上 |
-| 05 | `claude-code-overview` | Claude Code 概観 (詳細は Module 03 へ誘導) | 新規執筆 |
-
-#### Module 03: Claude Code (`03-claude-code`) ★メインコンテンツ
+#### Module 02: Claude Code (`02-claude-code`) ★メインコンテンツ
 
 > **移行元**: `website/claude-code-website/app/features/` 全カテゴリ。ページ内のTS配列 (`commandCategories` 等) を移行スクリプトでMD + フロントマターに変換。
 >
@@ -688,8 +659,8 @@ content/themes/04-ai-driven-development/
 
 > **拡張余地**:
 > - 各解説が肥大化した場合はディレクトリ型に昇格し、サブトピック (例: `skills/01-skill-creator.md`, `agents/01-agent-teams.md`) を詳細として切り出す
-> - Module 04: AI駆動開発のベストプラクティス (新規) — レビュー、テスト、セキュリティ
-> - Module 05: 各ツールの深掘り (Cursor単独、Codex単独 等)
+> - Module 03: AI駆動開発のベストプラクティス (新規) — レビュー、テスト、セキュリティ
+> - Module 04 以降: 他 AI コーディングツール単独解説 (例: `03-cursor`, `04-codex` など)
 > - Claude Code の更新に追従する形で本モジュールを継続的に拡充
 
 ---
@@ -700,8 +671,8 @@ content/themes/04-ai-driven-development/
 
 ```
 [ Web基礎 (blue) ]   [ Web開発基礎 (orange) ]   [ Web開発発展 (green) ]   [ AI駆動開発 (purple) ]
-  Markdown / Git       HTML / CSS / JS            React〜デプロイ           概論〜比較〜Claude Code
-  63ページ              22ページ                    21ページ                   19ページ
+  Markdown / Git       HTML / CSS / JS            React〜デプロイ           概論〜Claude Code
+  63ページ              22ページ                    21ページ                   12ページ
 ```
 
 各テーマカードは `_theme.json` から自動生成される (タイトル / 短説明 / アイコン / 色 / ページ数)。
@@ -841,8 +812,7 @@ mkdir -p content/themes/NN-theme-slug
 | HTML/CSS/JavaScript | — | 新設「Web開発基礎」テーマとして全編新規執筆 (3モジュール / 詳細19本) | React 学習前の前提知識を明示的に整備 |
 | React/Next.js/Supabase/Forms | team-lessons (実コード) | 解説 + 抜粋 + GitHubリンク。「Web開発発展」テーマに再配置 | サイト上は読み物として完結、実コードはGitHub参照 |
 | デプロイ | deploy_lessons (実コード) | Web開発発展テーマの Module 07 に統合、+概論とVercel編を新規執筆 | 1テーマ内で「作って → 出す」が完結 |
-| AIツール比較 | ai-coding-lessons step02 (未展開) | Module 02 として独立、5ツール × 比較マトリクス | 拡充の起点 |
-| **新規領域** | — | AI駆動開発概論、ツール比較マトリクス、Vercel編、Claude Code入門 | 横断的な解説を追加 |
+| **新規領域** | — | AI駆動開発概論、Vercel編、Claude Code入門 | 横断的な解説を追加 |
 
 ---
 
@@ -852,4 +822,4 @@ mkdir -p content/themes/NN-theme-slug
 - 既存 `web-skill-lessons` は当面残し、Phase 3 完了後に301リダイレクトで集約検討
 - 既存 `claude-code-website` は当面残し、深掘り版として併存可
 - コンテンツ更新フロー: ブランチ → PR → Vercel Preview確認 → main マージ → 自動デプロイ
-- Claude Code は更新が早いため、Module 03 のレッスンには `updatedAt` を必ず記載し、月次で「30日以上更新がないレッスン」を洗い出す `scripts/check-stale.ts` を Phase 3 で追加検討
+- Claude Code は更新が早いため、Module 02 (Claude Code) のレッスンには `updatedAt` を必ず記載し、月次で「30日以上更新がないレッスン」を洗い出す `scripts/check-stale.ts` を Phase 3 で追加検討

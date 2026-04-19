@@ -180,9 +180,9 @@ echo "node_modules\n.next\n.vercel\n.DS_Store\n.env*.local" > .gitignore
 - [ ] `/themes/01-web-basics/01-markdown` でレッスン32本リスト
 - [ ] `/themes/01-web-basics/01-markdown/02-headings` でレッスン本文表示
 
-### Day 8: 移行スクリプト (claude-code-website → 03-claude-code)
+### Day 8: 移行スクリプト (claude-code-website → 02-claude-code)
 
-**目的**: Claude Code 8カテゴリを `content/themes/03-ai-driven-development/03-claude-code/` に取り込む
+**目的**: Claude Code 8カテゴリを `content/themes/03-ai-driven-development/02-claude-code/` に取り込む
 
 **実施内容**
 1. `scripts/migrate/import-claude-code-website.ts` — 元 `website/claude-code-website/app/features/{8カテゴリ}/page.tsx` を解析、ページ内 TS 配列 (`commandCategories` 等) を抽出 → MD + フロントマターに変換
@@ -191,7 +191,7 @@ echo "node_modules\n.next\n.vercel\n.DS_Store\n.env*.local" > .gitignore
 4. `bun run migrate:cc-website` で実行
 
 **完了条件 (Done)**
-- [ ] `content/themes/03-ai-driven-development/03-claude-code/lessons/` に9本 (basics, getting-started, commands, memory, skills, agents, mcp, hooks-plugins, advanced)
+- [ ] `content/themes/03-ai-driven-development/02-claude-code/lessons/` に9本 (basics, getting-started, commands, memory, skills, agents, mcp, hooks-plugins, advanced)
 - [ ] 各ファイルで zod 検証パス
 - [ ] dev環境で各URLが表示
 
@@ -252,8 +252,7 @@ echo "node_modules\n.next\n.vercel\n.DS_Store\n.env*.local" > .gitignore
   - 主要コード (30〜80行) を抜粋して埋め込み
   - 末尾に GitHub リンク (元リポジトリの該当パス) を統一テンプレで付与
 - **`import-deploy.ts`**: `lessons/deploy_lessons/deploy_by_*/` を `content/themes/02-web-development/06-deployment/lessons/` に取り込み
-- **`import-ai-coding.ts`**: `lessons/ai-coding-lessons/step01_github_copilot/`, `step02_ai-tool-comparison/` を `03-ai-driven-development/02-tool-comparison/lessons/` に取り込み
-- 新規執筆コンテンツ (デプロイ概論、Vercel編、AI駆動開発概論、ツール比較マトリクス) のドラフト作成
+- 新規執筆コンテンツ (デプロイ概論、Vercel編、AI駆動開発概論) のドラフト作成
 
 ### 2.2 タグページ
 
@@ -321,7 +320,7 @@ echo "node_modules\n.next\n.vercel\n.DS_Store\n.env*.local" > .gitignore
 - [ ] `/themes/01-web-basics` でモジュール2つが表示
 - [ ] `/themes/01-web-basics/01-markdown` でレッスン32本がリスト表示
 - [ ] `/themes/01-web-basics/01-markdown/02-headings` でレッスン本文 + Sidebar + TOC + LessonNav が表示
-- [ ] `/themes/03-ai-driven-development/03-claude-code/03-commands` 等 Claude Code レッスンが表示
+- [ ] `/themes/03-ai-driven-development/02-claude-code/03-commands` 等 Claude Code レッスンが表示
 - [ ] `/about` が表示
 - [ ] 404 ページが表示
 - [ ] グローバルナビとフッタが全ページで表示
