@@ -166,7 +166,7 @@ sinlab-skills/
 ```json
 {
   "title": "Sinlab Knowledge",
-  "description": "Markdown / Git / Web開発 / AI駆動開発を体系的に学ぶ解説サイト",
+  "description": "シンギュラリティ・ラボが運営する、Web 開発や AI 活用などエンジニアリングの知識を体系的に学べる解説サイト。",
   "siteUrl": "https://skills.sinlab.dev",
   "author": "シンギュラリティ・ラボ",
   "navigation": [
