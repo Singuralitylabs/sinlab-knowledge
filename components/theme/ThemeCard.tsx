@@ -20,7 +20,7 @@ export default function ThemeCard({ theme }: ThemeCardProps) {
   return (
     <Link
       href={`/themes/${theme.slug}`}
-      className={`group flex flex-col gap-3 rounded-xl border bg-gray-900/40 p-6 transition ${colors.border} ${colors.borderHover} hover:bg-gray-900/70`}
+      className={`group flex flex-col gap-3 rounded-xl border bg-white p-6 shadow-sm transition ${colors.border} ${colors.borderHover} hover:bg-gray-50`}
     >
       <div className="flex items-center gap-3">
         <span
@@ -30,16 +30,14 @@ export default function ThemeCard({ theme }: ThemeCardProps) {
           {iconFallback(theme.meta.icon)}
         </span>
         <div className="min-w-0">
-          <h2 className="text-lg font-semibold text-gray-100 group-hover:text-white">
-            {theme.meta.title}
-          </h2>
+          <h2 className="text-lg font-semibold text-gray-900">{theme.meta.title}</h2>
           <p className={`text-xs font-medium ${colors.text}`}>
             {DIFFICULTY_LABELS[theme.meta.difficulty] ?? theme.meta.difficulty}
           </p>
         </div>
       </div>
 
-      <p className="line-clamp-3 text-sm text-gray-400">{theme.meta.description}</p>
+      <p className="line-clamp-3 text-sm text-gray-600">{theme.meta.description}</p>
 
       <div className="mt-auto flex items-center gap-4 pt-2 text-xs text-gray-500">
         <span>

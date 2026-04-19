@@ -28,14 +28,14 @@ export default function LessonCard({ lesson, themeColor, categoryLabel }: Lesson
   return (
     <Link
       href={lessonHref(lesson)}
-      className={`group flex flex-col gap-2 rounded-lg border bg-gray-900/40 p-4 transition ${colors.border} ${colors.borderHover} hover:bg-gray-900/70`}
+      className={`group flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-sm transition ${colors.border} ${colors.borderHover} hover:bg-gray-50`}
     >
       <div className="flex items-center gap-2 text-xs">
         <span className={`rounded-full px-2 py-0.5 font-medium ${colors.bgSoft} ${colors.text}`}>
           {TYPE_LABELS[type] ?? type}
         </span>
         {categoryLabel ? (
-          <span className="rounded-full bg-gray-800 px-2 py-0.5 text-gray-400">
+          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-gray-600">
             {categoryLabel}
           </span>
         ) : null}
@@ -44,17 +44,14 @@ export default function LessonCard({ lesson, themeColor, categoryLabel }: Lesson
         ) : null}
       </div>
 
-      <h3 className="text-base font-semibold text-gray-100 group-hover:text-white">{title}</h3>
+      <h3 className="text-base font-semibold text-gray-900">{title}</h3>
 
-      {description ? <p className="line-clamp-2 text-sm text-gray-400">{description}</p> : null}
+      {description ? <p className="line-clamp-2 text-sm text-gray-600">{description}</p> : null}
 
       {tags.length > 0 ? (
         <ul className="mt-1 flex flex-wrap gap-1">
           {tags.slice(0, 4).map((tag) => (
-            <li
-              key={tag}
-              className="rounded bg-gray-800/70 px-1.5 py-0.5 text-[11px] text-gray-400"
-            >
+            <li key={tag} className="rounded bg-gray-100 px-1.5 py-0.5 text-[11px] text-gray-600">
               #{tag}
             </li>
           ))}

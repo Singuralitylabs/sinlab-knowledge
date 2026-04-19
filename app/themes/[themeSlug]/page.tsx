@@ -43,8 +43,8 @@ export default async function ThemePage({ params }: ThemePageProps) {
           {iconFallback(theme.meta.icon)}
         </span>
         <div className="min-w-0">
-          <h1 className="text-3xl font-bold tracking-tight text-white">{theme.meta.title}</h1>
-          <p className="mt-2 text-sm text-gray-400">{theme.meta.description}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">{theme.meta.title}</h1>
+          <p className="mt-2 text-sm text-gray-600">{theme.meta.description}</p>
           <p className="mt-2 text-xs text-gray-500">
             {theme.modules.length} モジュール / {lessonCount} レッスン
             {theme.meta.estimatedHours ? ` / 約 ${theme.meta.estimatedHours} 時間` : ""}

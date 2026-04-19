@@ -57,7 +57,7 @@ export default function TOC({ items }: TOCProps) {
       <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
         On this page
       </p>
-      <ul className="space-y-1 border-l border-gray-800">
+      <ul className="space-y-1 border-l border-gray-200">
         {items.map((item) => {
           const isActive = item.id === activeId;
           return (
@@ -67,8 +67,8 @@ export default function TOC({ items }: TOCProps) {
                 aria-current={isActive ? "true" : undefined}
                 className={`-ml-px block border-l py-1 pl-3 transition ${
                   isActive
-                    ? "border-blue-400 font-medium text-blue-300"
-                    : "border-transparent text-gray-500 hover:border-gray-600 hover:text-gray-300"
+                    ? "border-blue-500 font-medium text-blue-700"
+                    : "border-transparent text-gray-500 hover:border-gray-400 hover:text-gray-800"
                 }`}
               >
                 {item.text}

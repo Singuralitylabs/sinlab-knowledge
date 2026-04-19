@@ -12,8 +12,8 @@ export default function ThemesPage() {
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-12">
       <header className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight text-white">テーマ</h1>
-        <p className="mt-2 text-sm text-gray-400">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">テーマ</h1>
+        <p className="mt-2 text-sm text-gray-600">
           各テーマは独立した解説領域です。興味のあるテーマから自由に読み始められます。
         </p>
       </header>

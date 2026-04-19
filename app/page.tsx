@@ -10,18 +10,20 @@ export default function Home() {
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-16">
       <section className="mb-16 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">{site.title}</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-gray-400">{site.description}</p>
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          {site.title}
+        </h1>
+        <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600">{site.description}</p>
         <div className="mt-8 flex justify-center gap-3">
           <Link
             href="/themes"
-            className="inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-950 hover:bg-gray-200"
+            className="inline-flex items-center rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
           >
             テーマを見る
           </Link>
           <Link
             href="/about"
-            className="inline-flex items-center rounded-md border border-gray-700 px-4 py-2 text-sm font-medium text-gray-300 hover:border-gray-500 hover:text-white"
+            className="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-400 hover:text-gray-900"
           >
             このサイトについて
           </Link>

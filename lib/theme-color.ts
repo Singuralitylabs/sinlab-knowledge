@@ -32,7 +32,7 @@ export interface ThemeColorClasses {
   borderHover: string;
   /** Foreground text color (used for accents / titles). */
   text: string;
-  /** Foreground text color used on dark surfaces. */
+  /** Foreground text color used on tinted surfaces. */
   textStrong: string;
   /** Solid background for badges / dots. */
   bgSolid: string;
@@ -42,57 +42,57 @@ export interface ThemeColorClasses {
 
 /**
  * Returns Tailwind class strings for a given theme color.
- * Designed for the dark theme (gray-950 base).
+ * Designed for the light theme (white base).
  */
 export function getThemeColorClasses(color: string | undefined | null): ThemeColorClasses {
   switch (normalizeThemeColor(color)) {
     case "blue":
       return {
-        bgSoft: "bg-blue-500/10",
-        border: "border-blue-500/30",
-        borderHover: "hover:border-blue-400/60",
-        text: "text-blue-300",
-        textStrong: "text-blue-200",
-        bgSolid: "bg-blue-500",
+        bgSoft: "bg-blue-50",
+        border: "border-blue-200",
+        borderHover: "hover:border-blue-400",
+        text: "text-blue-700",
+        textStrong: "text-blue-800",
+        bgSolid: "bg-blue-600",
         ring: "ring-blue-500/40",
       };
     case "green":
       return {
-        bgSoft: "bg-emerald-500/10",
-        border: "border-emerald-500/30",
-        borderHover: "hover:border-emerald-400/60",
-        text: "text-emerald-300",
-        textStrong: "text-emerald-200",
-        bgSolid: "bg-emerald-500",
+        bgSoft: "bg-emerald-50",
+        border: "border-emerald-200",
+        borderHover: "hover:border-emerald-400",
+        text: "text-emerald-700",
+        textStrong: "text-emerald-800",
+        bgSolid: "bg-emerald-600",
         ring: "ring-emerald-500/40",
       };
     case "purple":
       return {
-        bgSoft: "bg-purple-500/10",
-        border: "border-purple-500/30",
-        borderHover: "hover:border-purple-400/60",
-        text: "text-purple-300",
-        textStrong: "text-purple-200",
-        bgSolid: "bg-purple-500",
+        bgSoft: "bg-purple-50",
+        border: "border-purple-200",
+        borderHover: "hover:border-purple-400",
+        text: "text-purple-700",
+        textStrong: "text-purple-800",
+        bgSolid: "bg-purple-600",
         ring: "ring-purple-500/40",
       };
     case "orange":
       return {
-        bgSoft: "bg-orange-500/10",
-        border: "border-orange-500/30",
-        borderHover: "hover:border-orange-400/60",
-        text: "text-orange-300",
-        textStrong: "text-orange-200",
-        bgSolid: "bg-orange-500",
+        bgSoft: "bg-orange-50",
+        border: "border-orange-200",
+        borderHover: "hover:border-orange-400",
+        text: "text-orange-700",
+        textStrong: "text-orange-800",
+        bgSolid: "bg-orange-600",
         ring: "ring-orange-500/40",
       };
     default:
       return {
-        bgSoft: "bg-gray-500/10",
-        border: "border-gray-500/30",
-        borderHover: "hover:border-gray-400/60",
-        text: "text-gray-300",
-        textStrong: "text-gray-100",
+        bgSoft: "bg-gray-50",
+        border: "border-gray-200",
+        borderHover: "hover:border-gray-400",
+        text: "text-gray-700",
+        textStrong: "text-gray-900",
         bgSolid: "bg-gray-500",
         ring: "ring-gray-500/40",
       };

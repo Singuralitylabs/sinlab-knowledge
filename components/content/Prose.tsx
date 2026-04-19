@@ -1,6 +1,6 @@
 /**
  * Wraps server-rendered Markdown HTML in a `prose` container tuned for the
- * dark theme. Handles inserting the trusted HTML output of `renderMarkdown`
+ * light theme. Handles inserting the trusted HTML output of `renderMarkdown`
  * (the source is project-internal Markdown, not user input).
  */
 
@@ -12,31 +12,35 @@ export interface ProseProps {
 
 const BASE_CLASSES = [
   "prose",
-  "prose-invert",
   "prose-base",
+  "prose-gray",
   "max-w-none",
   // Headings
   "prose-headings:scroll-mt-20",
   "prose-headings:font-bold",
+  "prose-headings:text-gray-900",
   "prose-h1:text-3xl",
   "prose-h2:text-2xl",
   "prose-h2:border-b",
-  "prose-h2:border-gray-800",
+  "prose-h2:border-gray-200",
   "prose-h2:pb-2",
   "prose-h3:text-xl",
   // Body
   "prose-p:leading-relaxed",
-  "prose-a:text-blue-400",
+  "prose-p:text-gray-700",
+  "prose-li:text-gray-700",
+  "prose-a:text-blue-600",
   "prose-a:no-underline",
   "hover:prose-a:underline",
-  "prose-strong:text-white",
+  "prose-strong:text-gray-900",
   // Inline code
   "prose-code:rounded",
-  "prose-code:bg-gray-800/80",
+  "prose-code:bg-gray-100",
   "prose-code:px-1.5",
   "prose-code:py-0.5",
   "prose-code:text-[0.9em]",
   "prose-code:font-mono",
+  "prose-code:text-gray-800",
   "prose-code:before:content-none",
   "prose-code:after:content-none",
   // Pre / code blocks (rehype-pretty-code emits its own background, so we
@@ -45,12 +49,12 @@ const BASE_CLASSES = [
   "prose-pre:p-0",
   "prose-pre:my-6",
   // Blockquotes
-  "prose-blockquote:border-l-blue-500/50",
-  "prose-blockquote:text-gray-300",
+  "prose-blockquote:border-l-blue-500/60",
+  "prose-blockquote:text-gray-600",
   // Tables
   "prose-table:text-sm",
-  "prose-thead:border-gray-700",
-  "prose-tr:border-gray-800",
+  "prose-thead:border-gray-300",
+  "prose-tr:border-gray-200",
 ].join(" ");
 
 export default function Prose({ html, className }: ProseProps) {

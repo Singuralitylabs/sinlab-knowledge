@@ -52,10 +52,10 @@ export interface RenderContext {
 }
 
 const DEFAULT_DIRECTIVE_THEME: DirectiveThemeClasses = {
-  border: "border-gray-500/30",
-  borderHover: "hover:border-gray-400/60",
-  bgSoft: "bg-gray-500/10",
-  text: "text-gray-300",
+  border: "border-gray-200",
+  borderHover: "hover:border-gray-400",
+  bgSoft: "bg-gray-50",
+  text: "text-gray-700",
 };
 
 function extractText(node: unknown): string {
@@ -93,12 +93,12 @@ function remarkDetailDirective(context: RenderContext) {
     "block",
     "rounded-lg",
     "border",
-    "border-red-500/50",
-    "bg-red-500/10",
+    "border-red-300",
+    "bg-red-50",
     "px-4",
     "py-3",
     "text-sm",
-    "text-red-200",
+    "text-red-800",
   ].join(" ");
 
   return (tree: unknown) => {
@@ -142,7 +142,7 @@ function remarkDetailDirective(context: RenderContext) {
           type: "element",
           tagName: "span",
           properties: {
-            className: "block text-sm font-medium text-gray-100",
+            className: "block text-sm font-medium text-gray-900",
           },
           children: [{ type: "text", value: `${detail.title} →` }],
         },
@@ -152,7 +152,7 @@ function remarkDetailDirective(context: RenderContext) {
           type: "element",
           tagName: "span",
           properties: {
-            className: "mt-0.5 block text-xs text-gray-400",
+            className: "mt-0.5 block text-xs text-gray-600",
           },
           children: [{ type: "text", value: detail.description }],
         });
@@ -205,7 +205,7 @@ export async function renderMarkdown(
     .use(rehypeRaw)
     .use(rehypeSlug)
     .use(rehypePrettyCode, {
-      theme: "github-dark-dimmed",
+      theme: "github-light",
       keepBackground: true,
     })
     .use(rehypeStringify, { allowDangerousHtml: true })

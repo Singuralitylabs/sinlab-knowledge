@@ -26,15 +26,15 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
             <Fragment key={key}>
               <li className="flex items-center">
                 {isLast || !item.href ? (
-                  <span className={isLast ? "text-gray-300" : undefined}>{item.label}</span>
+                  <span className={isLast ? "text-gray-900" : undefined}>{item.label}</span>
                 ) : (
-                  <Link href={item.href} className="hover:text-gray-200">
+                  <Link href={item.href} className="hover:text-gray-800">
                     {item.label}
                   </Link>
                 )}
               </li>
               {!isLast ? (
-                <li aria-hidden="true" className="text-gray-700">
+                <li aria-hidden="true" className="text-gray-300">
                   /
                 </li>
               ) : null}

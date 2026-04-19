@@ -20,9 +20,9 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/90 backdrop-blur">
+    <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-        <Link href="/" className="text-sm font-bold text-white hover:text-gray-200">
+        <Link href="/" className="text-sm font-bold text-gray-900 hover:text-gray-700">
           {siteTitle}
         </Link>
 
@@ -36,8 +36,8 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
                   href={item.href}
                   className={`rounded-md px-2.5 py-1.5 text-sm transition ${
                     active
-                      ? "bg-white/15 font-semibold text-white"
-                      : "text-gray-400 hover:bg-white/10 hover:text-gray-200"
+                      ? "bg-gray-100 font-semibold text-gray-900"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   }`}
                 >
                   {item.label}
@@ -51,7 +51,7 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
         <button
           type="button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-white/10 hover:text-white md:hidden"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 md:hidden"
           aria-label={isMenuOpen ? "メニューを閉じる" : "メニューを開く"}
           aria-expanded={isMenuOpen}
         >
@@ -81,7 +81,7 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="border-t border-gray-800 px-6 py-2 md:hidden">
+        <div className="border-t border-gray-200 px-6 py-2 md:hidden">
           <ul className="space-y-1">
             {navigation.map((item) => {
               const active = isActive(item.href);
@@ -92,8 +92,8 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
                     onClick={() => setIsMenuOpen(false)}
                     className={`block rounded-md px-3 py-2 text-sm transition ${
                       active
-                        ? "bg-white/15 font-semibold text-white"
-                        : "text-gray-400 hover:bg-white/10 hover:text-gray-200"
+                        ? "bg-gray-100 font-semibold text-gray-900"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                     }`}
                   >
                     {item.label}

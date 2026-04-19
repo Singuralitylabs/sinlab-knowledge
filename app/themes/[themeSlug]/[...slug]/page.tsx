@@ -135,8 +135,8 @@ function ModuleView({ themeSlug, moduleSlug }: { themeSlug: string; moduleSlug: 
           {iconFallback(mod.meta.icon)}
         </span>
         <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight text-white">{mod.meta.title}</h1>
-          <p className="mt-1 text-sm text-gray-400">{mod.meta.description}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900">{mod.meta.title}</h1>
+          <p className="mt-1 text-sm text-gray-600">{mod.meta.description}</p>
           <p className="mt-1 text-xs text-gray-500">{mod.lessons.length} 解説</p>
         </div>
       </header>
@@ -218,7 +218,7 @@ async function LessonView({
       />
 
       {headerMeta.status === "deprecated" ? (
-        <div className="mt-6 rounded-md border border-orange-500/40 bg-orange-500/10 px-4 py-3 text-sm text-orange-200">
+        <div className="mt-6 rounded-md border border-orange-300 bg-orange-50 px-4 py-3 text-sm text-orange-900">
           このレッスンは <strong>非推奨</strong> です。内容が古い可能性があります。
         </div>
       ) : null}
@@ -229,7 +229,7 @@ async function LessonView({
           {headerMeta.estimatedMinutes ? ` · ${headerMeta.estimatedMinutes}分` : ""}
         </p>
         {headerMeta.description ? (
-          <p className="mt-2 text-sm text-gray-400">{headerMeta.description}</p>
+          <p className="mt-2 text-sm text-gray-600">{headerMeta.description}</p>
         ) : null}
       </header>
 
@@ -282,7 +282,7 @@ async function DetailView({
       />
 
       {headerMeta.status === "deprecated" ? (
-        <div className="mt-6 rounded-md border border-orange-500/40 bg-orange-500/10 px-4 py-3 text-sm text-orange-200">
+        <div className="mt-6 rounded-md border border-orange-300 bg-orange-50 px-4 py-3 text-sm text-orange-900">
           このページは <strong>非推奨</strong> です。内容が古い可能性があります。
         </div>
       ) : null}
@@ -293,7 +293,7 @@ async function DetailView({
           {headerMeta.estimatedMinutes ? ` · ${headerMeta.estimatedMinutes}分` : ""}
         </p>
         {headerMeta.description ? (
-          <p className="mt-2 text-sm text-gray-400">{headerMeta.description}</p>
+          <p className="mt-2 text-sm text-gray-600">{headerMeta.description}</p>
         ) : null}
       </header>
 

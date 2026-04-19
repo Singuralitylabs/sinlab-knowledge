@@ -31,7 +31,7 @@ export default function RootLayout({
   const site = getSite();
   return (
     <html lang="ja" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-gray-950 text-gray-100">
+      <body className="min-h-full flex flex-col bg-white text-gray-900">
         <Header siteTitle={site.title} navigation={site.navigation} />
         <div className="flex-1">{children}</div>
         <Footer siteTitle={site.title} description={site.description} links={site.footer.links} />
