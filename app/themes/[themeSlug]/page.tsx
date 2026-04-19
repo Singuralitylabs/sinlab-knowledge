@@ -56,7 +56,7 @@ export default async function ThemePage({ params }: ThemePageProps) {
         <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
           モジュール
         </h2>
-        <ul className="grid gap-4 md:grid-cols-2">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {theme.modules.map((mod) => (
             <li key={mod.slug}>
               <ModuleCard module={mod} themeColor={theme.meta.color} />
