@@ -40,30 +40,14 @@ export function getDetail(
 }
 
 /**
- * Flatten a module's lessons into reading order (each lecture followed by its
- * details). Used for prev/next navigation that traverses both lectures and
- * their detail sub-pages.
+ * Returns the sibling list that defines the prev/next scope for the given
+ * lesson. Top-level lectures navigate among lectures (skipping details);
+ * details navigate among their sibling details.
  */
-function flattenModuleLessons(mod: ContentModule): Lesson[] {
-  const flat: Lesson[] = [];
-  for (const lesson of mod.lessons) {
-    flat.push(lesson);
-    for (const detail of lesson.details) flat.push(detail);
-  }
-  return flat;
-}
-
-/**
- * Matches a lesson within a module either by its top-level slug or by the
- * (parentSlug, slug) pair for details.
- */
-function isSameLesson(a: Lesson, b: Lesson): boolean {
-  return (
-    a.themeSlug === b.themeSlug &&
-    a.moduleSlug === b.moduleSlug &&
-    a.parentSlug === b.parentSlug &&
-    a.slug === b.slug
-  );
+function siblingLessons(lesson: Lesson, mod: ContentModule): Lesson[] {
+  if (!lesson.parentSlug) return mod.lessons;
+  const parent = mod.lessons.find((l) => l.slug === lesson.parentSlug);
+  return parent ? parent.details : [];
 }
 
 export function getAdjacentLessonsInModule(lesson: Lesson): {
@@ -72,11 +56,11 @@ export function getAdjacentLessonsInModule(lesson: Lesson): {
 } {
   const mod = getModule(lesson.themeSlug, lesson.moduleSlug);
   if (!mod) return { prev: null, next: null };
-  const flat = flattenModuleLessons(mod);
-  const idx = flat.findIndex((l) => isSameLesson(l, lesson));
+  const siblings = siblingLessons(lesson, mod);
+  const idx = siblings.findIndex((l) => l.slug === lesson.slug);
   return {
-    prev: idx > 0 ? flat[idx - 1] : null,
-    next: idx >= 0 && idx < flat.length - 1 ? flat[idx + 1] : null,
+    prev: idx > 0 ? siblings[idx - 1] : null,
+    next: idx >= 0 && idx < siblings.length - 1 ? siblings[idx + 1] : null,
   };
 }
 
