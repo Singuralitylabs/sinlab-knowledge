@@ -20,7 +20,7 @@ export default function ThemeCard({ theme }: ThemeCardProps) {
   return (
     <Link
       href={`/themes/${theme.slug}`}
-      className={`group flex flex-col gap-3 rounded-xl border bg-white p-6 shadow-sm transition ${colors.border} ${colors.borderHover} hover:bg-gray-50`}
+      className={`group flex h-full flex-col gap-3 rounded-xl border bg-white p-6 shadow-sm transition ${colors.border} ${colors.borderHover} hover:bg-gray-50`}
     >
       <div className="flex items-center gap-3">
         <span
