@@ -83,3 +83,4 @@ PR ごとに Preview URL が自動生成されます。
 ## ライセンス
 
 Proprietary (Singularity Lab)
+# sinlab-knowledge
