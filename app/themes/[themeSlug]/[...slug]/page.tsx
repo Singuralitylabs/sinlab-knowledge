@@ -226,7 +226,6 @@ async function LessonView({
       <header className="mt-6 mb-8">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
           {mod.meta.title}
-          {headerMeta.estimatedMinutes ? ` · ${headerMeta.estimatedMinutes}分` : ""}
         </p>
         {headerMeta.description ? (
           <p className="mt-2 text-sm text-gray-600">{headerMeta.description}</p>
@@ -290,7 +289,6 @@ async function DetailView({
       <header className="mt-6 mb-8">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
           {mod.meta.title} · {lecture.frontmatter.title}
-          {headerMeta.estimatedMinutes ? ` · ${headerMeta.estimatedMinutes}分` : ""}
         </p>
         {headerMeta.description ? (
           <p className="mt-2 text-sm text-gray-600">{headerMeta.description}</p>
