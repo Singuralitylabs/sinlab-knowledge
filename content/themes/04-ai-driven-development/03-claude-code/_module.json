@@ -4,5 +4,11 @@
   "description": "Claude Code の機能・コマンド・概念を体系的に解説",
   "icon": "Sparkles",
   "order": 3,
-  "categories": []
+  "categories": [
+    { "key": "overview", "label": "概観" },
+    { "key": "core", "label": "コア機能" },
+    { "key": "extension", "label": "拡張機能" },
+    { "key": "automation", "label": "自動化" },
+    { "key": "advanced", "label": "高度な機能" }
+  ]
 }

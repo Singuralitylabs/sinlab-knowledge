@@ -1,10 +1,11 @@
 ---
 title: "Model Context Protocol (MCP)"
 description: "MCP サーバーの仕組み、Tools / Resources / Prompts の使い分けと接続例。"
-order: 5
-type: detail
+order: 7
+type: lecture
+category: extension
 difficulty: intermediate
-tags: [claude-code, ai-coding, mcp, reference]
+tags: [claude-code, ai-coding, mcp]
 estimatedMinutes: 12
 status: published
 ---

@@ -1,10 +1,11 @@
 ---
 title: "メモリとコンテキスト管理"
 description: "CLAUDE.md / 自動メモリ / コンテキスト圧縮など、Claude Code のメモリ機能を体系的に整理。"
-order: 2
-type: detail
+order: 4
+type: lecture
+category: core
 difficulty: intermediate
-tags: [claude-code, ai-coding, memory, reference]
+tags: [claude-code, ai-coding, memory]
 estimatedMinutes: 10
 status: published
 ---

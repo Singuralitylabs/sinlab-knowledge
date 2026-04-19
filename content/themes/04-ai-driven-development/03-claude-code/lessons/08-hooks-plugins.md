@@ -1,10 +1,11 @@
 ---
 title: "Hooks と Plugins"
 description: "イベント駆動の Hooks とプラグインによる Claude Code の拡張方法を解説。"
-order: 6
-type: detail
+order: 8
+type: lecture
+category: automation
 difficulty: intermediate
-tags: [claude-code, ai-coding, hooks, reference]
+tags: [claude-code, ai-coding, hooks]
 estimatedMinutes: 10
 status: published
 ---

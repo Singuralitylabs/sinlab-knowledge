@@ -1,10 +1,11 @@
 ---
 title: "カスタムスキル (Skills)"
 description: "プロジェクト固有のスキルを定義して Claude Code を拡張する方法と運用パターン。"
-order: 3
-type: detail
+order: 5
+type: lecture
+category: extension
 difficulty: intermediate
-tags: [claude-code, ai-coding, skills, reference]
+tags: [claude-code, ai-coding, skills]
 estimatedMinutes: 10
 status: published
 ---

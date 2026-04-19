@@ -3,6 +3,7 @@ title: "Claude Code を使い始める"
 description: "インストールから初回起動・認証・/init までの導入手順をまとめた入門ガイド。"
 order: 2
 type: lecture
+category: overview
 difficulty: intermediate
 tags: [claude-code, ai-coding, fundamentals, tutorial]
 estimatedMinutes: 8

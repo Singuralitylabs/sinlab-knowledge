@@ -1,10 +1,11 @@
 ---
 title: "サブエージェント (Agents)"
 description: "サブエージェントを使った並列・委譲ワークフローと設定の基礎。"
-order: 4
-type: detail
+order: 6
+type: lecture
+category: extension
 difficulty: intermediate
-tags: [claude-code, ai-coding, agents, reference]
+tags: [claude-code, ai-coding, agents]
 estimatedMinutes: 10
 status: published
 ---

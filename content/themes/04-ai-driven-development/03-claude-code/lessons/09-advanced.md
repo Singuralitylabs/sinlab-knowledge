@@ -1,10 +1,11 @@
 ---
 title: "高度な機能"
 description: "Managed Agents / Batch API などの高度な機能と運用上のヒント。"
-order: 7
-type: detail
+order: 9
+type: lecture
+category: advanced
 difficulty: intermediate
-tags: [claude-code, ai-coding, advanced, reference]
+tags: [claude-code, ai-coding, advanced]
 estimatedMinutes: 12
 status: published
 ---

@@ -1,10 +1,11 @@
 ---
 title: "コマンド一覧 (チートシート)"
 description: "スラッシュコマンド・CLIフラグ・キーボードショートカット・権限モードのリファレンス。"
-order: 1
-type: detail
+order: 3
+type: lecture
+category: core
 difficulty: intermediate
-tags: [claude-code, ai-coding, cheatsheet, reference]
+tags: [claude-code, ai-coding, cheatsheet]
 estimatedMinutes: 10
 status: published
 ---
