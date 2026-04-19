@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -22,7 +23,18 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
   return (
     <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-        <Link href="/" className="text-sm font-bold text-gray-900 hover:text-gray-700">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-gray-700"
+        >
+          <Image
+            src="/icon.png"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-7 rounded-md"
+            priority
+          />
           {siteTitle}
         </Link>
 
