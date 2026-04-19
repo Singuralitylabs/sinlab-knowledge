@@ -60,7 +60,7 @@ export default function Footer({ siteTitle, description, links, copyright }: Foo
         ) : null}
       </div>
 
-      <div className="mx-auto mt-8 max-w-6xl border-t border-gray-200 pt-4 text-xs text-gray-500">
+      <div className="mx-auto mt-8 max-w-6xl border-t border-gray-200 pt-4 text-center text-xs text-gray-500">
         © {year}{" "}
         {copyright?.url ? (
           <a
