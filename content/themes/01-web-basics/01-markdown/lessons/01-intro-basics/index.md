@@ -1,5 +1,5 @@
 ---
-title: "マークダウン基礎講座"
+title: "マークダウン基礎記法"
 order: 1
 type: lecture
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, fundamentals, concept]
 estimatedMinutes: 15
 status: published
 ---
-# マークダウン基礎講座
+# マークダウン基礎記法
 
 ## はじめに
 

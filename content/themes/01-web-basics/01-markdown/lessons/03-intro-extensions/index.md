@@ -1,5 +1,5 @@
 ---
-title: "マークダウン拡張記法リファレンス"
+title: "マークダウン拡張記法"
 order: 3
 type: lecture
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, fundamentals, concept]
 estimatedMinutes: 15
 status: published
 ---
-# マークダウン拡張記法リファレンス
+# マークダウン拡張記法
 
 基礎編・応用編で紹介した記法以外にも、特定のプラットフォームやエディタで使える拡張記法があります。
 

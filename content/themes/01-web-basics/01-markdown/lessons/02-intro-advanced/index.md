@@ -1,5 +1,5 @@
 ---
-title: "マークダウン応用記法リファレンス"
+title: "マークダウン応用記法"
 order: 2
 type: lecture
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, fundamentals, concept]
 estimatedMinutes: 15
 status: published
 ---
-# マークダウン応用記法リファレンス
+# マークダウン応用記法
 
 基礎講座で学んだ記法に加えて、知っておくと便利な応用的な記法を紹介します。
 
