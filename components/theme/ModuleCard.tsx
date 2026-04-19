@@ -15,11 +15,11 @@ export default function ModuleCard({ module, themeColor }: ModuleCardProps) {
   return (
     <Link
       href={`/themes/${module.themeSlug}/${module.slug}`}
-      className={`group flex h-full flex-col gap-2 rounded-lg border bg-white p-5 shadow-sm transition ${colors.border} ${colors.borderHover} hover:bg-gray-50`}
+      className={`group flex h-full flex-col gap-2 rounded-lg border p-5 shadow-sm transition ${colors.bgSoft} ${colors.bgSoftHover} ${colors.border} ${colors.borderHover}`}
     >
       <div className="flex items-center gap-3">
         <span
-          className={`flex h-8 w-8 items-center justify-center rounded-md text-base ${colors.bgSoft}`}
+          className={`flex h-8 w-8 items-center justify-center rounded-md border bg-white text-base ${colors.border}`}
           aria-hidden="true"
         >
           {iconFallback(module.meta.icon)}

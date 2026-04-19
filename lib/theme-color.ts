@@ -26,6 +26,8 @@ export function normalizeThemeColor(color: string | undefined | null): ThemeColo
 export interface ThemeColorClasses {
   /** Subtle tinted background (e.g. card backgrounds). */
   bgSoft: string;
+  /** Slightly stronger tinted background used on hover. */
+  bgSoftHover: string;
   /** Border color for cards / pills. */
   border: string;
   /** Border color when hovered. */
@@ -49,6 +51,7 @@ export function getThemeColorClasses(color: string | undefined | null): ThemeCol
     case "blue":
       return {
         bgSoft: "bg-blue-50",
+        bgSoftHover: "hover:bg-blue-100",
         border: "border-blue-200",
         borderHover: "hover:border-blue-400",
         text: "text-blue-700",
@@ -59,6 +62,7 @@ export function getThemeColorClasses(color: string | undefined | null): ThemeCol
     case "green":
       return {
         bgSoft: "bg-emerald-50",
+        bgSoftHover: "hover:bg-emerald-100",
         border: "border-emerald-200",
         borderHover: "hover:border-emerald-400",
         text: "text-emerald-700",
@@ -69,6 +73,7 @@ export function getThemeColorClasses(color: string | undefined | null): ThemeCol
     case "purple":
       return {
         bgSoft: "bg-purple-50",
+        bgSoftHover: "hover:bg-purple-100",
         border: "border-purple-200",
         borderHover: "hover:border-purple-400",
         text: "text-purple-700",
@@ -79,6 +84,7 @@ export function getThemeColorClasses(color: string | undefined | null): ThemeCol
     case "orange":
       return {
         bgSoft: "bg-orange-50",
+        bgSoftHover: "hover:bg-orange-100",
         border: "border-orange-200",
         borderHover: "hover:border-orange-400",
         text: "text-orange-700",
@@ -89,6 +95,7 @@ export function getThemeColorClasses(color: string | undefined | null): ThemeCol
     default:
       return {
         bgSoft: "bg-gray-50",
+        bgSoftHover: "hover:bg-gray-100",
         border: "border-gray-200",
         borderHover: "hover:border-gray-400",
         text: "text-gray-700",

@@ -20,11 +20,11 @@ export default function ThemeCard({ theme }: ThemeCardProps) {
   return (
     <Link
       href={`/themes/${theme.slug}`}
-      className={`group flex h-full flex-col gap-3 rounded-xl border bg-white p-6 shadow-sm transition ${colors.border} ${colors.borderHover} hover:bg-gray-50`}
+      className={`group flex h-full flex-col gap-3 rounded-xl border p-6 shadow-sm transition ${colors.bgSoft} ${colors.bgSoftHover} ${colors.border} ${colors.borderHover}`}
     >
       <div className="flex items-center gap-3">
         <span
-          className={`flex h-10 w-10 items-center justify-center rounded-lg text-xl ${colors.bgSoft}`}
+          className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-white text-xl ${colors.border}`}
           aria-hidden="true"
         >
           {iconFallback(theme.meta.icon)}

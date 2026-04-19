@@ -28,10 +28,10 @@ export default function LessonCard({ lesson, themeColor, categoryLabel }: Lesson
   return (
     <Link
       href={lessonHref(lesson)}
-      className={`group flex h-full flex-col gap-2 rounded-lg border bg-white p-4 shadow-sm transition ${colors.border} ${colors.borderHover} hover:bg-gray-50`}
+      className={`group flex h-full flex-col gap-2 rounded-lg border p-4 shadow-sm transition ${colors.bgSoft} ${colors.bgSoftHover} ${colors.border} ${colors.borderHover}`}
     >
       <div className="flex items-center gap-2 text-xs">
-        <span className={`rounded-full px-2 py-0.5 font-medium ${colors.bgSoft} ${colors.text}`}>
+        <span className={`rounded-full border bg-white px-2 py-0.5 font-medium ${colors.border} ${colors.text}`}>
           {TYPE_LABELS[type] ?? type}
         </span>
         {categoryLabel ? (
