@@ -308,7 +308,7 @@ npm init slidev@latest
 
 ### 基本構文
 
-```markdown
+````markdown
 ---
 theme: seriph
 background: https://example.com/bg.jpg
@@ -336,7 +336,7 @@ layout: two-cols
 ::right::
 
 # 右カラム
-```
+````
 
 ### Slidevの特徴
 
@@ -397,7 +397,7 @@ HTMLベースの高機能プレゼンテーション。
 
 ### 技術発表スライド
 
-```markdown
+````markdown
 ---
 marp: true
 theme: gaia
@@ -444,7 +444,7 @@ slides.forEach(render);
 # ありがとうございました
 
 質問はありますか？
-```
+````
 
 ---
 
