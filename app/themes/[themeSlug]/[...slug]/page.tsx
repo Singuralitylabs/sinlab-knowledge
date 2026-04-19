@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import LessonCard from "@/components/content/LessonCard";
 import Prose from "@/components/content/Prose";
@@ -7,7 +6,7 @@ import DocLayout from "@/components/layout/DocLayout";
 import Breadcrumb from "@/components/nav/Breadcrumb";
 import LessonNav from "@/components/nav/LessonNav";
 import TOC from "@/components/nav/TOC";
-import { renderMarkdown } from "@/lib/content/mdx";
+import { type DetailRef, renderMarkdown } from "@/lib/content/mdx";
 import { getThemeColorClasses, iconFallback } from "@/lib/theme-color";
 import {
   getAdjacentLessonsInModule,
@@ -182,11 +181,30 @@ async function LessonView({
   const lesson = getLesson(themeSlug, moduleSlug, lessonSlug);
   if (!theme || !mod || !lesson) notFound();
 
-  const { html, toc } = await renderMarkdown(lesson.body);
+  const colors = getThemeColorClasses(theme.meta.color);
+  const detailMap = new Map<string, DetailRef>(
+    lesson.details.map((detail) => [
+      detail.slug,
+      {
+        slug: detail.slug,
+        title: detail.frontmatter.title,
+        description: detail.frontmatter.description,
+        href: `/themes/${theme.slug}/${mod.slug}/${lesson.slug}/${detail.slug}`,
+      },
+    ]),
+  );
+  const { html, toc } = await renderMarkdown(lesson.body, {
+    details: detailMap,
+    directiveTheme: {
+      border: colors.border,
+      borderHover: colors.borderHover,
+      bgSoft: colors.bgSoft,
+      text: colors.text,
+    },
+  });
   const { prev, next } = getAdjacentLessonsInModule(lesson);
 
   const headerMeta = lesson.frontmatter;
-  const colors = getThemeColorClasses(theme.meta.color);
 
   return (
     <DocLayout sidebar={<TOC items={toc} />}>
@@ -216,27 +234,6 @@ async function LessonView({
       </header>
 
       <Prose html={html} />
-
-      {lesson.details.length > 0 ? (
-        <section className="mt-12 border-t border-gray-800 pt-8">
-          <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
-            詳細サブページ ({lesson.details.length})
-          </h2>
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {lesson.details.map((detail) => (
-              <li key={detail.slug}>
-                <Link
-                  href={`/themes/${theme.slug}/${mod.slug}/${lesson.slug}/${detail.slug}`}
-                  className={`block rounded-lg border ${colors.border} ${colors.borderHover} bg-gray-900/40 px-4 py-3 text-sm text-gray-200 transition`}
-                >
-                  <span className={`${colors.text} text-xs`}>詳細</span>
-                  <span className="ml-2">{detail.frontmatter.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
 
       <LessonNav prev={prev} next={next} />
     </DocLayout>
