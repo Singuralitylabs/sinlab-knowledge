@@ -265,7 +265,7 @@ Markdownでプレゼンテーションスライドを作成できます。
 
 ### Marp（推奨）
 
-```markdown
+````markdown
 ---
 marp: true
 theme: default
@@ -291,7 +291,7 @@ paginate: true
 ```javascript
 console.log("Hello!");
 ```
-```
+````
 
 `---` でスライドを区切ります。VSCode拡張「Marp for VS Code」をインストールするだけで使えます。
 
