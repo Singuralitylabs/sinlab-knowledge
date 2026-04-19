@@ -1,8 +1,8 @@
 {
   "slug": "01-web-basics",
-  "title": "Web基礎",
-  "shortTitle": "Web基礎",
-  "description": "MarkdownとGit。すべての出発点となる必須スキルを体系的に学ぶ。",
+  "title": "Web技術基礎",
+  "shortTitle": "Web技術基礎",
+  "description": "マークダウン・Git をはじめ、Web 開発を行う上で必要な周辺スキルを体系的に学ぶ。",
   "icon": "BookOpen",
   "color": "blue",
   "order": 1,
