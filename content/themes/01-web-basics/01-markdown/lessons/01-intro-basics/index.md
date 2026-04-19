@@ -434,7 +434,3 @@ Markdownは記法の数が少なく、覚えることもシンプルです。こ
 
 - [Markdown Guide](https://www.markdownguide.org/)：マークダウンの総合ガイド（英語）
 - [GitHub Flavored Markdown](https://github.github.com/gfm/)：GitHub版マークダウン仕様
-
----
-
-お疲れさまでした！🎉
