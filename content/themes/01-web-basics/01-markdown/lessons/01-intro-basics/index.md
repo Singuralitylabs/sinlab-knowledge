@@ -414,23 +414,7 @@ function hello() {
 
 ---
 
-## まとめ
-
-本記事では、Markdownの基本文法11種類を解説しました。
-
-Markdownは記法の数が少なく、覚えることもシンプルです。この記事で紹介した内容をマスターすれば、**READMEファイル、技術ドキュメント、ブログ記事、議事録など、実務で必要なほとんどのMarkdown文書を書くことができます**。
-
-生成AI（ChatGPT、Claudeなど）の出力もMarkdown形式です。Markdownを理解していれば、AIの回答をより正確に読み取り、自分でも同じ形式で整理された文書を作成できるようになります。
-
-まずは見出し・リスト・強調の3つから使い始めて、必要に応じて他の記法を取り入れていきましょう。
-
-### 次のステップ
-
-- 生成AIの出力を読むときに、マークダウン記法を意識してみましょう
-- GitHubでREADMEファイルを作成してみましょう
-- メモアプリ（Obsidian、Notionなど）でマークダウンを活用してみましょう
-
-### 参考リソース
+## 参考リソース
 
 - [Markdown Guide](https://www.markdownguide.org/)：マークダウンの総合ガイド（英語）
 - [GitHub Flavored Markdown](https://github.github.com/gfm/)：GitHub版マークダウン仕様
