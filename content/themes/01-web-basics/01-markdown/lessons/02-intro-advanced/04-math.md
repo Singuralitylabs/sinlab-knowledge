@@ -1,5 +1,5 @@
 ---
-title: "数式（LaTeX記法）サンプル"
+title: "数式（LaTeX記法）の詳細"
 order: 4
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 数式（LaTeX記法）サンプル
+# 数式（LaTeX記法）
 
 ## 解説
 

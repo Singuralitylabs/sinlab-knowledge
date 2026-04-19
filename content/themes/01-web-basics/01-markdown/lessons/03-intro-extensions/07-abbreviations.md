@@ -1,5 +1,5 @@
 ---
-title: "略語定義（Abbreviations）サンプル"
+title: "略語定義（Abbreviations）の詳細"
 order: 7
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 略語定義（Abbreviations）サンプル
+# 略語定義（Abbreviations）
 
 ## 解説
 

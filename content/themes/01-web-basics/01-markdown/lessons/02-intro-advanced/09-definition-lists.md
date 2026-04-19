@@ -1,5 +1,5 @@
 ---
-title: "定義リスト サンプル"
+title: "定義リストの詳細"
 order: 9
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 定義リスト サンプル
+# 定義リスト
 
 ## 解説
 

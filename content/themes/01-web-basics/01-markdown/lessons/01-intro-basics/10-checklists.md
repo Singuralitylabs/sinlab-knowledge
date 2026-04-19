@@ -1,5 +1,5 @@
 ---
-title: "チェックリスト（Task Lists）サンプル"
+title: "チェックリスト（Task Lists）の詳細"
 order: 10
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# チェックリスト（Task Lists）サンプル
+# チェックリスト（Task Lists）
 
 ## 解説
 

@@ -1,5 +1,5 @@
 ---
-title: "脚注（Footnotes）サンプル"
+title: "脚注（Footnotes）の詳細"
 order: 2
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 脚注（Footnotes）サンプル
+# 脚注（Footnotes）
 
 ## 解説
 

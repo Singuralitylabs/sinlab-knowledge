@@ -1,5 +1,5 @@
 ---
-title: "GitHub固有記法（GitHub-specific Syntax）サンプル"
+title: "GitHub固有記法（GitHub-specific Syntax）の詳細"
 order: 6
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# GitHub固有記法（GitHub-specific Syntax）サンプル
+# GitHub固有記法（GitHub-specific Syntax）
 
 ## 解説
 

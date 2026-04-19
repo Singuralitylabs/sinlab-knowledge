@@ -1,5 +1,5 @@
 ---
-title: "表（Tables）サンプル"
+title: "表（Tables）の詳細"
 order: 8
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 表（Tables）サンプル
+# 表（Tables）
 
 ## 解説
 

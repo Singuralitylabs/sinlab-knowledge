@@ -52,6 +52,8 @@ git revert HEAD    # 直前のコミットを打ち消す
 
 共有リポジトリでは `git revert` を使うのが安全です。
 
+::detail{slug="revert-and-reset"}
+
 ---
 
 ## タグ付け
@@ -84,6 +86,8 @@ git tag -d v1.0.0                                # タグの削除
 git push origin v1.0.0     # 特定のタグをプッシュ
 git push origin --tags      # すべてのタグをプッシュ
 ```
+
+::detail{slug="tag"}
 
 ---
 
@@ -167,6 +171,14 @@ git stash pop
 ```bash
 git stash -u    # 未追跡ファイルも退避
 ```
+
+::detail{slug="stash"}
+
+::detail{slug="gitignore"}
+
+::detail{slug="troubleshooting"}
+
+::detail{slug="git-config-and-alias"}
 
 ---
 

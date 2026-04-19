@@ -1,5 +1,5 @@
 ---
-title: "見出し（Headings）サンプル"
+title: "見出し（Headings）の詳細"
 order: 1
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 見出し（Headings）サンプル
+# 見出し（Headings）
 
 ## 解説
 

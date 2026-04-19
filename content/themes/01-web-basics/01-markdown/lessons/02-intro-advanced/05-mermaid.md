@@ -1,5 +1,5 @@
 ---
-title: "図表（Mermaid）サンプル"
+title: "図表（Mermaid）の詳細"
 order: 5
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 図表（Mermaid）サンプル
+# 図表（Mermaid）
 
 ## 解説
 

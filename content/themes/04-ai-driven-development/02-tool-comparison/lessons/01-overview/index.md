@@ -13,3 +13,13 @@ status: draft
 本レクチャーは新規執筆予定です。
 
 GitHub Copilot / Cursor / Codex CLI / Gemini CLI / Claude Code の位置づけと選定観点を、 ユースケースとチーム構成の切り口から整理します。
+
+::detail{slug="github-copilot"}
+
+::detail{slug="cursor"}
+
+::detail{slug="codex"}
+
+::detail{slug="gemini-cli"}
+
+::detail{slug="claude-code-overview"}

@@ -1,5 +1,5 @@
 ---
-title: "コードブロック（Code Blocks）サンプル"
+title: "コードブロック（Code Blocks）の詳細"
 order: 5
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# コードブロック（Code Blocks）サンプル
+# コードブロック（Code Blocks）
 
 ## 解説
 

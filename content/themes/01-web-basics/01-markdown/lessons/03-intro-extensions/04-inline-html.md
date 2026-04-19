@@ -1,5 +1,5 @@
 ---
-title: "インラインHTML（Inline HTML）サンプル"
+title: "インラインHTML（Inline HTML）の詳細"
 order: 4
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# インラインHTML（Inline HTML）サンプル
+# インラインHTML（Inline HTML）
 
 ## 解説
 

@@ -1,5 +1,5 @@
 ---
-title: "上付き・下付き文字（Superscript / Subscript）サンプル"
+title: "上付き・下付き文字（Superscript / Subscript）の詳細"
 order: 2
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 上付き・下付き文字（Superscript / Subscript）サンプル
+# 上付き・下付き文字（Superscript / Subscript）
 
 ## 解説
 

@@ -1,5 +1,5 @@
 ---
-title: "引用（Blockquotes）サンプル"
+title: "引用（Blockquotes）の詳細"
 order: 7
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 引用（Blockquotes）サンプル
+# 引用（Blockquotes）
 
 ## 解説
 

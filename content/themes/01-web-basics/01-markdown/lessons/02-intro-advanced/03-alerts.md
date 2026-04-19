@@ -1,5 +1,5 @@
 ---
-title: "アラート / 注意書き（GitHub Alerts）サンプル"
+title: "アラート / 注意書き（GitHub Alerts）の詳細"
 order: 3
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# アラート / 注意書き（GitHub Alerts）サンプル
+# アラート / 注意書き（GitHub Alerts）
 
 ## 解説
 

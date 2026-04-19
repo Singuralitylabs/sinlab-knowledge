@@ -1,5 +1,5 @@
 ---
-title: "リスト（Lists）サンプル"
+title: "リスト（Lists）の詳細"
 order: 3
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# リスト（Lists）サンプル
+# リスト（Lists）
 
 ## 解説
 

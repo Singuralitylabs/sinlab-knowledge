@@ -1,5 +1,5 @@
 ---
-title: "強調（Emphasis）サンプル"
+title: "強調（Emphasis）の詳細"
 order: 4
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 強調（Emphasis）サンプル
+# 強調（Emphasis）
 
 ## 解説
 

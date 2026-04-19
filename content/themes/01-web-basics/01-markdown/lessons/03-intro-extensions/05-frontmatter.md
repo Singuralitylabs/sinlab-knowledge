@@ -1,5 +1,5 @@
 ---
-title: "YAMLフロントマター（Front Matter）サンプル"
+title: "YAMLフロントマター（Front Matter）の詳細"
 order: 5
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# YAMLフロントマター（Front Matter）サンプル
+# YAMLフロントマター（Front Matter）
 
 ## 解説
 

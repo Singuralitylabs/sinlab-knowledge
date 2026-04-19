@@ -33,6 +33,8 @@ status: published
 
 **対応環境**：GitHub、多くのマークダウンエディタ
 
+::detail{slug="details"}
+
 ---
 
 ## 脚注（Footnotes）
@@ -47,6 +49,8 @@ status: published
 ```
 
 **対応環境**：GitHub、Obsidian、多くのマークダウンエディタ
+
+::detail{slug="footnotes"}
 
 ---
 
@@ -73,6 +77,8 @@ status: published
 
 **対応環境**：GitHub
 
+::detail{slug="alerts"}
+
 ---
 
 ## 数式（LaTeX記法）
@@ -89,6 +95,8 @@ $$
 ```
 
 **対応環境**：GitHub、Notion、Obsidian、Jupyter Notebook
+
+::detail{slug="math"}
 
 ---
 
@@ -109,6 +117,8 @@ graph TD
 
 **対応環境**：GitHub、Notion、Obsidian
 
+::detail{slug="mermaid"}
+
 ---
 
 ## 絵文字ショートコード
@@ -120,6 +130,8 @@ graph TD
 ```
 
 **対応環境**：GitHub、Slack、Discord
+
+::detail{slug="emojis"}
 
 ---
 
@@ -134,6 +146,8 @@ graph TD
 ```
 
 **対応環境**：ほぼすべてのマークダウン環境
+
+::detail{slug="comments"}
 
 ---
 
@@ -150,6 +164,8 @@ graph TD
 
 **対応環境**：すべてのマークダウン環境
 
+::detail{slug="escape"}
+
 ---
 
 ## 定義リスト
@@ -165,6 +181,8 @@ graph TD
 ```
 
 **対応環境**：一部（Pandoc、PHP Markdown Extra）
+
+::detail{slug="definition-lists"}
 
 ---
 
@@ -185,6 +203,8 @@ graph TD
 ```
 
 **注意**：日本語見出しのアンカー生成ルールは環境によって異なります。
+
+::detail{slug="toc-links"}
 
 ---
 

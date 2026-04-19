@@ -1,5 +1,5 @@
 ---
-title: "水平線（Horizontal Rules）サンプル"
+title: "水平線（Horizontal Rules）の詳細"
 order: 9
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 水平線（Horizontal Rules）サンプル
+# 水平線（Horizontal Rules）
 
 ## 解説
 

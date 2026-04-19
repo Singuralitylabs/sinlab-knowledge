@@ -1,5 +1,5 @@
 ---
-title: "目次リンク（Table of Contents）サンプル"
+title: "目次リンク（Table of Contents）の詳細"
 order: 10
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 目次リンク（Table of Contents）サンプル
+# 目次リンク（Table of Contents）
 
 ## 解説
 

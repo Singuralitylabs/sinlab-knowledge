@@ -1,5 +1,5 @@
 ---
-title: "リンク（Links）サンプル"
+title: "リンク（Links）の詳細"
 order: 6
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# リンク（Links）サンプル
+# リンク（Links）
 
 ## 解説
 

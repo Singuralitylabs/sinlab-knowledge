@@ -1,5 +1,5 @@
 ---
-title: "折りたたみ（Details / Summary）サンプル"
+title: "折りたたみ（Details / Summary）の詳細"
 order: 1
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 折りたたみ（Details / Summary）サンプル
+# 折りたたみ（Details / Summary）
 
 ## 解説
 

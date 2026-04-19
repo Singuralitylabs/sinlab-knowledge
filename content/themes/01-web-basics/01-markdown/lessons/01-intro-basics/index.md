@@ -79,6 +79,8 @@ status: published
 
 **✏️ 実習**：`practice.md` に見出し1〜3を書いてみましょう。
 
+::detail{slug="headings"}
+
 ---
 
 ### 2. 段落と改行（Paragraphs & Line Breaks）
@@ -106,6 +108,8 @@ status: published
 - 空行を入れると段落が分かれます
 
 **✏️ 実習**：2つの段落と、段落内での改行を試してみましょう。
+
+::detail{slug="paragraphs"}
 
 ---
 
@@ -158,6 +162,8 @@ status: published
 
 **✏️ 実習**：好きな食べ物を箇条書きで3つ、作り方の手順を番号付きで3つ書いてみましょう。
 
+::detail{slug="lists"}
+
 ---
 
 ### 4. 強調（Emphasis）
@@ -199,6 +205,8 @@ status: published
 - 生成AIの出力では太字（`**`）がよく使われます
 
 **✏️ 実習**：太字と打ち消し線を使った文を書いてみましょう。
+
+::detail{slug="emphasis"}
 
 ---
 
@@ -243,6 +251,8 @@ function hello() {
 
 **✏️ 実習**：インラインコードとコードブロックをそれぞれ書いてみましょう。
 
+::detail{slug="code-blocks"}
+
 ---
 
 ### 6. リンク（Links）
@@ -270,6 +280,8 @@ function hello() {
 **表示結果：** <https://www.google.com>
 
 **✏️ 実習**：好きなWebサイトへのリンクを作成してみましょう。
+
+::detail{slug="links"}
 
 ---
 
@@ -302,6 +314,8 @@ function hello() {
 - 生成AIの出力で、ユーザーの質問を引用するときにも使われます
 
 **✏️ 実習**：好きな名言を引用形式で書いてみましょう。
+
+::detail{slug="quotes"}
 
 ---
 
@@ -346,6 +360,8 @@ function hello() {
 
 **✏️ 実習**：3列×3行の表を作成してみましょう。
 
+::detail{slug="tables"}
+
 ---
 
 ### 9. 水平線（Horizontal Rules）
@@ -369,6 +385,8 @@ function hello() {
 下のセクション
 
 **✏️ 実習**：水平線でセクションを区切ってみましょう。
+
+::detail{slug="horizontal-rules"}
 
 ---
 
@@ -395,6 +413,8 @@ function hello() {
 
 **✏️ 実習**：今日やることリストをチェックリスト形式で書いてみましょう。
 
+::detail{slug="checklists"}
+
 ---
 
 ### 11. 画像（Images）
@@ -413,6 +433,8 @@ function hello() {
 **ポイント**
 - 代替テキスト（alt属性）は画像が表示できないときに表示されます
 - アクセシビリティのためにも代替テキストは必ず入れましょう
+
+::detail{slug="images"}
 
 ---
 

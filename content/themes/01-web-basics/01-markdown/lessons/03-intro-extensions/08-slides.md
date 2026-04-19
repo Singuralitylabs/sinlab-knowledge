@@ -1,5 +1,5 @@
 ---
-title: "スライド作成（Markdown Slides）サンプル"
+title: "スライド作成（Markdown Slides）の詳細"
 order: 8
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# スライド作成（Markdown Slides）サンプル
+# スライド作成（Markdown Slides）
 
 ## 解説
 

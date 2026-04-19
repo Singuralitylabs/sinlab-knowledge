@@ -1,5 +1,5 @@
 ---
-title: "段落と改行（Paragraphs & Line Breaks）サンプル"
+title: "段落と改行（Paragraphs & Line Breaks）の詳細"
 order: 2
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 段落と改行（Paragraphs & Line Breaks）サンプル
+# 段落と改行（Paragraphs & Line Breaks）
 
 ## 解説
 

@@ -180,6 +180,8 @@ Claude: プロジェクトを分析しています...
 CLAUDE.md を生成しました。内容を確認してください。
 ```
 
+::detail{slug="memory"}
+
 ## 基本的な使い方
 
 ### インストールと初期設定
@@ -253,6 +255,8 @@ claude -c              # 直前のセッションを再開
 claude -r              # 過去のセッション一覧から選択
 ```
 
+::detail{slug="commands"}
+
 ## 権限システム
 
 Claude Code はファイルの編集やコマンドの実行を行う際に、 ユーザーの明示的な許可を求めます。 これにより、意図しない変更やコマンド実行を防ぎ、安全に作業を進められます。
@@ -320,6 +324,16 @@ Claude の変更は必ず diff で確認してから承認しましょう。 意
 スラッシュコマンド、CLI フラグ、キーボードショートカットのチートシート
 
 CLAUDE.md の詳細な書き方、自動メモリ、コンテキスト圧縮テクニック
+
+::detail{slug="skills"}
+
+::detail{slug="agents"}
+
+::detail{slug="mcp"}
+
+::detail{slug="hooks-plugins"}
+
+::detail{slug="advanced"}
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "diff構文（変更差分表示）サンプル"
+title: "diff構文（変更差分表示）の詳細"
 order: 3
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# diff構文（変更差分表示）サンプル
+# diff構文（変更差分表示）
 
 ## 解説
 

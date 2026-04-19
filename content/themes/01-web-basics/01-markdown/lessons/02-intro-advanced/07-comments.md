@@ -1,5 +1,5 @@
 ---
-title: "コメント（非表示テキスト）サンプル"
+title: "コメント（非表示テキスト）の詳細"
 order: 7
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# コメント（非表示テキスト）サンプル
+# コメント（非表示テキスト）
 
 ## 解説
 

@@ -1,5 +1,5 @@
 ---
-title: "ハイライト（Highlight）サンプル"
+title: "ハイライト（Highlight）の詳細"
 order: 1
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# ハイライト（Highlight）サンプル
+# ハイライト（Highlight）
 
 ## 解説
 

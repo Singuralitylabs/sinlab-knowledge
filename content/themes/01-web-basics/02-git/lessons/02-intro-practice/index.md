@@ -111,6 +111,8 @@ git add index.html
 git commit -m "コンフリクトを解消"
 ```
 
+::detail{slug="merge-conflict"}
+
 ---
 
 ## リモートリポジトリとの連携
@@ -143,6 +145,8 @@ git merge origin/main       # 確認後にマージ
 |----------|:----:|:------:|:------:|
 | `git pull` | する | する | やや低い |
 | `git fetch` | する | しない | 高い |
+
+::detail{slug="push-and-pull"}
 
 ---
 
@@ -223,6 +227,12 @@ git merge upstream/main
 │                                          │
 └──────────────────────────────────────────┘
 ```
+
+::detail{slug="pull-request"}
+
+::detail{slug="code-review"}
+
+::detail{slug="rebase"}
 
 ---
 

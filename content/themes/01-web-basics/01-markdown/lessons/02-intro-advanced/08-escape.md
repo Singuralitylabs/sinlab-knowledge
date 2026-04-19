@@ -1,5 +1,5 @@
 ---
-title: "エスケープ サンプル"
+title: "エスケープの詳細"
 order: 8
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# エスケープ サンプル
+# エスケープ
 
 ## 解説
 

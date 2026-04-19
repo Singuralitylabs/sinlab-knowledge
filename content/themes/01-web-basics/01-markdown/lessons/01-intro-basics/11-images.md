@@ -1,5 +1,5 @@
 ---
-title: "画像（Images）サンプル"
+title: "画像（Images）の詳細"
 order: 11
 type: detail
 difficulty: beginner
@@ -7,7 +7,7 @@ tags: [markdown, reference]
 estimatedMinutes: 5
 status: published
 ---
-# 画像（Images）サンプル
+# 画像（Images）
 
 ## 解説
 
