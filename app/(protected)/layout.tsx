@@ -8,13 +8,14 @@ export default async function ProtectedLayout({ children }: { children: React.Re
     redirect("/login");
   }
 
-  if (status === "pending" || status === null) {
-    // users テーブルに未登録のユーザーも承認待ち扱いとする（ポータル側で初回登録される想定）
-    redirect("/pending");
-  }
-
+  // allow-list 方式: "active" のみ保護コンテンツへ通す。
+  // "rejected" は専用ページへ、それ以外（pending / null / 想定外値）は pending に寄せる。
   if (status === "rejected") {
     redirect("/rejected");
+  }
+
+  if (status !== "active") {
+    redirect("/pending");
   }
 
   return <>{children}</>;

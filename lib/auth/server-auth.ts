@@ -2,7 +2,14 @@ import type { User } from "@supabase/supabase-js";
 import { cache } from "react";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
-export type UserStatus = "pending" | "active" | "rejected";
+export const USER_STATUSES = ["pending", "active", "rejected"] as const;
+export type UserStatus = (typeof USER_STATUSES)[number];
+
+function toUserStatus(value: unknown): UserStatus | null {
+  return typeof value === "string" && (USER_STATUSES as readonly string[]).includes(value)
+    ? (value as UserStatus)
+    : null;
+}
 
 export interface ServerAuthResult {
   user: User | null;
@@ -34,5 +41,6 @@ export const getServerAuth = cache(async (): Promise<ServerAuthResult> => {
     return { user, status: null };
   }
 
-  return { user, status: userRow.status as UserStatus };
+  // DB から来た未知の status 値は null 扱い（= pending 相当）として弾く。
+  return { user, status: toUserStatus(userRow.status) };
 });
