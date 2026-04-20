@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import HeaderAuthMenu from "@/components/layout/HeaderAuthMenu";
 import type { NavItem } from "@/components/layout/types";
 
 export interface HeaderProps {
@@ -39,25 +40,28 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden gap-1 md:flex">
-          {navigation.map((item) => {
-            const active = isActive(item.href);
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`rounded-md px-2.5 py-1.5 text-sm transition ${
-                    active
-                      ? "bg-gray-100 font-semibold text-gray-900"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="hidden items-center gap-3 md:flex">
+          <ul className="flex gap-1">
+            {navigation.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`rounded-md px-2.5 py-1.5 text-sm transition ${
+                      active
+                        ? "bg-gray-100 font-semibold text-gray-900"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <HeaderAuthMenu />
+        </div>
 
         {/* Mobile menu button */}
         <button
@@ -114,6 +118,9 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
               );
             })}
           </ul>
+          <div className="mt-2 flex justify-end">
+            <HeaderAuthMenu />
+          </div>
         </div>
       )}
     </nav>
