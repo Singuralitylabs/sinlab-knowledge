@@ -72,9 +72,9 @@ Hooks（フック）は、Claude Code のエージェントループ内で特定
 > [!NOTE]
 > ブロック可能なフックで `exit 2` を返すと、対応する処理（ツール実行やプロンプト処理）は中止されます。`exit 0` を返した場合は通常通り続行します。`exit 1` は「ブロックしないエラー」として扱われ、処理は継続される点に注意してください。
 
-## Hooks の設定と実用例
+## Hooks の設定
 
-Hooks は `settings.json` の `hooks` フィールドで設定します。各フックタイプには `matcher`（対象ツール名のパターン）と `hooks` 配列を指定し、配列内の各エントリで `type: "command"` と `command`（実行するシェルコマンド）を定義します。`matcher` には `Write|Edit` のようにパイプで複数ツールを OR 指定できます。フック発火時のツール入力は標準入力に JSON で渡されるため、`jq` などで必要な値を抽出して使います。
+Hooks は `settings.json` の `hooks` フィールドで設定します。発火させたいイベント名（`PostToolUse` など）をキーに、`matcher` と `hooks` を持つオブジェクトの配列を指定する形が基本です。
 
 ```json
 {
@@ -105,6 +105,112 @@ Hooks は `settings.json` の `hooks` フィールドで設定します。各フ
 }
 ```
 
+### 設定キーの意味
+
+| キー | 役割 |
+| --- | --- |
+| イベント名（例: `PostToolUse`） | 発火させるフックイベント。値は配列で、複数の `matcher` 設定を並べられる |
+| `matcher` | 対象ツール名のパターン。`Write\|Edit` のようにパイプで OR 指定、`*` または省略で全ツールマッチ。`mcp__memory__.*` のような正規表現も可 |
+| `hooks` | マッチ時に実行するハンドラの配列。複数登録すると順番に実行される |
+| `type` | ハンドラの種類。基本は `"command"`（シェルコマンド実行）。他に `"http"`、`"mcp_tool"`、`"prompt"`、`"agent"` などがある |
+| `command` | `type: "command"` 時に実行するシェル文字列 |
+
+### フックへの入力
+
+フック発火時、ツール入力やセッション情報などは **標準入力に JSON** で渡されます。`jq` で必要な値を抽出して利用してください。
+
+```bash
+FILE=$(jq -r '.tool_input.file_path')
+```
+
+合わせて以下の環境変数も参照できます。
+
+| 環境変数 | 内容 |
+| --- | --- |
+| `$CLAUDE_PROJECT_DIR` | プロジェクトルートのパス |
+| `$CLAUDE_PLUGIN_ROOT` | プラグインのインストール先（プラグイン由来のフックのみ） |
+| `$CLAUDE_PLUGIN_DATA` | プラグインの永続データ用ディレクトリ |
+
+JSON や `jq`、環境変数の表記に馴染みがない場合は、以下を展開してください。
+
+<details>
+<summary>JSON とは？</summary>
+
+JSON (JavaScript Object Notation) は、データを構造化して書くためのテキスト形式です。`{ "キー": "値" }` の形でデータを記述します。フック発火時に Claude Code から渡されてくるデータも、この形式です。
+
+```json
+{
+  "session_id": "abc123",
+  "tool_name": "Edit",
+  "tool_input": {
+    "file_path": "/path/to/file.ts",
+    "old_string": "before",
+    "new_string": "after"
+  }
+}
+```
+
+- `{ }` で **オブジェクト**（キーと値の組）を表す
+- `[ ]` で **配列**（順序のある値のリスト）を表す
+- 値は文字列・数値・真偽値・配列・オブジェクトをネストできる
+- ネストされた値は `tool_input.file_path` のように **ドットで階層を辿って** 参照する
+
+</details>
+
+<details>
+<summary>jq コマンドとは？</summary>
+
+`jq` は **JSON を扱うためのコマンドラインツール** です。標準入力から流れてきた JSON から、欲しい値だけを取り出すのに使います。
+
+```bash
+# サンプル: パイプで JSON を流し込み、name フィールドを抜き出す
+echo '{"name": "Alice", "age": 30}' | jq '.name'
+# => "Alice"
+
+# ネストされた値はドットで辿る
+echo '{"user": {"name": "Alice"}}' | jq '.user.name'
+# => "Alice"
+```
+
+よく使うオプション:
+
+- `-r` (raw): 出力からダブルクォートを外し、生の文字列として返す。シェル変数に代入するときはこれが必要
+
+フック内では標準入力にすでに JSON が来ているので、パイプを書かずにそのまま `jq` を呼べます。
+
+```bash
+# Claude が編集したファイルのパスを取り出す
+FILE=$(jq -r '.tool_input.file_path')
+```
+
+macOS / Linux には標準で入っていない場合があります。Mac なら `brew install jq` でインストールできます。
+
+</details>
+
+<details>
+<summary>環境変数とは？</summary>
+
+環境変数 (environment variable) は、シェルから参照できる名前付きの値です。`$VAR_NAME` または `${VAR_NAME}` の形で読み出します。
+
+```bash
+echo $HOME
+# => /Users/yourname
+
+echo $PATH
+# => /usr/bin:/usr/local/bin:...
+```
+
+Claude Code はフックを起動する直前に、文脈に応じた値を環境変数として自動で設定します。たとえば `$CLAUDE_PROJECT_DIR` には現在のプロジェクトの絶対パスが入ります。
+
+```bash
+# プロジェクト直下の audit.log にイベントを書き出す例
+echo "edited at $(date)" >> "$CLAUDE_PROJECT_DIR/audit.log"
+```
+
+</details>
+
+## Hooks の実用例
+
 ### 1. ファイル編集後の自動フォーマット（format-on-write）
 
 Claude がファイルを編集（Write または Edit）するたびに Prettier を自動実行してコードスタイルを統一します。`PostToolUse` はツール実行後に発火するため、フォーマットに失敗しても既に編集自体は完了しています。
@@ -120,9 +226,6 @@ Claude がファイルを編集（Write または Edit）するたびに Prettie
   ]
 }
 ```
-
-> [!NOTE]
-> フックには標準入力経由で JSON 形式のフックデータが渡されます。`tool_input.file_path` のように `jq` で必要な値を抽出して利用してください。プロジェクトルートは `$CLAUDE_PROJECT_DIR`、プラグインルートは `$CLAUDE_PLUGIN_ROOT` のような環境変数で参照できます。
 
 ### 2. 危険なコマンドのブロック
 
@@ -141,23 +244,28 @@ Claude がファイルを編集（Write または Edit）するたびに Prettie
 ```
 
 > [!WARNING]
-> `PreToolUse` で `exit 2` を返すと、そのツール実行は中止されます。`exit 0` を返すと通常通り実行され、`exit 1` は「ブロックしないエラー」として扱われ実行が継続されます。ブロック条件の誤検知を避けるため、パターンは慎重に定義してください。
+> ブロック条件は誤検知の影響が大きいため、パターンは慎重に定義してください。例えば `rm -rf` だけで判定すると、無害なコマンド（`echo "do not run rm -rf"` のような文字列を含むもの）まで止めてしまう可能性があります。
 
-### 3. コード変更後の自動 ESLint
+### 3. ファイル編集後の自動レビュー（`prompt` 型）
 
-JavaScript / TypeScript ファイルが編集された後に ESLint を自動実行し、コード品質を維持します。フック内で拡張子を判定し、対象ファイルのみ lint を実行します。
+`type` には `"command"` 以外も指定できます。`"prompt"` を使うと、シェルコマンドではなく **Claude 自身に自然言語で指示を渡す** 形で自動化を組めます。シェルスクリプトに不慣れでも書きやすく、機械的な判定では難しいコードレビューのような処理に向いています。
+
+下記は、ファイル編集のたびに Claude 自身に簡易レビューを依頼する例です。
 
 ```json
 {
   "matcher": "Write|Edit",
   "hooks": [
     {
-      "type": "command",
-      "command": "FILE=$(jq -r '.tool_input.file_path'); if echo \"$FILE\" | grep -qE '\\.(js|ts|jsx|tsx)$'; then npx eslint --fix \"$FILE\"; fi"
+      "type": "prompt",
+      "prompt": "直前に編集したファイルにバグや脆弱性、命名の不整合がないか確認してください。問題があれば指摘し、なければ「問題なし」とだけ返してください。"
     }
   ]
 }
 ```
+
+> [!NOTE]
+> `prompt` 型や `agent` 型は LLM を呼び出すため、`command` 型と違ってトークンとコンテキストを消費します。決定論的な定型処理（フォーマット、lint、ブロック判定）は `command` 型、自然言語の判断や柔軟なレビューが必要な処理は `prompt` / `agent` 型、と使い分けるのが基本です。
 
 ## スキル・エージェント内フック定義
 
