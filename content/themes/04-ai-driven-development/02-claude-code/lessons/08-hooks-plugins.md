@@ -306,24 +306,29 @@ Claude がファイルを編集（Write または Edit）するたびに Prettie
 }
 ```
 
-### 2. 危険なコマンドのブロック
+### 2. 応答完了時の効果音通知
 
-`Bash` ツールが実行される前に、コマンド内容を検査します。`rm -rf` などの破壊的コマンドが含まれている場合、`exit 2` で実行をブロックします。`PreToolUse` はブロック可能な Hooks です。
+Claude が応答を返し終えたタイミングで通知音を鳴らします。長めのタスクを任せてターミナルから目を離していても、完了を音で気付けるので便利です。Hooks の典型的な活用パターンの 1 つで、`Stop` イベント（応答完了直後に発火）を使います。
 
 ```json
 {
-  "matcher": "Bash",
-  "hooks": [
-    {
-      "type": "command",
-      "command": "jq -r '.tool_input.command' | grep -q 'rm -rf' && exit 2 || exit 0"
-    }
-  ]
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Glass.aiff"
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
-> [!WARNING]
-> ブロック条件は誤検知の影響が大きいため、パターンは慎重に定義してください。例えば `rm -rf` だけで判定すると、無害なコマンド（`echo "do not run rm -rf"` のような文字列を含むもの）まで止めてしまう可能性があります。
+> [!NOTE]
+> `afplay` は macOS の組み込みコマンドです。Linux なら `paplay`、Windows なら PowerShell の `[System.Media.SystemSounds]::Asterisk.Play()` などに置き換えてください。サウンドファイルは `/System/Library/Sounds/` 配下から好みのものを選べます（`Glass`、`Ping`、`Funk` など）。
 
 ### 3. ファイル編集後の自動レビュー（`prompt` 型）
 
