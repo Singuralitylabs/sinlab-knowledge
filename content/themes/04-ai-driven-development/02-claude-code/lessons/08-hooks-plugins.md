@@ -209,6 +209,85 @@ echo "edited at $(date)" >> "$CLAUDE_PROJECT_DIR/audit.log"
 
 </details>
 
+## Hooks の作り方
+
+新しいフックを導入する流れは、**どこに書くかを決める → 編集する → 動作を確認する** の 3 ステップに集約できます。
+
+### 1. どこに定義するか
+
+フックを書ける場所は 5 つあり、目的に応じて使い分けます。同じイベントに複数の場所のフックがマッチした場合、上書きではなく **すべてが順番に発火** します。
+
+| 場所 | パス | 適用範囲 | コミット | 主な用途 |
+| --- | --- | --- | --- | --- |
+| ユーザー設定 | `~/.claude/settings.json` | 自分の全プロジェクト | - | 個人用の自動フォーマットなど |
+| プロジェクト設定 | `.claude/settings.json` | 単一プロジェクト | ✓ リポジトリにコミット | チーム共有のルール |
+| ローカル設定 | `.claude/settings.local.json` | 単一プロジェクト | ✗ gitignore 対象 | 個人用の試験設定 |
+| プラグイン | `<plugin>/hooks/hooks.json` | プラグイン有効時のみ | プラグイン経由で配布 | 拡張パッケージとして配布 |
+| スキル / エージェント | `SKILL.md` の frontmatter | スキル active 時のみ | スキルと一緒 | スキル固有の自動化 |
+
+優先順位というよりは「適用範囲（スコープ）が違う」と捉えるのが正確です。狭いスコープ（プラグイン、スキル）から広いスコープ（プロジェクト、ユーザー）へと書き分けます。
+
+> [!TIP]
+> チームで共有したいフックは `.claude/settings.json`、自分だけ試したいフックは `.claude/settings.local.json` に書きます。`*.local.json` は `.gitignore` 済みなので、個人用パスや実験中の設定を置いても他メンバーに影響しません。
+
+### 2. 編集ワークフロー
+
+#### A. 手書きで編集する
+
+最もストレートな方法です。エディタで対象の `settings.json` を開き、`hooks` フィールドに追記します。
+
+```bash
+# プロジェクトスコープに追加する場合
+mkdir -p .claude
+$EDITOR .claude/settings.json
+```
+
+ファイルを保存すると Claude Code 側のウォッチャーが変更を拾うため、再起動は不要です。
+
+#### B. Claude 自身に編集を依頼する
+
+JSON の構文を覚えていない、あるいは記述ミスを避けたい場合は、Claude にお願いするのが楽です。
+
+```
+PostToolUse に Write/Edit が走るたびに prettier を実行するフックを
+.claude/settings.json に追加してください。
+```
+
+Claude は Read で現在の設定を読み、Edit ツールでフックを追記します。生成された JSON は **必ず一度内容を確認してから採用** してください（`matcher` のスペル違い、`exit 1` / `exit 2` の取り違えなどは起こりがちです）。
+
+### 3. 作成後の確認方法
+
+#### `/hooks` で一覧を見る
+
+Claude Code 内で `/hooks` を実行すると、現在ロードされている全フックが一覧表示されます。各エントリには定義元のスコープが付記されるので、どこに書いたフックが効いているかひと目で分かります。
+
+| ラベル | 出どころ |
+| --- | --- |
+| `User` | `~/.claude/settings.json` |
+| `Project` | `.claude/settings.json` |
+| `Local` | `.claude/settings.local.json` |
+| `Plugin` | プラグイン同梱の `hooks/hooks.json` |
+| `Session` | セッション中だけ登録された一時フック |
+| `Built-in` | Claude Code 組み込み |
+
+> [!IMPORTANT]
+> `/hooks` は **閲覧専用** です。このメニューから追加・編集・削除はできません。「設定したはずのフックが一覧に出ない」場合は、JSON の構文エラーかパスの誤りを疑ってください。
+
+#### `disableAllHooks` で一時停止する
+
+トラブルがフック起因かどうか切り分けたいときは、`settings.json` に以下を追加すると全フックを止められます。
+
+```json
+{
+  "disableAllHooks": true
+}
+```
+
+確認が終わったら忘れずに削除してください。
+
+> [!NOTE]
+> 組織が管理者権限で配布したフック（managed settings 経由）は、ユーザー側の `disableAllHooks` では止められません。セキュリティ上の意図的な仕様です。
+
 ## Hooks の実用例
 
 ### 1. ファイル編集後の自動フォーマット（format-on-write）
