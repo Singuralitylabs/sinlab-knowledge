@@ -1,6 +1,6 @@
 ---
-title: "Hooks と Plugins"
-description: "イベント駆動の Hooks とプラグインによる Claude Code の拡張方法を解説。"
+title: "Hooks"
+description: "Claude Code のイベント駆動自動化 Hooks の仕組みと作り方を解説。"
 order: 8
 type: lecture
 category: automation
@@ -9,19 +9,18 @@ tags: [claude-code, ai-coding, hooks]
 estimatedMinutes: 15
 status: published
 ---
-# Hooks & Plugins
+# Hooks
 
-イベント駆動の自動化とパッケージ化された拡張機能の仕組みを解説します。Skills や MCP が「LLM の判断を伴う柔軟な拡張」であるのに対し、Hooks と Plugins は「決定論的な自動化」と「再利用可能な配布単位」を担当します。
+Claude Code のエージェントループ内で発生するイベントに対して、決定論的にシェルコマンド等を実行する仕組み「Hooks」の使い方を解説します。Skills や MCP が「LLM の判断を伴う柔軟な拡張」であるのに対し、Hooks は「必ず実行したい処理を事前に定義する」役割を担います。
 
 ## このページで学べること
 
 - Hooks の仕組みと、LLM を介さない決定論的自動化の基本概念
-- 主要なイベントタイプ（PreToolUse / PostToolUse / UserPromptSubmit など）とそれぞれのタイミング
+- 主要なイベントタイプ（PreToolUse / PostToolUse / UserPromptSubmit / Stop など）とそれぞれのタイミング
 - `settings.json` の `hooks` フィールドと `matcher` を使った設定方法
-- フォーマット自動化、危険コマンドのブロック、lint 自動実行などの典型ユースケース
-- スキルやエージェントのフロントマターに Hooks を埋め込む方法（v2.1 以降）
-- Plugins の構造（マニフェスト、skills / hooks / agents / mcp の同梱）とインストールの流れ
-- Marketplaces の位置付けとチーム配布の考え方
+- ファイル編集後の自動フォーマット、応答完了の効果音通知、自動レビューなどの典型ユースケース
+- スキルやエージェントのフロントマターに Hooks を埋め込む方法
+- どこに Hooks を定義するか（user / project / local / plugin / skill）と、その使い分け
 
 ## Hooks の基本概念
 
@@ -380,87 +379,7 @@ hooks:
 > [!TIP]
 > `settings.json` の Hooks はグローバルに常時有効です。一方、スキル内の Hooks はそのスキルが有効な間だけ動作します。「どんなスキルでも常にフォーマットしたい」場合は `settings.json` に、「このスキルを使うときだけ lint したい」場合はスキル内に定義しましょう。
 
-## Plugins の概念
-
-Plugin（プラグイン）は、Claude Code の拡張機能を 1 つのインストール可能なパッケージにまとめる仕組みです。**Skills、Hooks、サブエージェント、MCP サーバー設定**を 1 つのユニットにバンドルし、リポジトリ間で再利用できます。
-
-### プラグインのディレクトリ構造
-
-```text
-my-plugin/
-├── .claude-plugin/
-│   └── plugin.json   # マニフェスト（プラグイン名・バージョン・説明など）
-├── skills/
-│   ├── review/
-│   │   └── SKILL.md  # コードレビュー用スキル
-│   └── deploy/
-│       └── SKILL.md  # デプロイ用スキル
-├── hooks/
-│   └── hooks.json    # イベント駆動の自動化ルール
-├── agents/
-│   └── security.md   # セキュリティ特化サブエージェント
-└── .mcp.json         # MCP サーバー接続設定
-```
-
-| パス | 内容 |
-| --- | --- |
-| `.claude-plugin/plugin.json` | プラグインのメタデータ（名前・バージョン・説明など）を定義するマニフェスト |
-| `skills/<name>/SKILL.md` | 再利用可能なワークフローやナレッジを定義するスキルディレクトリ |
-| `hooks/hooks.json` | イベント駆動の自動化ルールを定義する設定ファイル |
-| `agents/` | 専用のシステムプロンプトとツール制限を持つサブエージェント |
-| `.mcp.json` | 外部サービス接続のための MCP サーバー設定 |
-
-### 名前空間によるスキルの参照
-
-プラグイン内のスキルは、プラグイン名をプレフィックスとした名前空間付きで公開されます。これにより、複数のプラグインが同じ名前のスキルを持っていても衝突しません。
-
-```text
-/my-plugin:review     ← my-plugin の review スキル
-/my-plugin:deploy     ← my-plugin の deploy スキル
-/other-plugin:review  ← 別プラグインの review（衝突しない）
-```
-
-### インストールとリポジトリ間の再利用
-
-プラグインはパッケージとしてインストールできるため、チーム全体で統一された開発環境を簡単に共有できます。一度作成したプラグインを複数のリポジトリで再利用することで、設定のコピーペーストを排除し、メンテナンスを一元化できます。
-
-```text
-Plugin 作成 → 公開 / 共有 → 各リポジトリにインストール
-```
-
-プラグインの管理は Claude Code 内のスラッシュコマンド `/plugin` から行います。Marketplace 経由のインストールや一覧表示、削除はインタラクティブに操作できます。開発中のプラグインを動作確認したい場合は、`--plugin-dir` フラグでローカルパスを指定して読み込みます。
-
-```bash
-# Claude Code 内でプラグイン管理 UI を開く
-/plugin
-
-# Marketplace のプラグインをインストール
-/plugin install <plugin-name>
-
-# 開発中のプラグインをローカルから読み込む
-claude --plugin-dir ./my-plugin
-```
-
-> [!IMPORTANT]
-> Plugins は Skills / Hooks / Agents / MCP を「束ねて配る」レイヤーです。個別に配布すると散らかりやすい拡張資産を、バージョン付きのパッケージとしてまとめられる点が価値の中核になります。
-
-## Marketplaces（マーケットプレイス）
-
-Marketplaces は、プラグインのホスティング・配布を行うプラットフォームです。チームや組織でプラグインコレクションを管理し、標準化された開発環境を共有するための基盤として設計されています。
-
-| 役割 | 説明 |
-| --- | --- |
-| プラグインのホスティング | 作成したプラグインを公開し、他のユーザーやチームが発見・インストールできるようにします。 |
-| チーム / 組織での管理 | 組織内で承認済みのプラグインセットを管理し、メンバー全員の環境を統一できます。 |
-| 標準化された開発環境 | フォーマッター設定、lint ルール、デプロイ手順などをプラグインとして統一配布します。 |
-| 将来のビジョン | コミュニティによるプラグインエコシステムの発展、レビュー・評価システムなどが構想されています。 |
-
-> [!TIP]
-> まとめ: Hooks は「LLM を介さない決定論的な自動化」、Plugins は「拡張機能のパッケージ化と配布」、Marketplaces は「その配布を束ねる場」です。まずは `settings.json` に 1 つだけ Hooks を追加するところから始め、チームで共有したくなったら Plugin 化を検討しましょう。
-
 ## 関連ページ
 
 - [Hooks（公式ドキュメント）](https://code.claude.com/docs/en/hooks)
-- [Plugins（公式ドキュメント）](https://code.claude.com/docs/en/plugins)
-- [Plugin Marketplaces（公式ドキュメント）](https://code.claude.com/docs/en/plugin-marketplaces)
-- [Skills（Plugin にバンドルして配布する）](https://code.claude.com/docs/en/skills)
+- [Settings（permissions など `settings.json` 全体仕様）](https://code.claude.com/docs/en/settings)
