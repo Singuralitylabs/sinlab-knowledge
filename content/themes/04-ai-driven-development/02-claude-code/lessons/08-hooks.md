@@ -66,7 +66,7 @@ Hooks の実行自体は LLM を介さないため、基本的にコンテキス
 
 テーブルだけでは見えにくい「ループ構造」と「分岐」を図にすると次のようになります。`UserPromptSubmit` から `PostToolUse` までは 1 ターン内で複数回繰り返され、これがエージェントループの本質です。
 
-![Claude Code Hooks の実行タイミングを示すフローチャート](/images/ai-driven-development/hooks-plugins/hook-timing.png)
+![Claude Code Hooks の実行タイミングを示すフローチャート](/content-assets/04-ai-driven-development/02-claude-code/images/hooks-plugins/hook-timing.png)
 
 > [!NOTE]
 > ブロック可能な Hooks で `exit 2` を返すと、対応する処理（ツール実行やプロンプト処理）は中止されます。`exit 0` を返した場合は通常通り続行します。`exit 1` は「ブロックしないエラー」として扱われ、処理は継続される点に注意してください。
