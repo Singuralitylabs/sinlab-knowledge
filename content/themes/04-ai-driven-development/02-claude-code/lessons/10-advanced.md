@@ -1,7 +1,7 @@
 ---
 title: "高度な機能"
 description: "Managed Agents / Batch API などの高度な機能と運用上のヒント。"
-order: 9
+order: 10
 type: lecture
 category: advanced
 difficulty: intermediate
