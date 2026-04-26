@@ -30,7 +30,14 @@ export async function GET(_req: Request, { params }: { params: Promise<{ path: s
   const { path: segments } = await params;
   if (!segments?.length) return notFound();
   for (const seg of segments) {
-    if (!seg || seg === "." || seg === ".." || seg.includes("\0") || seg.includes("/")) {
+    if (
+      !seg ||
+      seg === "." ||
+      seg === ".." ||
+      seg.includes("\0") ||
+      seg.includes("/") ||
+      seg.includes("\\")
+    ) {
       return notFound();
     }
   }
