@@ -84,7 +84,7 @@ Hooks は `settings.json` の `hooks` フィールドで設定します。発火
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write"
+            "command": "FILE=$(jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\""
           }
         ]
       }
@@ -299,7 +299,7 @@ Claude がファイルを編集（Write または Edit）するたびに Prettie
   "hooks": [
     {
       "type": "command",
-      "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write"
+      "command": "FILE=$(jq -r '.tool_input.file_path') && npx prettier --write \"$FILE\""
     }
   ]
 }
@@ -362,7 +362,7 @@ hooks:
     - matcher: "Edit"
       hooks:
         - type: command
-          command: "jq -r '.tool_input.file_path' | xargs npx eslint --fix"
+          command: "FILE=$(jq -r '.tool_input.file_path') && npx eslint --fix \"$FILE\""
 ---
 
 # コードレビュースキル
