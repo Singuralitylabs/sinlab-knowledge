@@ -130,7 +130,6 @@ sinlab-skills/
 │       └── shared/{frontmatter,filename}.ts
 │
 ├── public/
-│   ├── images/{theme-slug}/...
 │   └── og/                           # OGP画像
 │
 ├── docs/                             # 内部開発ドキュメント
