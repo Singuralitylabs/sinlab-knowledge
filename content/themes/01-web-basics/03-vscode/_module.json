@@ -1,0 +1,8 @@
+{
+  "slug": "03-vscode",
+  "title": "Visual Studio Code",
+  "description": "VS Code の画面UI・基本操作・設定・Git連携・ショートカットを5カテゴリで体系的に学習",
+  "icon": "Code",
+  "order": 3,
+  "categories": []
+}
