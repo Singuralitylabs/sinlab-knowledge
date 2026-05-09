@@ -5,7 +5,7 @@ type: detail
 difficulty: beginner
 tags: [vscode, settings, reference]
 estimatedMinutes: 8
-status: draft
+status: published
 ---
 # 設定の編集方法
 

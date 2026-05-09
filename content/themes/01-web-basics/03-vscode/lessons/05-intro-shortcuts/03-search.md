@@ -5,7 +5,7 @@ type: detail
 difficulty: beginner
 tags: [vscode, shortcuts, reference]
 estimatedMinutes: 4
-status: draft
+status: published
 ---
 # 検索
 

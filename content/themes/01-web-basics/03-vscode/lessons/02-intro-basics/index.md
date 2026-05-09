@@ -5,7 +5,7 @@ type: lecture
 difficulty: beginner
 tags: [vscode, fundamentals, concept]
 estimatedMinutes: 18
-status: draft
+status: published
 ---
 # VS Code の基本操作
 

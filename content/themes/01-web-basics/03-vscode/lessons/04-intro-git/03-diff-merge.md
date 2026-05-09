@@ -5,7 +5,7 @@ type: detail
 difficulty: intermediate
 tags: [vscode, git, reference]
 estimatedMinutes: 6
-status: draft
+status: published
 ---
 # 差分表示とマージコンフリクト
 

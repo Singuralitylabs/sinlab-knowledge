@@ -5,7 +5,7 @@ type: detail
 difficulty: beginner
 tags: [vscode, reference]
 estimatedMinutes: 7
-status: draft
+status: published
 ---
 # 拡張機能（Extensions）
 

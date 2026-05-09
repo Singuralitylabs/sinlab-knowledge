@@ -5,7 +5,7 @@ type: detail
 difficulty: intermediate
 tags: [vscode, git, reference]
 estimatedMinutes: 5
-status: draft
+status: published
 ---
 # 履歴の閲覧と Blame
 

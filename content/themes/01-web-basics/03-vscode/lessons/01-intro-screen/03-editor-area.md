@@ -5,7 +5,7 @@ type: detail
 difficulty: beginner
 tags: [vscode, ui, reference]
 estimatedMinutes: 7
-status: draft
+status: published
 ---
 # エディタ領域
 

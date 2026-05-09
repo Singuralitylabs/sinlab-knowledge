@@ -5,7 +5,7 @@ type: detail
 difficulty: intermediate
 tags: [vscode, git, reference]
 estimatedMinutes: 5
-status: draft
+status: published
 ---
 # Source Control パネルの読み方
 

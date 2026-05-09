@@ -5,7 +5,7 @@ type: lecture
 difficulty: beginner
 tags: [vscode, install, ui, fundamentals, concept]
 estimatedMinutes: 22
-status: draft
+status: published
 ---
 # VS Code のインストールと画面構成
 

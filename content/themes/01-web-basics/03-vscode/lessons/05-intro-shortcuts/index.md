@@ -5,7 +5,7 @@ type: lecture
 difficulty: beginner
 tags: [vscode, shortcuts, fundamentals, concept]
 estimatedMinutes: 15
-status: draft
+status: published
 ---
 # VS Code のキーボードショートカット
 

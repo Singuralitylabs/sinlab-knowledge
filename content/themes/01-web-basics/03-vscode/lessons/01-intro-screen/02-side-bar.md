@@ -5,7 +5,7 @@ type: detail
 difficulty: beginner
 tags: [vscode, ui, reference]
 estimatedMinutes: 6
-status: draft
+status: published
 ---
 # サイドバー
 

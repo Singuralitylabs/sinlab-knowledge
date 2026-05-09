@@ -5,7 +5,7 @@ type: detail
 difficulty: intermediate
 tags: [vscode, git, reference]
 estimatedMinutes: 7
-status: draft
+status: published
 ---
 # ブランチ操作とリモート同期
 

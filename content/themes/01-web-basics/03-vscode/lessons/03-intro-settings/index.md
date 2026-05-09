@@ -5,7 +5,7 @@ type: lecture
 difficulty: beginner
 tags: [vscode, settings, fundamentals, concept]
 estimatedMinutes: 18
-status: draft
+status: published
 ---
 # VS Code の設定とカスタマイズ
 

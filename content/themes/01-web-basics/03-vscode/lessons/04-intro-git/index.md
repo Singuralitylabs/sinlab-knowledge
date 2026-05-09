@@ -5,7 +5,7 @@ type: lecture
 difficulty: intermediate
 tags: [vscode, git, intermediate, concept]
 estimatedMinutes: 20
-status: draft
+status: published
 ---
 # VS Code で Git を扱う
 
