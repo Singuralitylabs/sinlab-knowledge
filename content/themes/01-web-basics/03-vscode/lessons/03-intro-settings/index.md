@@ -33,39 +33,23 @@ VS Code の設定は次の優先順位で適用されます（下にあるもの
 
 ---
 
-## 設定の編集方法
+## トピック一覧
 
-### GUI から編集する（設定 UI）
+### 1. 設定の編集方法
 
-`Cmd + ,` / `Ctrl + ,` で設定 UI を開きます。検索バーに「font」「format」などのキーワードを入れて目的の設定を探し、チェックボックスや入力欄で値を変更します。
+設定 UI（`Cmd/Ctrl + ,`）と `settings.json` を直接編集する 2 通りの入口、その使い分け。JSONC 構文・言語別オーバーライド・よく使う設定例を整理します。
 
-::detail{slug="settings-ui"}
+::detail{slug="settings"}
 
-### JSON で直接編集する
+### 2. テーマとキーバインドのカスタマイズ
 
-設定 UI に表示されない項目や、複雑な値（オブジェクト・配列）を扱うときは `settings.json` を直接編集します。コマンドパレットから `Preferences: Open User Settings (JSON)` を実行すると開きます。
+カラーテーマ / アイコンテーマ / Product Icon テーマの違いと切替、OS のライト / ダーク追従、キーバインドの調べ方（Recording Keys）と `keybindings.json` の基本。
 
-::detail{slug="settings-json"}
+::detail{slug="customization"}
 
----
+### 3. ワークスペースと .vscode ディレクトリ
 
-## カスタマイズのトピック
-
-### カラーテーマ・アイコンテーマ
-
-`Cmd + K, Cmd + T` / `Ctrl + K, Ctrl + T` でカラーテーマ切替。Marketplace から好みのテーマを追加できます。アイコンテーマ（ファイルアイコン）と Product Icon テーマ（VS Code 全体のアイコン）も別途設定可能です。
-
-::detail{slug="themes"}
-
-### キーバインドのカスタマイズ
-
-`Cmd + K, Cmd + S` / `Ctrl + K, Ctrl + S` でキーバインドエディタ。既存ショートカットの変更や、`when` 句を使った文脈依存のキー割り当てができます。`keybindings.json` に直接記述することも可能です。
-
-::detail{slug="keybindings"}
-
-### ワークスペースと .vscode ディレクトリ
-
-`.code-workspace` ファイルと `.vscode/` ディレクトリの中身（`settings.json` / `extensions.json` / `launch.json` / `tasks.json`）の役割。マルチルートワークスペースの使いどころも整理します。
+`.code-workspace` ファイルとマルチルートワークスペース、`.vscode/` 配下の `settings.json` / `extensions.json` / `launch.json` / `tasks.json` の役割分担。
 
 ::detail{slug="workspace"}
 
@@ -76,4 +60,3 @@ VS Code の設定は次の優先順位で適用されます（下にあるもの
 - 設定は **User → Workspace → Folder** の 3 階層、下ほど優先される
 - GUI（設定 UI）と JSON 直接編集は同じ設定の異なる入口
 - チーム共有設定は `.vscode/settings.json` に、個人の好みは User 設定に
-- キーバインド、テーマ、ワークスペースなど、変えると効くポイントは多い
