@@ -1,23 +1,85 @@
 ---
-title: "VS Code の画面構成"
+title: "VS Code のインストールと画面構成"
 order: 1
 type: lecture
 difficulty: beginner
-tags: [vscode, ui, fundamentals, concept]
-estimatedMinutes: 15
+tags: [vscode, install, ui, fundamentals, concept]
+estimatedMinutes: 22
 status: draft
 ---
-# VS Code の画面構成
+# VS Code のインストールと画面構成
 
 ## はじめに
 
 ### このレッスンのゴール
 
-Visual Studio Code（以下 VS Code）を起動すると、画面にたくさんのアイコンやパネルが並んでいます。一見すると複雑に見えますが、画面は **5 つの大きな領域 + 1 つのオーバーレイ（コマンドパレット）** に分けて捉えると一気に整理できます。
+このレッスンでは、まず VS Code を OS にインストールする手順を確認したあと、起動した画面の構成を理解します。VS Code の画面は **5 つの大きな領域 + 1 つのオーバーレイ（コマンドパレット）** に分けて捉えると一気に整理できます。
 
-このレッスンでは、各領域に「何が表示されているのか」「何を操作するためのものか」を俯瞰します。各領域の細かいボタンや使い方は、それぞれの詳細ページで深掘りします。
+すでに VS Code が入っている方はインストール節を読み飛ばして、画面構成から始めてください。
 
 > **Tips**：本レッスンで紹介するキーボードショートカットは macOS と Windows / Linux の両方を併記しています。お使いの OS に合わせて読み替えてください。
+
+---
+
+## インストール
+
+### ダウンロード
+
+[VS Code 公式サイト](https://code.visualstudio.com/) にアクセスします。トップページに表示される **"Download for ..."** ボタンが、自動でアクセスしている OS に応じて切り替わります。
+
+> **公式版とフォーク版**：VS Code には Microsoft 配布の公式版（ロゴが青）以外に、テレメトリを除いた OSS 版（**VSCodium**）や、AI 機能を中心に再パッケージしたフォーク（**Cursor**、**Windsurf** など）があります。本レッスンは公式版を前提とします。
+
+### macOS
+
+1. ダウンロードした `.zip` を展開
+2. 中身の `Visual Studio Code.app` を **`/Applications/`** へドラッグ＆ドロップ
+3. 初回起動時に「インターネットからダウンロードしたアプリ」の確認ダイアログが出たら "開く" を選択
+4. Dock に常駐させたければ右クリック › "オプション" › "Dock に追加"
+
+Apple Silicon（M1 / M2 / M3 など）と Intel で別バイナリが配布されていますが、公式サイトは自動判定して適切なものを配ります。手動で選びたい場合は **Universal** 版を使えば両対応です。
+
+### Windows
+
+1. ダウンロードした `VSCodeUserSetup-<version>.exe` を実行
+2. ライセンスに同意 → インストール先を選ぶ（既定で OK）
+3. **追加タスク** の画面で次の項目をチェックしておくと便利:
+   - **`PATH` への追加**（`code` コマンドが使えるようになる）
+   - **エクスプローラーのコンテキストメニューに "Code で開く" を追加**
+
+User Installer（個人ユーザー）と System Installer（全ユーザー共通）の 2 種類があり、自分専用の PC なら User 版で十分です。
+
+### `code` コマンドを PATH に通す（macOS）
+
+ターミナルから `code .` のようにディレクトリを開けるようにします。
+
+1. VS Code を起動
+2. コマンドパレット（`Cmd + Shift + P`）を開く
+3. **`Shell Command: Install 'code' command in PATH`** を実行
+
+その後、ターミナルで:
+
+```bash
+code --version    # バージョンが表示されればOK
+code .            # 現在のディレクトリを VS Code で開く
+```
+
+Windows でインストール時に「PATH への追加」をチェックしていれば、コマンドプロンプト / PowerShell から `code` が使えます。
+
+### 日本語化（任意）
+
+VS Code は標準では英語 UI です。日本語に切り替えたい場合は拡張機能 **`Japanese Language Pack for Visual Studio Code`**（パブリッシャ：MS-CEINTL）をインストールします。
+
+1. アクティビティバーの拡張機能（`Cmd/Ctrl + Shift + X`）を開く
+2. `Japanese Language Pack` で検索
+3. インストール後、再起動を促す通知が出るので「Restart」
+
+> **Tips**：開発時は公式ドキュメントやエラーメッセージとの一貫性のため英語のまま使う人も多いです。学習段階で日本語化し、慣れたら英語に戻す、という選び方もあります。
+
+### インストール周りのつまずき
+
+- 「`code` コマンドが見つからない」 → コマンドパレットで `Shell Command: Install 'code' command in PATH` を再度実行。シェルの再起動も忘れずに
+- 「インストールしたが起動しない」（macOS） → Gatekeeper のブロックの可能性。"システム設定" › "プライバシーとセキュリティ" で許可
+- 「自動アップデートを止めたい」 → 設定 `update.mode` を `manual` または `none` に
 
 ---
 
