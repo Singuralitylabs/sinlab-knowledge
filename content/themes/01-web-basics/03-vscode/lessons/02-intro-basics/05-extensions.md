@@ -61,7 +61,7 @@ VS Code 自体は **言語非依存の軽量エディタ** で、TypeScript / Py
 | 言語サーバ | `Python`（Microsoft）、`Go`（Google） |
 | Linter / フォーマッタ | `ESLint`、`Biome`、`Prettier - Code formatter`、`Ruff` |
 | Git 補助 | `GitLens`、`GitHub Pull Requests` |
-| AI 補完 / Chat | `GitHub Copilot`、`GitHub Copilot Chat`、`Codeium` |
+| AI 補完 / Chat | `GitHub Copilot`、`GitHub Copilot Chat`、`Claude Code`（Anthropic）、`Cline`、`Continue`、`Windsurf`（旧 Codeium） |
 | リモート開発 | `Remote - SSH`、`Dev Containers`、`WSL` |
 | 補助系 | `Path Intellisense`、`Error Lens`、`Code Spell Checker` |
 

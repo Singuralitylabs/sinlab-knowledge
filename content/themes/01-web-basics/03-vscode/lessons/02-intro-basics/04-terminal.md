@@ -90,4 +90,4 @@ OS ごとの主な選択肢:
 - 「Path が外部ターミナルと違う」 → VS Code 起動時の環境変数を引き継ぐかは設定 `terminal.integrated.inheritEnv` で制御。`.zshrc` などのプロファイル読み込みは設定 `terminal.integrated.defaultProfile.*` で指定したシェルに依存
 - 「ターミナルが消えた」 → パネル下部のターミナル一覧で他のターミナルに切り替わっただけのことが多い。`` Ctrl + ` `` で再表示
 - 「色がおかしい / プロンプトが崩れる」 → シェルの `LANG` / `TERM` 環境変数や Powerlevel10k などのフォント依存設定を確認。VS Code 側の設定 `terminal.integrated.fontFamily` で Nerd Font などに切替
-- 「Windows で `code .` が動かない」 → コマンドパレットで `Shell Command: Install 'code' command in PATH` を実行（macOS でも同コマンド）
+- 「`code .` が動かない」 → macOS / Linux ではコマンドパレットで `Shell Command: Install 'code' command in PATH` を実行する。Windows ではインストーラーで「PATH へ追加」オプションを有効にして再インストールするか、`%LOCALAPPDATA%\Programs\Microsoft VS Code\bin` を環境変数 `PATH` に追加する

@@ -46,7 +46,7 @@ status: draft
 ## カスタマイズ
 
 - ステータスバーの **項目自体を非表示** にしたいときは、コマンド `View: Toggle Status Bar Visibility` でバー全体を、または右クリックで個別項目を切替
-- 設定 `workbench.statusBar.visible` で表示制御も可能
+- 設定 `workbench.statusBar.visible` を `true` / `false` で切り替えても同じ制御ができる
 
 ---
 

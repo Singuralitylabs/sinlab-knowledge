@@ -50,12 +50,12 @@ status: draft
 
 - アイコンの **並び替え**：ドラッグ&ドロップで順序を変更できます
 - **非表示**：右クリックメニューで使わないアイコンを隠せます
-- **位置の切替**：右クリックメニューの `Activity Bar Position`、または **View › Appearance › Activity Bar Position** から **Default / Top / Bottom / Hidden** を選択できます。コマンドパレットからは `View: Activity Bar Position: Default`（あるいは `Top` / `Bottom` / `Hidden`）を実行
+- **位置の切替**：右クリックメニューの `Activity Bar Position`、または **View › Appearance › Activity Bar Position** から **Side / Top / Bottom / Hidden** を選択できます。コマンドパレットからは `View: Move Activity Bar to Side`（あるいは `Top` / `Bottom` / `Hidden`）を実行
 - 拡張機能を入れると、独自のアイコン（GitLens、Docker、Remote-SSH など）が追加されることがあります
 
 ---
 
 ## ありがちなつまずき
 
-- アクティビティバーが消えた → 表示メニュー、または `View: Toggle Activity Bar Visibility` で復帰
+- アクティビティバーが消えた → `Activity Bar Position` が `Hidden` になっている可能性。コマンドパレットで `View: Move Activity Bar to Side` を実行するか、`View › Appearance › Activity Bar Position` から `Side` を選び直す
 - 通知バッジが消えない → ソース管理ならコミット / プッシュ漏れ、拡張機能ならアップデート可能のサイン

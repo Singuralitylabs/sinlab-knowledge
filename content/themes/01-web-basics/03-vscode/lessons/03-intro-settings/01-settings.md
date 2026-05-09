@@ -92,6 +92,7 @@ User 設定は OS のユーザーディレクトリ配下（macOS は `~/Library
   // 保存時の整形
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // VS Code 1.84+ では値を `"explicit"` で指定（以前は `true`）
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },

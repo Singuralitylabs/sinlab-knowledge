@@ -47,11 +47,14 @@ OS のライト / ダーク切替に合わせて自動で変えるには、次�
 {
   "window.autoDetectColorScheme": true,
   "workbench.preferredDarkColorTheme": "Default Dark Modern",
-  "workbench.preferredLightColorTheme": "Default Light Modern"
+  "workbench.preferredLightColorTheme": "Default Light Modern",
+  // ハイコントラスト環境を併用する場合
+  "workbench.preferredHighContrastColorTheme": "Default High Contrast",
+  "workbench.preferredHighContrastLightColorTheme": "Default High Contrast Light"
 }
 ```
 
-OS が「外観：ダーク」のときは `preferredDarkColorTheme`、「ライト」のときは `preferredLightColorTheme` が自動適用されます。
+OS が「外観：ダーク」のときは `preferredDarkColorTheme`、「ライト」のときは `preferredLightColorTheme` が自動適用されます。OS のハイコントラストモードに追従させたい場合は `preferredHighContrastColorTheme` / `preferredHighContrastLightColorTheme` も併せて指定します。
 
 ---
 
@@ -66,11 +69,11 @@ VS Code のすべての操作は内部で **コマンド ID** に紐付いてお
 | キーバインドエディタを開く | `Cmd + K, Cmd + S` | `Ctrl + K, Ctrl + S` |
 | `keybindings.json` を直接開く | コマンド `Preferences: Open Keyboard Shortcuts (JSON)` | 同左 |
 
-### Recording Keys（キーから逆引き）
+### Record Keys（キーから逆引き）
 
-検索バー右の **キーボードアイコン** をクリックして「Recording Keys」モードに入り、知りたいショートカットを実際に押すと、そのキーに割り当てられた **すべてのコマンド** が一覧されます。
+検索バー右の **キーボードアイコン** をクリックして「Record Keys」モードに入り、知りたいショートカットを実際に押すと、そのキーに割り当てられた **すべてのコマンド** が一覧されます。
 
-「うっかり押してしまった謎のショートカット」を特定する一番速い方法で、知らないとなかなか辿り着けない隠れ機能です。
+「うっかり押してしまった謎のショートカット」を特定する一番速い方法で、知らないとなかなか辿り着けない隠れ機能です（モード解除は同じキーボードアイコンをもう一度クリック、または `Esc`）。
 
 ### `keybindings.json` の最小例
 

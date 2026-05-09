@@ -31,7 +31,7 @@ status: draft
 | タブを閉じる | `Cmd + W` | `Ctrl + W` |
 | タブをピン留め | コマンド `View: Pin Editor` | 同左 |
 | 直前に閉じたタブを再度開く | `Cmd + Shift + T` | `Ctrl + Shift + T` |
-| タブを切替 | `Ctrl + Tab` | `Ctrl + Tab` |
+| タブを切替（履歴順） | `Ctrl + Tab`（macOS でも `Cmd` ではなく `Ctrl`） | `Ctrl + Tab` |
 
 ---
 
@@ -83,5 +83,3 @@ status: draft
 - タブが次々と上書きされる → プレビュータブの仕様。タブをダブルクリックして通常タブ化、またはピン留め
 - 「右に分割しすぎてレイアウトが崩れた」 → コマンド `View: Editor Layout: Single` で 1 つに戻せる
 - 折り返しが効かない → `Alt/Option + Z` でトグル
-
-<!-- TODO(screenshot): タブ + 分割エディタ + ミニマップが見えるスクリーンショット -->

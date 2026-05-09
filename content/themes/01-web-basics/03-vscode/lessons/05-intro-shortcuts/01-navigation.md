@@ -23,7 +23,7 @@ status: draft
 | 直近のファイル一覧（クイックオープンを開いた直後） | `Cmd + P` | `Ctrl + P` |
 | 直前のエディタへ戻る | `Ctrl + Tab` | `Ctrl + Tab` |
 | 隣のタブへ移動 | `Cmd + Option + ←` / `→` | `Ctrl + PageUp` / `PageDown` |
-| 直前 / 直後のカーソル位置へ移動（履歴） | `Ctrl + −` / `Ctrl + Shift + −` | `Alt + ←` / `Alt + →` |
+| 直前 / 直後のカーソル位置へ移動（履歴） | `Ctrl + -` / `Ctrl + Shift + -`（macOS。`Cmd` ではなく `Ctrl`） | `Alt + ←` / `Alt + →` |
 
 `Ctrl + Tab` は押しっぱなしで「最近開いたエディタ」がオーバーレイ表示され、押すたびに履歴を遡れます。
 
@@ -60,7 +60,7 @@ status: draft
 | 定義を覗き見（ピーク） | `Option + F12` | `Alt + F12` |
 | 参照を表示（呼び出し元一覧） | `Shift + F12` | `Shift + F12` |
 | 実装へ移動（インターフェイス → 実装） | `Cmd + F12` | `Ctrl + F12` |
-| ジャンプ前の位置へ戻る | `Ctrl + −` | `Alt + ←` |
+| ジャンプ前の位置へ戻る | `Ctrl + -` | `Alt + ←` |
 
 ---
 
@@ -78,5 +78,5 @@ status: draft
 ## ありがちなつまずき
 
 - 「`F12` で定義に飛ばない」 → 言語サーバ（Language Server）が動いていないか、未インストールの可能性。「問題」パネルや拡張機能を確認
-- 「直前位置へ戻れない」 → macOS は `Ctrl + −`（マイナスキー）。`Cmd` ではないので注意
+- 「直前位置へ戻れない」 → macOS は `Ctrl + -`（マイナスキー）。`Cmd` ではないので注意。前進は `Ctrl + Shift + -`
 - 「`Cmd/Ctrl + P` に履歴が出てこない」 → 設定 `workbench.editor.enablePreview` の影響。プレビュータブで開いただけのファイルは履歴に残らないことがある

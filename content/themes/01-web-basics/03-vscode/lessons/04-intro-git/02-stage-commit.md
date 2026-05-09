@@ -41,6 +41,8 @@ VS Code の GUI が特に強い領域です。ファイルを開いた状態で�
 
 行単位でさらに細かく分けたい場合は、diff ビュー上で行を選択してから右クリック ›  `Stage Selected Ranges`。「コミットを論理的に分けたい時」「同じファイル内の異なる目的の変更を別コミットにしたい時」に使います。
 
+> **注**：メニュー名は VS Code のバージョンによって `Stage Change` / `Stage Block` / `Stage Selected Ranges` などの揺れがあります。実際に表示されている文言を選んでください。
+
 ---
 
 ## 変更の取り消し（Discard Changes）

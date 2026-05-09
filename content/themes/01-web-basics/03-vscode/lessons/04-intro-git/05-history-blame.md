@@ -11,7 +11,7 @@ status: draft
 
 ## 解説
 
-VS Code 標準の履歴閲覧機能は **Timeline（タイムライン）ビュー** が中心で、できることはやや限定的です。`git log` のグラフ表示や `git blame` 相当の行単位の作者表示までやりたい場合は、**GitLens** などの拡張機能を併用するのが定石です。
+VS Code 標準の履歴閲覧機能は **Timeline（タイムライン）ビュー** と **インライン Git Blame**（VS Code 1.96+）が中心です。日常の「直近の変更を確認する」「現在行の最終変更者を見る」用途は標準で完結しますが、`git log` のグラフ表示や、ホバーリッチな blame 情報まで踏み込みたい場合は **GitLens** などの拡張機能を併用するのが定石です。
 
 ---
 
@@ -29,17 +29,32 @@ Timeline には Git のコミット以外にも **VS Code のローカル変更�
 
 ---
 
+## インライン Git Blame（標準機能、VS Code 1.96+）
+
+エディタの現在行の **行末** に「最終変更者・コミット要約・経過時間」が薄い色で表示されます。設定 `git.blame.editorDecoration.enabled` を `true` にすると有効化、ホバーするとそのコミット詳細（SHA、メッセージ全文、変更ファイル）が表示されます。
+
+```jsonc
+{
+  "git.blame.editorDecoration.enabled": true,
+  "git.blame.statusBarItem.enabled": true
+}
+```
+
+`git.blame.statusBarItem.enabled` を有効化すると、ステータスバー右側にも現在行の blame 情報が表示されます。
+
+---
+
 ## ファイル単位の操作（標準コマンド）
 
 コマンドパレット（`Cmd/Ctrl + Shift + P`）で次のコマンドが使えます。
 
 | コマンド | 動作 |
 |---------|------|
-| `Git: View History (git log)`（Git: 履歴の表示） | Source Control タブにファイルの履歴を表示（拡張により挙動が変わる） |
-| `Git: Open File from Previous Revision`（Git: 前のリビジョンからファイルを開く） | 過去のコミットのバージョンをエディタで開く |
-| `Git: Compare with Selected`（Git: 選択範囲との比較） | 2 つのコミットや状態を比較 |
+| `Git: Open File (HEAD)`（Git: HEAD のファイルを開く） | 直前のコミット時点のファイル内容を開く |
+| `Git: Compare with Selected`（Git: 選択範囲との比較） | 選択した 2 つのファイル / コミットを比較 |
+| `Git: Stash` / `Git: Pop Latest Stash` | 作業を一時退避 / 戻す |
 
-ただし VS Code 標準では **コミットグラフの可視化** や **行単位の blame** は提供されません。これらは拡張機能に委ねる方針です。
+`git log` のような **時系列グラフ表示** は標準では限定的なので、本格的に履歴を辿るときは GitLens / Git Graph 拡張に委ねる方針です。
 
 ---
 
