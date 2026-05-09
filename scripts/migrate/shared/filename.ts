@@ -162,17 +162,6 @@ const GIT_LECTURES: MigrationEntry[] = [
     titleOverride: "解説記事 (チーム開発編)",
   },
   {
-    sourceRel: "解説記事（VS Code編）.md",
-    targetFile: "05-intro-vscode.md",
-    order: 5,
-    type: "lecture",
-    category: "jissen",
-    difficulty: "intermediate",
-    tags: [...GIT_BASE_TAGS, "vscode", "intermediate", "concept"],
-    estimatedMinutes: 15,
-    titleOverride: "解説記事 (VS Code編)",
-  },
-  {
     sourceRel: "ハンズオン（チーム開発編）.md",
     targetFile: "06-team-workshop.md",
     order: 6,
