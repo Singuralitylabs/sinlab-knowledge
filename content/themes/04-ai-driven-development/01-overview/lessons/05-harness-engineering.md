@@ -5,7 +5,7 @@ order: 5
 type: lecture
 difficulty: intermediate
 tags: [ai-coding, harness-engineering, claude-code]
-status: draft
+status: published
 ---
 
 # ハーネスエンジニアリング
