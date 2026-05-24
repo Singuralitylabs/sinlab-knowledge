@@ -12,19 +12,19 @@ status: draft
 
 # Claude Design との連携
 
-Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジュアル制作向けの AI プロダクトです。プロトタイプ・スライド・ワンページャー・モックアップなどを会話ベースで生成でき、完成したデザインを **Claude Code にハンドオフして実装まで一気通貫で進められる** のが特徴です。
+Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジュアル制作向けの AI プロダクトです。**クリック可能なインタラクティブプロトタイプ**、スライド、ワンページャー、モックアップなどを会話ベースで生成でき、完成したデザインを **Claude Code にハンドオフして実装まで一気通貫で進められる** のが特徴です。
 
 ## このページで学べること
 
 - Claude Design がカバーする領域と Claude Code との役割分担
-- 利用できるプラン・モデルと有効化の方法
+- 利用できるプラン・モデル・利用枠と有効化の方法
 - アクセスからオンボーディングまでの具体的な手順
 - 左右 2 ペイン UI（チャット ＋ キャンバス）の基本操作
 - 5 ステップで進めるデザイン制作ワークフロー
 - 効果的なプロンプトの書き方
 - デザインシステムをセットアップしてチームで共有する手順
 - インライン編集とチャットを使い分けた反復改善
-- エクスポート形式と Claude Code への引き継ぎ方
+- エクスポート形式・組織内共有と Claude Code への引き継ぎ方
 - Research preview としての制限・既知の不具合
 
 ## A. Claude Design とは何か
@@ -34,22 +34,26 @@ Claude Design は、デザイン経験のないファウンダー・PM・エン�
 | 比較項目 | Claude Code | Claude Design |
 | --- | --- | --- |
 | 主な役割 | コードの実装・編集・運用 | デザイン・プロトタイプ・資料の作成 |
-| 主な成果物 | ソースコード・コミット・PR | 画面モック・スライド・ワンページャー |
+| 主な成果物 | ソースコード・コミット・PR | インタラクティブプロトタイプ・画面モック・スライド・ワンページャー |
 | 利用シーン | 実装・リファクタ・デバッグ | アイデア共有・要件すり合わせ・社内資料 |
 | ハンドオフ | Claude Design からバンドルを受け取る | Claude Code へのエクスポートが可能 |
 
 ## B. 利用できるプランとモデル
 
-Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。Enterprise はデフォルトで無効化されているため、管理者が Organization settings から有効化する必要があります。
+Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。現在は [claude.ai/design](https://claude.ai/design) からブラウザで利用します（デスクトップの Claude Code アプリとは別の画面です）。
+
+Enterprise はデフォルトで無効化されています。Team / Enterprise ともに、管理者は **Organization settings > Capabilities** から有効化できます。
 
 | プラン | 利用可否 | 備考 |
 | --- | --- | --- |
 | Free | 不可 | — |
 | Pro / Max | 可 | 個人で利用可能 |
-| Team | 可 | チームで共有可能 |
-| Enterprise | 可（要管理者有効化） | Organization settings からオン |
+| Team | 可 | チームで共有可能。管理者が Capabilities でオン/オフ可能 |
+| Enterprise | 可（要管理者有効化） | デフォルト OFF。Capabilities からオン |
 
-バックエンドのモデルは **Claude Opus 4.7**。Claude Code と同じモデルファミリーが動いているため、ハンドオフ時にデザイン意図が失われにくいのが利点です。
+利用量は **チャットや Claude Code とは別メーター** です。プランごとに週次の枠があり、枯渇時は [Extra usage](https://support.claude.com/en/articles/12429409-manage-extra-usage-for-paid-claude-plans) で追加できます（詳細は公式の利用量・料金ページを参照）。
+
+バックエンドは **Claude Opus 4.7** です。ハンドオフ時は **ハンドオフバンドル** に構造・コンポーネント・デザイントークン・実装指示がまとまるため、Claude Code がデザイン意図を解釈しやすくなります（Claude Code 側のモデルは Sonnet / Opus など切り替え可能）。
 
 > [!WARNING]
 > 本記事執筆時点で Claude Design は **research preview**（段階的ロールアウト）です。機能・UI・料金は変更される可能性があります。実運用に組み込む前に最新の公式ドキュメントを確認してください。
@@ -63,16 +67,18 @@ Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます
 - 直接 URL：[claude.ai/design](https://claude.ai/design)
 - Claude.ai にログインし、アプリメニューから「Claude Design」を選択
 
-### 最初の質問
+### オンボーディングの流れ
 
-オンボーディングは 1 問だけです。
+初回起動時に、用途に応じた質問（役割の選択など）が表示されることがあります。UI は変更されうるため、ここでは公式ドキュメントで確実な流れだけ整理します。
 
-```text
-What do you do?
-└─ Design / Engineering / Product / Sales / Data / Marketing / Other
-```
+**組織のデザインシステムを初めて整える場合**（G 節）は、次の順序がオンボーディングの中心です。
 
-選んだ役割に応じて、初期テンプレートや推奨プロンプトが調整されます。あとから変更できるので、いちばん近いものを選べば OK です。
+1. 左下のプロジェクトピッカーで組織を選択 or 新規作成
+2. オンボーディングフローでブランド素材をアップロード
+3. 抽出された色・タイポ・コンポーネントを確認
+4. テストプロジェクトで検証し、問題なければ [Published] をオン
+
+デザインシステムが既に Published 済みなら、プロジェクト作成からすぐ作業を始められます（E 節参照）。
 
 ## D. 画面構成と基本操作
 
@@ -96,7 +102,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | --- | --- |
 | 全体方針を変える（トーン・構成・追加機能） | 左のチャット |
 | 個別要素をピンポイントで修正 | 右のキャンバス上の要素をクリック |
-| 素材を渡す（画像・PPTX・PDF・コードベース） | 左のチャットに添付 |
+| 素材を渡す（画像・PPTX・PDF・DOCX・XLSX・コードベース） | 左のチャットに添付 |
 | エクスポート | 右上の [Export] ボタン |
 
 ## E. ワークフロー：5 ステップで進める
@@ -118,7 +124,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 ### ステップ別のコツ
 
 - **1. プロジェクト作成**：左下のプロジェクトピッカーで組織を選んでから新規作成。組織のデザインシステム（公開済み）が自動で適用されます。
-- **2. コンテキスト追加**：競合プロダクトのスクリーンショット、既存 LP の URL、社内 PPTX などを最初にまとめて渡すと、トーンと文脈が安定します。
+- **2. コンテキスト追加**：競合プロダクトのスクリーンショット、既存 LP の URL、社内 PPTX / DOCX / XLSX、**Web キャプチャ**（既存サイトから要素を取り込む）などを最初にまとめて渡すと、トーンと文脈が安定します。
 - **3. 要件記述**：いきなり全機能を盛り込まず、**まず骨格だけ** を作るのが鉄則です（後述のプロンプトのコツ参照）。
 - **4. レビュー**：「コントラスト比」「情報階層」「アクセシビリティ」も Claude にレビューさせられます。
 - **5. 反復**：チャットで大枠を変える → キャンバスで細部を直す、の順で回します。
@@ -184,13 +190,13 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | --- | --- |
 | コードベース | React コンポーネントライブラリ、Tailwind 設定、CSS 変数 |
 | 既存デザイン | 画面スクリーンショット、Web キャプチャ、デザインファイル |
-| 資料 | PowerPoint、PDF、ブランドガイド |
+| 資料 | PowerPoint、PDF、DOCX、XLSX、ブランドガイド |
 | 個別アセット | ロゴ画像、カラーパレット、タイポグラフィ仕様 |
 
 抽出されたシステムには **カラーパレット・タイポグラフィ・コンポーネント・レイアウトパターン** が含まれ、以降のプロジェクトで自動的に使われます。
 
 > [!TIP]
-> いきなり全社展開する前に、必ず **テストプロジェクトで 1 つ作って検証** してから Published をオンにしましょう。意図しない色やフォントが拾われていることがあります。
+> いきなり全社展開する前に、必ず **テストプロジェクトで 1 つ作って検証** してから Published をオンにしましょう。意図しない色やフォントが拾われていることがあります。1 組織で **複数のデザインシステム**（ブランドやサブチームごと）を持つこともできます。
 
 ## H. デザインを反復改善する
 
@@ -222,14 +228,26 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | HTML | LP プレビュー・実機での確認 |
 | ZIP | コード化の起点として手元で扱う |
 | Canva | デザイナーによる仕上げ・チーム編集 |
-| **Claude Code** | **そのまま実装に進む** |
+| **Handoff to Claude Code** | ハンドオフバンドルで実装に進む（経路は下表） |
+
+実装への引き継ぎは、Export メニューから次のいずれかを選びます。
+
+| 経路 | 向いている場面 |
+| --- | --- |
+| Handoff to Claude Code | 一般的なハンドオフ（バンドル生成） |
+| Send to local coding agent | ローカルの Claude Code に渡す |
+| Send to Claude Code Web | [claude.ai/code](https://claude.ai/code) 上のセッションに渡す |
+
+### 組織内での共有
+
+エクスポート以外に、組織内の **共有リンク**（閲覧のみ / コメント / 編集）でステークホルダーにレビューしてもらえます。実装前のすり合わせに使います。
 
 ### Claude Code へのハンドオフ
 
-Export メニューから「Claude Code」を選ぶと、デザインを再現するために必要な情報がまとまった **ハンドオフバンドル** が生成されます。
+上記のいずれかを選ぶと、デザインを再現するために必要な情報がまとまった **ハンドオフバンドル** が生成されます。
 
 ```text
-[Claude Design] Export → Claude Code
+[Claude Design] Export → Claude Code（いずれかの経路）
        │
        ├─ ハンドオフバンドル（構造・コンポーネント・
        │   デザイントークン・実装指示）
@@ -264,16 +282,19 @@ Research preview のため、執筆時点で次の問題が報告されていま
 
 ## まとめ
 
-- Claude Design は「実装前のビジュアル設計」を担当する Anthropic Labs の新製品
-- 入口は **[claude.ai/design](https://claude.ai/design)**、UI は **左チャット + 右キャンバス**
+- Claude Design は「実装前のビジュアル設計」を担当する Anthropic Labs の新製品（**インタラクティブプロトタイプ**含む）
+- 入口は **[claude.ai/design](https://claude.ai/design)（ブラウザ）**、UI は **左チャット + 右キャンバス**
+- 利用量は **チャット・Claude Code とは別メーター**（週次枠 + Extra usage）
 - 推奨ワークフローは **作成 → コンテキスト → 要件 → レビュー → 反復** の 5 ステップ
 - プロンプトは **目標・レイアウト・コンテンツ・対象ユーザー** を含めて段階的に複雑さを足す
-- デザインシステムを組織にセットアップし、[Published] にすると全プロジェクトに自動適用
-- エクスポートから **Claude Code へのハンドオフ** で実装まで一気通貫
+- デザインシステムを組織にセットアップし、[Published] にすると全プロジェクトに自動適用（複数システムも可）
+- エクスポートから **Claude Code へのハンドオフ**（ローカル / Web 経由含む）で実装まで一気通貫
 - Research preview のため、既知の不具合に留意して小規模検証から始める
 
 ## 関連リソース
 
 - [Get started with Claude Design (Claude Help Center)](https://support.claude.com/en/articles/14604416-get-started-with-claude-design)
 - [Set up your design system in Claude Design (Claude Help Center)](https://support.claude.com/en/articles/14604397-set-up-your-design-system-in-claude-design)
+- [Claude Design subscription usage and pricing (Claude Help Center)](https://support.claude.com/en/articles/14667344-claude-design-subscription-usage-and-pricing)
+- [Claude Design admin guide for Team and Enterprise plans (Claude Help Center)](https://support.claude.com/en/articles/14604406-claude-design-admin-guide-for-team-and-enterprise-plans)
 - [Introducing Claude Design by Anthropic Labs](https://www.anthropic.com/news/claude-design-anthropic-labs)
