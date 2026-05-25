@@ -7,7 +7,7 @@ category: extension
 difficulty: intermediate
 tags: [claude-code, claude-design, anthropic-labs, design, prototype]
 estimatedMinutes: 20
-status: draft
+status: published
 ---
 
 # Claude Design との連携
