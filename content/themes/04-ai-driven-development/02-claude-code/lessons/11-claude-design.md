@@ -26,7 +26,7 @@ Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジ�
 - 5 ステップで進めるデザイン制作ワークフロー
 - 効果的なプロンプトの書き方
 - デザインシステムをセットアップしてチームで共有する手順
-- キャンバスの 4 つの編集モード（Markup / Comments / Edit / Tweaks）とチャットの使い分け
+- キャンバスの 4 つの編集モード（Mark up / Comments / Edit / Tweaks）とチャットの使い分け
 - エクスポート形式・組織内共有と Claude Code への引き継ぎ方
 - Research preview としての制限・既知の不具合
 
@@ -70,6 +70,8 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 - 直接 URL：[claude.ai/design](https://claude.ai/design)
 - Claude.ai にログインし、アプリメニューから「Claude Design」を選択
 
+![Claude Design のホーム画面。Research Preview バッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
+
 ### オンボーディングの流れ
 
 初回起動時に、用途に応じた質問（役割の選択など）が表示されることがあります。UI は変更されうるため、ここでは公式ドキュメントで確実な流れだけ整理します。
@@ -85,7 +87,9 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 
 ### プロジェクト作成時の忠実度（Wireframe / High Fidelity）
 
-プロトタイプのプロジェクトを作成するとき、プロジェクト名のほかに **忠実度（fidelity）** を Wireframe / High Fidelity から選びます。生成されるデザインの作り込み度が変わります。
+プロトタイプのプロジェクトを作成するとき、プロジェクト名・デザインシステムのほかに **忠実度（fidelity）** を Wireframe / High Fidelity から選びます。生成されるデザインの作り込み度が変わります。
+
+![新規プロトタイプ作成ダイアログ。Project name 入力欄、Design system の選択、Wireframe と High fidelity の 2 択（Wireframe が選択中）、Create ボタンが並ぶ](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/CreateNewPrototype.png)
 
 | | **Wireframe** | **High Fidelity** |
 | --- | --- | --- |
@@ -103,6 +107,10 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 ## D. 画面構成と基本操作
 
 Claude Design の UI は **左にチャット、右にキャンバス** の 2 ペイン構成です。
+
+![Claude Design の編集画面。左に「Start with context」のコンテキスト追加パネル、右のキャンバスに生成された LP のデザインが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/ClaudeDesignUI.png)
+
+模式的に表すと次の通りです。
 
 ```text
 ┌──────────────────────┬──────────────────────────┐
@@ -204,19 +212,31 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 8. 以降、組織内の全プロジェクトに自動適用
 ```
 
-### アップロードできる素材
+### セットアップ画面で入力する項目
 
-| 種別 | 例 |
+「Set up your design system」画面では、会社・プロダクトの説明とブランド素材を渡します。素材はすべて任意で、渡せるものだけ渡せば構いません。
+
+![「Set up your design system」のセットアップフォーム。会社概要のテキスト欄、GitHub リポジトリのリンク、ローカルフォルダのアップロード、.fig ファイルのアップロード、フォント・ロゴ・アセットの追加、補足メモ欄が並ぶ](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/DesignSystemsSettings.png)
+
+| 入力欄 | 内容 |
 | --- | --- |
-| コードベース | React コンポーネントライブラリ、Tailwind 設定、CSS 変数 |
-| 既存デザイン | 画面スクリーンショット、Web キャプチャ、デザインファイル |
-| 資料 | PowerPoint、PDF、DOCX、XLSX、ブランドガイド |
-| 個別アセット | ロゴ画像、カラーパレット、タイポグラフィ仕様 |
+| Company name and blurb | 会社・プロダクトの概要をテキストで（デザインシステムの名前にもなる） |
+| Link code on GitHub | GitHub リポジトリの URL を指定 |
+| Link code from your computer | ローカルのフォルダをドラッグ（全体ではなく選択ファイルをコピー。大規模なら frontend 中心のサブフォルダ推奨） |
+| Upload a .fig file | Figma ファイル（ブラウザ内でローカル解析され、アップロードはされない） |
+| Add fonts, logos and assets | フォント・ロゴ・アセットをドラッグ |
+| Any other notes | 「角丸を多用」「ブランドボイスは遊び心がありつつプロフェッショナル」などの補足 |
 
 抽出されたシステムには **カラーパレット・タイポグラフィ・コンポーネント・レイアウトパターン** が含まれ、以降のプロジェクトで自動的に使われます。
 
+### デザインシステムの一覧と公開
+
+作成したデザインシステムは「Design systems」タブで一覧管理します。各システムには **Published トグル** があり、オンにすると組織内の全プロジェクトに適用されます。`Make default` で既定システムも指定できます。
+
+![Design systems タブの一覧画面。複数のデザインシステムが並び、それぞれに Published トグルと Make default ボタンが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/DesignSystems.png)
+
 > [!TIP]
-> いきなり全社展開する前に、必ず **テストプロジェクトで 1 つ作って検証** してから Published をオンにしましょう。意図しない色やフォントが拾われていることがあります。1 組織で **複数のデザインシステム**（ブランドやサブチームごと）を持つこともできます。
+> いきなり全社展開する前に、必ず **テストプロジェクトで 1 つ作って検証** してから Published をオンにしましょう。意図しない色やフォントが拾われていることがあります。上の画面のように 1 組織で **複数のデザインシステム**（ブランドやサブチームごと）を持つこともできます。
 
 ## H. デザインを反復改善する
 
@@ -234,24 +254,29 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 キャンバス右上には編集モードを切り替える 4 つのボタンがあります。大きく **「AI に依頼する系」** と **「自分で直接いじる系」** に分かれます。
 
-| ボタン | 系統 | できること |
+![キャンバス右上のツールバー。Mark up (M)、Edit (E)、Hide tweaks、Comments (C) のモードボタンと、Present・Share ボタンが並ぶ](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FourCanvasButtons.png)
+
+| ボタン（ショートカット） | 系統 | できること |
 | --- | --- | --- |
-| **Markup** | AI に依頼 | キャンバスに直接スケッチ・手描き注釈を描き込み、視覚的に修正を指示する。複数箇所をキューに溜めてまとめて送れる |
-| **Comments** | AI に依頼 | 要素をクリックしてコメントとして指示文（例：「全ページから削除」）を残す。各コメントの「Select for Send to Claude」をチェックして複数まとめてバッチ送信できる |
-| **Edit** | 自分でいじる | 要素を直接クリックして、テキスト・位置・サイズ・色・スタイルを手動で調整する（Claude を介さない） |
-| **Tweaks** | 自分でいじる | Claude が背景プリセット（Plain / Grid / Dark Mode）・アクセントカラー・余白・アニメーション速度などのスライダーやカラーピッカーを埋め込む。ドラッグするとキャンバスがライブ更新される |
+| **Mark up**（M） | AI に依頼 | キャンバスに直接スケッチ・手描き注釈を描き込み、視覚的に修正を指示する。複数箇所をキューに溜めてまとめて送れる |
+| **Comments**（C） | AI に依頼 | 要素をクリックしてコメントとして指示文（例：「全ページから削除」）を残す。各コメントの「Select for Send to Claude」をチェックして複数まとめてバッチ送信できる |
+| **Edit**（E） | 自分でいじる | 要素を直接クリックして、テキスト・位置・サイズ・色・スタイルを手動で調整する（Claude を介さない） |
+| **Tweaks**（Show / Hide tweaks トグル） | 自分でいじる | Claude が背景プリセット（Plain / Grid / Dark Mode）・アクセントカラー・余白・アニメーション速度などのスライダーやカラーピッカーを埋め込む。ドラッグするとキャンバスがライブ更新される |
+
+> [!NOTE]
+> ツールバーには上記 4 つに加えて、プレビュー表示用の **Present** と、共有・エクスポートの **Share**（I 節）も並びます。Tweaks は表示中だと「Hide tweaks」、非表示だと「Show tweaks」と表示が切り替わるトグルです。
 
 ### モードの使い分け
 
-- **Markup と Comments はどちらも「Claude に修正を依頼する」モード** で、入力方法が違います。
-  - **Markup**：図で示す（線・囲み・矢印）→ 言葉で位置を説明しづらいレイアウト変更に向く
+- **Mark up と Comments はどちらも「Claude に修正を依頼する」モード** で、入力方法が違います。
+  - **Mark up**：図で示す（線・囲み・矢印）→ 言葉で位置を説明しづらいレイアウト変更に向く
   - **Comments**：文章で示す（要素にピン留め）→ 「この見出しを短く」など言語化しやすい変更に向く
 - **Edit と Tweaks は自分で直接いじる** モードで、Claude への往復が発生しません。
   - **Edit**：完全手動（任意の値に直接変更）
   - **Tweaks**：Claude が用意した範囲内（スライダー・プリセット）での微調整
 
 > [!TIP]
-> ざっくり **Markup / Comments = AI に頼む系、Edit / Tweaks = 自分で動かす系** と捉えると整理しやすいです。大枠の変更はチャットや Markup、細部の仕上げは Edit / Tweaks、と組み合わせると効率的です。
+> ざっくり **Mark up / Comments = AI に頼む系、Edit / Tweaks = 自分で動かす系** と捉えると整理しやすいです。大枠の変更はチャットや Mark up、細部の仕上げは Edit / Tweaks、と組み合わせると効率的です。
 
 > [!WARNING]
 > **既知の不具合**：インラインコメントが Claude に読まれる前に消えることがあります。重要な指示はキャンバスで書いたあとに **同じ内容をチャットに貼り直す** と確実です。
@@ -259,6 +284,8 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 ## I. 共有・エクスポートと Claude Code へのハンドオフ
 
 キャンバス右上の **[Share] ボタン**（2026 年 5 月時点。以前は Export という名称でした）から、共有・エクスポート・ハンドオフをまとめて選べます。用途に応じて以下を選びます。
+
+![Share メニューの展開状態。アクセス権（Teammates can comment）と Copy link、Duplicate project、Download project as .zip、Export as PDF / PPTX / standalone HTML、Send to Canva、Handoff to Claude Code の項目が並ぶ](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/ShareMenu.png)
 
 | 形式 | 用途 |
 | --- | --- |
@@ -269,11 +296,10 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | Canva | デザイナーによる仕上げ・チーム編集 |
 | **Handoff to Claude Code** | ハンドオフバンドルで実装に進む（経路は下表） |
 
-実装への引き継ぎは、[Share] メニューから次のいずれかを選びます。
+実装への引き継ぎは、[Share] メニューの **「Handoff to Claude Code…」** を選ぶと、続けて次の経路を選べます。
 
 | 経路 | 向いている場面 |
 | --- | --- |
-| Handoff to Claude Code | 一般的なハンドオフ（バンドル生成） |
 | Send to local coding agent | ローカルの Claude Code に渡す |
 | Send to Claude Code Web | [claude.ai/code](https://claude.ai/code) 上のセッションに渡す |
 
