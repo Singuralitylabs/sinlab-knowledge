@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import LessonCard from "@/components/content/LessonCard";
 import Prose from "@/components/content/Prose";
@@ -132,7 +133,18 @@ function ModuleView({ themeSlug, moduleSlug }: { themeSlug: string; moduleSlug: 
           className={`flex h-12 w-12 items-center justify-center rounded-xl text-xl ${colors.bgSoft} ${colors.border} border`}
           aria-hidden="true"
         >
-          {iconFallback(mod.meta.icon)}
+          {mod.meta.iconImage ? (
+            <Image
+              src={mod.meta.iconImage}
+              alt=""
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain"
+              unoptimized
+            />
+          ) : (
+            iconFallback(mod.meta.icon)
+          )}
         </span>
         <div className="min-w-0">
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">{mod.meta.title}</h1>

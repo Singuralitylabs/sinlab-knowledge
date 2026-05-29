@@ -3,6 +3,7 @@
   "title": "Claude Code",
   "description": "Claude Code の機能・コマンド・概念を体系的に解説",
   "icon": "Sparkles",
+  "iconImage": "/content-assets/04-ai-driven-development/02-claude-code/images/claude-code-logo.svg",
   "order": 2,
   "categories": [
     { "key": "overview", "label": "概観" },
