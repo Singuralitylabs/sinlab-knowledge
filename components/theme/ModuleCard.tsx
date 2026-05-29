@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getThemeColorClasses, iconFallback } from "@/lib/theme-color";
 import type { ContentModule } from "@/lib/themes";
@@ -22,7 +23,18 @@ export default function ModuleCard({ module, themeColor }: ModuleCardProps) {
           className={`flex h-8 w-8 items-center justify-center rounded-md border bg-white text-base ${colors.border}`}
           aria-hidden="true"
         >
-          {iconFallback(module.meta.icon)}
+          {module.meta.iconImage ? (
+            <Image
+              src={module.meta.iconImage}
+              alt=""
+              width={20}
+              height={20}
+              className="h-5 w-5 object-contain"
+              unoptimized
+            />
+          ) : (
+            iconFallback(module.meta.icon)
+          )}
         </span>
         <h3 className="text-base font-semibold text-gray-900">{module.meta.title}</h3>
       </div>

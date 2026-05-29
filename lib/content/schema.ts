@@ -67,6 +67,8 @@ export const moduleMetaSchema = z.object({
   title: z.string(),
   description: z.string(),
   icon: z.string().optional(),
+  /** Optional logo image (content-assets URL) shown instead of the emoji icon. */
+  iconImage: z.string().optional(),
   order: z.number(),
   categories: z.array(moduleCategorySchema).default([]),
   status: statusSchema.default("published"),
