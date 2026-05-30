@@ -2,6 +2,7 @@
   "slug": "01-html",
   "title": "HTML",
   "description": "文書構造・セマンティクス・アクセシビリティを学ぶ",
+  "iconImage": "/content-assets/02-web-development-basics/01-html/images/html5-logo.svg",
   "order": 1,
   "categories": [],
   "status": "draft"

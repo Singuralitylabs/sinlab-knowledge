@@ -2,6 +2,7 @@
   "slug": "02-css",
   "title": "CSS",
   "description": "セレクタ・ボックスモデル・レイアウト・レスポンシブを学ぶ",
+  "iconImage": "/content-assets/02-web-development-basics/02-css/images/css3-logo.svg",
   "order": 2,
   "categories": [],
   "status": "draft"
