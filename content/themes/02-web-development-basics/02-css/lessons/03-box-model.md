@@ -81,6 +81,10 @@ CSS では、すべての要素が四角い「箱（ボックス）」として�
 /* 実際の横幅 = 200px のまま（中身が自動的に縮む） */
 ```
 
+同じ `width: 200px` でも、`box-sizing` の違いで実際の幅が変わります。
+
+![box-sizing の比較。content-box は width に padding と border が加算されて実際の幅が252pxに広がり、border-box は指定した200pxのまま](/content-assets/02-web-development-basics/02-css/images/box-model/box-sizing.png)
+
 > [!TIP]
 > 多くのプロジェクトでは、最初にすべての要素へ `border-box` を適用してしまうのが定番です。幅の計算が直感的になり、レイアウト崩れを防げます。
 >

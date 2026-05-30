@@ -36,7 +36,11 @@ status: published
 }
 ```
 
-これで6個のアイテムが3列×2行に並びます。
+これで6個のアイテムが3列×2行に並びます。実際の表示は次のようになります。
+
+![3列のグリッドに6枚のカードが等間隔で並んだ表示例](/content-assets/02-web-development-basics/02-css/images/grid/grid-layout.png)
+
+この並びを「トラック（行・列の帯）」という観点で見ると、次のような構造になっています。
 
 ![CSS Grid のトラックと gap の図。3つの列トラック（1fr）と2つの行トラック、その間の溝（gap）を示す](/content-assets/02-web-development-basics/02-css/images/grid/grid-tracks.svg)
 

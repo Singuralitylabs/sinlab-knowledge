@@ -162,6 +162,10 @@ li:nth-child(2)    { color: red; }   /* 2番目 */
 li:nth-child(3n)   { color: blue; }  /* 3の倍数番目 */
 ```
 
+たとえば `tr:nth-child(even)` で偶数行に背景色を付け、特定の行をクラスで強調すると、次のように表示されます。
+
+![セレクタの適用例。偶数行に背景色が付いたストライプ表示のテーブルと、クラスで強調された行](/content-assets/02-web-development-basics/02-css/images/selectors/selectors-demo.png)
+
 > [!TIP]
 > `:hover` や `:focus` は、リンクやボタンに「反応している」ことをユーザーに伝える大切な指定です。特に `:focus` はキーボード操作の利用者にとって不可欠なので、消さずに残しましょう。
 

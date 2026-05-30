@@ -78,6 +78,10 @@ Flexbox を理解する鍵は、2つの軸です。
 | `space-around` | 各アイテムの周囲を均等にあける |
 | `space-evenly` | すべての間隔を均等にする |
 
+主な値による配置の違いは次のとおりです。
+
+![justify-content の比較。flex-start は左寄せ、center は中央寄せ、space-between は両端揃えで間隔均等、space-around は各要素の周囲に均等な余白](/content-assets/02-web-development-basics/02-css/images/flexbox/justify-content.png)
+
 ---
 
 ## align-items：交差軸方向の揃え
@@ -98,6 +102,10 @@ Flexbox を理解する鍵は、2つの軸です。
 | `flex-start` | 上端に揃える |
 | `center` | 縦中央に揃える |
 | `flex-end` | 下端に揃える |
+
+高さのあるコンテナで、交差軸方向の揃え方を変えた例です。
+
+![align-items の比較。stretch は高さいっぱいに引き伸ばし、center は縦中央、flex-start は上端に揃える](/content-assets/02-web-development-basics/02-css/images/flexbox/align-items.png)
 
 > [!TIP]
 > `justify-content: center` と `align-items: center` を組み合わせると、子要素を**上下左右ぴったり中央**に配置できます。中央寄せの定番テクニックです。
