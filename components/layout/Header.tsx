@@ -47,13 +47,14 @@ export default function Header({ siteTitle, navigation }: HeaderProps) {
           onClick={() => setIsMenuOpen((v) => !v)}
           aria-label={isMenuOpen ? "メニューを閉じる" : "メニューを開く"}
           aria-expanded={isMenuOpen}
+          aria-controls="site-nav-mobile"
         >
           {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
       </div>
 
       {/* Mobile menu panel */}
-      <div className={`nav__mobile${isMenuOpen ? " is-open" : ""}`}>
+      <div id="site-nav-mobile" className={`nav__mobile${isMenuOpen ? " is-open" : ""}`}>
         <div className="wrap">
           {navigation.map((item) => (
             <Link key={item.href} href={item.href} onClick={() => setIsMenuOpen(false)}>

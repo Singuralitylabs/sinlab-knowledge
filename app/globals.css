@@ -12,10 +12,10 @@
    rounded shapes, per-theme colour coding)
    ============================================================ */
 :root {
-  /* Type & shape */
-  --font-display: "Outfit", var(--font-jp);
-  --font-jp: "Zen Maru Gothic", system-ui, sans-serif;
-  --font-monoui: "JetBrains Mono", ui-monospace, monospace;
+  /* Type & shape (self-hosted via next/font; see app/layout.tsx) */
+  --font-display: var(--font-outfit), var(--font-jp);
+  --font-jp: var(--font-zenmaru), system-ui, sans-serif;
+  --font-monoui: var(--font-jbmono), ui-monospace, monospace;
   --display-weight: 600;
   --display-tracking: -0.015em;
 

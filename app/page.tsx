@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ComponentType, CSSProperties, SVGProps } from "react";
 import { ArrowIcon, BookIcon, CodeIcon, GlobeIcon, SparkIcon } from "@/components/icons";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -126,9 +127,9 @@ export default function Home() {
                       {inner}
                     </div>
                   ) : (
-                    <a className="card" href={`/themes/${theme.slug}`} style={cardStyle}>
+                    <Link className="card" href={`/themes/${theme.slug}`} style={cardStyle}>
                       {inner}
-                    </a>
+                    </Link>
                   )}
                 </li>
               );
