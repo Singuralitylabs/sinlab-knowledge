@@ -1,0 +1,48 @@
+name: コンテンツの追加・修正
+description: レッスン記事などコンテンツの追加・修正・誤りの指摘を行う
+title: "[Content]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        対象と内容が明確だと対応がスムーズです。
+        コンテンツは `content/themes/<テーマ>/<モジュール>/lessons/*.md` に配置されています。
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 種別
+      description: 起票の種類を選択してください。
+      options:
+        - 新規コンテンツの追加
+        - 既存コンテンツの修正・加筆
+        - 誤り・事実誤認の指摘
+        - その他
+    validations:
+      required: true
+
+  - type: input
+    id: target
+    attributes:
+      label: 対象（テーマ / モジュール / レッスン）
+      description: 対象のパスや URL、レッスン名を記載してください。新規追加の場合は配置予定の階層を記載してください。
+      placeholder: 例）content/themes/02-ai-driven/03-claude-code/lessons/01-intro.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: 内容
+      description: 追加・修正したい内容、または指摘したい誤りと正しい情報を具体的に記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考資料
+      description: 出典・参考リンク・スクリーンショットなどがあれば記載してください。
+    validations:
+      required: false

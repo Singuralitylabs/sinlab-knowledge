@@ -1,0 +1,44 @@
+name: リファクタリング
+description: 挙動を変えずにコード構造・可読性・保守性を改善する提案
+title: "[Refactor]: "
+labels: ["refactor"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **外部から見た挙動は変えず**、内部構造を改善することを目的とします。
+        変更の意図と範囲が明確だとレビューしやすくなります。
+
+  - type: textarea
+    id: target
+    attributes:
+      label: 対象
+      description: リファクタリング対象のファイル・モジュール・関数などを記載してください。
+      placeholder: 例）lib/content/loader.ts の loadLessonsForModule 周辺
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 現状の課題
+      description: 現在のコードのどこに問題があるか（重複・複雑さ・命名・責務の混在など）を記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 改善案
+      description: どのように改善するかの方針を記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 影響範囲・注意点
+      description: 挙動が変わらないことの確認方法、影響しうる箇所、守るべき規約などがあれば記載してください。
+      placeholder: 例）TOC id と見出し id の重複排除の同期を保つ／隣接ナビゲーションのスコープを変えない
+    validations:
+      required: false
