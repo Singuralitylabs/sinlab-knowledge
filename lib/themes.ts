@@ -50,12 +50,15 @@ function siblingLessons(lesson: Lesson, mod: ContentModule): Lesson[] {
   return parent ? parent.details : [];
 }
 
-export function getAdjacentLessonsInModule(lesson: Lesson): {
-  prev: Lesson | null;
-  next: Lesson | null;
-} {
-  const mod = getModule(lesson.themeSlug, lesson.moduleSlug);
-  if (!mod) return { prev: null, next: null };
+/**
+ * Pure prev/next resolution against an already-loaded module. Separated from
+ * {@link getAdjacentLessonsInModule} so the scoping rules can be unit-tested
+ * without touching the filesystem-backed content tree.
+ */
+export function resolveAdjacentLessons(
+  lesson: Lesson,
+  mod: ContentModule,
+): { prev: Lesson | null; next: Lesson | null } {
   const siblings = siblingLessons(lesson, mod);
   const idx = siblings.findIndex((l) => l.slug === lesson.slug);
   return {
@@ -64,9 +67,19 @@ export function getAdjacentLessonsInModule(lesson: Lesson): {
   };
 }
 
-export function getAllLessonPaths(): { themeSlug: string; slug: string[] }[] {
+export function getAdjacentLessonsInModule(lesson: Lesson): {
+  prev: Lesson | null;
+  next: Lesson | null;
+} {
+  const mod = getModule(lesson.themeSlug, lesson.moduleSlug);
+  if (!mod) return { prev: null, next: null };
+  return resolveAdjacentLessons(lesson, mod);
+}
+
+/** Pure core of {@link getAllLessonPaths}: collect lesson/detail paths from a theme list. */
+export function collectAllLessonPaths(themes: Theme[]): { themeSlug: string; slug: string[] }[] {
   const paths: { themeSlug: string; slug: string[] }[] = [];
-  for (const theme of getThemes()) {
+  for (const theme of themes) {
     for (const mod of theme.modules) {
       for (const lesson of mod.lessons) {
         paths.push({ themeSlug: theme.slug, slug: [mod.slug, lesson.slug] });
@@ -79,9 +92,14 @@ export function getAllLessonPaths(): { themeSlug: string; slug: string[] }[] {
   return paths;
 }
 
-export function getAllModulePaths(): { themeSlug: string; slug: string[] }[] {
+export function getAllLessonPaths(): { themeSlug: string; slug: string[] }[] {
+  return collectAllLessonPaths(getThemes());
+}
+
+/** Pure core of {@link getAllModulePaths}: collect module paths from a theme list. */
+export function collectAllModulePaths(themes: Theme[]): { themeSlug: string; slug: string[] }[] {
   const paths: { themeSlug: string; slug: string[] }[] = [];
-  for (const theme of getThemes()) {
+  for (const theme of themes) {
     for (const mod of theme.modules) {
       paths.push({ themeSlug: theme.slug, slug: [mod.slug] });
     }
@@ -89,9 +107,14 @@ export function getAllModulePaths(): { themeSlug: string; slug: string[] }[] {
   return paths;
 }
 
-export function getLessonsByTag(tag: string): Lesson[] {
+export function getAllModulePaths(): { themeSlug: string; slug: string[] }[] {
+  return collectAllModulePaths(getThemes());
+}
+
+/** Pure core of {@link getLessonsByTag}: collect lessons/details carrying a tag. */
+export function collectLessonsByTag(themes: Theme[], tag: string): Lesson[] {
   const lessons: Lesson[] = [];
-  for (const theme of getThemes()) {
+  for (const theme of themes) {
     for (const mod of theme.modules) {
       for (const lesson of mod.lessons) {
         if (lesson.frontmatter.tags.includes(tag)) lessons.push(lesson);
@@ -102,4 +125,8 @@ export function getLessonsByTag(tag: string): Lesson[] {
     }
   }
   return lessons;
+}
+
+export function getLessonsByTag(tag: string): Lesson[] {
+  return collectLessonsByTag(getThemes(), tag);
 }

@@ -49,19 +49,20 @@
 
 ### 2.1 GitHub Actions ワークフロー
 
-`.github/` は未整備のため新規作成する。本リポジトリは小規模なため、**`ci.yml` 1 ファイルに並列ジョブをまとめる**構成とする（失敗箇所はジョブ名で識別でき、可観測性を保ちつつファイルの乱立を避ける）。全ジョブ Bun ベースで統一する。
+`.github/` は未整備のため新規作成する。**検証内容ごとにワークフローファイルを分割**し、各ファイルに単一ジョブを置く構成とする（失敗したワークフロー名から目的が即座に読み取れ、必須チェックの登録も観点ごとに行える）。全ワークフロー Bun ベースで統一する。
 
-| ジョブ | 目的 | 主な実行内容 | パスフィルタの目安 |
-|---|---|---|---|
-| `lint` | Lint / Format / デバッグ出力検知 | `biome check .` | 全体 |
-| `content` | frontmatter / メタ JSON の整合性（本プロジェクトの要） | `bun run check:content` | `content/**`, `lib/content/**`, `scripts/**` |
-| `typecheck` | 型安全性 | `tsc --noEmit`（**要: スクリプト追加**） | `**/*.ts(x)` |
-| `test` | 純粋ロジックのユニットテスト | `bun test` | `lib/**`, `tests/**` |
-| `build` | 本番相当ビルドの成立 | `bun run build` | `app/**`, `content/**`, `lib/**` |
+| ワークフロー（ファイル） | 目的 | 主な実行内容 |
+|---|---|---|
+| `lint.yml` | Lint / Format / デバッグ出力検知 | `bunx biome check .` |
+| `content.yml` | frontmatter / メタ JSON の整合性（本プロジェクトの要） | `bun run check:content` |
+| `typecheck.yml` | 型安全性 | `bun run typecheck`（`tsc --noEmit`） |
+| `test.yml` | 純粋ロジックのユニットテスト | `bun test` |
+| `build.yml` | 本番相当ビルドの成立 | `bun run build` |
 
-- 共通セットアップ: `oven-sh/setup-bun@v2` + `bun install --frozen-lockfile`。
+- 共通セットアップ: `actions/checkout@v4` + `oven-sh/setup-bun@v2` + `bun install --frozen-lockfile`。
 - トリガー: `pull_request` / `push`（`main`）/ `workflow_dispatch`。
-- 各ジョブは独立に並列実行し、いずれかが失敗したら PR をブロックする。
+- 各ワークフローは独立に並列実行し、いずれかが失敗したら PR をブロックする。
+- **パスフィルタは設けず、全 PR で全ワークフローを実行する**。必須ステータスチェックに登録した際、パスフィルタによるスキップで PR がマージ待ちのままブロックされる事象（GitHub の既知の挙動）を避けるため。ジョブが軽量なので全実行のコストは小さい。将来コストが問題化したら、各ワークフローにパスフィルタ（例: `content.yml` は `content/**` / `lib/content/**` / `scripts/**`）を追加して最適化する。
 
 ### 2.2 導入ツール
 
@@ -159,6 +160,6 @@
 1. `package.json` に `"typecheck": "tsc --noEmit"` を追加。
 2. `biome.json` の linter に `suspicious.noConsole`（`console.error` / `console.warn` 許可）を追加。
 3. `tests/` ディレクトリと初期テストを作成（優先順: `slug` → `frontmatter`/`schema` → `themes`（必要なら 3.2 (b) のリファクタ）→ `mdx` → `server-auth`）。
-4. `.github/workflows/ci.yml` を作成（`lint` / `content` / `typecheck` / `test` / `build` の並列ジョブ）。
+4. `.github/workflows/` に検証内容ごとのワークフロー（`lint.yml` / `content.yml` / `typecheck.yml` / `test.yml` / `build.yml`）を作成。
 5. `build` ジョブ用のダミー環境変数（または Secrets）を GitHub 側に設定。
 6. PR の必須チェックに各ジョブを登録（ブランチ保護ルール）。

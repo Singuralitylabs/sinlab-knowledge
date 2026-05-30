@@ -9,6 +9,8 @@
     "lint": "biome check . && bun run check:content",
     "format": "biome format --write .",
     "check": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
     "check:content": "bun scripts/check-content.ts",
     "migrate:web-skill": "bun scripts/migrate/import-web-skill.ts",
     "migrate:cc-website": "bun scripts/migrate/import-claude-code-website.ts"
@@ -39,6 +41,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.12",
     "@tailwindcss/postcss": "^4",
+    "@types/bun": "^1.3.14",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
