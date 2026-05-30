@@ -1,7 +1,7 @@
 ---
 title: "テンプレートリテラル"
 description: "バッククォートによる変数の埋め込みと複数行文字列を、従来の文字列連結と比較して学ぶ。"
-order: 4
+order: 5
 type: lecture
 difficulty: beginner
 tags: [javascript, es6]

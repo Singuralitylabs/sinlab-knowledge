@@ -1,7 +1,7 @@
 ---
 title: "スプレッド構文とレスト構文"
 description: "... 記号によるスプレッド（展開）とレスト（集約）の違いと、非破壊的なデータ操作を学ぶ。"
-order: 6
+order: 7
 type: lecture
 difficulty: beginner
 tags: [javascript, es6]

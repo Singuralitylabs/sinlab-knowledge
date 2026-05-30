@@ -1,7 +1,7 @@
 ---
 title: "ES Modules (import / export)"
 description: "export と import によるファイル分割の仕組みと、名前付き・デフォルトエクスポートの使い分けを学ぶ。"
-order: 7
+order: 8
 type: lecture
 difficulty: beginner
 tags: [javascript, es6]

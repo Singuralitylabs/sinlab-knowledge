@@ -1,7 +1,7 @@
 ---
 title: "クラス構文"
 description: "class によるオブジェクトの設計図の書き方、コンストラクタ・メソッド・継承の基本を学ぶ。"
-order: 8
+order: 9
 type: lecture
 difficulty: beginner
 tags: [javascript, es6]

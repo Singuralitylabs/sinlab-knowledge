@@ -1,7 +1,7 @@
 ---
 title: "分割代入"
 description: "配列やオブジェクトの要素をまとめて変数に取り出す分割代入の書き方と実用例を学ぶ。"
-order: 5
+order: 6
 type: lecture
 difficulty: beginner
 tags: [javascript, es6]

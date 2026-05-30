@@ -1,7 +1,7 @@
 ---
 title: "オプショナルチェイニングとNull合体演算子"
 description: "?. による安全なプロパティアクセスと、?? による既定値の指定方法を学ぶ。"
-order: 9
+order: 10
 type: lecture
 difficulty: beginner
 tags: [javascript, es6]
