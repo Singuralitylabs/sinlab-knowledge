@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 444" font-family="'Hiragino Sans','Noto Sans JP','Helvetica Neue',Arial,sans-serif" role="img" aria-label="CSSボックスモデルの図。外側から margin、border、padding、content（要素の中身）の順に入れ子になっている">
+  <rect width="560" height="444" fill="#ffffff"/>
+  <!-- margin -->
+  <rect x="20" y="20" width="520" height="360" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="6 4"/>
+  <text x="34" y="40" font-size="16" fill="#b45309" font-weight="bold">margin（外側の余白）</text>
+  <!-- border -->
+  <rect x="70" y="64" width="420" height="272" rx="4" fill="#fde0b2" stroke="#ea580c"/>
+  <text x="84" y="84" font-size="16" fill="#c2410c" font-weight="bold">border（境界線）</text>
+  <!-- padding -->
+  <rect x="120" y="108" width="320" height="184" rx="4" fill="#bbf7d0" stroke="#16a34a"/>
+  <text x="134" y="128" font-size="16" fill="#15803d" font-weight="bold">padding（内側の余白）</text>
+  <!-- content -->
+  <rect x="170" y="152" width="220" height="96" rx="4" fill="#bfdbfe" stroke="#2563eb"/>
+  <text x="280" y="196" font-size="16" fill="#1d4ed8" font-weight="bold" text-anchor="middle">content</text>
+  <text x="280" y="220" font-size="13" fill="#1e40af" text-anchor="middle">要素の中身（文字・画像など）</text>
+  <!-- caption -->
+  <text x="280" y="408" font-size="13" fill="#6b7280" text-anchor="middle">box-sizing の既定は content-box（width = content の幅）。</text>
+  <text x="280" y="430" font-size="13" fill="#6b7280" text-anchor="middle">border-box にすると padding・border を含めた幅になる。</text>
+</svg>

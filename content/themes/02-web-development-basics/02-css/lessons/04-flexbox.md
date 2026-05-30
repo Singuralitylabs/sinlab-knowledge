@@ -54,6 +54,8 @@ Flexbox を理解する鍵は、2つの軸です。
 
 この「主軸」と「交差軸」がどちらを向いているかで、次に紹介する `justify-content` と `align-items` の効く方向が決まります。
 
+![Flexbox の主軸と交差軸の図。flex-direction:row では主軸が横方向（justify-content で配置）、交差軸が縦方向（align-items で配置）になる](/content-assets/02-web-development-basics/02-css/images/flexbox/flex-axes.svg)
+
 ---
 
 ## justify-content：主軸方向の揃え

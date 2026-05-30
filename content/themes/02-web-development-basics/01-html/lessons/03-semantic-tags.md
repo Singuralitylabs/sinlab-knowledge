@@ -90,6 +90,10 @@ status: published
 - `<article>` は「切り出しても意味が通る」内容に使います。たとえばブログ記事は、それ単体で読めるので `<article>` が適切です。
 - `<section>` は「見出しを伴うまとまり」を表すときに使います。
 
+各タグがページのどの領域を担うかを図にすると、次のようになります。
+
+![セマンティックタグによるページ領域の図。header・nav・main（article と aside）・footer で構成される典型的なレイアウト](/content-assets/02-web-development-basics/01-html/images/semantic-tags/semantic-layout.svg)
+
 ---
 
 ## `<div>` との違い

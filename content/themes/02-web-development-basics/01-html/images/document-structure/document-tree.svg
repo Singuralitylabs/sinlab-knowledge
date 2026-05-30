@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Hiragino Sans','Noto Sans JP','Helvetica Neue',Arial,sans-serif" role="img" aria-label="HTML文書の構造ツリー。html要素の下にhead（meta・title）とbody（h1・p）が並ぶ">
+  <rect width="560" height="420" fill="#ffffff"/>
+  <text x="280" y="30" font-size="16" fill="#111827" font-weight="bold" text-anchor="middle">HTML 文書のツリー構造</text>
+
+  <!-- connectors -->
+  <g stroke="#cbd5e1" stroke-width="2" fill="none">
+    <path d="M280,70 V100"/>
+    <path d="M280,124 V150 H170 V176"/>
+    <path d="M280,124 V150 H390 V176"/>
+    <path d="M170,200 V224 H120 V250"/>
+    <path d="M170,200 V224 H230 V250"/>
+    <path d="M390,200 V224 H340 V250"/>
+    <path d="M390,200 V224 H450 V250"/>
+  </g>
+
+  <!-- DOCTYPE note -->
+  <rect x="170" y="46" width="220" height="26" rx="4" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="280" y="64" font-size="12" fill="#854d0e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;!DOCTYPE html&gt;（先頭で宣言）</text>
+
+  <!-- html -->
+  <rect x="220" y="100" width="120" height="26" rx="4" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="280" y="118" font-size="14" fill="#1d4ed8" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;html lang="ja"&gt;</text>
+
+  <!-- head / body -->
+  <rect x="115" y="176" width="110" height="26" rx="4" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="170" y="194" font-size="14" fill="#15803d" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;head&gt;</text>
+  <rect x="335" y="176" width="110" height="26" rx="4" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="390" y="194" font-size="14" fill="#15803d" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;body&gt;</text>
+
+  <!-- head children -->
+  <rect x="60" y="250" width="120" height="26" rx="4" fill="#f1f5f9" stroke="#64748b"/>
+  <text x="120" y="268" font-size="12" fill="#334155" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;meta charset&gt;</text>
+  <rect x="190" y="250" width="80" height="26" rx="4" fill="#f1f5f9" stroke="#64748b"/>
+  <text x="230" y="268" font-size="12" fill="#334155" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;title&gt;</text>
+
+  <!-- body children -->
+  <rect x="300" y="250" width="80" height="26" rx="4" fill="#f1f5f9" stroke="#64748b"/>
+  <text x="340" y="268" font-size="12" fill="#334155" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;h1&gt;</text>
+  <rect x="410" y="250" width="80" height="26" rx="4" fill="#f1f5f9" stroke="#64748b"/>
+  <text x="450" y="268" font-size="12" fill="#334155" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;p&gt;</text>
+
+  <!-- legend -->
+  <text x="170" y="320" font-size="13" fill="#15803d" text-anchor="middle">head ＝ ページの設定情報（表示されない）</text>
+  <text x="390" y="320" font-size="13" fill="#15803d" text-anchor="middle">body ＝ 画面に表示される内容</text>
+  <text x="280" y="360" font-size="13" fill="#6b7280" text-anchor="middle">親要素の中に子要素が入れ子になり、全体が1本のツリーを成す。</text>
+</svg>

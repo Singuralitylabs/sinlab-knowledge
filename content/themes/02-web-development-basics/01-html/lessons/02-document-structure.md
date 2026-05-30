@@ -38,6 +38,10 @@ status: published
 > [!TIP]
 > このテンプレートは丸ごと覚えてしまって構いません。新しい HTML ファイルを作るときは、まずこの形を書き写すところから始めます。
 
+この構造を図にすると、次のようなツリー（入れ子）になります。
+
+![HTML 文書のツリー構造。html 要素の下に head（meta・title）と body（h1・p）が入れ子で並ぶ](/content-assets/02-web-development-basics/01-html/images/document-structure/document-tree.svg)
+
 ---
 
 ## 各部分の役割

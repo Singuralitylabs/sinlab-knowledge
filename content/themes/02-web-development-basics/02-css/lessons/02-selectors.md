@@ -177,6 +177,8 @@ li:nth-child(3n)   { color: blue; }  /* 3の倍数番目 */
 | 2桁目 | クラス・属性・擬似クラス（`.title`、`[href]`、`:hover`） |
 | 3桁目 | 要素・擬似要素（`p`、`li`） |
 
+![特定性（詳細度）の比較図。(id, クラス等, 要素) の3つの組で数え、左の桁ほど強い。#main が最も優先される](/content-assets/02-web-development-basics/02-css/images/selectors/specificity.svg)
+
 ```css
 p              /* (0,0,1) */
 .lead          /* (0,1,0) */

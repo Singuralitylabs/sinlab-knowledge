@@ -29,6 +29,10 @@ status: published
 | `action` | 入力内容の送信先 URL |
 | `method` | 送信方法（`get` または `post`） |
 
+各入力要素を組み合わせると、ブラウザでは次のように表示されます（スタイルは CSS で整えたもの）。
+
+![ブラウザに表示されたお問い合わせフォームの例。テキスト入力・メール入力・セレクトボックス・テキストエリア・チェックボックス・送信ボタンが並ぶ](/content-assets/02-web-development-basics/01-html/images/forms/form-rendered.png)
+
 ---
 
 ## テキスト入力（`<input>`）

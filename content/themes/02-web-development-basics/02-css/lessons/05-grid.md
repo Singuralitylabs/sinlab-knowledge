@@ -38,6 +38,8 @@ status: published
 
 これで6個のアイテムが3列×2行に並びます。
 
+![CSS Grid のトラックと gap の図。3つの列トラック（1fr）と2つの行トラック、その間の溝（gap）を示す](/content-assets/02-web-development-basics/02-css/images/grid/grid-tracks.svg)
+
 ---
 
 ## grid-template-columns：列の構成
