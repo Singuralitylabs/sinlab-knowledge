@@ -31,13 +31,21 @@ export default function RootLayout({
   const site = getSite();
   return (
     <html lang="ja" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
         <Header siteTitle={site.title} navigation={site.navigation} />
         <div className="flex-1">{children}</div>
         <Footer
           siteTitle={site.title}
           description={site.description}
-          links={site.footer.links}
+          navigation={site.navigation}
           copyright={site.footer.copyright}
         />
       </body>
