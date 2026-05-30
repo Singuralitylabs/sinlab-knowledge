@@ -1,0 +1,8 @@
+{
+  "slug": "04-modern-javascript",
+  "title": "モダンJavaScript",
+  "description": "ES6+ の構文。let/const・アロー関数・分割代入・モジュール・クラスなどモダンな書き方を学ぶ",
+  "order": 4,
+  "categories": [],
+  "status": "draft"
+}
