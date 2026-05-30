@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" font-family="'Hiragino Sans','Noto Sans JP','Helvetica Neue',Arial,sans-serif" role="img" aria-label="Flexboxの主軸と交差軸の図。flex-direction:row では主軸が横方向、交差軸が縦方向になる">
+  <rect width="600" height="320" fill="#ffffff"/>
+  <text x="300" y="34" font-size="17" fill="#111827" font-weight="bold" text-anchor="middle">flex-direction: row（既定）の軸</text>
+
+  <!-- flex container -->
+  <rect x="120" y="70" width="380" height="150" rx="8" fill="#f0f9ff" stroke="#0ea5e9"/>
+  <!-- items -->
+  <rect x="140" y="95" width="80" height="100" rx="6" fill="#bae6fd" stroke="#0284c7"/>
+  <text x="180" y="150" font-size="15" fill="#075985" text-anchor="middle">1</text>
+  <rect x="240" y="95" width="80" height="100" rx="6" fill="#bae6fd" stroke="#0284c7"/>
+  <text x="280" y="150" font-size="15" fill="#075985" text-anchor="middle">2</text>
+  <rect x="340" y="95" width="80" height="100" rx="6" fill="#bae6fd" stroke="#0284c7"/>
+  <text x="380" y="150" font-size="15" fill="#075985" text-anchor="middle">3</text>
+
+  <!-- main axis (horizontal) -->
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="av" markerWidth="10" markerHeight="10" refX="3" refY="8" orient="auto"><path d="M0,0 L6,0 L3,8 Z" fill="#7c3aed"/></marker>
+  </defs>
+  <line x1="120" y1="250" x2="500" y2="250" stroke="#dc2626" stroke-width="2.5" marker-end="url(#ah)"/>
+  <text x="310" y="275" font-size="15" fill="#dc2626" font-weight="bold" text-anchor="middle">主軸 main axis（justify-content で配置）</text>
+
+  <!-- cross axis (vertical) -->
+  <line x1="90" y1="70" x2="90" y2="220" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#av)"/>
+  <text x="78" y="150" font-size="15" fill="#7c3aed" font-weight="bold" text-anchor="middle" transform="rotate(-90 78 150)">交差軸 cross axis（align-items）</text>
+</svg>

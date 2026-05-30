@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" font-family="'Hiragino Sans','Noto Sans JP','Helvetica Neue',Arial,sans-serif" role="img" aria-label="CSS Gridのトラックとgapの図。3つの列トラックと2つの行トラック、その間の溝(gap)を示す">
+  <rect width="600" height="360" fill="#ffffff"/>
+  <text x="300" y="32" font-size="17" fill="#111827" font-weight="bold" text-anchor="middle">grid-template-columns: 1fr 1fr 1fr / gap</text>
+
+  <!-- cells -->
+  <g fill="#ede9fe" stroke="#7c3aed">
+    <rect x="90"  y="70"  width="130" height="90" rx="6"/>
+    <rect x="240" y="70"  width="130" height="90" rx="6"/>
+    <rect x="390" y="70"  width="130" height="90" rx="6"/>
+    <rect x="90"  y="190" width="130" height="90" rx="6"/>
+    <rect x="240" y="190" width="130" height="90" rx="6"/>
+    <rect x="390" y="190" width="130" height="90" rx="6"/>
+  </g>
+  <g font-size="14" fill="#5b21b6" text-anchor="middle">
+    <text x="155" y="120">1</text><text x="305" y="120">2</text><text x="455" y="120">3</text>
+    <text x="155" y="240">4</text><text x="305" y="240">5</text><text x="455" y="240">6</text>
+  </g>
+
+  <!-- column track labels -->
+  <g font-size="13" fill="#6d28d9" text-anchor="middle">
+    <text x="155" y="60">列トラック 1fr</text>
+    <text x="305" y="60">列トラック 1fr</text>
+    <text x="455" y="60">列トラック 1fr</text>
+  </g>
+
+  <!-- gap markers (column) -->
+  <line x1="220" y1="300" x2="240" y2="300" stroke="#dc2626" stroke-width="2"/>
+  <text x="230" y="320" font-size="12" fill="#dc2626" text-anchor="middle">gap</text>
+
+  <!-- row labels -->
+  <text x="60" y="120" font-size="13" fill="#6d28d9" text-anchor="middle" transform="rotate(-90 60 120)">行トラック</text>
+  <text x="60" y="240" font-size="13" fill="#6d28d9" text-anchor="middle" transform="rotate(-90 60 240)">行トラック</text>
+
+  <text x="300" y="345" font-size="13" fill="#6b7280" text-anchor="middle">行と列を同時に定義し、gap で溝（すきま）をまとめて指定できる。</text>
+</svg>

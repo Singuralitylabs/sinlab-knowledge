@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Hiragino Sans','Noto Sans JP','Helvetica Neue',Arial,sans-serif" role="img" aria-label="セマンティックタグによるページ領域の図。header・nav・main（article と aside）・footer で構成される典型的なレイアウト">
+  <rect width="560" height="420" fill="#ffffff"/>
+  <text x="280" y="30" font-size="16" fill="#111827" font-weight="bold" text-anchor="middle">セマンティックタグで表すページの領域</text>
+
+  <!-- header -->
+  <rect x="40" y="50" width="480" height="50" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="280" y="80" font-size="15" fill="#1d4ed8" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;header&gt;（ロゴ・サイト名）</text>
+
+  <!-- nav -->
+  <rect x="40" y="108" width="480" height="38" rx="6" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="280" y="132" font-size="15" fill="#6d28d9" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;nav&gt;（ナビゲーション）</text>
+
+  <!-- main wrapper -->
+  <rect x="40" y="154" width="480" height="170" rx="6" fill="#f0fdf4" stroke="#16a34a"/>
+  <text x="52" y="174" font-size="13" fill="#15803d" font-family="ui-monospace,Menlo,monospace">&lt;main&gt;</text>
+
+  <!-- article -->
+  <rect x="60" y="184" width="300" height="126" rx="6" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="210" y="250" font-size="15" fill="#15803d" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;article&gt;（本文）</text>
+
+  <!-- aside -->
+  <rect x="372" y="184" width="130" height="126" rx="6" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="437" y="244" font-size="14" fill="#854d0e" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;aside&gt;</text>
+  <text x="437" y="264" font-size="12" fill="#854d0e" text-anchor="middle">補足・関連</text>
+
+  <!-- footer -->
+  <rect x="40" y="332" width="480" height="46" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="280" y="360" font-size="15" fill="#1d4ed8" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">&lt;footer&gt;（著作権・リンク）</text>
+
+  <text x="280" y="402" font-size="13" fill="#6b7280" text-anchor="middle">同じ見た目でも &lt;div&gt; ではなく意味を持つタグを選ぶと、人にも機械にも伝わる。</text>
+</svg>
