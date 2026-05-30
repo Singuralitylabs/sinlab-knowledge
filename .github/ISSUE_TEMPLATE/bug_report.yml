@@ -1,0 +1,66 @@
+name: バグ報告
+description: 不具合・期待どおりに動作しない問題を報告する
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        再現と修正をスムーズに進めるため、以下の項目をできるだけ埋めてください。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 概要
+      description: どのような不具合かを簡潔に説明してください。
+      placeholder: 例）レッスンページで目次のリンクをクリックしても該当見出しにスクロールしない。
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      description: 不具合を再現する手順を順番に記載してください。
+      placeholder: |
+        1. `/themes/...` を開く
+        2. 目次の「...」をクリックする
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する挙動
+      description: 本来どうなるべきかを記載してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の挙動
+      description: 実際に何が起きたかを記載してください。エラーメッセージやスクリーンショットがあれば添付してください。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: 発生環境
+      description: 不具合が発生した環境を選択してください。
+      options:
+        - 本番（デプロイ済みサイト）
+        - ローカル開発（bun run dev）
+        - 不明・その他
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 補足情報
+      description: ブラウザ・OS・関連するレッスンパスなど、参考になる情報があれば記載してください。
+    validations:
+      required: false
