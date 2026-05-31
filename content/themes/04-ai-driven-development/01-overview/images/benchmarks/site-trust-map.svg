@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" width="720" height="340" role="img" aria-labelledby="title-trust">
+  <title id="title-trust">参照サイトの3分類：標準化評価・公式リーダーボード・アグリゲーターと信頼度</title>
+  <defs>
+    <marker id="up-arrow" viewBox="0 0 10 10" refX="5" refY="1" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M1,9 L5,1 L9,9" fill="none" stroke="#6366f1" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <style>
+    .ttl { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-weight: 700; fill: #1f2937; }
+    .ex  { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #4b5563; }
+    .axis { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #6366f1; font-weight: 600; }
+  </style>
+
+  <!-- trust axis -->
+  <line x1="60" y1="295" x2="60" y2="28" stroke="#6366f1" stroke-width="1.6" marker-end="url(#up-arrow)"/>
+  <text class="axis" x="34" y="165" font-size="14" text-anchor="middle" transform="rotate(-90 34 165)">信頼度（裏取りの確かさ）</text>
+
+  <!-- Tier 1: standardized -->
+  <rect x="95" y="28" width="600" height="76" rx="10" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+  <text class="ttl" x="115" y="58" font-size="16">標準化評価 — 測定条件を固定・開示</text>
+  <text class="ex"  x="115" y="84" font-size="13">Artificial Analysis ／ LiveBench ／ Epoch AI</text>
+
+  <!-- Tier 2: official -->
+  <rect x="95" y="118" width="600" height="76" rx="10" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+  <text class="ttl" x="115" y="148" font-size="16">公式リーダーボード — 一次情報（提出制で遅延あり）</text>
+  <text class="ex"  x="115" y="174" font-size="13">SWE-bench ／ ARC-AGI ／ GAIA ／ MMMU</text>
+
+  <!-- Tier 3: aggregators -->
+  <rect x="95" y="208" width="600" height="76" rx="10" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.5"/>
+  <text class="ttl" x="115" y="238" font-size="16">アグリゲーター — 手軽・全体像向き（要裏取り）</text>
+  <text class="ex"  x="115" y="264" font-size="13">Vellum ／ llm-stats など</text>
+</svg>
