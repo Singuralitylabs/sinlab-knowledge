@@ -1,0 +1,8 @@
+{
+  "slug": "01-debugging",
+  "title": "デバッグの基礎",
+  "description": "原因特定と修正の違い、再現、根本原因分析、再発防止まで、ツールに依存しないデバッグの原理原則を学ぶ。",
+  "icon": "Search",
+  "order": 1,
+  "categories": []
+}

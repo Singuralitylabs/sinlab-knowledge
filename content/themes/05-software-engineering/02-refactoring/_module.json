@@ -1,0 +1,8 @@
+{
+  "slug": "02-refactoring",
+  "title": "リファクタリングの基礎",
+  "description": "リファクタリングの定義、コードの臭い、安全な進め方、定番パターンまで、ツールに依存しない原理原則を学ぶ。",
+  "icon": "Wrench",
+  "order": 2,
+  "categories": []
+}
