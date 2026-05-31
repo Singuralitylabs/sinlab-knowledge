@@ -60,9 +60,9 @@ git add -A && git commit -m "refactor前の状態"
 # 1ステップ実行 → テスト → 問題なければコミット
 npm test && git commit -am "refactor: 重複していたバリデーションを共通関数に抽出"
 
-# 問題が出たら直前のコミットに戻す
-git restore .          # 未コミットの変更を破棄
-git reset --hard HEAD  # 直前のコミットまで戻す
+# 問題が出たら戻す
+git restore .            # まだコミットしていない変更を破棄（最新コミットの状態に戻る）
+git reset --hard HEAD~1  # 直前のコミットごと取り消す（コミット済みの場合）
 ```
 
 > [!NOTE]
