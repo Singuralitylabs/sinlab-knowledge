@@ -1,0 +1,8 @@
+{
+  "slug": "03-development-practice",
+  "title": "AIによる開発の進め方",
+  "description": "計画・実装・デバッグ・リファクタリング・レビューという開発ループを、AIツールを活用して効率よく進める実践手法を解説。",
+  "icon": "Rocket",
+  "order": 3,
+  "categories": []
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "05-software-engineering",
+  "title": "ソフトウェアエンジニアリング基礎",
+  "shortTitle": "SE基礎",
+  "description": "デバッグ・リファクタリングなど、ツールに依存しないコード品質の原理原則を体系的に学ぶ。",
+  "icon": "Layers",
+  "color": "green",
+  "order": 5,
+  "difficulty": "intermediate",
+  "estimatedHours": 5,
+  "status": "draft"
+}
