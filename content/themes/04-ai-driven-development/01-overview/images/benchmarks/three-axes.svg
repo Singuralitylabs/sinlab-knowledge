@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 480" width="540" height="480" role="img" aria-labelledby="title-axes">
+  <title id="title-axes">モデル選びの4軸：知能・速度・コスト効率・体感のバランス</title>
+  <style>
+    .ax { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-weight: 700; fill: #312e81; }
+    .cap { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #4b5563; }
+  </style>
+
+  <!-- grid: outer + inner diamond -->
+  <polygon points="270,90 420,240 270,390 120,240" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <polygon points="270,165 345,240 270,315 195,240" fill="none" stroke="#ddd6fe" stroke-width="1.2"/>
+  <!-- axes -->
+  <line x1="270" y1="240" x2="270" y2="90" stroke="#c4b5fd" stroke-width="1.2"/>
+  <line x1="270" y1="240" x2="420" y2="240" stroke="#c4b5fd" stroke-width="1.2"/>
+  <line x1="270" y1="240" x2="270" y2="390" stroke="#c4b5fd" stroke-width="1.2"/>
+  <line x1="270" y1="240" x2="120" y2="240" stroke="#c4b5fd" stroke-width="1.2"/>
+
+  <!-- sample model polygon (illustrative tradeoff) -->
+  <polygon points="270,105 360,240 270,308 158,240" fill="#6366f1" fill-opacity="0.18" stroke="#4f46e5" stroke-width="2"/>
+  <circle cx="270" cy="105" r="3.5" fill="#4f46e5"/>
+  <circle cx="360" cy="240" r="3.5" fill="#4f46e5"/>
+  <circle cx="270" cy="308" r="3.5" fill="#4f46e5"/>
+  <circle cx="158" cy="240" r="3.5" fill="#4f46e5"/>
+
+  <!-- axis labels -->
+  <text class="ax" x="270" y="74" font-size="17" text-anchor="middle">知能</text>
+  <text class="ax" x="434" y="245" font-size="17" text-anchor="start">速度</text>
+  <text class="ax" x="270" y="412" font-size="17" text-anchor="middle">コスト効率</text>
+  <text class="ax" x="106" y="245" font-size="17" text-anchor="end">体感</text>
+
+  <text class="cap" x="270" y="452" font-size="15" text-anchor="middle">4軸のバランスで見る — 賢さ（知能）だけで選ばない</text>
+</svg>

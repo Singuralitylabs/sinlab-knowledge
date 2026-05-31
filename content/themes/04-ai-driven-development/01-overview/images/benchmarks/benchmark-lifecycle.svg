@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 420" width="660" height="420" role="img" aria-labelledby="title-lifecycle">
+  <title id="title-lifecycle">ベンチマークのライフサイクル：飽和した旧指標から新しい難問指標へ主役が移る</title>
+  <defs>
+    <marker id="ax-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+    </marker>
+  </defs>
+  <style>
+    .lab { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #4b5563; }
+    .old { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #6b7280; font-weight: 700; }
+    .new { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #6d28d9; font-weight: 700; }
+    .note { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #312e81; font-weight: 700; }
+  </style>
+
+  <!-- axes -->
+  <line x1="70" y1="50" x2="70" y2="360" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="70" y1="360" x2="615" y2="360" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ax-arrow)"/>
+  <text class="lab" x="40" y="210" font-size="14" text-anchor="middle" transform="rotate(-90 40 210)">スコア</text>
+  <text class="lab" x="575" y="385" font-size="14" text-anchor="middle">時間 →</text>
+
+  <!-- saturation line -->
+  <line x1="70" y1="72" x2="610" y2="72" stroke="#d1d5db" stroke-width="1.4" stroke-dasharray="6 5"/>
+  <text class="lab" x="610" y="66" font-size="12" text-anchor="end">飽和ライン（≒100%）</text>
+
+  <!-- old benchmark: rises then saturates -->
+  <path d="M70,305 C140,305 165,110 240,86 C320,62 560,72 605,72" fill="none" stroke="#9ca3af" stroke-width="3"/>
+  <text class="old" x="250" y="58" font-size="14" text-anchor="middle">旧指標（MMLU）→ 飽和</text>
+
+  <!-- new benchmark: starts later, low, rising -->
+  <path d="M255,346 C370,330 480,250 605,150" fill="none" stroke="#6d28d9" stroke-width="3"/>
+  <text class="new" x="540" y="138" font-size="14" text-anchor="middle">新しい難問指標</text>
+  <text class="new" x="540" y="156" font-size="13" text-anchor="middle">（GPQA / HLE）</text>
+
+  <!-- handover annotation -->
+  <text class="note" x="300" y="190" font-size="15" text-anchor="middle">主役交代</text>
+  <path d="M300,200 C320,235 300,270 290,300" fill="none" stroke="#312e81" stroke-width="1.2" stroke-dasharray="4 4"/>
+</svg>
