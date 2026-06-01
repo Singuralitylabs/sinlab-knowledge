@@ -1,0 +1,8 @@
+{
+  "slug": "04-terminal",
+  "title": "ターミナル",
+  "description": "ファイル操作・パスの概念・タブ補完や履歴に加え、リダイレクトやパイプ・grep などを基礎/応用の2カテゴリで体系的に学習",
+  "icon": "Terminal",
+  "order": 4,
+  "categories": []
+}
