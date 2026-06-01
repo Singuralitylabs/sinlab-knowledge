@@ -1,6 +1,6 @@
 ---
 title: "エイリアスとシェル設定ファイル"
-order: 6
+order: 9
 type: detail
 difficulty: intermediate
 tags: [terminal, alias, config, reference]

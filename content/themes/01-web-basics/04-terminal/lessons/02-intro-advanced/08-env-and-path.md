@@ -1,6 +1,6 @@
 ---
 title: "環境変数とPATH"
-order: 5
+order: 8
 type: detail
 difficulty: intermediate
 tags: [terminal, environment, path, reference]
