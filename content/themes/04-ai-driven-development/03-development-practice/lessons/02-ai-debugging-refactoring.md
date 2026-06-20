@@ -6,7 +6,6 @@ type: lecture
 difficulty: intermediate
 tags: [ai-coding, claude-code, cursor, github-copilot, codex, troubleshooting, best-practices]
 estimatedMinutes: 22
-status: draft
 ---
 
 # AIによるデバッグとリファクタリング

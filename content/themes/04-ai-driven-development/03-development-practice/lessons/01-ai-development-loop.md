@@ -6,7 +6,6 @@ type: lecture
 difficulty: intermediate
 tags: [ai-coding, claude-code, best-practices]
 estimatedMinutes: 12
-status: draft
 ---
 
 # AI開発の基本ループ
