@@ -71,7 +71,7 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 - Claude.ai にログインし、アプリメニューから「Claude Design」を選択
 - Claude デスクトップアプリのサイドバーから「Claude Design」を開く（2026 年 6 月のアップデートで追加）
 
-![Claude Design のホーム画面。Research Preview バッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
+![Claude Design のホーム画面。ステータスバッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
 
 ### オンボーディングの流れ
 
@@ -298,7 +298,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | **Handoff to Claude Code** | ハンドオフバンドルで実装に進む（経路は下表） |
 
 > [!NOTE]
-> 2026 年 6 月のアップデートで連携先が拡充され、Canva に加えて **Adobe・Vercel・Replit・Gamma・Lovable・Miro・Wix** などへ直接送れるようになりました（今後さらに追加予定）。
+> 2026 年 6 月のアップデートで連携先が拡充され、Canva に加えて **Adobe・Base44・Vercel・Replit・Gamma・Lovable・Miro・Wix** などへ直接送れるようになりました（今後さらに追加予定）。
 
 実装への引き継ぎは、[Share] メニューの **「Handoff to Claude Code…」** を選ぶと、続けて次の経路を選べます。
 
@@ -340,7 +340,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 2026 年 6 月のアップデートで、Claude Design と Claude Code は **双方向に同期** できるようになりました。ハンドオフは「スクリーンショットを見て一から作り直す」のではなく、**既存の作業を引き継いで続きから実装する** 方式に変わっています。
 
-- Claude Code 側で `/design-sync` を実行すると、Claude Design のデザインシステムをそのままリポジトリに取り込めます（プロトタイプを既存コンポーネントから組み立てられる）。
+- Claude Code 側で `/design-sync` を実行すると、リポジトリ（既存コードベース）のデザインシステムを Claude Design に取り込めます（プロトタイプを既存コンポーネントから組み立てられる）。
 - `/design` コマンドを使うと、ターミナルを離れずにデザインプロジェクトの作成・編集・同期ができます。デザインをコードベースに取り込んだり、逆にコードを生きたプロトタイプに変換したりできます。
 
 デザイン → コード、コード → デザインのどちらに動いても作業が同期され続けるため、「実装が先行してデザインと乖離する」従来の問題が起きにくくなります。
@@ -366,7 +366,7 @@ beta 段階のため、執筆時点で次の問題が報告されています。
 - 推奨ワークフローは **作成 → コンテキスト → 要件 → レビュー → 反復** の 5 ステップ
 - プロンプトは **目標・レイアウト・コンテンツ・対象ユーザー** を含めて段階的に複雑さを足す
 - デザインシステムを組織にセットアップし、[Published] にすると全プロジェクトに自動適用（複数システムも可）
-- エクスポートから **Claude Code へのハンドオフ**（ローカル / Web 経由含む）で実装まで一気通貫。2026 年 6 月のアップデートで `/design-sync` ・ `/design` によるデザイン⇔コードの双方向同期に対応
+- エクスポートから **Claude Code へのハンドオフ**（ローカル / Web 経由含む）で実装まで一気通貫。2026 年 6 月のアップデートで `/design-sync`・`/design` によるデザイン⇔コードの双方向同期に対応
 - beta 段階のため、既知の不具合に留意して小規模検証から始める
 
 ## 関連リソース
