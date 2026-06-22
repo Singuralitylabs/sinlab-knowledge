@@ -68,7 +68,7 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 次のいずれかでアクセスします。
 
 - 直接 URL：[claude.ai/design](https://claude.ai/design)
-- Claude.ai にログインし、アプリメニューから「Claude Design」を選択
+- claude.ai にログインし、アプリメニューから「Claude Design」を選択
 - Claude デスクトップアプリのサイドバーから「Claude Design」を開く（2026 年 6 月のアップデートで追加）
 
 ![Claude Design のホーム画面。ステータスバッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
