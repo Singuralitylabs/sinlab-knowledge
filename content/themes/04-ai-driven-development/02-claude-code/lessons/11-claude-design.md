@@ -15,7 +15,7 @@ status: published
 Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジュアル制作向けの AI プロダクトです。**クリック可能なインタラクティブプロトタイプ**、スライド、ワンページャー、モックアップなどを会話ベースで生成でき、完成したデザインを **Claude Code にハンドオフして実装まで一気通貫で進められる** のが特徴です。
 
 > [!NOTE]
-> 本記事の内容は **2026 年 5 月時点** のものです。Claude Design は research preview（段階的ロールアウト）であり、UI・機能名・料金・利用枠は今後変更される可能性があります。実際に利用する際は最新の公式ドキュメントを併せて確認してください。
+> 本記事の内容は **2026 年 6 月時点** のものです。Claude Design は beta（段階的ロールアウト）であり、UI・機能名・料金・利用枠は今後変更される可能性があります。実際に利用する際は最新の公式ドキュメントを併せて確認してください。
 
 ## このページで学べること
 
@@ -28,7 +28,7 @@ Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジ�
 - デザインシステムをセットアップしてチームで共有する手順
 - キャンバスの 4 つの編集モード（Mark up / Comments / Edit / Tweaks）とチャットの使い分け
 - エクスポート形式・組織内共有と Claude Code への引き継ぎ方
-- Research preview としての制限・既知の不具合
+- beta 段階としての制限・既知の不具合
 
 ## A. Claude Design とは何か
 
@@ -43,7 +43,7 @@ Claude Design は、デザイン経験のないファウンダー・PM・エン�
 
 ## B. 利用できるプランとモデル
 
-Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。現在は [claude.ai/design](https://claude.ai/design) からブラウザで利用します（デスクトップの Claude Code アプリとは別の画面です）。
+Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。[claude.ai/design](https://claude.ai/design) からブラウザで利用するほか、2026 年 6 月のアップデートで **Claude デスクトップアプリのサイドバー** からも開けるようになりました（いずれも Claude Code とは別の画面です）。
 
 Enterprise はデフォルトで無効化されています。Team / Enterprise ともに、管理者は **Organization settings > Capabilities** から有効化できます。
 
@@ -56,21 +56,22 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 
 利用量は **チャットや Claude Code とは別メーター** です。プランごとに週次の枠があり、枯渇時は [Extra usage](https://support.claude.com/en/articles/12429409-manage-extra-usage-for-paid-claude-plans) で追加できます（詳細は公式の利用量・料金ページを参照）。
 
-バックエンドは **Claude Opus 4.7** です。ハンドオフ時は **ハンドオフバンドル** に構造・コンポーネント・デザイントークン・実装指示がまとまるため、Claude Code がデザイン意図を解釈しやすくなります（Claude Code 側のモデルは Sonnet / Opus など切り替え可能）。
+バックエンドは Anthropic の **Opus 系モデル** です（公式ドキュメントでは具体的なバージョンは明記されておらず、随時更新されます）。ハンドオフ時は **ハンドオフバンドル** に構造・コンポーネント・デザイントークン・実装指示がまとまるため、Claude Code がデザイン意図を解釈しやすくなります（Claude Code 側のモデルは Sonnet / Opus など切り替え可能）。
 
 > [!WARNING]
-> 本記事執筆時点で Claude Design は **research preview**（段階的ロールアウト）です。機能・UI・料金は変更される可能性があります。実運用に組み込む前に最新の公式ドキュメントを確認してください。
+> 本記事執筆時点で Claude Design は **beta**（段階的ロールアウト）です。機能・UI・料金は変更される可能性があります。実運用に組み込む前に最新の公式ドキュメントを確認してください。
 
 ## C. 使い始める：アクセスとオンボーディング
 
 ### アクセスの入り口
 
-ブラウザから次のいずれかでアクセスします。
+次のいずれかでアクセスします。
 
 - 直接 URL：[claude.ai/design](https://claude.ai/design)
-- Claude.ai にログインし、アプリメニューから「Claude Design」を選択
+- claude.ai にログインし、アプリメニューから「Claude Design」を選択
+- Claude デスクトップアプリのサイドバーから「Claude Design」を開く（2026 年 6 月のアップデートで追加）
 
-![Claude Design のホーム画面。Research Preview バッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
+![Claude Design のホーム画面。ステータスバッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
 
 ### オンボーディングの流れ
 
@@ -260,7 +261,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | --- | --- | --- |
 | **Mark up**（M） | AI に依頼 | キャンバスに直接スケッチ・手描き注釈を描き込み、視覚的に修正を指示する。複数箇所をキューに溜めてまとめて送れる |
 | **Comments**（C） | AI に依頼 | 要素をクリックしてコメントとして指示文（例：「全ページから削除」）を残す。各コメントの「Select for Send to Claude」をチェックして複数まとめてバッチ送信できる |
-| **Edit**（E） | 自分でいじる | 要素を直接クリックして、テキスト・位置・サイズ・色・スタイルを手動で調整する（Claude を介さない） |
+| **Edit**（E） | 自分でいじる | 要素を直接クリックして、テキスト・位置・サイズ・色・スタイルを手動で調整する（Claude を介さない）。2026 年 6 月のアップデートで、要素のドラッグ・リサイズ・整列といった直接編集（Direct Canvas Editing）が強化された |
 | **Tweaks**（Show / Hide tweaks トグル） | 自分でいじる | Claude が背景プリセット（Plain / Grid / Dark Mode）・アクセントカラー・余白・アニメーション速度などのスライダーやカラーピッカーを埋め込む。ドラッグするとキャンバスがライブ更新される |
 
 > [!NOTE]
@@ -283,7 +284,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 ## I. 共有・エクスポートと Claude Code へのハンドオフ
 
-キャンバス右上の **[Share] ボタン**（2026 年 5 月時点。以前は Export という名称でした）から、共有・エクスポート・ハンドオフをまとめて選べます。用途に応じて以下を選びます。
+キャンバス右上の **[Share] ボタン**（以前は Export という名称でした）から、共有・エクスポート・ハンドオフをまとめて選べます。用途に応じて以下を選びます。
 
 ![Share メニューの展開状態。アクセス権（Teammates can comment）と Copy link、Duplicate project、Download project as .zip、Export as PDF / PPTX / standalone HTML、Send to Canva、Handoff to Claude Code の項目が並ぶ](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/ShareMenu.png)
 
@@ -295,6 +296,9 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | ZIP | コード化の起点として手元で扱う |
 | Canva | デザイナーによる仕上げ・チーム編集 |
 | **Handoff to Claude Code** | ハンドオフバンドルで実装に進む（経路は下表） |
+
+> [!NOTE]
+> 2026 年 6 月のアップデートで連携先が拡充され、Canva に加えて **Adobe・Base44・Vercel・Replit・Gamma・Lovable・Miro・Wix** などへ直接送れるようになりました（今後さらに追加予定）。
 
 実装への引き継ぎは、[Share] メニューの **「Handoff to Claude Code…」** を選ぶと、続けて次の経路を選べます。
 
@@ -332,9 +336,18 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 > [!TIP]
 > ハンドオフを前提にするなら、Claude Design 側でデザインシステムを先に整備しておきましょう。Claude Code 側の実装でも同じコンポーネントが再利用され、PR の差分が最小化されます。
 
+### デザインとコードの双方向同期（2026 年 6 月のアップデート）
+
+2026 年 6 月のアップデートで、Claude Design と Claude Code は **双方向に同期** できるようになりました。ハンドオフは「スクリーンショットを見て一から作り直す」のではなく、**既存の作業を引き継いで続きから実装する** 方式に変わっています。
+
+- Claude Code 側で `/design-sync` を実行すると、リポジトリ（既存コードベース）のデザインシステムを Claude Design に取り込めます（プロトタイプを既存コンポーネントから組み立てられる）。
+- `/design` コマンドを使うと、ターミナルを離れずにデザインプロジェクトの作成・編集・同期ができます。デザインをコードベースに取り込んだり、逆にコードを生きたプロトタイプに変換したりできます。
+
+デザイン → コード、コード → デザインのどちらに動いても作業が同期され続けるため、「実装が先行してデザインと乖離する」従来の問題が起きにくくなります。
+
 ## J. 既知の問題と落とし穴
 
-Research preview のため、執筆時点で次の問題が報告されています。
+beta 段階のため、執筆時点で次の問題が報告されています。
 
 | 症状 | 回避策 |
 | --- | --- |
@@ -348,13 +361,13 @@ Research preview のため、執筆時点で次の問題が報告されていま
 ## まとめ
 
 - Claude Design は「実装前のビジュアル設計」を担当する Anthropic Labs の新製品（**インタラクティブプロトタイプ**含む）
-- 入口は **[claude.ai/design](https://claude.ai/design)（ブラウザ）**、UI は **左チャット + 右キャンバス**
+- 入口は **[claude.ai/design](https://claude.ai/design)（ブラウザ）/ Claude デスクトップアプリのサイドバー**、UI は **左チャット + 右キャンバス**
 - 利用量は **チャット・Claude Code とは別メーター**（週次枠 + Extra usage）
 - 推奨ワークフローは **作成 → コンテキスト → 要件 → レビュー → 反復** の 5 ステップ
 - プロンプトは **目標・レイアウト・コンテンツ・対象ユーザー** を含めて段階的に複雑さを足す
 - デザインシステムを組織にセットアップし、[Published] にすると全プロジェクトに自動適用（複数システムも可）
-- エクスポートから **Claude Code へのハンドオフ**（ローカル / Web 経由含む）で実装まで一気通貫
-- Research preview のため、既知の不具合に留意して小規模検証から始める
+- エクスポートから **Claude Code へのハンドオフ**（ローカル / Web 経由含む）で実装まで一気通貫。2026 年 6 月のアップデートで `/design-sync`・`/design` によるデザイン⇔コードの双方向同期に対応
+- beta 段階のため、既知の不具合に留意して小規模検証から始める
 
 ## 関連リソース
 
