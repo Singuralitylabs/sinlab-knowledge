@@ -150,5 +150,6 @@ AI がデバッグ・リファクタリングを高速化しても、次の判�
 ## 関連ページ
 
 - [AI開発の基本ループ](/themes/04-ai-driven-development/03-development-practice/ai-development-loop) — 前のレッスン
+- [AI駆動開発のセキュリティとsecrets管理](/themes/04-ai-driven-development/03-development-practice/ai-security-secrets) — 次のレッスン（プロンプトインジェクション対策・secrets 管理）
 - [デバッグの基礎](/themes/05-software-engineering/01-debugging) — 原因特定・再現・根本原因分析の原理
 - [リファクタリングの基礎](/themes/05-software-engineering/02-refactoring) — 定義・コードの臭い・安全な進め方
