@@ -139,7 +139,7 @@ Serena は Python 製で、`uv` でインストールしてから Claude Code �
 
 ```bash
 # 1. Serena 本体をインストール
-uv tool install -p 3.13 serena-agent
+uv tool install --python 3.13 serena-agent
 serena init
 
 # 2. Claude Code に自動セットアップ
