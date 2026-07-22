@@ -129,7 +129,7 @@ Serena を入れると、同じ作業がシンボル単位になります。
 | `find_symbol` | 名前でシンボルを検索し、本体だけを取得する |
 | `find_referencing_symbols` | そのシンボルを参照している箇所を横断検索する |
 | `replace_symbol_body` / `insert_after_symbol` | シンボル単位でコードを書き換える・追記する |
-| `rename` / `move` / `safe_delete` | LSP の力でプロジェクト全体に及ぶリファクタリングを 1 回の呼び出しで行う |
+| `rename_symbol` / `safe_delete_symbol` | LSP の力でプロジェクト全体に及ぶリネーム・安全な削除を 1 回の呼び出しで行う |
 
 公式 README は「典型的な代替手段よりはるかにトークン効率的（much more token-efficient）」と説明しています。「◯% 削減」という公式の数値は公表されていませんが、「ファイル全読みの連鎖」が「シンボル単位の取得」に置き換わるという仕組み上、**大規模なコードベースほど効果が大きくなります**。
 
@@ -182,11 +182,14 @@ claude mcp add serena -- serena start-mcp-server --context claude-code --project
 
 ```bash
 # インストール（公式スクリプト）
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
 
 # または cargo で（必ず --git 指定で。理由は下の警告参照）
 cargo install --git https://github.com/rtk-ai/rtk
 ```
+
+> [!TIP]
+> `curl | sh` 形式は手軽ですが、外部スクリプトをそのまま実行することになります。[前のレッスン](/themes/04-ai-driven-development/03-development-practice/ai-security-secrets)で学んだ姿勢の延長として、気になる場合は一度ダウンロードして中身を確認してから実行すると安全です。
 
 Claude Code との統合は `rtk init` で行います。これは Claude Code の **hooks**（PreToolUse）を設定し、AI が実行する Bash コマンドを透過的に `rtk <cmd>` へ書き換える仕組みです。AI 側は何も意識せず、出力だけが圧縮されます。
 
@@ -215,7 +218,7 @@ rtk init --show      # 設定内容の確認
 
 ## Headroom — LLMに届く直前でコンテキストを圧縮するエンジン
 
-3 つ目の **Headroom**（headroomlabs-ai/headroom）は、最も下流——**LLM への送信直前**——に介入するオープンソース（Apache-2.0 ライセンス）のコンテキスト圧縮エンジンです。ツール出力・ログ・JSON・会話履歴といったコンテキスト全体を対象に、「回答品質は同等のまま」トークンを削減することを目標としています。公称値は、コーディングエージェントで約 20% 削減、JSON データでは 60〜95% 削減です。
+3 つ目の **Headroom**（headroomlabs-ai/headroom）は、最も下流——**LLM への送信直前**——に介入するオープンソース（Apache-2.0 ライセンス）のコンテキスト圧縮エンジンです。ツール出力・ログ・ファイル・RAG チャンクといったコンテキストを対象に、「回答品質は同等のまま」トークンを削減することを目標としています。公称値は、コーディングエージェントで約 20% 削減、JSON データでは 60〜95% 削減です。
 
 ### 仕組み — 内容の種類ごとに専用の圧縮器を使う
 
