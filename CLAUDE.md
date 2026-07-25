@@ -8,6 +8,24 @@
 
 - **コミット前には必ずユーザーに確認を取ること。** 明示的な承認を得るまで `git commit` を実行してはいけません。変更内容の要約とコミットメッセージ案を提示し、承認を得てからコミットしてください。
 
+### fallow コミットゲート
+
+エージェントの `git commit` / `git push` は `.claude/hooks/fallow-gate.sh` が `fallow audit` を実行してブロックします。判定は `new-only` — その変更で**新たに発生した**問題のみが対象で、既存の指摘ではブロックされません。
+
+ブロックされた場合の対処:
+
+- `npx fallow audit --explain` で原因を確認。`npx fallow explain <rule>` で指摘の意味を調べる
+- 未使用 export は **コードを削除せず `export` キーワードだけを外す**（同一ファイル内で使用されている場合がある）
+- 意図的に残すものは `// fallow-ignore-next-line <rule>` を理由とともに付与する
+- 解消できない場合はユーザーに報告する
+
+**禁止事項** — いずれもゲートの意味を失わせます:
+
+- `.claude/settings.json` やフック本体の編集による無効化
+- `--no-verify` での回避
+- ゲート通過のみを目的としたコード削除
+- `__` で始まるファイル名の使用（解析対象外になるため抜け道になる）
+
 ## ランタイムとツール
 
 - **Bun 1.x** はパッケージマネージャ **かつ** TS ランタイム — `bun install`、`bun run <script>`、`bun scripts/foo.ts` で TypeScript を直接実行できます（`tsx`/`ts-node` は不要）。
