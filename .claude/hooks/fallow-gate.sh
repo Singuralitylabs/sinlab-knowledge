@@ -5,7 +5,15 @@ set -euo pipefail
 # Installer version: 3.9.1
 # Requires bash and jq. On Windows run via git-bash or WSL.
 # Blocks Claude Code git commit and git push when fallow audit returns verdict fail.
-# Runtime errors fail open with a single stderr notice so skips stay visible.
+#
+# Local modifications to the generated 3.9.1 script (all tighten the gate):
+#  - the git matcher skips leading global options and treats quotes as delimiters,
+#    so `git -C dir commit`, `git -c k=v commit` and `bash -c "git commit"` are gated
+#  - a missing jq or fallow binary blocks instead of skipping: that is a persistent
+#    misconfiguration, not a transient failure, and it would silence the gate forever
+#  - --version output is truncated to its first line before the floor comparison
+# Audit runtime errors still fail open with a single stderr notice so transient
+# breakage does not wedge every commit; only the missing-prerequisite paths block.
 #
 # Version floor (FALLOW_GATE_MIN_VERSION, default 2.85.0). The gate passes
 # --gate-marker agent (added in v2.85.0) so Impact can record containment;
@@ -16,30 +24,57 @@ set -euo pipefail
 # diverge on prereleases (BSD sorts `2.48.0-alpha.1` ABOVE `2.48.0`, GNU below).
 # If you set a prerelease floor explicitly, verify the behavior on the target OS.
 
-if ! command -v jq >/dev/null 2>&1; then
-  echo "fallow-gate: jq not on PATH, skipping audit." >&2
+INPUT="$(cat)"
+
+# jq reads the command out of the hook payload and parses the audit result below.
+# Without it, fall back to scanning the raw payload: that is enough to tell a gated
+# git call apart from every other Bash command, so unrelated commands keep flowing
+# and only the gated ones stop at the hard block further down.
+if command -v jq >/dev/null 2>&1; then
+  CMD="$(jq -r '.tool_input.command // empty' <<<"$INPUT")"
+  HAVE_JQ=1
+else
+  CMD="$INPUT"
+  HAVE_JQ=0
+fi
+
+# Global options may sit between `git` and the subcommand (`git -C dir commit`,
+# `git -c user.name=x commit`, `git --no-pager push`), so step over any run of
+# leading flags -- including the detached value that -c and -C take. Quotes count
+# as delimiters on both ends so `bash -c "git commit"` and the raw JSON payload of
+# the jq fallback are matched too.
+GIT_GATED_RE=$'(^|[[:space:];|&()"\'])git([[:space:]]+(-[cC][[:space:]]+[^[:space:]]+|--[^[:space:]]+|-[a-zA-Z]+))*[[:space:]]+(commit|push)([[:space:]"\']|$)'
+
+if ! printf '%s\n' "$CMD" | grep -Eq "$GIT_GATED_RE"; then
   exit 0
 fi
 
-INPUT="$(cat)"
-CMD="$(jq -r '.tool_input.command // empty' <<<"$INPUT")"
-
-if ! printf '%s\n' "$CMD" | grep -Eq '(^|[[:space:];|&()])git[[:space:]]+(commit|push)([[:space:]]|$)'; then
-  exit 0
+if [ "$HAVE_JQ" -eq 0 ]; then
+  {
+    echo "fallow-gate: blocked: jq not on PATH, so the audit cannot run."
+    echo "fallow-gate: install jq (e.g. brew install jq) to restore the gate."
+  } >&2
+  exit 2
 fi
 
 if command -v fallow >/dev/null 2>&1; then
   RUNNER=(fallow)
   BIN_DESC="$(command -v fallow)"
-elif command -v npx >/dev/null 2>&1 && VER_PROBE="$(npx --no-install fallow --version 2>/dev/null || true)" && [[ "$VER_PROBE" == fallow* ]]; then
+elif command -v npx >/dev/null 2>&1 && VER_PROBE="$(npx --no-install fallow --version 2>/dev/null | head -n1 || true)" && [[ "$VER_PROBE" == fallow* ]]; then
   RUNNER=(npx --no-install fallow)
   BIN_DESC="npx --no-install fallow"
 else
-  echo "fallow-gate: fallow binary not found (tried PATH and npx --no-install), skipping audit." >&2
-  exit 0
+  {
+    echo "fallow-gate: blocked: fallow binary not found (tried PATH and npx --no-install)."
+    echo "fallow-gate: run \`bun install\` to restore the local devDependency, or install it"
+    echo "fallow-gate: globally (npm install -g fallow@latest)."
+  } >&2
+  exit 2
 fi
 
-VERSION_RAW="$("${RUNNER[@]}" --version 2>/dev/null || true)"
+# --version prints a signature-verification line after the version itself, so keep
+# only the first line; otherwise VERSION carries a newline into the floor compare.
+VERSION_RAW="$("${RUNNER[@]}" --version 2>/dev/null | head -n1 || true)"
 VERSION="${VERSION_RAW#fallow }"
 VERSION="${VERSION%% *}"
 

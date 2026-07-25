@@ -12,6 +12,8 @@
 
 エージェントの `git commit` / `git push` は `.claude/hooks/fallow-gate.sh` が `fallow audit` を実行してブロックします。判定は `new-only` — その変更で**新たに発生した**問題のみが対象で、既存の指摘ではブロックされません。
 
+グローバルオプションやサブシェルを挟んだ形（`git -C <dir> commit`、`git -c k=v commit`、`bash -c "git commit"`）でも同じくゲートが走ります。`--no-verify` は git 自身のフックを飛ばすだけで、このゲートは Claude Code の PreToolUse フックなので影響を受けません。
+
 ブロックされた場合の対処:
 
 - `npx fallow audit --explain` で原因を確認。`npx fallow explain <rule>` で指摘の意味を調べる
@@ -19,12 +21,14 @@
 - 意図的に残すものは `// fallow-ignore-next-line <rule>` を理由とともに付与する
 - 解消できない場合はユーザーに報告する
 
+前提ツール（`jq` / `fallow` バイナリ）が見つからない場合、ゲートは素通りせず**ブロックします**。`bun install` でローカルの devDependency を復旧してください。一方、audit 自体の実行時エラーは stderr に通知を出したうえで通過します — 一過性の障害で全コミットが止まらないようにするためです。
+
 **禁止事項** — いずれもゲートの意味を失わせます:
 
 - `.claude/settings.json` やフック本体の編集による無効化
-- `--no-verify` での回避
 - ゲート通過のみを目的としたコード削除
-- `__` で始まるファイル名の使用（解析対象外になるため抜け道になる）
+- 指摘を黙らせるための `.fallowrc.json` への追記（`entry` / `ignoreDependencies` / `rules` の `off` 化）。設定変更が正当だと考える場合はユーザーに確認すること
+- 理由を書かない `// fallow-ignore-next-line` の付与
 
 ## ランタイムとツール
 
