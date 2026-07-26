@@ -50,6 +50,8 @@ const BASE_CLASSES = [
   "prose-pre:bg-transparent",
   "prose-pre:p-0",
   "prose-pre:my-6",
+  // Images
+  "prose-img:mx-auto",
   // Blockquotes
   "prose-blockquote:border-l-blue-500/60",
   "prose-blockquote:text-gray-600",
