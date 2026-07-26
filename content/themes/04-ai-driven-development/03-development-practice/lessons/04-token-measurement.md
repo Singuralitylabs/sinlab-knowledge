@@ -51,7 +51,7 @@ cache_read_input_tokens       … キャッシュからの読み込み
 output_tokens                 … 出力
 ```
 
-さらに、`tool_use` ブロック（どのツールを呼んだか）と `tool_result` ブロック（結果の本体）を `tool_use_id` で突き合わせると、**「どのツールが何トークン分の結果をコンテキストに積んだか」**というツール別の内訳まで集計できます。コードを書かなくても、この「どのフィールドを見るか」を知っていれば、jq や小さなスクリプトで自分の環境を測れます。
+さらに、`tool_use` ブロック（どのツールを呼んだか）と `tool_result` ブロック（結果の本体）を `tool_use_id` で突き合わせると、「**どのツールが何トークン分の結果をコンテキストに積んだか**」というツール別の内訳まで集計できます。コードを書かなくても、この「どのフィールドを見るか」を知っていれば、jq や小さなスクリプトで自分の環境を測れます。
 
 > [!WARNING]
 > transcript の JSONL は Claude Code の**内部形式**で、公式ドキュメントも「バージョン間で変わりうるため、直接パースするスクリプトはリリースのたびに壊れる可能性がある」と明記しています。恒久的な仕組みを作るなら `/export` や Agent SDK の公開インターフェースを検討してください。ここでは「一度測って現状を知る」用途に割り切って使います。
@@ -77,7 +77,7 @@ output_tokens                 … 出力
 
 ### 対策 — フックで削減を「強制」する
 
-では、どう避けるか。「同じファイルを読み直さないで」と CLAUDE.md に書く方法もありますが、CLAUDE.md の指示は **advisory（助言）**——AI が従わない可能性が常に残ります。確実に止めたいなら、**フック（hooks）**で実行そのものをブロックします。
+では、どう避けるか。「同じファイルを読み直さないで」と CLAUDE.md に書く方法もありますが、CLAUDE.md の指示は **advisory（助言）**——AI が従わない可能性が常に残ります。確実に止めたいなら、**フック**（hooks）で実行そのものをブロックします。
 
 Claude Code の `PreToolUse` フックは、ツール実行の直前に任意のスクリプトを走らせる仕組みです。スクリプトは stdin から `session_id` / `tool_name` / `tool_input` などを含む JSON を受け取り、**終了コード 2 で終了するとツール実行がブロックされ、stderr の内容がエラーメッセージとして AI に返ります**。つまり「拒否した上で、代わりにどうすべきかを AI に伝える」ことができます。フックの基礎は [hooks のレッスン](/themes/04-ai-driven-development/02-claude-code/hooks)を参照してください。
 
@@ -98,7 +98,7 @@ Claude Code の `PreToolUse` フックは、ツール実行の直前に任意の
 再読が必要なら offset / limit で必要な範囲だけ読んでください。
 ```
 
-「必要なら部分読みで」と案内することで、コンパクション後の正当な再読を完全には塞がず、かつ全体読みではなく安価な部分読みへ誘導できます。
+「必要なら部分読みで」と案内することで、コンパクション後の正当な再読を完全には塞がず、かつ全体読みではなく安価な部分読みへ誘導できます。なお、この例は `offset` / `limit` 付きの読み込みを無条件で許可しているため、厳密には「完全な強制（hard block）」ではなく、**安価な読み方へ誘導する仕組み**（nudge）です。本当に硬く塞ぎたい場合は許可条件を絞ることになりますが、絞るほど正当な読み込みを誤ってブロックする副作用も増えます。
 
 <details>
 <summary>実装例の全文と導入手順（クリックで展開）</summary>
@@ -111,11 +111,10 @@ Claude Code の `PreToolUse` フックは、ツール実行の直前に任意の
 # 異常時はすべて「許可」に倒す（fail open）
 command -v jq >/dev/null 2>&1 || exit 0                   # jq が無ければ素通し
 
-input=$(cat)
-session=$(echo "$input" | jq -r '.session_id // empty')
-file=$(echo "$input" | jq -r '.tool_input.file_path // empty')
-offset=$(echo "$input" | jq -r '.tool_input.offset // empty')
-limit=$(echo "$input" | jq -r '.tool_input.limit // empty')
+# stdin の JSON から必要な値を 1 回の jq 呼び出しでまとめて取り出す
+IFS=$'\t' read -r session file offset limit <<<"$(jq -r \
+  '[.session_id // "", .tool_input.file_path // "",
+    (.tool_input.offset // "" | tostring), (.tool_input.limit // "" | tostring)] | @tsv')"
 
 if [ -z "$session" ] || [ -z "$file" ]; then exit 0; fi   # 情報が取れない → 許可
 if [ -n "$offset" ] || [ -n "$limit" ]; then exit 0; fi   # 部分読み → 許可
@@ -124,7 +123,9 @@ if [ -n "$offset" ] || [ -n "$limit" ]; then exit 0; fi   # 部分読み → 許
 # セッション+ファイルパスをキーに、前回読んだときの mtime を記録・比較する
 state_dir="${TMPDIR:-/tmp}/dedupe-read/$session"
 mkdir -p "$state_dir" 2>/dev/null || exit 0
-key=$(printf '%s' "$file" | { shasum 2>/dev/null || sha1sum 2>/dev/null || cksum; } | cut -d' ' -f1)
+key=$(printf '%s' "$file" | { shasum 2>/dev/null || sha1sum 2>/dev/null; } | cut -d' ' -f1)
+[ -n "$key" ] || exit 0                                   # ハッシュできない → 許可
+# 注: mtime は秒精度。同一秒内の変更は「重複」と誤判定しうる（その場合も部分読みの逃げ道あり）
 mtime=$(stat -f %m "$file" 2>/dev/null || stat -c %Y "$file" 2>/dev/null)
 [ -n "$mtime" ] || exit 0                                 # mtime が取れない → 許可
 
@@ -155,9 +156,9 @@ exit 0
 }
 ```
 
-**3. 動作確認** — Claude Code を再起動し、同じファイルを 2 回読ませてみます。2 回目の Read がブロックされ、上記のメッセージが AI に返れば成功です。外したいときは settings.json の該当ブロックを削除します（状態ファイルは `/tmp` 配下に作られるため、残っても OS が自動的に掃除します）。
+**3. 動作確認** — Claude Code を再起動し、同じファイルを 2 回読ませてみます。2 回目の Read がブロックされ、上記のメッセージが AI に返れば成功です。外したいときは settings.json の該当ブロックを削除します（状態ファイルは一時ディレクトリ——`$TMPDIR`、未設定なら `/tmp`——の配下に作られるため、残っても OS が自動的に掃除します）。
 
-判定表の 4 条件がスクリプトのどこに対応しているか（部分読みの許可・mtime 比較・初回の許可）を照らし合わせながら読むと、自分の用途に合わせた改造もしやすくなります。
+判定表の 4 条件（初回の許可・mtime 変化の許可・部分読みの許可・それ以外の拒否）がスクリプトのどこに対応しているかを照らし合わせながら読むと、自分の用途に合わせた改造もしやすくなります。
 
 </details>
 
