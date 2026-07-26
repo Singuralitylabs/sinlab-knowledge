@@ -1,7 +1,7 @@
 {
   "slug": "03-development-practice",
   "title": "AIによる開発の進め方",
-  "description": "計画・実装・デバッグ・リファクタリング・レビューの開発ループに加え、secrets管理などAI時代のセキュリティ、トークン効率化までを実践的に解説。",
+  "description": "計画・実装・デバッグ・リファクタリング・レビューの開発ループに加え、secrets管理などAI時代のセキュリティ、トークン消費の実測と効率化までを実践的に解説。",
   "icon": "Rocket",
   "order": 3,
   "categories": []
