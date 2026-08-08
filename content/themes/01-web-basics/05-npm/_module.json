@@ -1,0 +1,8 @@
+{
+  "slug": "05-npm",
+  "title": "npm",
+  "description": "npmの基本概念・package.json/package-lock.jsonの読み方・依存関係とscriptsの活用、他のパッケージ管理ツールとの比較を基礎/応用の2カテゴリで体系的に学習",
+  "icon": "Layers",
+  "order": 5,
+  "categories": []
+}
