@@ -90,10 +90,13 @@ npm pkg set scripts.prehello="echo 前処理を実行中..."
 # 3. 実行してみる（pre → 本体 の順で走ることを確認）
 npm run hello
 
-# 4. .gitignore を作成する
+# 4. node_modules を生成してみる（依存パッケージを追加）
+npm install lodash
+
+# 5. .gitignore を作成する
 echo "node_modules" > .gitignore
 
-# 5. Gitリポジトリとして確認する
+# 6. Gitリポジトリとして確認する
 git init
 git add .
 git status   # node_modules が含まれていないことを確認
