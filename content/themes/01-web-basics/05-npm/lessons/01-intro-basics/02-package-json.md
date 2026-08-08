@@ -52,8 +52,8 @@ npm init
 # 質問なしでデフォルト値のまま作成
 npm init -y
 
-# 特定のテンプレートから作成（例: create-react-app）
-npm init react-app my-app
+# 特定のテンプレートから作成（例: Vite）
+npm create vite@latest my-app
 
 # package.json の特定フィールドを取得
 npm pkg get name

@@ -76,11 +76,9 @@ $ ls
 package.json  package-lock.json  node_modules
 
 $ npm ci
-npm warn old lockfile
 added 57 packages in 1s
 
-$ rm -rf node_modules package-lock.json
-$ npm install express@4.18.0     # package.json と食い違わせてみる
+$ # package.json の express を "^5.0.0" に手動で書き換える（package-lock.json はそのまま）
 $ npm ci
 npm error `npm ci` can only install packages when your package.json and
 npm error package-lock.json or npm-shrinkwrap.json are in sync. Please
@@ -145,9 +143,8 @@ steps:
 ### ロックファイルの更新だけを目的とした操作
 
 ```bash
-# 依存関係は変えずに package-lock.json の整合性だけ再構築したいとき
-rm -rf node_modules package-lock.json
-npm install
+# package.json の範囲内で package-lock.json だけを再生成する（node_modules は触らない）
+npm install --package-lock-only
 ```
 
 ---

@@ -116,8 +116,8 @@ Wrote to /Users/you/hello-npm/package.json:
 npm  … パッケージを「インストール・管理」するコマンド
 npx  … パッケージを「一時的に実行」するコマンド（インストール不要）
 
-npm install create-react-app   # インストールしてから使う
-npx create-react-app my-app    # インストールせずに一度だけ実行する
+npm install create-vite    # インストールしてから使う
+npx create-vite my-app     # インストールせずに一度だけ実行する
 ```
 
 ### 3. `npm init` の質問にすべて答えようとして混乱する
