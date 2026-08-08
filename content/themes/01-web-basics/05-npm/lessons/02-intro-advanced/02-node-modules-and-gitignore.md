@@ -42,7 +42,7 @@ package-lock.json      →   （npm install で再生成できるため）
 # .gitignore を作成・編集
 echo "node_modules" >> .gitignore
 
-# 現在 Git 追跡下にあるか確認
+# node_modules が .gitignore の対象になっているか確認
 git check-ignore -v node_modules
 
 # すでに追跡されてしまっている場合、追跡だけを解除する（ファイルは残す）
