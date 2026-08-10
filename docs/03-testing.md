@@ -9,7 +9,7 @@
 技術構成（Bun + Biome + コンテンツ駆動）に合わせ、次の前提に立つ。
 
 - テストランナーは **`bun test`**（Bun 標準・追加依存ゼロ・Jest 互換 API）。
-- lint / format / デバッグ出力検知は **Biome** が担う（`noConsole` ルールで `console.log` 混入を CI エラーにする。`console.error` / `console.warn` は許可）。
+- lint / format / デバッグ出力検知は **Biome** が担う（`noConsole` ルールで `console.log` 混入を CI エラーにする。`console.error` / `console.warn` は許可、`scripts/**` は override で対象外）。
 - DB 型生成の整合チェックは、生成型ファイルが無く DB 接点も `users` テーブルの読み取りのみと最小のため**対象外**とする（将来 DB 利用が増えた時点で再検討）。
 
 ## 1. テスト方針
@@ -63,7 +63,7 @@
 
 - **型安全性**: `bun run typecheck`（`tsc --noEmit`）と Biome の静的解析により型不整合を早期検知する。
 - **ビルド**: `bun run build` で本番相当ビルドの完走と、`bun install --frozen-lockfile` による lockfile どおりの依存解決を検証する。
-- **コード品質**: Biome `lint/suspicious/noConsole` で `console.log` / `console.info` の混入を失敗させる（`debugger` 文は recommended の `suspicious/noDebugger` が検知）。`biome check` がフォーマット崩れを検知する。
+- **コード品質**: Biome `lint/suspicious/noConsole` で `console.log` / `console.info` の混入を失敗させる（`scripts/**` は override で対象外。`debugger` 文は recommended の `suspicious/noDebugger` が検知）。`biome check` がフォーマット崩れを検知する。
 
 ### 2.4 E2E テスト（未実装・リリース前のみ）
 

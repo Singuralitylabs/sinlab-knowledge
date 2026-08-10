@@ -69,7 +69,7 @@ status: draft               # draft | published | deprecated
 ```
 
 - `order` は**必須**（省略すると検証エラー）
-- `type` は基本的に `lecture` / `detail` の 2 値を使う。`reference` は移行期の互換値（`detail` と同様に扱われる）、`cheatsheet` はチートシート用
+- `type` は基本的に `lecture` / `detail` の 2 値を使い、**ファイル配置と一致させる**（トップレベルのファイル / `index.md` → `lecture`、ディレクトリ型解説の配下 → `detail`）。解説か詳細かの実際の判定はファイル配置で行われ、`type` は zod 検証されるメタデータ。`reference` は移行期に残る互換値、`cheatsheet` はチートシート用
 - `status: draft` は開発環境でのみ表示され、本番ビルドから除外される。公開時に `published` へ変更する
 
 ### 検証・確認

@@ -47,7 +47,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 中心となるルール: **コンテンツの追加 = `content/` 配下に Markdown ファイルを追加するだけ。コード変更は不要**。以下で強制されます:
 
 - `content/themes/<NN-theme>/<NN-module>/lessons/*.md` — `NN-` プレフィックスでソート（URL スラグからは `lib/content/slug.ts:toUrlSlug` により除去）。
-- 階層: `Site → Theme → Module → Lesson`。レクチャー種別はファイル配置ではなく frontmatter（`type: lecture | detail | reference | cheatsheet`）のみで区別します。
+- 階層: `Site → Theme → Module → Lesson`。解説（lecture）か詳細（detail）かは**ファイル配置で決まります**（下記の 2 レイアウト）。frontmatter の `type: lecture | detail | reference | cheatsheet` は配置と一致させるメタデータで、zod 検証されますがローダーの種別判定には使われません。
 - **2 種類のレッスンレイアウト**（どちらも `lib/content/loader.ts:loadLessonsForModule` が処理）:
   - **ファイル型レクチャー**: `lessons/NN-slug.md`
   - **ディレクトリ型レクチャー**: `lessons/NN-slug/index.md` + 兄弟の `NN-*.md` ファイルが "details"（サブページ）になります。`index.md` が無い場合は検証エラーです。
