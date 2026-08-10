@@ -11,9 +11,7 @@
     "check": "biome check --write .",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "check:content": "bun scripts/check-content.ts",
-    "migrate:web-skill": "bun scripts/migrate/import-web-skill.ts",
-    "migrate:cc-website": "bun scripts/migrate/import-claude-code-website.ts"
+    "check:content": "bun scripts/check-content.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",
