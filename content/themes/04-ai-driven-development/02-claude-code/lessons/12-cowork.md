@@ -117,11 +117,11 @@ Cowork はチャットと同じメッセージボックスから起動します�
 
 ### コネクタ
 
-Slack・Gmail・Google Drive・Microsoft 365・Salesforce・Jira・Zoom など 50 以上のツールと連携できます。コネクタは Cowork に対象システムの文脈を与え、実際にアクションを起こす権限も渡します。
+Slack・Gmail・Google Drive・Microsoft 365・GitHub・Linear・1Password など、多数のツールと連携できます。コネクタは Cowork に対象システムの文脈を与え、実際にアクションを起こす権限も渡します。利用できるコネクタは `claude.ai/connectors` の一覧（Connectors Directory）から確認できます。
 
 ### プラグイン
 
-Cowork には標準で 11 種類のプラグインが同梱されています。既定では「Knowledge Work」マーケットプレイスが追加されており、Financial Services・Legal など Anthropic 提供の他マーケットプレイスや、GitHub リポジトリからのプラグイン追加も可能です。たとえば Product プラグインは Jira・Confluence・Slack と連携し、フィードバック整理や PRD 作成、スプリント更新などのスキルを提供します。
+プラグインは、特定の業務向けにスキル・コネクタ・サブエージェントをひとまとめにしたパッケージです。既定では「Knowledge Work」マーケットプレイスが追加されており、Financial Services・Legal・Life Sciences など Anthropic 提供の他マーケットプレイスや、GitHub リポジトリからのプラグイン追加も可能です。プラグインには Google Drive・Gmail・Slack・DocuSign といった関連コネクタがあらかじめ組み込まれており、個別に設定し直す手間がかかりません。
 
 ### プロジェクト
 
