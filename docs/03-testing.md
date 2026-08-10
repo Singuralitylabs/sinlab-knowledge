@@ -29,7 +29,7 @@
 ### 1.2 実行タイミング
 
 - **PR（原則）**: lint・コンテンツ検証・型チェック・ユニットテスト・ビルドを `.github/workflows/` の各ワークフローが自動実行し、失敗した場合は PR をブロックする。
-- **リリース前**: 認証フローなど影響範囲が大きい変更に対し、主要フローの手動確認（または最小限の E2E）を追加する（[3.4](#34-e2e-テスト未実装リリース前のみ)）。
+- **リリース前**: 認証フローなど影響範囲が大きい変更に対し、主要フローの手動確認（または最小限の E2E）を追加する（[2.4](#24-e2e-テスト未実装リリース前のみ)）。
 
 ### 1.3 テストデータ方針
 
@@ -63,7 +63,7 @@
 
 - **型安全性**: `bun run typecheck`（`tsc --noEmit`）と Biome の静的解析により型不整合を早期検知する。
 - **ビルド**: `bun run build` で本番相当ビルドの完走と、`bun install --frozen-lockfile` による lockfile どおりの依存解決を検証する。
-- **コード品質**: Biome `lint/suspicious/noConsole` で `console.log` / `console.info` / `debugger` 混入を失敗させ、`biome check` がフォーマット崩れを検知する。
+- **コード品質**: Biome `lint/suspicious/noConsole` で `console.log` / `console.info` の混入を失敗させる（`debugger` 文は recommended の `suspicious/noDebugger` が検知）。`biome check` がフォーマット崩れを検知する。
 
 ### 2.4 E2E テスト（未実装・リリース前のみ）
 
