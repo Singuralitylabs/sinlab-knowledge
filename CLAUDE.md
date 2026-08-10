@@ -19,15 +19,15 @@
 | コマンド | 用途 |
 |---|---|
 | `bun run dev` | `http://localhost:3000` で開発サーバを起動 |
-| `bun run build` | 本番ビルド（Next.js のみ。設計ドキュメントに記載の Pagefind は **未接続**） |
+| `bun run build` | 本番ビルド（`next build`） |
 | `bun run lint` | `biome check .` + `bun run check:content`（frontmatter 検証）。コミット前に実行してください。 |
+| `bun run typecheck` | `tsc --noEmit` による型チェック |
+| `bun test` | `tests/` 配下のユニットテストを Bun 標準ランナーで実行 |
 | `bun run check` | `biome check --write .`（lint/format の自動修正） |
 | `bun run format` | `biome format --write .` |
 | `bun run check:content` | `bun scripts/check-content.ts` — すべての `_site.json` / `_theme.json` / `_module.json` / レッスン frontmatter を zod で検証。最初の失敗バッチで非ゼロ終了。 |
-| `bun run migrate:web-skill` | `web-skill-lessons` ソースから Web基礎 テーマを再インポート |
-| `bun run migrate:cc-website` | `claude-code-website` から AI駆動開発 Module 03 を再インポート |
 
-テストランナーは構成されていません。
+CI（`.github/workflows/`）では lint / content / typecheck / test / build の 5 ワークフローが PR ごとに実行されます。
 
 ## 環境
 
@@ -106,4 +106,4 @@ remark-parse → remark-gfm → remark-directive → remarkDetailDirective
 - **`@/*` パスエイリアス** はリポジトリルートを指します（`tsconfig.json`）。
 - **レッスン/モジュール/テーマのリストをコードにハードコードしない。** 配列リテラルに手が伸びたら立ち止まってください — すべてのそうしたリストを `content/` から派生させるのが設計目標です。
 - MDX パイプラインに触れるときは、TOC id と見出し id の重複排除の同期を保つこと（GithubSlugger ↔ rehype-slug）。
-- `docs/design/01-architecture.md` と `docs/design/02-content-structure.md` が正規の設計ドキュメントです。アーキテクチャを変更する場合はこれらも更新してください。
+- `docs/01-architecture.md`（設計思想・規約）と `docs/02-content-structure.md`（コンテンツ執筆ルール）が正規の設計ドキュメントです。アーキテクチャを変更する場合はこれらも更新してください。テスト方針は `docs/03-testing.md` を参照。
