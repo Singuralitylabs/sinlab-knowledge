@@ -117,7 +117,7 @@ Cowork はチャットと同じメッセージボックスから起動します�
 
 ### コネクタ
 
-Slack・Gmail・Google Drive・Microsoft 365・GitHub・Linear・1Password など、多数のツールと連携できます。コネクタは Cowork に対象システムの文脈を与え、実際にアクションを起こす権限も渡します。利用できるコネクタは `claude.ai/connectors` の一覧（Connectors Directory）から確認できます。
+Slack・Gmail・Google Drive・Microsoft 365・GitHub・Linear・1Password など、多数のツールと連携できます。コネクタは Cowork に対象システムの文脈を与え、実際にアクションを起こす権限も渡します。利用できるコネクタは [claude.ai/connectors](https://claude.ai/connectors) の一覧（Connectors Directory）から確認できます。
 
 ### プラグイン
 
