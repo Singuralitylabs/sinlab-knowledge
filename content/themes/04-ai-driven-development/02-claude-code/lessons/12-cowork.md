@@ -45,7 +45,7 @@ Claude Cowork は、Claude Code のエージェント基盤を非エンジニア
 
 Claude Cowork は **有料プラン（Pro / Max / Team / Enterprise）** で利用できます。Free プランでは利用できません。
 
-対応環境は デスクトップアプリ（macOS・Windows）、Web（[claude.ai](https://claude.ai)）、モバイルアプリ（iOS・Android）の 3 つです。Web・モバイルは現在ベータで、**Max / Team / Enterprise が先行**しており、Pro は数週間かけて順次展開中です。
+対応環境はデスクトップアプリ（macOS・Windows）、Web（[claude.ai](https://claude.ai)）、モバイルアプリ（iOS・Android）の 3 つです。Web・モバイルは現在ベータで、**Max / Team / Enterprise が先行**しており、Pro は数週間かけて順次展開中です。
 
 | プラン | 利用可否 | デスクトップ | Web / モバイル（ベータ） | Computer Use |
 | --- | --- | --- | --- | --- |
