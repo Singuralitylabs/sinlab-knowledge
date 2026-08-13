@@ -113,6 +113,8 @@ Slack・Gmail・Google Drive・Microsoft 365・GitHub・Linear・1Password な�
 
 毎朝メールを確認する、週次で指標を集計する、といった定型業務を繰り返し自動実行できます。ユーザーが端末をオフラインにしていても、クラウドセッション上でタスクが進行します。
 
+Claude Code 側にも同種の仕組みとして **Routines** があります。こちらはリポジトリを対象とし、スケジュールに加えて **API 呼び出しや GitHub イベント** でも起動できる点が異なります。「フォルダとコネクタに対する自動化」が Cowork のスケジュールタスク、「リポジトリに対する自動化」が Routines、という住み分けです。詳しくは [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) を参照してください。
+
 ## E. 活用例
 
 - **レポートの定期作成**：週次・月次のレポートをスケジュールタスクで自動生成する
@@ -151,6 +153,7 @@ Cowork が行った操作の結果（コンテンツの公開・金銭のやり�
 ## 関連ページ
 
 - [サブエージェント (Agents)](/themes/04-ai-driven-development/02-claude-code/agents) — Claude Code 内のサブエージェントの仕組み。Agent Teams と Cowork の位置づけを紹介
+- [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — Claude Code 側の定期実行・自動起動の仕組み。Cowork のスケジュールタスクとの違いを解説
 - [Claude Design との連携](/themes/04-ai-driven-development/02-claude-code/claude-design) — 同じ「関連プロダクト紹介」枠の先行例
 - [Get started with Claude Cowork (Claude Help Center)](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
 - [Use Claude Cowork safely (Claude Help Center)](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely)

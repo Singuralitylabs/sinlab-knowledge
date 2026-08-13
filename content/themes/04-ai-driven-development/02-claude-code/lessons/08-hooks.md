@@ -381,5 +381,6 @@ hooks:
 
 ## 関連ページ
 
+- [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — 自動化のもう一方の柱。Hooks が「ループの内側に割り込む」のに対し、こちらは「ループを外から起動する」仕組み
 - [Hooks（公式ドキュメント）](https://code.claude.com/docs/en/hooks)
 - [Settings（permissions など `settings.json` 全体仕様）](https://code.claude.com/docs/en/settings)
