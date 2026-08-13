@@ -83,6 +83,9 @@ bun run check:links -- --in=freshness-scan.json --out=freshness-links.json
 
 `dead` が確定した外部リンクだけは、実害があり対応も明確なので**個別 Issue を立てる**。
 
+> [!IMPORTANT]
+> **トラッキング Issue・個別 Issue のどちらも、必ず `content-freshness` ラベルを付けること。** GitHub Project 側でこのラベルを条件に Auto-add ワークフローが設定されており、ラベルが無いと Issue がトラッキング対象から漏れる。新規作成時はもちろん、既存のトラッキング Issue を本文置換する際もラベルが外れていないか確認する。
+
 **Issue 本文の構成:**
 
 ```markdown
