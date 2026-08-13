@@ -37,6 +37,20 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { checkUrls, type UrlEntry } from "../lib/content/freshness/linkcheck";
 import type { LinkResult, ScanResult } from "../lib/content/freshness/types";
 
+/**
+ * Parse a positive integer strictly. `Number.parseInt` silently truncates
+ * `"1x"` to `1` and `"4.5"` to `4`, so a typo in `--concurrency`/`--timeout`
+ * passes validation and produces a working-looking but wrong run.
+ */
+function parseStrictPositiveInt(flag: string, value: string): number {
+  if (!/^\d+$/.test(value)) {
+    throw new Error(`${flag} は正の整数で指定してください（受け取った値: ${value}）`);
+  }
+  const n = Number.parseInt(value, 10);
+  if (n < 1) throw new Error(`${flag} は 1 以上の整数で指定してください`);
+  return n;
+}
+
 interface Options {
   in?: string;
   out?: string;
@@ -66,10 +80,10 @@ function parseArgs(argv: string[]): Options {
         options.format = value;
         break;
       case "--concurrency":
-        options.concurrency = Number.parseInt(value, 10);
+        options.concurrency = parseStrictPositiveInt("--concurrency", value);
         break;
       case "--timeout":
-        options.timeoutMs = Number.parseInt(value, 10);
+        options.timeoutMs = parseStrictPositiveInt("--timeout", value);
         break;
       default:
         throw new Error(`不明なオプション: ${arg}`);

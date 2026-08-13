@@ -21,10 +21,15 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { extractClaims } from "../lib/content/freshness/extract";
-import {
-  buildValidInternalPaths,
-  findInternalLinkIssues,
-} from "../lib/content/freshness/internal-links";
+// `internal-links.ts` is imported dynamically, not here — see
+// `loadThemesIncludingDrafts` for why. It is the one module in this file's
+// dependency graph that statically imports `lib/themes.ts`, which in turn
+// pulls in `lib/content/loader.ts`, whose `isProduction` const is fixed at
+// module-evaluation time. A static import here would load and freeze it
+// before this file's own code — including the NODE_ENV fix below — ever runs
+// (import statements are hoisted above everything else in a module).
+// `import type` is erased at compile time, so this carries no runtime import.
+import type * as InternalLinksModule from "../lib/content/freshness/internal-links";
 import { applyIgnoreList, formatMarkdown, parseIgnoreList } from "../lib/content/freshness/report";
 import {
   bucketOf,
@@ -35,7 +40,6 @@ import {
 import { isStub, scoreClaims, scoreLesson } from "../lib/content/freshness/score";
 import type { InternalLinkIssue, LessonScan, ScanResult } from "../lib/content/freshness/types";
 import type { Lesson, Theme } from "../lib/content/loader";
-import { getThemes } from "../lib/themes";
 
 const DEFAULT_BUCKET_COUNT = 4;
 const RECENT_WINDOW_DAYS = 7;
@@ -50,6 +54,18 @@ interface Options {
   format: "json" | "markdown";
   includeLow: boolean;
   out?: string;
+}
+
+/**
+ * Parse a non-negative integer strictly. `Number.parseInt` silently truncates
+ * `"1x"` to `1` and `"4.5"` to `4`, so a typo in `--bucket`/`--bucket-count`/
+ * `--max` would otherwise pass validation and silently select the wrong bucket.
+ */
+function parseStrictInt(flag: string, value: string): number {
+  if (!/^\d+$/.test(value)) {
+    throw new Error(`${flag} は整数で指定してください（受け取った値: ${value}）`);
+  }
+  return Number.parseInt(value, 10);
 }
 
 function parseArgs(argv: string[]): Options {
@@ -67,13 +83,13 @@ function parseArgs(argv: string[]): Options {
         options.all = true;
         break;
       case "--bucket":
-        options.bucket = Number.parseInt(value, 10);
+        options.bucket = parseStrictInt("--bucket", value);
         break;
       case "--bucket-count":
-        options.bucketCount = Number.parseInt(value, 10);
+        options.bucketCount = parseStrictInt("--bucket-count", value);
         break;
       case "--max":
-        options.max = Number.parseInt(value, 10);
+        options.max = parseStrictInt("--max", value);
         break;
       case "--theme":
         options.theme = value;
@@ -97,22 +113,15 @@ function parseArgs(argv: string[]): Options {
     }
   }
 
-  if (Number.isNaN(options.bucketCount) || options.bucketCount < 1) {
+  if (options.bucketCount < 1) {
     throw new Error("--bucket-count は 1 以上の整数で指定してください");
   }
-  if (options.bucket !== undefined) {
-    // Left unvalidated, a typo becomes NaN, matches no bucket, and silently
-    // yields only the recently-changed lane — printed as "バケット NaN / 4".
-    if (Number.isNaN(options.bucket) || options.bucket < 0) {
-      throw new Error("--bucket は 0 以上の整数で指定してください");
-    }
-    if (options.bucket >= options.bucketCount) {
-      throw new Error(
-        `--bucket は 0〜${options.bucketCount - 1} の範囲で指定してください（--bucket-count=${options.bucketCount}）`,
-      );
-    }
+  if (options.bucket !== undefined && options.bucket >= options.bucketCount) {
+    throw new Error(
+      `--bucket は 0〜${options.bucketCount - 1} の範囲で指定してください（--bucket-count=${options.bucketCount}）`,
+    );
   }
-  if (options.max !== undefined && (Number.isNaN(options.max) || options.max < 1)) {
+  if (options.max !== undefined && options.max < 1) {
     throw new Error("--max は 1 以上の整数で指定してください");
   }
   return options;
@@ -194,13 +203,56 @@ function recentlyChangedFiles(warnings: string[]): Set<string> {
   return changed;
 }
 
-function main(): void {
+/**
+ * Load the content tree guaranteed to include drafts, regardless of the
+ * process's `NODE_ENV` — and, with it, `internal-links.ts`, the one module
+ * in this file's own dependency graph that would otherwise pull the same
+ * loader in statically (see the import comment above).
+ *
+ * `lib/content/loader.ts` reads `process.env.NODE_ENV` into a module-level
+ * constant at import time and skips `status: draft` content whenever it's
+ * `"production"` — correct for the website (drafts shouldn't ship), wrong here
+ * (this scanner promises to cover every article, draft or not). Rather than
+ * changing that shared, whole-app loader, this script clears `NODE_ENV` for
+ * its own process *before* the loader module — or anything that imports it —
+ * is evaluated. A dynamic `import()` is what makes "before" possible: unlike
+ * a static import, it runs in place rather than being hoisted above this
+ * function's own code.
+ */
+async function loadThemesIncludingDrafts(
+  warnings: string[],
+): Promise<{ themes: Theme[]; internalLinks: typeof InternalLinksModule }> {
+  // Next.js declares `NODE_ENV` readonly in its ambient types to discourage
+  // mutating it app-wide; this cast is deliberately scoped to this one
+  // process-local, restored-in-`finally` assignment, not a general escape hatch.
+  const env = process.env as { NODE_ENV?: string };
+  const original = env.NODE_ENV;
+  if (original === "production") {
+    warnings.push(
+      "NODE_ENV=production で実行されました。draft を含めて走査するため、このスクリプトの" +
+        "プロセス内でのみ NODE_ENV を一時的に外しています（サイト本体の挙動には影響しません）。",
+    );
+    env.NODE_ENV = "development";
+  }
+  try {
+    const [{ getThemes }, internalLinks] = await Promise.all([
+      import("../lib/themes"),
+      import("../lib/content/freshness/internal-links"),
+    ]);
+    return { themes: getThemes(), internalLinks };
+  } finally {
+    env.NODE_ENV = original;
+  }
+}
+
+async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   const warnings: string[] = [];
 
   // Call once: loadContentTree is wrapped in React.cache, which is a no-op outside
   // a React request scope, so repeated calls would re-walk content/ every time.
-  const themes = getThemes();
+  const { themes, internalLinks } = await loadThemesIncludingDrafts(warnings);
+  const { buildValidInternalPaths, findInternalLinkIssues } = internalLinks;
   const validPaths = buildValidInternalPaths(themes, publicAssets());
   const allLessons = flattenLessons(themes);
   const changed = recentlyChangedFiles(warnings);
@@ -326,7 +378,7 @@ function main(): void {
 }
 
 try {
-  main();
+  await main();
 } catch (error) {
   // Argument mistakes are the common failure here; a stack trace buries the
   // message that says how to fix them.

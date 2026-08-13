@@ -147,6 +147,13 @@ describe("checkUrl", () => {
 });
 
 describe("checkUrls", () => {
+  // concurrency=0 starts zero workers, leaving `results` a sparse array of
+  // `undefined` — silently wrong rather than an obvious failure.
+  test("rejects a concurrency of zero instead of returning a sparse result", async () => {
+    const entries = [{ url: "https://a.test/1", files: [] }];
+    await expect(checkUrls(entries, { concurrency: 0, retries: 0 })).rejects.toThrow(/concurrency/);
+  });
+
   test("returns results in input order regardless of completion order", async () => {
     const entries = [
       { url: "https://a.test/1", files: [] },

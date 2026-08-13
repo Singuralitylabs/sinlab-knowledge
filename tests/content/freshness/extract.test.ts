@@ -122,6 +122,23 @@ describe("extractUrls", () => {
     expect(claims).toHaveLength(0);
   });
 
+  // Regression: `\byour[-_]?` matched any word starting with "your", so the
+  // real Anthropic help-center URL .../set-up-your-design-system-... was
+  // silently excluded from stage 2. The pattern must require the placeholder
+  // shape itself, not just the word "your".
+  test("does not exclude a real URL that merely contains the word your", () => {
+    const url =
+      "https://support.claude.com/en/articles/14604397-set-up-your-design-system-in-claude-design";
+    expect(isCheckableUrl(url)).toBe(true);
+    expect(extractUrls(`[link](${url})`)).toHaveLength(1);
+  });
+
+  test("still excludes genuine your-* placeholders", () => {
+    expect(isCheckableUrl("https://github.com/your-name/repo")).toBe(false);
+    expect(isCheckableUrl("https://github.com/yourname/repo")).toBe(false);
+    expect(isCheckableUrl("https://github.com/your-org/repo")).toBe(false);
+  });
+
   test("excludes our own site, which internal link checking already covers", () => {
     expect(isCheckableUrl("https://sinlab.future-tech-association.org/themes")).toBe(false);
   });
@@ -231,6 +248,21 @@ describe("extractDateClaims", () => {
 
   test("still matches 時点で when it stands alone", () => {
     expect(values("2026年時点での挙動", "high")).toContain("時点で");
+  });
+
+  // Regression: 「最新」 (weak) sits inside 「最新版」 (strong). Without checking
+  // takenSpans, one assertion produced both confidences with two fingerprints —
+  // ignoring the visible high-confidence claim left the low-confidence one behind.
+  test("does not also emit a weak claim for a word inside an already-claimed strong phrase", () => {
+    const withAnchor = "2026 年 6 月時点の最新版はこちら";
+    expect(values(withAnchor, "high")).toContain("最新版");
+    expect(values(withAnchor, "low")).not.toContain("最新");
+  });
+
+  test("still emits the weak claim when it does not overlap a strong phrase", () => {
+    // "最新" here is not inside "最新版"/"最新モデル"/"最新のバージョン".
+    const withAnchor = "2026 年 6 月時点、こちらが最新の情報です";
+    expect(values(withAnchor, "low")).toContain("最新");
   });
 
   test("ignores bare 現在 with no anchor in its paragraph", () => {

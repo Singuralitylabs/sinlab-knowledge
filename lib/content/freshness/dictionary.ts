@@ -43,9 +43,14 @@ export const EXCLUDED_HOST_SUFFIXES: readonly string[] = [
 /**
  * URLs containing an obvious placeholder token. Catches things like
  * `https://github.com/your-name/repo` that survive host-level filtering.
+ *
+ * `your` / `example` alone are too broad: a real Anthropic help-center URL is
+ * `.../set-up-your-design-system-...`, and `\byour[-_]?` matches it — silently
+ * dropping a live link from stage 2. Require the placeholder shape itself
+ * (`your-name`, `yourname`, `example-foo`), not just the word.
  */
 export const PLACEHOLDER_URL_PATTERN =
-  /(?:\byour[-_]?|\bUSERNAME\b|<[^>]+>|\{\{|\bexample-|\bmy-repo\b)/i;
+  /(?:\byour[-_](?:name|username|repo|org|account)\b|\byourname\b|\bUSERNAME\b|<[^>]+>|\{\{|\bexample-(?:repo|org|user)\b|\bmy-repo\b)/i;
 
 /**
  * Our own site. These resolve to pages this repository builds, so external

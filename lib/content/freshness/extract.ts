@@ -230,7 +230,14 @@ export function extractDateClaims(masked: string, now: Date = new Date()): Claim
     }
 
     for (const word of WEAK_TEMPORAL_WORDS) {
-      if (text.includes(word) && paragraphHasAnchor(lineNo)) {
+      // 「最新」 sits inside the already-claimed 「最新版」/「最新モデル」/「最新のバージョン」
+      // — without checking takenSpans, one assertion yields both a high- and a
+      // low-confidence claim with two fingerprints, and ignoring the visible
+      // high-confidence one leaves the low-confidence duplicate unsuppressed.
+      const at = text.indexOf(word);
+      const overlapsStrong =
+        at !== -1 && takenSpans.some(([s, e]) => at < e && at + word.length > s);
+      if (at !== -1 && !overlapsStrong && paragraphHasAnchor(lineNo)) {
         claims.push({
           kind: "date",
           value: word,

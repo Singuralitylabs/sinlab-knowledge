@@ -185,6 +185,12 @@ export async function checkUrls(
   const concurrency = options.concurrency ?? DEFAULTS.concurrency;
   const perHostDelayMs = options.perHostDelayMs ?? DEFAULTS.perHostDelayMs;
 
+  // A concurrency of 0 starts zero workers, so `results` stays a sparse array
+  // of `undefined` — silently wrong rather than an obvious failure.
+  if (concurrency < 1) {
+    throw new Error(`concurrency must be >= 1 (got ${concurrency})`);
+  }
+
   const results: LinkResult[] = new Array(entries.length);
   const lastHitByHost = new Map<string, number>();
   let cursor = 0;
