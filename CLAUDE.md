@@ -26,6 +26,8 @@
 | `bun run check` | `biome check --write .`（lint/format の自動修正） |
 | `bun run format` | `biome format --write .` |
 | `bun run check:content` | `bun scripts/check-content.ts` — すべての `_site.json` / `_theme.json` / `_module.json` / レッスン frontmatter を zod で検証。最初の失敗バッチで非ゼロ終了。 |
+| `bun run check:freshness` | `bun scripts/freshness-scan.ts` — 記事の陳腐化候補を抽出（トークン 0）。`--all` / `--theme=<slug>` / `--format=markdown` などのオプションあり。**`lint` には含めません**（PR ゲートではないため）。 |
+| `bun run check:links` | `bun scripts/freshness-linkcheck.ts` — `check:freshness` の JSON を受け取り外部リンクの生存を確認。リンク切れでも非ゼロ終了はしません。 |
 
 CI（`.github/workflows/`）では lint / content / typecheck / test / build の 5 ワークフローが PR ごとに実行されます。
 
@@ -106,4 +108,4 @@ remark-parse → remark-gfm → remark-directive → remarkDetailDirective
 - **`@/*` パスエイリアス** はリポジトリルートを指します（`tsconfig.json`）。
 - **レッスン/モジュール/テーマのリストをコードにハードコードしない。** 配列リテラルに手が伸びたら立ち止まってください — すべてのそうしたリストを `content/` から派生させるのが設計目標です。
 - MDX パイプラインに触れるときは、TOC id と見出し id の重複排除の同期を保つこと（GithubSlugger ↔ rehype-slug）。
-- `docs/01-architecture.md`（設計思想・規約）と `docs/02-content-structure.md`（コンテンツ執筆ルール）が正規の設計ドキュメントです。アーキテクチャを変更する場合はこれらも更新してください。テスト方針は `docs/03-testing.md` を参照。
+- `docs/01-architecture.md`（設計思想・規約）と `docs/02-content-structure.md`（コンテンツ執筆ルール）が正規の設計ドキュメントです。アーキテクチャを変更する場合はこれらも更新してください。テスト方針は `docs/03-testing.md`、記事の陳腐化チェックは `docs/04-content-freshness.md` を参照。
