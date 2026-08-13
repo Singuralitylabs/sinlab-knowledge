@@ -40,7 +40,7 @@ VS Code でプロジェクトを開く方法は **3 種類** あり、それぞ�
 
 ## ワークスペース版 settings.json
 
-`.vscode/settings.json` の構文・コメント可否・言語別オーバーライドの書き方は User の `settings.json` と同じです。詳細は [設定の編集方法](/themes/web-basics/vscode/intro-settings/settings) を参照してください。
+`.vscode/settings.json` の構文・コメント可否・言語別オーバーライドの書き方は User の `settings.json` と同じです。詳細は [設定の編集方法](/themes/01-web-basics/03-vscode/intro-settings/settings) を参照してください。
 
 ここに書くのは **プロジェクト固有の規約だけ**（フォーマッタ、改行コード、タブ幅、Linter ルールなど）。User 設定と同じキーがあった場合は **Workspace の値が優先** されます。
 
