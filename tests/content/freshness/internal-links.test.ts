@@ -39,6 +39,19 @@ describe("buildValidInternalPaths", () => {
     expect(paths.has("/about")).toBe(true);
     expect(paths.has("/themes")).toBe(true);
   });
+
+  // public/ files are served at the site root and can't be derived from content/.
+  // Internal link issues carry no fingerprint, so a false positive here is
+  // unsuppressible.
+  test("accepts public/ assets, with or without a leading slash", () => {
+    const paths = buildValidInternalPaths([theme], ["icon.png", "/og-image.png"]);
+    expect(paths.has("/icon.png")).toBe(true);
+    expect(paths.has("/og-image.png")).toBe(true);
+  });
+
+  test("treats the asset list as optional", () => {
+    expect(buildValidInternalPaths([theme]).has("/icon.png")).toBe(false);
+  });
 });
 
 describe("extractInternalLinks", () => {
@@ -59,6 +72,18 @@ describe("extractInternalLinks", () => {
 
   test("ignores external URLs", () => {
     expect(extractInternalLinks("[docs](https://code.claude.com/docs)")).toHaveLength(0);
+  });
+
+  // Without the title branch, a broken link written this way is never reported.
+  test("finds links carrying a title", () => {
+    expect(extractInternalLinks('[設定](/themes/01-a/02-b/settings "設定の編集方法")')).toEqual([
+      {
+        href: "/themes/01-a/02-b/settings",
+        line: 1,
+        context: '[設定](/themes/01-a/02-b/settings "設定の編集方法")',
+      },
+    ]);
+    expect(extractInternalLinks("[x](/about 'タイトル')").map((r) => r.href)).toEqual(["/about"]);
   });
 });
 

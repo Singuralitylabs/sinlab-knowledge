@@ -168,4 +168,9 @@ async function main(): Promise<void> {
   console.error(`✓ ${results.length} 件を確認 — 切れ ${dead} 件 / 判定不能 ${unknown} 件`);
 }
 
-await main();
+try {
+  await main();
+} catch (error) {
+  console.error(`✘ ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+}

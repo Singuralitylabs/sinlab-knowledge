@@ -14,6 +14,15 @@
 /** Opening fence: up to 3 spaces of indent, then 3+ backticks or tildes. */
 const FENCE_RE = /^ {0,3}(`{3,}|~{3,})/;
 
+/**
+ * Closing fence. Per CommonMark a closing fence carries no info string, so
+ * ```` ```javascript ```` inside a ```` ```markdown ```` block is content, not a
+ * terminator. Without this distinction the Markdown lessons that demonstrate
+ * fence syntax close early: prose after the inner fence gets scanned as code and
+ * — worse — real headings and paragraphs after it get masked away unscanned.
+ */
+const CLOSING_FENCE_RE = /^ {0,3}(`{3,}|~{3,})[ \t]*$/;
+
 /** Inline code span. Non-greedy within a single line. */
 const INLINE_CODE_RE = /`[^`\n]*`/g;
 
@@ -26,10 +35,10 @@ interface OpenFence {
  * Replace fenced code blocks and inline code spans with blanks, keeping the
  * total line count and every retained line's index unchanged.
  *
- * Fence matching follows CommonMark closely enough for documentation prose: a
- * fence closes only on the same marker character with at least the same run
- * length. That matters here because the Markdown lessons nest ``` blocks inside
- * ```` blocks to show fence syntax itself.
+ * Fence matching follows CommonMark: a fence closes only on the same marker
+ * character, with at least the same run length, and with no info string. All
+ * three conditions matter here because the Markdown lessons nest fences to
+ * demonstrate fence syntax itself.
  *
  * An unterminated fence masks everything to EOF — the safe direction, since a
  * false negative costs one missed claim while a false positive puts shell
@@ -42,15 +51,17 @@ export function maskCodeRegions(source: string): string {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const match = FENCE_RE.exec(line);
 
     if (fence) {
-      if (match && match[1][0] === fence.char && match[1].length >= fence.length) {
+      const closing = CLOSING_FENCE_RE.exec(line);
+      if (closing && closing[1][0] === fence.char && closing[1].length >= fence.length) {
         fence = null;
       }
       out[i] = "";
       continue;
     }
+
+    const match = FENCE_RE.exec(line);
 
     if (match) {
       fence = { char: match[1][0], length: match[1].length };

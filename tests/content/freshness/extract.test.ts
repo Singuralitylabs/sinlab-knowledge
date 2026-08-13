@@ -38,6 +38,36 @@ describe("maskCodeRegions", () => {
     expect(masked).toContain("outer.test");
   });
 
+  // CommonMark: a closing fence carries no info string. The Markdown lessons
+  // demonstrate fence syntax by nesting fences, so getting this wrong breaks
+  // both ways — code leaks out, and real prose after it gets masked away.
+  test("a fence with an info string does not close an open block", () => {
+    const masked = maskCodeRegions(
+      [
+        "```markdown",
+        "```javascript",
+        "https://leak.test/x",
+        "```",
+        "",
+        "## 本文の見出し https://keep.test/y",
+      ].join("\n"),
+    );
+    expect(masked).not.toContain("leak.test");
+    expect(masked).toContain("keep.test");
+    expect(masked).toContain("## 本文の見出し");
+  });
+
+  test("a bare fence of equal length still closes", () => {
+    const masked = maskCodeRegions(["```", "https://drop.test/a", "```", "本文"].join("\n"));
+    expect(masked).not.toContain("drop.test");
+    expect(masked).toContain("本文");
+  });
+
+  test("trailing whitespace does not stop a fence from closing", () => {
+    const masked = maskCodeRegions(["```", "https://drop.test/a", "```   ", "本文"].join("\n"));
+    expect(masked).toContain("本文");
+  });
+
   test("an unclosed fence masks through end of file", () => {
     const masked = maskCodeRegions(["```", "https://drop.test/b", "still code"].join("\n"));
     expect(masked).not.toContain("drop.test");
@@ -144,6 +174,19 @@ describe("extractVersionClaims", () => {
     expect(values("CVSS 7.1 と MMLU 92.5 のスコア")).toEqual([]);
   });
 
+  // A multi-word product name must not also yield its tail as a separate claim.
+  test("does not emit a trailing-word duplicate for multi-word product names", () => {
+    expect(values("Tailwind CSS 3.4 を使う")).toEqual(["Tailwind CSS 3.4"]);
+    expect(values("VS Code 1.96 で確認")).toEqual(["VS Code 1.96"]);
+    expect(values("Visual Studio Code 1.96")).toEqual(["Visual Studio Code 1.96"]);
+    expect(values("Claude Code 2.1 の挙動")).toEqual(["Claude Code 2.1"]);
+  });
+
+  test("still reports an unrelated product elsewhere on the same line", () => {
+    expect(values("VS Code 1.96 と Fastify 4.26.0", "high")).toEqual(["VS Code 1.96"]);
+    expect(values("VS Code 1.96 と Fastify 4.26.0", "low")).toEqual(["Fastify 4.26.0"]);
+  });
+
   test("reports a product outside the dictionary with a dotted version as low confidence", () => {
     expect(values("Fastify 4.26.0 を使う", "low")).toEqual(["Fastify 4.26.0"]);
     // A dictionary product is high confidence instead, not duplicated into low.
@@ -177,6 +220,17 @@ describe("extractDateClaims", () => {
     const old = extractDateClaims("2004年に誕生した", NOW).find((c) => c.kind === "date");
     expect(recent?.note).toContain("直近の年号");
     expect(old?.note).toContain("古い年号");
+  });
+
+  // 「執筆時点」 and 「時点で」 overlap in 「執筆時点では」. Emitting both would
+  // mean one assertion needs two ignore entries to suppress.
+  test("emits one claim when temporal phrases overlap", () => {
+    expect(values("執筆時点では対応していません", "high")).toEqual(["執筆時点"]);
+    expect(values("現時点での仕様です", "high")).toEqual(["現時点"]);
+  });
+
+  test("still matches 時点で when it stands alone", () => {
+    expect(values("2026年時点での挙動", "high")).toContain("時点で");
   });
 
   test("ignores bare 現在 with no anchor in its paragraph", () => {

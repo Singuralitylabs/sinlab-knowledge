@@ -96,7 +96,7 @@ function formatLinkResults(results: readonly LinkResult[]): string[] {
   const lines = ["## 外部リンクの状態", ""];
 
   if (dead.length > 0) {
-    lines.push("### 切れているリンク（404 / 410 / DNS 失敗）", "");
+    lines.push("### 切れているリンク（404 / 410）", "");
     for (const r of dead) {
       lines.push(`- ${r.url} — ${r.reason}`);
       for (const f of r.files) lines.push(`  - \`${f}\``);

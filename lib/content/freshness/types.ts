@@ -41,7 +41,7 @@ export interface Claim {
 export type LinkStatus =
   /** 2xx/3xx and the final URL matches what we asked for. */
   | "alive"
-  /** 404 / 410 / DNS failure — a real broken link. */
+  /** 404 / 410 — a real broken link. */
   | "dead"
   /** Resolved, but to a different URL than requested. The target may have been re-organised. */
   | "moved"

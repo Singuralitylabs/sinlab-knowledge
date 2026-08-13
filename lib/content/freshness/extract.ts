@@ -102,12 +102,15 @@ export function extractVersionClaims(masked: string): Claim[] {
   const tierB = new RegExp(GENERIC_VERSION_PATTERN.source, "g");
 
   for (const { lineNo, text } of eachLine(masked)) {
-    const seen = new Set<string>();
+    // Character spans Tier A already claimed. Tracking positions rather than
+    // strings is what stops a multi-word product name from also yielding its
+    // tail: "Tailwind CSS 3.4" must not additionally report "CSS 3.4".
+    const claimed: [number, number][] = [];
 
     tierA.lastIndex = 0;
     let a: RegExpExecArray | null = tierA.exec(text);
     while (a !== null) {
-      seen.add(a[0]);
+      claimed.push([a.index, a.index + a[0].length]);
       claims.push({
         kind: "version",
         value: a[0],
@@ -122,8 +125,10 @@ export function extractVersionClaims(masked: string): Claim[] {
     let b: RegExpExecArray | null = tierB.exec(text);
     while (b !== null) {
       const [whole, word] = b;
-      // Skip anything Tier A already reported, and known non-product vocabulary.
-      if (!seen.has(whole) && !VERSION_STOPWORDS.has(word)) {
+      const start = b.index;
+      const end = start + whole.length;
+      const insideTierA = claimed.some(([s, e]) => start >= s && end <= e);
+      if (!insideTierA && !VERSION_STOPWORDS.has(word)) {
         claims.push({
           kind: "version",
           value: whole,
@@ -205,9 +210,22 @@ export function extractDateClaims(masked: string, now: Date = new Date()): Claim
       iso = isoDate.exec(text);
     }
 
-    for (const phrase of STRONG_TEMPORAL_PHRASES) {
-      if (text.includes(phrase)) {
-        claims.push({ kind: "date", value: phrase, line: lineNo, context, confidence: "high" });
+    // Longest phrase first, skipping any match that overlaps one already taken.
+    // The phrase list contains both 「執筆時点」 and 「時点で」, which overlap in
+    // 「執筆時点では」 — without this, one assertion yields two claims with two
+    // different fingerprints, so suppressing it would need two ignore entries.
+    const takenSpans: [number, number][] = [];
+    for (const phrase of [...STRONG_TEMPORAL_PHRASES].sort((x, y) => y.length - x.length)) {
+      let from = text.indexOf(phrase);
+      while (from !== -1) {
+        const to = from + phrase.length;
+        const overlaps = takenSpans.some(([s, e]) => from < e && to > s);
+        if (!overlaps) {
+          takenSpans.push([from, to]);
+          claims.push({ kind: "date", value: phrase, line: lineNo, context, confidence: "high" });
+          break; // One claim per phrase per line; the fingerprint is per (file, value).
+        }
+        from = text.indexOf(phrase, from + 1);
       }
     }
 

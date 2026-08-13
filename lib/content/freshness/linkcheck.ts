@@ -33,8 +33,15 @@ const DEFAULTS = {
     "Mozilla/5.0 (compatible; sinlab-knowledge-freshness-bot/1.0; +https://github.com/Singuralitylabs/sinlab-knowledge)",
 } as const;
 
-/** Statuses where a HEAD request tells us nothing and a GET is worth trying. */
-const HEAD_UNSUPPORTED = new Set([403, 405, 501]);
+/**
+ * Statuses where a HEAD request tells us nothing and a GET is worth trying.
+ *
+ * 404 is included deliberately: some hosts answer 404 to HEAD while serving the
+ * page fine over GET. Since a confirmed `dead` link opens its own issue, paying
+ * one extra request to avoid that false positive is the right trade — and real
+ * 404s are rare enough that the cost is negligible.
+ */
+const HEAD_UNSUPPORTED = new Set([403, 404, 405, 501]);
 
 /** Compare URLs ignoring differences that carry no meaning for a reader. */
 function canonicalize(url: string): string {
@@ -194,9 +201,14 @@ export async function checkUrls(
         host = entry.url;
       }
 
-      const since = Date.now() - (lastHitByHost.get(host) ?? 0);
-      if (since < perHostDelayMs) await sleep(perHostDelayMs - since);
-      lastHitByHost.set(host, Date.now());
+      // Reserve this host's next slot *before* sleeping. Reading the timestamp
+      // and writing it after waking lets every worker queued on the same host
+      // compute the same delay and wake together, which bursts the host and
+      // defeats the rate limiting these delays exist to avoid.
+      const earliest = Math.max(Date.now(), lastHitByHost.get(host) ?? 0);
+      lastHitByHost.set(host, earliest + perHostDelayMs);
+      const wait = earliest - Date.now();
+      if (wait > 0) await sleep(wait);
 
       results[index] = await checkUrl(entry.url, entry.files, options);
     }

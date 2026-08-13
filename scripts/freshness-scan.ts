@@ -18,7 +18,7 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { extractClaims } from "../lib/content/freshness/extract";
 import {
@@ -32,7 +32,7 @@ import {
   selectedBucket,
   weekIndex,
 } from "../lib/content/freshness/rotation";
-import { isStub, scoreLesson } from "../lib/content/freshness/score";
+import { isStub, scoreClaims, scoreLesson } from "../lib/content/freshness/score";
 import type { InternalLinkIssue, LessonScan, ScanResult } from "../lib/content/freshness/types";
 import type { Lesson, Theme } from "../lib/content/loader";
 import { getThemes } from "../lib/themes";
@@ -100,7 +100,37 @@ function parseArgs(argv: string[]): Options {
   if (Number.isNaN(options.bucketCount) || options.bucketCount < 1) {
     throw new Error("--bucket-count は 1 以上の整数で指定してください");
   }
+  if (options.bucket !== undefined) {
+    // Left unvalidated, a typo becomes NaN, matches no bucket, and silently
+    // yields only the recently-changed lane — printed as "バケット NaN / 4".
+    if (Number.isNaN(options.bucket) || options.bucket < 0) {
+      throw new Error("--bucket は 0 以上の整数で指定してください");
+    }
+    if (options.bucket >= options.bucketCount) {
+      throw new Error(
+        `--bucket は 0〜${options.bucketCount - 1} の範囲で指定してください（--bucket-count=${options.bucketCount}）`,
+      );
+    }
+  }
+  if (options.max !== undefined && (Number.isNaN(options.max) || options.max < 1)) {
+    throw new Error("--max は 1 以上の整数で指定してください");
+  }
   return options;
+}
+
+/**
+ * File names under `public/`, which Next.js serves at the site root.
+ *
+ * These can't be derived from `content/`, so without them a reference such as
+ * `/icon.png` would be reported as a broken internal link — and internal link
+ * issues carry no fingerprint, so there would be no way to suppress it.
+ */
+function publicAssets(): string[] {
+  try {
+    return readdirSync(path.join(process.cwd(), "public"));
+  } catch {
+    return [];
+  }
 }
 
 /** Every lesson and detail page in the tree, flattened. */
@@ -171,7 +201,7 @@ function main(): void {
   // Call once: loadContentTree is wrapped in React.cache, which is a no-op outside
   // a React request scope, so repeated calls would re-walk content/ every time.
   const themes = getThemes();
-  const validPaths = buildValidInternalPaths(themes);
+  const validPaths = buildValidInternalPaths(themes, publicAssets());
   const allLessons = flattenLessons(themes);
   const changed = recentlyChangedFiles(warnings);
   const now = new Date();
@@ -181,15 +211,18 @@ function main(): void {
 
   for (const lesson of allLessons) {
     const file = path.relative(process.cwd(), lesson.filePath);
+    const raw = readFileSync(lesson.filePath, "utf-8");
+
+    // Internal links are cheap, deterministic, and cost no tokens, so they are
+    // checked across every article — including when --theme narrows the claim
+    // scan. Letting --theme filter these too would quietly contradict the
+    // report, which states they cover the whole repository.
+    internalLinkIssues.push(...findInternalLinkIssues(file, raw, validPaths));
+
     if (options.theme && lesson.themeSlug !== options.theme) continue;
 
-    const raw = readFileSync(lesson.filePath, "utf-8");
     const claims = extractClaims(raw, now);
     const stub = isStub(lesson.body);
-
-    // Internal links are cheap and deterministic, so they are always checked
-    // across every article rather than sampled by the rotation.
-    internalLinkIssues.push(...findInternalLinkIssues(file, raw, validPaths));
 
     scans.push({
       file,
@@ -209,12 +242,26 @@ function main(): void {
   let ignored = new Set<string>();
   try {
     ignored = parseIgnoreList(readFileSync(IGNORE_FILE, "utf-8"));
-  } catch {
-    // No ignore file yet — nothing to suppress.
+  } catch (error) {
+    // A missing file is the normal case. Anything else (a permissions problem,
+    // say) would silently disable every suppression, so surface it.
+    if ((error as NodeJS.ErrnoException)?.code !== "ENOENT") {
+      warnings.push(
+        `${path.relative(process.cwd(), IGNORE_FILE)} を読めませんでした。抑制リストが効いていません: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
   }
-  const withIgnores = applyIgnoreList(scans, ignored) as (LessonScan & {
-    recentlyChanged: boolean;
-  })[];
+
+  // Re-score after suppression: a score computed from claims that were then
+  // ignored would skew the --max cut-off toward articles whose findings were
+  // already dismissed.
+  const withIgnores = applyIgnoreList(scans, ignored).map((lesson, i) => ({
+    ...lesson,
+    score: lesson.stub ? 0 : scoreClaims(lesson.claims),
+    recentlyChanged: scans[i].recentlyChanged,
+  }));
 
   const candidates = withIgnores.filter(
     (l) => !l.stub && l.claims.some((c) => c.confidence === "high"),
@@ -278,4 +325,11 @@ function main(): void {
   }
 }
 
-main();
+try {
+  main();
+} catch (error) {
+  // Argument mistakes are the common failure here; a stack trace buries the
+  // message that says how to fix them.
+  console.error(`✘ ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+}

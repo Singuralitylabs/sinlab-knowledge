@@ -28,8 +28,12 @@ const STATIC_ROUTES: readonly string[] = [
  */
 const UNCHECKABLE_PREFIXES: readonly string[] = ["/content-assets/"];
 
-/** Markdown link to a root-relative path: `](/themes/...)`. */
-const MD_LINK_RE = /\]\((\/[^)\s]*)\)/g;
+/**
+ * Markdown link to a root-relative path: `](/themes/...)`, optionally carrying a
+ * title — `](/themes/... "説明")`. Without the title branch, a broken link
+ * written that way would never be reported.
+ */
+const MD_LINK_RE = /\]\((\/[^)\s]*)(?:[ \t]+["'][^"']*["'])?\)/g;
 
 /** Raw HTML anchor to a root-relative path. */
 const HTML_HREF_RE = /href=["'](\/[^"'\s]*)["']/g;
@@ -41,9 +45,23 @@ export function normalizeInternalPath(href: string): string {
   return withoutFragment.replace(/\/+$/, "");
 }
 
-/** Every root-relative path the site actually serves, derived from the content tree. */
-export function buildValidInternalPaths(themes: Theme[]): Set<string> {
+/**
+ * Every root-relative path the site actually serves.
+ *
+ * `publicAssets` are the file names under `public/`, which Next.js serves at the
+ * site root. They can't be derived from the content tree, and a reference to one
+ * would otherwise be reported as broken — with no way to suppress it, since
+ * internal link issues carry no fingerprint.
+ */
+export function buildValidInternalPaths(
+  themes: Theme[],
+  publicAssets: readonly string[] = [],
+): Set<string> {
   const paths = new Set<string>(STATIC_ROUTES);
+
+  for (const asset of publicAssets) {
+    paths.add(asset.startsWith("/") ? asset : `/${asset}`);
+  }
 
   for (const theme of themes) {
     paths.add(`/themes/${theme.slug}`);

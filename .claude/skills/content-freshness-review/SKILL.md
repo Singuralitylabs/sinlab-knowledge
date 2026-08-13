@@ -45,7 +45,7 @@ bun run check:links -- --in=freshness-scan.json --out=freshness-links.json
 | status | 意味 | 扱い |
 |---|---|---|
 | `alive` | 到達した | 報告不要 |
-| `dead` | 404 / 410 / DNS 失敗 | **確実な実害。個別 Issue を立てる** |
+| `dead` | 404 / 410 | **確実な実害。個別 Issue を立てる** |
 | `moved` | 別 URL にリダイレクトされた | リンク先の内容が変わっていないか確認して報告 |
 | `unknown` | 403 / 429 / タイムアウト | **切れているとは限らない。断定しない** |
 

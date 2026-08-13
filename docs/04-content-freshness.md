@@ -35,7 +35,7 @@ Stage 1・2 を LLM に混ぜない理由は 2 つある。**再現性**（リ�
 | `github.com` | 67 件 | 9 件（残りは `git clone https://github.com/user/repo.git` 等の例示） |
 | `img.shields.io` | 5 件 | 0 件 |
 
-結果として **202 ファイル → 候補 56 ファイル**に絞り込まれる。これが Stage 3 のトークン量を決める。
+結果として **202 ファイル → 候補 57 ファイル**に絞り込まれる。これが Stage 3 のトークン量を決める。
 
 ## 3. 主要な設計判断
 
@@ -43,7 +43,9 @@ Stage 1・2 を LLM に混ぜない理由は 2 つある。**再現性**（リ�
 
 `lib/content/freshness/mask.ts` はコード行を空文字に置換し、**行数を保存する**。削除すると報告の `file:line` が実ファイルとずれて使い物にならない。
 
-フェンスの開閉は CommonMark に近い規則（同じ記号・同じ長さ以上でのみ閉じる）で判定する。Markdown モジュールの記事が ` ``` ` を ` ```` ` で囲んでフェンス構文自体を解説しているため、素朴なトグルでは破綻する。未閉じフェンスは EOF までコード扱いとする（安全側）。
+フェンスの開閉は CommonMark に従い、**同じ記号・同じ長さ以上・info string 無し**の 3 条件で判定する。Markdown モジュールの記事がフェンス構文自体を解説しており、` ```markdown ` の中に ` ```javascript ` を書く入れ子が実在するため、素朴なトグルでは破綻する。
+
+info string の条件を落とすと 2 方向に壊れる。内側の ` ```javascript ` が外側を早期に閉じ、以降のコードが本文として走査される一方、**その後の本文（見出しや説明文）がコード扱いされて走査対象から丸ごと漏れる**。実際に 3 ファイルで発生していた。未閉じフェンスは EOF までコード扱いとする（安全側）。
 
 ### 3.2 バージョン検出は 2 層
 
@@ -90,7 +92,7 @@ state を持たない設計の唯一の本質的な欠陥は、「対応済み�
 
 | status | 条件 | 扱い |
 |---|---|---|
-| `dead` | 404 / 410 / DNS 失敗 | 個別 Issue |
+| `dead` | 404 / 410 | 個別 Issue |
 | `moved` | 到達したが最終 URL が異なる | Stage 3 で内容確認 |
 | `unknown` | 403 / 429 / タイムアウト / 5xx | **切れているとは限らない** |
 | `alive` | 2xx / 3xx で最終 URL が一致 | 報告不要 |
@@ -123,8 +125,8 @@ bun run check:freshness
 # 全候補を走査して Markdown で出力
 bun run check:freshness -- --all --format=markdown
 
-# 特定テーマだけ
-bun run check:freshness -- --theme=04-ai-driven-development --format=markdown
+# 特定テーマだけを全件（--all が無いと今週のバケット分しか見ない）
+bun run check:freshness -- --all --theme=04-ai-driven-development --format=markdown
 
 # リンク生存確認（scan の JSON を渡す）
 bun run check:freshness -- --all --out=scan.json
