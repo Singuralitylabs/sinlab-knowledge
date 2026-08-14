@@ -30,7 +30,6 @@ Claude Code には、この「自動で動かす」仕組みが **3 つ** 用意
 ## このページで学べること
 
 - 3 つのスケジュール実行方式の違いと選び分けの基準
-- Hooks との役割の違い（何をきっかけに動くのか）
 - Cloud Routines を**画面のボタンから作って実行する**手順
 - Cloud Routines の 3 種類のきっかけ（スケジュール / API / GitHub イベント）とその設定方法
 - GitHub のイベントと連携する仕組み（何がどう繋がっているのか）
@@ -79,19 +78,6 @@ Claude Code には、この「自動で動かす」仕組みが **3 つ** 用意
 
 > [!TIP]
 > 迷ったときの基準はシンプルです。**パソコンの状態に左右されず確実に回したい定型業務は Cloud**、**手元のファイルやツールが必要なら Desktop**、**作業中の一時的な見張りなら `/loop`** を選びます。
-
-### Hooks との違い
-
-同じ「自動化」カテゴリでも、[Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) とスケジュール実行は役割が異なります。
-
-| 観点 | Hooks | スケジュール実行（Routines / `/loop`） |
-| --- | --- | --- |
-| 位置づけ | Claude が作業している **最中に割り込む** | Claude の作業自体を **外から開始させる** |
-| きっかけ | ツール実行の前後などのタイミング | 時刻・API 呼び出し・GitHub のイベント |
-| 実行されるもの | あらかじめ書いたコマンド | Claude のセッションそのもの |
-| 判断するのは | 設定に書いた条件（機械的な一致判定） | Claude がプロンプトを読んで判断 |
-
-Hooks は「Claude が動いている最中に、必ず実行したい処理を差し込む」仕組みです。対してスケジュール実行は「Claude の作業自体を、決まったきっかけで開始する」仕組みです。両者は競合せず、Routines で起動したセッションの中でも Hooks は通常どおり動作します。
 
 ## Cloud Routines
 
@@ -612,11 +598,10 @@ Cloud Routines のプロンプトは、会話の履歴を持たない状態か�
 - Cloud Routines は **確認プロンプトのない完全自律実行**。連携先と環境変数の範囲を絞り、取り返しのつかない操作は任せない
 - デスクトップタスクは **アプリ起動中かつ非スリープ時のみ** 動作し、取りこぼしは直近 1 回だけ遅れて実行される
 - `/loop` の価値は **直前までの作業文脈を引き継げること**。引数なしの `/loop` は「PR をマージできる状態まで面倒を見る」用途で特に有効
-- [Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) が「作業中に割り込む」仕組みであるのに対し、スケジュール実行は「作業自体を外から開始させる」仕組み
 
 ## 関連ページ
 
-- [Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) — 作業の途中に決まった処理を差し込む仕組み。自動化のもう一方の柱
+- [Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) — ツール実行の前後に決まった処理を差し込む仕組み。Routine で起動したセッションの中でも通常どおり発火する
 - [Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) — 開発以外の業務向けのスケジュールタスクはこちら
 - [Automate work with routines（公式ドキュメント）](https://code.claude.com/docs/en/routines)
 - [Run prompts on a schedule（`/loop` 公式ドキュメント）](https://code.claude.com/docs/en/scheduled-tasks)
