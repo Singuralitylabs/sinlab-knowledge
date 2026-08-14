@@ -92,7 +92,7 @@ Cowork はチャットと同じメッセージボックスから起動します�
 > [!NOTE]
 > ローカルファイルの読み書きと Computer Use は、デスクトップアプリ上で動作する機能です。Web・モバイルのクラウドセッションからこれらを使う場合も、**デスクトップアプリを開いた状態にしておく必要**があります。
 
-以下は Cowork に固有の機能です。このほかに Slack・Gmail・Google Drive などの外部ツール連携（**コネクタ**）も利用できますが、これは Cowork 専用の機能ではなく、Chat や Claude Code とも共通の **claude.ai アカウント単位の仕組み**です。設定は [claude.ai/connectors](https://claude.ai/connectors) から行います。
+以下は Cowork の主な機能です。このほかに Slack・Gmail・Google Drive などの外部ツール連携（**コネクタ**）も利用できますが、これは Cowork 専用の機能ではなく、Chat や Claude Code とも共通の **claude.ai アカウント単位の仕組み**です。設定は [claude.ai/customize/connectors](https://claude.ai/customize/connectors) から行い、Team / Enterprise プランでは管理者のみがコネクタを追加できます。
 
 ### ファイルの読み取り・編集・作成
 
@@ -104,23 +104,34 @@ Cowork はチャットと同じメッセージボックスから起動します�
 
 ### 「Knowledge Work」マーケットプレイス
 
-Cowork には既定で **Knowledge Work マーケットプレイス**が追加されており、業務領域別に **11 種類の公式プラグイン**が用意されています。
+プラグインの配布・管理の**仕組み自体**は Claude Code の Plugins と共通の基盤です。一方 **「Knowledge Work」マーケットプレイス**は、その仕組みの上に Anthropic が知識労働向けのプラグインを集めてキュレーションしたもので、こちらは Cowork に既定で追加されています。パッケージの構造や `/plugin` コマンドでの管理方法は [Plugins](/themes/04-ai-driven-development/02-claude-code/plugins) を参照してください（プラグインは Skills・Hooks・サブエージェント・MCP サーバー接続を束ねます。MCP サーバー接続は Cowork の文脈では「コネクタ」と呼ばれます）。
+
+Knowledge Work マーケットプレイスには、業務領域別の **17 種類の公式プラグイン**（PDF 閲覧などのユーティリティ 1 種を含む）が用意されています。
 
 | プラグイン | 用途 |
 | --- | --- |
-| Productivity | タスク管理・カレンダー調整・日常業務のワークフロー効率化 |
-| Sales | 見込み客調査・商談準備・パイプラインレビュー・アウトリーチ文面作成・競合分析資料 |
-| Customer Support | チケット対応・返信文起草・エスカレーション記録・顧客調査・ナレッジ記事化 |
-| Product Management | 仕様書作成・ロードマップ計画・ユーザーリサーチの統合・ステークホルダー向け報告・競合トラッキング |
-| Marketing | コンテンツ制作・キャンペーン計画・ブランドボイスの徹底・競合ブリーフィング・複数チャネルの実績レポート |
-| Legal | 契約書レビュー・NDA の仕分け・コンプライアンス対応・リスク評価・ミーティング準備・定型的な法務回答 |
-| Finance | 仕訳の作成・勘定照合・財務諸表の生成・差異分析・監査対応 |
-| Data | データセットの照会・可視化・解釈・SQL 作成・統計分析・検証機能付きダッシュボード作成 |
-| Enterprise Search | メール・チャット・ドキュメント・Wiki を横断した社内情報検索 |
-| Bio-Research | 文献検索・ゲノム解析・ターゲット評価など、ライフサイエンス領域の前臨床研究ツールの統合 |
-| Cowork Plugin Management | 自社のツール・業務に合わせた新規プラグインの作成・カスタマイズ |
+| Productivity | タスク管理・1 日の計画立案。カレンダー・メール・チャットと連携し、重要な文脈を記憶として蓄積 |
+| Sales | 見込み客調査・アウトリーチ文面作成・商談戦略の立案。通話準備とパイプライン管理を支援 |
+| Customer Support | チケットの仕分け・返信文起草・問題のエスカレーション・ナレッジベース構築。解決済み案件をセルフサービス向けコンテンツに転用 |
+| Product Management | 仕様書作成・ロードマップ計画・ユーザーリサーチの統合。ステークホルダーへの共有と競合状況の把握 |
+| Marketing | コンテンツ制作・キャンペーン計画・チャネル横断の実績分析。ブランドボイスの一貫性維持と競合トラッキング |
+| Legal | 社内法務向けの契約書レビュー・NDA の仕分け・コンプライアンス対応。法務ブリーフの作成・判例リサーチの整理・ナレッジ管理 |
+| Finance | 仕訳・勘定照合から財務諸表の作成・差異分析まで。監査対応・月次決算の迅速化 |
+| Data | SQL 作成・データセットの探索・インサイトの生成。可視化とダッシュボードの作成 |
+| Enterprise Search | メール・チャット・ドキュメント・Wiki など社内の全ツールを横断した検索 |
+| Bio Research | 文献検索・ゲノム解析・ターゲット選定など、ライフサイエンス初期研究向けの前臨床研究ツール・データベース連携 |
+| Engineering | スタンドアップ・コードレビュー・アーキテクチャ判断・インシデント対応・技術文書作成 |
+| Human Resources | 採用・オンボーディング・人事評価・報酬分析・ポリシーガイダンス |
+| Design | デザインレビュー・デザインシステム管理・UX ライティング・アクセシビリティ監査・リサーチ統合・開発者への引き継ぎ |
+| Operations | ベンダー管理・プロセス文書化・変更管理・キャパシティプランニング・コンプライアンス追跡 |
+| Small Business | 給与計画・月次決算・週次ブリーフ・成長キャンペーンなど、QuickBooks・PayPal・HubSpot・DocuSign 等と連携した小規模事業者向けの定型ワークフロー |
+| Plugin Management | 自社のツール・業務に合わせた新規プラグインの作成・カスタマイズ |
+| PDF Viewer | PDF の閲覧・注釈・署名。契約書への書き込みやフォーム入力にも対応 |
 
-Knowledge Work 以外にも、Financial Services・Legal・Life Sciences など業界特化のマーケットプレイスが Anthropic から追加提供されています。プラグイン自体の中身（スキル・コネクタ・サブエージェントをひとまとめにする仕組み）は Claude Code の Plugins と共通の基盤です。パッケージの構造や `/plugin` コマンドでの管理方法は [Plugins](/themes/04-ai-driven-development/02-claude-code/plugins) を参照してください。
+> [!NOTE]
+> 表中の Legal・Bio Research は Knowledge Work マーケットプレイス内の個別プラグイン名です。後述する Legal・Life Sciences という**別のマーケットプレイス**（業界特化）とは名前が似ていますが別物なので、混同しないよう注意してください。
+
+Knowledge Work 以外にも、Financial Services・Legal・Life Sciences など業界特化のマーケットプレイスが Anthropic から追加提供されています。
 
 ### プロジェクト
 
@@ -172,6 +183,7 @@ Cowork が行った操作の結果（コンテンツの公開・金銭のやり�
 
 - [サブエージェント (Agents)](/themes/04-ai-driven-development/02-claude-code/agents) — Claude Code 内のサブエージェントの仕組み。Agent Teams と Cowork の位置づけを紹介
 - [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — Claude Code 側の定期実行・自動起動の仕組み。Cowork のスケジュールタスクとの違いを解説
+- [Plugins](/themes/04-ai-driven-development/02-claude-code/plugins) — Cowork の「Knowledge Work」マーケットプレイスが乗っている、Claude Code 共通のプラグイン基盤
 - [Claude Design との連携](/themes/04-ai-driven-development/02-claude-code/claude-design) — 同じ「関連プロダクト紹介」枠の先行例
 - [Get started with Claude Cowork (Claude Help Center)](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
 - [Use Claude Cowork safely (Claude Help Center)](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely)
