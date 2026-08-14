@@ -103,6 +103,7 @@ Marketplaces は、プラグインのホスティング・配布を行うプラ�
 
 ## 関連ページ
 
+- [Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) — 同じ Plugins の基盤の上に、業務領域別プラグインを揃えた「Knowledge Work」マーケットプレイスが用意されている
 - [Plugins（公式ドキュメント）](https://code.claude.com/docs/en/plugins)
 - [Plugin Marketplaces（公式ドキュメント）](https://code.claude.com/docs/en/plugin-marketplaces)
 - [Skills（Plugin にバンドルして配布する）](https://code.claude.com/docs/en/skills)
