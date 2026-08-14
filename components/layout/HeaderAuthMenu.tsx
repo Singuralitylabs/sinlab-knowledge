@@ -21,15 +21,12 @@ export default function HeaderAuthMenu() {
   }, []);
 
   if (state === "loading") {
-    return <div className="h-8 w-20 animate-pulse rounded-md bg-gray-100" aria-hidden="true" />;
+    return <div className="nav__skeleton" aria-hidden="true" />;
   }
 
   if (state === "signedOut") {
     return (
-      <a
-        href="/login"
-        className="rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-gray-700"
-      >
+      <a className="nav__cta" href="/login">
         ログイン
       </a>
     );
@@ -43,12 +40,7 @@ export default function HeaderAuthMenu() {
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleSignOut}
-      disabled={isSigningOut}
-      className="rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:opacity-60"
-    >
+    <button className="nav__link" type="button" onClick={handleSignOut} disabled={isSigningOut}>
       {isSigningOut ? "..." : "ログアウト"}
     </button>
   );

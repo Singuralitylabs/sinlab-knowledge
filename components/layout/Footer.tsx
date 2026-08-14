@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { NavItem } from "@/components/layout/types";
+import { getThemes } from "@/lib/themes";
 
 export interface FooterCopyright {
   holder: string;
@@ -9,71 +11,68 @@ export interface FooterCopyright {
 export interface FooterProps {
   siteTitle: string;
   description?: string;
-  links: NavItem[];
+  navigation: NavItem[];
   copyright?: FooterCopyright;
 }
 
-function isExternal(href: string): boolean {
-  return /^https?:\/\//.test(href);
+function stripProtocol(url: string): string {
+  return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 }
 
-export default function Footer({ siteTitle, description, links, copyright }: FooterProps) {
+export default function Footer({ siteTitle, description, navigation, copyright }: FooterProps) {
   const year = new Date().getFullYear();
   const copyrightName = copyright?.holder ?? siteTitle;
+  const themes = getThemes();
+
+  const [first, ...rest] = siteTitle.split(" ");
+  const accented = rest.join(" ");
 
   return (
-    <footer className="mt-16 border-t border-gray-200 bg-gray-50 px-6 py-10 text-sm text-gray-600">
-      <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2">
-        <div>
-          <p className="mb-1 font-bold text-gray-900">{siteTitle}</p>
-          {description ? (
-            <p className="text-xs leading-relaxed text-gray-500">{description}</p>
-          ) : null}
+    <footer className="footer">
+      <div className="wrap">
+        <div className="footer__grid">
+          <div className="footer__brand">
+            <Link className="brand" href="/">
+              <Image className="brand__logo" src="/icon.png" alt="" width={34} height={34} />
+              <span className="brand__name">
+                {first} {accented ? <b>{accented}</b> : null}
+              </span>
+            </Link>
+            {description ? <p>{description}</p> : null}
+          </div>
+
+          <div className="footer__cols">
+            <div className="footer__col">
+              <h4>Themes</h4>
+              {themes.map((theme) => (
+                <Link key={theme.slug} href={`/themes/${theme.slug}`}>
+                  {theme.meta.shortTitle ?? theme.meta.title}
+                </Link>
+              ))}
+            </div>
+            {navigation.length > 0 ? (
+              <div className="footer__col">
+                <h4>Site</h4>
+                {navigation.map((item) => (
+                  <Link key={item.href} href={item.href}>
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
 
-        {links.length > 0 ? (
-          <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
-              リンク
-            </p>
-            <ul className="space-y-1">
-              {links.map((link) => (
-                <li key={link.href}>
-                  {isExternal(link.href) ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-gray-900"
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link href={link.href} className="text-gray-600 hover:text-gray-900">
-                      {link.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </div>
-
-      <div className="mx-auto mt-8 max-w-6xl border-t border-gray-200 pt-4 text-center text-xs text-gray-500">
-        © {year}{" "}
-        {copyright?.url ? (
-          <a
-            href={copyright.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-900 hover:underline"
-          >
-            {copyrightName}
-          </a>
-        ) : (
-          copyrightName
-        )}
+        <div className="footer__base">
+          <span>
+            © {year} {copyrightName}
+          </span>
+          {copyright?.url ? (
+            <a href={copyright.url} target="_blank" rel="noopener noreferrer">
+              {stripProtocol(copyright.url)}
+            </a>
+          ) : null}
+        </div>
       </div>
     </footer>
   );
