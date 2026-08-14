@@ -240,7 +240,18 @@ API トリガーは、**既存の Routine に対して Web の画面から追加
 
 ##### 呼び出す側の設定
 
-呼び出す側では、コピーした URL に対して、トークンを添えた HTTP リクエストを送ります。監視ツールの Webhook 設定画面であれば「URL」「ヘッダー」「ボディ」の 3 つを埋めるだけです。手元で動作確認したい場合は次のようなコマンドで試せます。
+呼び出す側では、コピーした URL に対して、トークンを添えた HTTP リクエストを送ります。設定するのは「URL」「ヘッダー」「ボディ」の 3 つだけです。
+
+ヘッダーには次の 4 つを指定します。
+
+| ヘッダー | 値 | 役割 |
+| --- | --- | --- |
+| `Authorization` | `Bearer <発行したトークン>` | 認証（これがないと `401` エラー） |
+| `anthropic-beta` | `experimental-cc-routine-2026-04-01` | 研究プレビュー版の機能を使う宣言 |
+| `anthropic-version` | `2023-06-01` | API のバージョン指定 |
+| `Content-Type` | `application/json` | ボディの形式 |
+
+手元で動作確認したい場合は次のようなコマンドで試せます。
 
 ```bash
 # 監視ツールのアラートを Routine に渡して調査させる（URL とトークンは設定手順でコピーしたもの）
@@ -266,6 +277,62 @@ curl -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fir
 
 > [!IMPORTANT]
 > **`text` に書いた内容は、そのままでは指示として扱われません。** Claude には「信頼できない外部データ」というラベル付きで渡されるため、Routine 側のプロンプトが「`routine-fire-payload` ブロックに記載されたアラートを調査してください」のように**明示的に参照しない限り、無視されます**。これは、トークンが漏れた場合に第三者から任意の命令を送り込まれることを防ぐための設計です。API トリガーを使う Routine では、プロンプト側にこの参照を必ず書いてください。
+
+##### 呼び出し元の具体例
+
+「HTTP リクエストを送れる場所」と言われてもイメージしづらいので、代表的な呼び出し元を挙げます。
+
+| 呼び出し元 | 典型的な用途 | 設定方法 |
+| --- | --- | --- |
+| 監視・アラート SaaS（Datadog・Sentry・PagerDuty・Grafana など） | エラー急増や閾値超過をきっかけに、原因調査と修正 PR の起票まで走らせる | 通知先の Webhook として URL とヘッダーを登録する |
+| GitHub Actions などの CI/CD | デプロイ完了後の検証、リリース後の後始末 | ワークフローのステップで `curl` を実行する |
+| サーバの cron | プリセットにない細かい間隔で回したい | シェルスクリプトを cron から呼び出す |
+| ノーコード自動化ツール（Zapier・n8n・Make など） | 他の SaaS の出来事を中継して Claude に渡す | 「HTTP リクエスト」系のアクションで POST する |
+| 社内の業務システム | 申請の受理や在庫の異常など、業務イベントを起点に動かす | アプリのコードから HTTP クライアントで POST する |
+
+> [!IMPORTANT]
+> **必要なのは「カスタムヘッダーを設定できる」呼び出し元です。** 前述のとおりヘッダーを 4 つ指定する必要があるため、**送信先の URL しか指定できない簡易的な Webhook 機能からは直接呼び出せません**。使いたいツールの Webhook 設定画面に、ヘッダーを追加する入力欄があるかを先に確認してください。無い場合は、CI のジョブや小さなスクリプトを間に挟んで中継します。
+
+**例 1: GitHub Actions からデプロイ後の検証を依頼する**
+
+トークンはリポジトリのシークレット（例: `CLAUDE_ROUTINE_TOKEN`）に登録し、ワークフローからは環境変数として参照します。
+
+```yaml
+# .github/workflows/deploy.yml の一部
+- name: デプロイ後の検証を Routine に依頼
+  env:
+    ROUTINE_TOKEN: ${{ secrets.CLAUDE_ROUTINE_TOKEN }}
+  run: |
+    curl -sS -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fire \
+      -H "Authorization: Bearer $ROUTINE_TOKEN" \
+      -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
+      -H "anthropic-version: 2023-06-01" \
+      -H "Content-Type: application/json" \
+      -d "{\"text\": \"コミット ${GITHUB_SHA} を本番へデプロイしました。スモークテストとエラーログの確認をお願いします。\"}"
+```
+
+**例 2: サーバの cron から定期的に起動する**
+
+cron の設定行は複数行に分けられないため、`curl` はスクリプトに切り出しておきます。
+
+```bash
+#!/usr/bin/env bash
+# ~/bin/fire-routine.sh
+curl -sS -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fire \
+  -H "Authorization: Bearer $(cat ~/.secrets/claude-routine-token)" \
+  -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "定期チェックの時刻になりました。"}'
+```
+
+```text
+# crontab -e に登録（15 分おきに実行）
+*/15 * * * * ~/bin/fire-routine.sh
+```
+
+> [!TIP]
+> この方法は、**Cloud Routines のスケジュールの最短間隔（1 時間）を回避する手段** にもなります。ただし cron を動かすサーバを常時稼働させる必要があり、1 日あたりの実行回数上限も通常どおり消費します。単に頻度が欲しいだけであれば、まず `/loop` やデスクトップスケジュールタスクで足りないかを検討してください。
 
 > [!NOTE]
 > この API は `experimental-cc-routine-2026-04-01` というベータ指定の下で提供されています。研究プレビュー中はリクエスト・レスポンスの形や上限が変わる可能性があります。
