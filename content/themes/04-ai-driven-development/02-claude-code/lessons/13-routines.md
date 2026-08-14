@@ -45,10 +45,10 @@ Claude Code には、この「自動で動かす」仕組みが **3 つ** 用意
 | 言葉 | 意味 |
 | --- | --- |
 | **プロンプト** | Claude への指示文。「何をしてほしいか」を書いた文章そのもの |
-| **セッション** | Claude との会話 1 回分。自動実行では、起動のたびに新しい会話が 1 つ立ち上がる |
-| **トリガー**（きっかけ） | セッションを開始させる合図。「毎朝 9 時になったら」「PR が作られたら」といった条件 |
+| **セッション** | Claude との会話 1 回分 |
+| **トリガー**（きっかけ） | 自動実行を開始させる合図。「毎朝 9 時になったら」「PR が作られたら」といった条件 |
 
-つまり自動実行とは、**「トリガー（きっかけ）が来たら、保存しておいたプロンプトで、新しいセッションを始める」** という仕組みです。3 方式の違いは、このセッションがどこで立ち上がるかの違いだと考えると整理しやすくなります。
+つまり自動実行とは、**「トリガー（きっかけ）が来たら、保存しておいたプロンプトを実行する」** という仕組みです。Cloud Routines とデスクトップスケジュールタスクは、トリガーのたびに**新しいセッション**を 1 つ立ち上げます。対して `/loop` だけは新しいセッションを作らず、**今開いている会話にプロンプトを追加投入する**という違いがあります（この違いが `/loop` の使いどころに直結します。詳しくは後述）。
 
 ## 3 つの方式の違い
 
@@ -303,7 +303,7 @@ curl -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fir
   env:
     ROUTINE_TOKEN: ${{ secrets.CLAUDE_ROUTINE_TOKEN }}
   run: |
-    curl -sS -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fire \
+    curl -sS --fail-with-body -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fire \
       -H "Authorization: Bearer $ROUTINE_TOKEN" \
       -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
       -H "anthropic-version: 2023-06-01" \
@@ -318,7 +318,7 @@ cron の設定行は複数行に分けられないため、`curl` はスクリ�
 ```bash
 #!/usr/bin/env bash
 # ~/bin/fire-routine.sh
-curl -sS -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fire \
+curl -sS --fail-with-body -X POST https://api.anthropic.com/v1/claude_code/routines/trig_XXXXXXXX/fire \
   -H "Authorization: Bearer $(cat ~/.secrets/claude-routine-token)" \
   -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
   -H "anthropic-version: 2023-06-01" \
