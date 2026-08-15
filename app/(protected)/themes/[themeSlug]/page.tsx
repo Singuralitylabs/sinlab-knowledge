@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import ThemeLessonIndex from "@/components/content/ThemeLessonIndex";
 import Breadcrumb from "@/components/nav/Breadcrumb";
 import ModuleCard from "@/components/theme/ModuleCard";
 import { getThemeColorClasses, iconFallback } from "@/lib/theme-color";
@@ -63,6 +64,8 @@ export default async function ThemePage({ params }: ThemePageProps) {
           ))}
         </ul>
       </section>
+
+      <ThemeLessonIndex theme={theme} />
     </main>
   );
 }

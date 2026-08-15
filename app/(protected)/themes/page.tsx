@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ContentIndex from "@/components/content/ContentIndex";
 import ThemeCard from "@/components/theme/ThemeCard";
 import { getThemes } from "@/lib/themes";
 
@@ -25,6 +26,8 @@ export default function ThemesPage() {
           </li>
         ))}
       </ul>
+
+      <ContentIndex themes={themes} />
     </main>
   );
 }

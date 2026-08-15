@@ -1,7 +1,8 @@
 import type { ContentModule, Lesson, Theme } from "./themes";
 
 /**
- * View model for the top-page content index (テーマ → モジュール → レッスン).
+ * View model for the content index (テーマ → モジュール → レッスン), shared by
+ * the home page, `/themes` and the per-theme lesson listing.
  *
  * The projection deliberately drops `Lesson.body` (the full Markdown source)
  * and every other heavyweight field: the index only ever renders titles,
@@ -64,7 +65,7 @@ function projectModule(mod: ContentModule, themeSlug: string): ContentIndexModul
   };
 }
 
-/** Projects the loaded content tree into the top-page index view model. */
+/** Projects the loaded content tree into the index view model. */
 export function buildContentIndex(themes: Theme[]): ContentIndexTheme[] {
   return themes.map((theme) => {
     const modules = theme.modules.map((mod) => projectModule(mod, theme.slug));
