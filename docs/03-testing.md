@@ -57,6 +57,7 @@
 | レッスン隣接ナビ・抽出（`lib/themes.ts`） | `tests/themes/themes.test.ts` | スコープ規則（レクチャーは detail をスキップ / detail は兄弟内のみ / モジュール・テーマ境界を越えない）が複雑で壊れやすい | 先頭 / 末尾での prev/next、detail スコープ、`collectLessonsByTag`、`collectAllLessonPaths` |
 | frontmatter 検証（`lib/content/frontmatter.ts` + `schema.ts`） | `tests/content/frontmatter.test.ts` | 不正コンテンツを確実に弾く・default 値の適用挙動 | 正常 → 通過、必須欠落 → throw、`status` 等 default の付与 |
 | MDX レンダリング（`lib/content/mdx.ts:renderMarkdown`） | `tests/content/mdx.test.ts` | TOC id 重複排除（GithubSlugger ↔ rehype-slug 同期）、`::detail` ディレクティブ、外部リンク属性付与など不変条件が繊細 | 重複見出しへの `-1` / `-2` 付与、未知 slug のエラー表示、外部リンク `target=_blank` + `rel`、相対リンクは同一タブ |
+| トップページ目次の射影（`lib/content-index.ts`） | `tests/content-index.test.ts` | 目次の不変条件（lecture のみ・detail を出さない・URL 形式・`Lesson.body` を持ち込まない）が壊れやすい | detail 除外、テーマ / モジュール / レッスンの href、件数集計、順序保持、draft フラグ |
 | 認証ステータス判定（`lib/auth/server-auth.ts`） | `tests/auth/server-auth.test.ts` | 認証ロジックは最優先。未知 status → null（≒ pending）扱い | 認証エラー時 `{ user: null, status: null }`、status 別応答、未知値の弾き |
 
 ### 2.3 型・ビルド・コード品質
@@ -80,7 +81,7 @@
 ### 3.1 配置
 
 - テストコードは `tests/` 配下に置き、対象コード（`lib/` 配下）の構造をミラーする。
-  - 例: `tests/content/slug.test.ts`、`tests/themes/themes.test.ts`、`tests/content/frontmatter.test.ts`、`tests/content/mdx.test.ts`、`tests/auth/server-auth.test.ts`
+  - 例: `tests/content/slug.test.ts`、`tests/themes/themes.test.ts`、`tests/content/frontmatter.test.ts`、`tests/content/mdx.test.ts`、`tests/auth/server-auth.test.ts`、`tests/content-index.test.ts`
 - フィクスチャは実ファイルツリーではなく、`tests/helpers/fixtures.ts` のインメモリファクトリ（Lesson / Module / Theme のビルダー関数）で組み立てる。
 
 ### 3.2 命名
