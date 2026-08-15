@@ -85,12 +85,13 @@ remark-parse → remark-gfm → remark-directive → remarkDetailDirective
 
 ### ルーティング
 
-- パブリック: `/`、`/about`
-- **保護対象（認証ゲート付き）: `/themes/**`** — **両方必須**の 2 層で強制:
-  1. `proxy.ts`（Next.js 16 で `middleware.ts` → `proxy.ts` にリネーム）: 楽観的な `supabase.auth.getUser()` チェック、未認証ユーザーを `/login?returnTo=<path>` にリダイレクト。マッチャーは `/themes/:path*`。
+- パブリック: `/`、`/about`、`/themes`、`/themes/<theme>`（テーマトップ）、`/themes/<theme>/<module>`（モジュール＝レッスン一覧）— いずれもメタ情報のみで本文を含まない。
+- **保護対象（認証ゲート付き）: 記事本文のみ** — `/themes/<theme>/<module>/<lesson>[/<detail>]`。**両方必須**の 2 層で強制:
+  1. `proxy.ts`（Next.js 16 で `middleware.ts` → `proxy.ts` にリネーム）: 楽観的な `supabase.auth.getUser()` チェック、未認証ユーザーを `/login?returnTo=<path>` にリダイレクト。保護境界の判定は `lib/auth/route-protection.ts:isProtectedPath()`（`/themes` 配下でセグメント数 3 以上、= `<theme>/<module>/<article>` 以降のみ保護）。
   2. `app/(protected)/layout.tsx`: `getServerAuth()` 経由のサーバサイド厳格チェック — `status === "active"` のユーザーのみ通過、`"rejected"` → `/rejected`、それ以外 → `/pending`。
 - 認証ルートは `app/(auth)/` 配下 — ルートグループであり URL の一部ではありません。
-- レッスン catch-all: `app/(protected)/themes/[themeSlug]/[...slug]/page.tsx`。
+- 一覧ページは `(protected)` の外: `app/themes/page.tsx`、`app/themes/[themeSlug]/page.tsx`、`app/themes/[themeSlug]/[moduleSlug]/page.tsx`。
+- 記事本文 catch-all: `app/(protected)/themes/[themeSlug]/[moduleSlug]/[...slug]/page.tsx`（`slug` は解説なら 1 要素、詳細なら 2 要素）。
 
 ### 認証フローの詳細
 

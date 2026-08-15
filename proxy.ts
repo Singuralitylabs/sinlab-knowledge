@@ -1,19 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { isProtectedPath } from "@/lib/auth/route-protection";
 import { createProxySupabaseClient } from "@/lib/supabase/proxy";
-
-// 認証必須ルート。ここに含まれないパスは認証チェックをスキップする。
-const protectedPrefixes = ["/themes"];
-
-function isProtected(pathname: string): boolean {
-  return protectedPrefixes.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
-  );
-}
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (!isProtected(pathname)) {
+  if (!isProtectedPath(pathname)) {
     return NextResponse.next();
   }
 

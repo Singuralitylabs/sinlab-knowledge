@@ -53,24 +53,27 @@ Site
 | `/` | トップページ | 公開 |
 | `/about` | About（`content/pages/about.md`） | 公開 |
 | `/login` `/pending` `/rejected` `/callback` | 認証フロー（`app/(auth)/`） | 公開 |
-| `/themes` | テーマ一覧 | 会員のみ |
-| `/themes/<theme>` | テーマトップ | 会員のみ |
-| `/themes/<theme>/<module>` | モジュールトップ | 会員のみ |
-| `/themes/<theme>/<module>/<lesson>` | 解説（lecture） | 会員のみ |
-| `/themes/<theme>/<module>/<lesson>/<detail>` | 詳細（detail） | 会員のみ |
+| `/themes` | テーマ一覧 | 公開 |
+| `/themes/<theme>` | テーマトップ（モジュール一覧） | 公開 |
+| `/themes/<theme>/<module>` | モジュールトップ（レッスン一覧） | 公開 |
+| `/themes/<theme>/<module>/<lesson>` | 解説（lecture）本文 | 会員のみ |
+| `/themes/<theme>/<module>/<lesson>/<detail>` | 詳細（detail）本文 | 会員のみ |
 | `/content-assets/[...path]` | コンテンツ内画像等の配信 | 公開 |
 
 - テーマ・モジュールの URL セグメントは `NN-` プレフィックスを**含む**。レッスン（解説・詳細）のセグメントは `NN-` を**除去**して表示する（`lib/content/slug.ts`）。例: `/themes/01-web-basics/01-markdown/intro-basics/headings`
-- レッスン URL は `app/(protected)/themes/[themeSlug]/[...slug]/page.tsx` の catch-all で受ける。slug の深さがレッスン形式（解説 / 詳細）によって異なっても対応できる。
+- 一覧ページ（テーマ・モジュール・レッスン一覧）はタイトル・説明・件数などのメタ情報のみで本文を含まないため公開。記事本文（解説・詳細）のみ認証必須とする。
+- ルーティングは一覧ページと記事本文ページで App Router のルートグループを分けて実装する:
+  - 一覧: `app/themes/page.tsx`、`app/themes/[themeSlug]/page.tsx`、`app/themes/[themeSlug]/[moduleSlug]/page.tsx`（いずれも `(protected)` の外）
+  - 記事本文: `app/(protected)/themes/[themeSlug]/[moduleSlug]/[...slug]/page.tsx` の catch-all で受ける。`slug` は解説なら 1 要素、詳細なら 2 要素になる
 
-### 認証ゲート（`/themes/**`）
+### 認証ゲート（記事本文のみ）
 
-`/themes/**` は**シンラボ会員専用**であり、両方必須の二層で保護する:
+記事本文 URL（`/themes/<theme>/<module>/<lesson>[/<detail>]`）は**シンラボ会員専用**であり、両方必須の二層で保護する:
 
-1. **`proxy.ts`**（Next.js 16 で `middleware.ts` から改名）: 楽観的な `supabase.auth.getUser()` チェック。未認証ユーザーを `/login?returnTo=<path>` にリダイレクトする
+1. **`proxy.ts`**（Next.js 16 で `middleware.ts` から改名）: 楽観的な `supabase.auth.getUser()` チェック。未認証ユーザーを `/login?returnTo=<path>` にリダイレクトする。保護対象かどうかは `lib/auth/route-protection.ts:isProtectedPath()` が判定する（`/themes` 配下でセグメント数が 3 以上、つまり `<theme>/<module>/<article>` 以降のみ保護）
 2. **`app/(protected)/layout.tsx`**: サーバサイドの厳格チェック。Supabase のアローリスト（`users` テーブル）で `status: "active"` のユーザーのみ通過させ、`"rejected"` は `/rejected` へ、それ以外は `/pending` へ誘導する
 
-保護レイアウトがクッキーを参照するため、`/themes/**` は動的レンダリングになる（全ページ静的生成の初期方針は認証導入に伴い撤回済み）。認証フローの実装詳細（クッキーによる returnTo ラウンドトリップ等）は `CLAUDE.md` と `lib/auth/` を参照。
+一覧ページ（`/themes`、`/themes/<theme>`、`/themes/<theme>/<module>`）は `isProtectedPath()` が `false` を返すため誰でも閲覧できる。保護レイアウトがクッキーを参照するため、記事本文ページは動的レンダリングになる。認証フローの実装詳細（クッキーによる returnTo ラウンドトリップ等）は `CLAUDE.md` と `lib/auth/` を参照。
 
 ## 5. 拡張シナリオの検証
 

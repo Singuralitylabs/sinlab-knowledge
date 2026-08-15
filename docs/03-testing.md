@@ -58,6 +58,7 @@
 | frontmatter 検証（`lib/content/frontmatter.ts` + `schema.ts`） | `tests/content/frontmatter.test.ts` | 不正コンテンツを確実に弾く・default 値の適用挙動 | 正常 → 通過、必須欠落 → throw、`status` 等 default の付与 |
 | MDX レンダリング（`lib/content/mdx.ts:renderMarkdown`） | `tests/content/mdx.test.ts` | TOC id 重複排除（GithubSlugger ↔ rehype-slug 同期）、`::detail` ディレクティブ、外部リンク属性付与など不変条件が繊細 | 重複見出しへの `-1` / `-2` 付与、未知 slug のエラー表示、外部リンク `target=_blank` + `rel`、相対リンクは同一タブ |
 | 認証ステータス判定（`lib/auth/server-auth.ts`） | `tests/auth/server-auth.test.ts` | 認証ロジックは最優先。未知 status → null（≒ pending）扱い | 認証エラー時 `{ user: null, status: null }`、status 別応答、未知値の弾き |
+| 認証境界判定（`lib/auth/route-protection.ts`） | `tests/auth/route-protection.test.ts` | 一覧ページ（公開）と記事本文（認証必須）の境界は `proxy.ts` によるアクセス制御の要であり、抜け漏れが即・認証バイパスになる | `/themes`・`/themes/<theme>`・`/themes/<theme>/<module>` は公開、`/themes/<theme>/<module>/<lesson>` 以降は保護 |
 
 ### 2.3 型・ビルド・コード品質
 
