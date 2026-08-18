@@ -1,3 +1,4 @@
+import ContentIndex from "@/components/content/ContentIndex";
 import ThemeCard from "@/components/theme/ThemeCard";
 import { getSite } from "@/lib/site";
 import { getThemes } from "@/lib/themes";
@@ -27,6 +28,8 @@ export default function Home() {
           ))}
         </ul>
       </section>
+
+      <ContentIndex themes={themes} />
     </main>
   );
 }
