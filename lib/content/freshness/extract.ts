@@ -12,6 +12,7 @@ import {
   GENERIC_VERSION_PATTERN,
   HIGH_RISK_HOSTS,
   OWN_HOSTS,
+  PLACEHOLDER_IMAGE_HOSTS,
   PLACEHOLDER_URL_PATTERN,
   STRONG_TEMPORAL_PHRASES,
   VERSION_STOPWORDS,
@@ -52,14 +53,27 @@ export function urlHost(url: string): string | null {
   }
 }
 
+/**
+ * True when `url` on `line` is a markdown image or an HTML `<img>` that will
+ * actually render — as opposed to a throwaway example link in prose.
+ */
+export function isDisplayedImageUrl(line: string, url: string): boolean {
+  if (!line.includes(url)) return false;
+  if (/!\[[^\]]*\]\(/.test(line) && line.includes(`](${url}`)) return true;
+  if (/<img\b/i.test(line) && /src\s*=/i.test(line) && line.includes(url)) return true;
+  return false;
+}
+
 /** True when a URL is a real external reference worth checking, not an example. */
-export function isCheckableUrl(url: string): boolean {
+export function isCheckableUrl(url: string, line = ""): boolean {
   const host = urlHost(url);
   if (!host) return false;
-  if (EXCLUDED_HOSTS.has(host)) return false;
   if (EXCLUDED_HOST_SUFFIXES.some((suffix) => host.endsWith(suffix))) return false;
   if (OWN_HOSTS.has(host)) return false;
   if (PLACEHOLDER_URL_PATTERN.test(url)) return false;
+  if (EXCLUDED_HOSTS.has(host)) {
+    return PLACEHOLDER_IMAGE_HOSTS.has(host) && isDisplayedImageUrl(line, url);
+  }
   return true;
 }
 
@@ -77,7 +91,7 @@ export function extractUrls(masked: string): Claim[] {
     let match: RegExpExecArray | null = pattern.exec(text);
     while (match !== null) {
       const url = match[0].replace(TRAILING_PUNCT_RE, "");
-      if (isCheckableUrl(url)) {
+      if (isCheckableUrl(url, text)) {
         claims.push({
           kind: "url",
           value: url,
@@ -211,9 +225,9 @@ export function extractDateClaims(masked: string, now: Date = new Date()): Claim
     }
 
     // Longest phrase first, skipping any match that overlaps one already taken.
-    // The phrase list contains both 「執筆時点」 and 「時点で」, which overlap in
-    // 「執筆時点では」 — without this, one assertion yields two claims with two
-    // different fingerprints, so suppressing it would need two ignore entries.
+    // 「執筆時点」 contains 「時点」, and 「最新版」 contains 「最新」; without this,
+    // one assertion yields two claims with two different fingerprints, so
+    // suppressing it would need two ignore entries.
     const takenSpans: [number, number][] = [];
     for (const phrase of [...STRONG_TEMPORAL_PHRASES].sort((x, y) => y.length - x.length)) {
       let from = text.indexOf(phrase);

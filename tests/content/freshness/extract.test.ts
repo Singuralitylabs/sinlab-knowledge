@@ -113,13 +113,32 @@ describe("extractUrls", () => {
       [
         "https://example.com/a",
         "https://api.example.com/b",
-        "https://via.placeholder.com/150",
         "https://img.shields.io/badge",
         "https://github.com/your-name/repo",
         "http://localhost:3000",
       ].join("\n"),
     );
     expect(claims).toHaveLength(0);
+  });
+
+  test("still excludes placeholder image hosts when they are not rendered images", () => {
+    expect(extractUrls("参考: https://via.placeholder.com/150")).toHaveLength(0);
+    expect(extractUrls("参考: https://placehold.co/200x150")).toHaveLength(0);
+    expect(isCheckableUrl("https://via.placeholder.com/150")).toBe(false);
+  });
+
+  // Inline images actually render for the reader, so a dead placeholder CDN
+  // is user-visible damage — unlike a URL mentioned in prose or a code fence.
+  test("extracts placeholder image CDNs when they are markdown or HTML images", () => {
+    expect(extractUrls("![x](https://placehold.co/200x150)").map((c) => c.value)).toEqual([
+      "https://placehold.co/200x150",
+    ]);
+    expect(extractUrls("![x](https://via.placeholder.com/150)").map((c) => c.value)).toEqual([
+      "https://via.placeholder.com/150",
+    ]);
+    expect(
+      extractUrls('<img src="https://placehold.co/200x100" alt="x">').map((c) => c.value),
+    ).toEqual(["https://placehold.co/200x100"]);
   });
 
   // Regression: `\byour[-_]?` matched any word starting with "your", so the
@@ -239,15 +258,15 @@ describe("extractDateClaims", () => {
     expect(old?.note).toContain("古い年号");
   });
 
-  // 「執筆時点」 and 「時点で」 overlap in 「執筆時点では」. Emitting both would
-  // mean one assertion needs two ignore entries to suppress.
+  // 「執筆時点」 contains 「時点」; emitting both would mean one assertion
+  // needs two ignore entries to suppress.
   test("emits one claim when temporal phrases overlap", () => {
     expect(values("執筆時点では対応していません", "high")).toEqual(["執筆時点"]);
     expect(values("現時点での仕様です", "high")).toEqual(["現時点"]);
   });
 
-  test("still matches 時点で when it stands alone", () => {
-    expect(values("2026年時点での挙動", "high")).toContain("時点で");
+  test("does not treat 時点で as a date claim by itself", () => {
+    expect(values("手が空いた時点で 1 回だけ実行されます")).not.toContain("時点で");
   });
 
   // Regression: 「最新」 (weak) sits inside 「最新版」 (strong). Without checking

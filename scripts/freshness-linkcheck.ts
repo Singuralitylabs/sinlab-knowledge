@@ -23,8 +23,9 @@
  * Network environment matters, and results are not portable between environments:
  *
  *   - In a sandbox that forces traffic through an HTTP CONNECT proxy, Bun's
- *     `fetch` may not reach anything at all and every URL comes back `unknown`.
- *     That is the environment, not the links.
+ *     `fetch` does not honor `HTTPS_PROXY`. This script then falls back to
+ *     `curl`, which does. If almost every URL still comes back `unknown`,
+ *     the environment (allowlist / proxy) is the suspect, not the links.
  *   - A Claude Cloud Routine enforces its allowlist at the gateway instead, so
  *     `fetch` connects directly — but any host missing from the environment's
  *     **Allowed domains** is refused with 403 and lands in `unknown` too.
@@ -34,7 +35,8 @@
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { checkUrls, type UrlEntry } from "../lib/content/freshness/linkcheck";
+import { checkUrls, highUnknownWarning, type UrlEntry } from "../lib/content/freshness/linkcheck";
+import { selectFetchFn } from "../lib/content/freshness/proxy-fetch";
 import type { LinkResult, ScanResult } from "../lib/content/freshness/types";
 
 /**
@@ -163,9 +165,15 @@ async function main(): Promise<void> {
     console.error("チェック対象の URL がありません。");
   }
 
+  const { fetchFn, via } = selectFetchFn({});
+  if (via === "curl") {
+    console.error("HTTPS_PROXY を検出したため、Bun の fetch ではなく curl でチェックします。");
+  }
+
   const results = await checkUrls(entries, {
     concurrency: options.concurrency,
     timeoutMs: options.timeoutMs,
+    fetchFn,
   });
 
   const output =
@@ -180,6 +188,8 @@ async function main(): Promise<void> {
   const dead = results.filter((r) => r.status === "dead").length;
   const unknown = results.filter((r) => r.status === "unknown").length;
   console.error(`✓ ${results.length} 件を確認 — 切れ ${dead} 件 / 判定不能 ${unknown} 件`);
+  const warning = highUnknownWarning(results);
+  if (warning) console.error(`⚠ ${warning}`);
 }
 
 try {
