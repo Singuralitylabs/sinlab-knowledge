@@ -72,6 +72,8 @@ Site
 
 保護レイアウトがクッキーを参照するため、`/themes/**` は動的レンダリングになる（全ページ静的生成の初期方針は認証導入に伴い撤回済み）。認証フローの実装詳細（クッキーによる returnTo ラウンドトリップ等）は `CLAUDE.md` と `lib/auth/` を参照。
 
+本サービスの Supabase プロジェクトはポータル（singularity-lab-portal）と共有している。OAuth の `redirectTo` が Redirect URLs の許可リストに無い場合、Supabase Auth はこれを破棄して Site URL（＝ポータル）へフォールバックする。新しいドメインを追加する際は、Redirect URLs に `https://<domain>/callback` を追加すること。
+
 ## 5. 拡張シナリオの検証
 
 設計方針が守られていれば、以下はすべて**コード変更なし**で成立する。具体的な追加手順・テンプレートは [02-content-structure.md](./02-content-structure.md) を参照。

@@ -4,7 +4,7 @@
 
 Web 開発の基礎から AI 駆動開発まで、実務で使える知識を **テーマ → モジュール → レッスン** の 3 階層で整理し、Markdown ファイルとして蓄積していきます。コンテンツを追加するだけでサイトに反映される、ファイルシステム駆動のアーキテクチャを採用しています。
 
-- 公開 URL: <https://sinlab-skills.vercel.app>
+- 公開 URL: <https://knowledge.future-tech-association.org>（<https://sinlab-skills.vercel.app> でも到達可能）
 - **シンラボ会員専用**: `/themes/**` 配下のコンテンツはシンラボ会員のみがアクセス可能です。Supabase 認証のアローリストで保護されており、閲覧には承認済みのシンラボ会員アカウントでのログインが必要です。
 
 収録テーマの実際の構成は `content/themes/`（各テーマの `_theme.json`）を参照してください。テーマ・モジュールは今後も追加されていきます。
