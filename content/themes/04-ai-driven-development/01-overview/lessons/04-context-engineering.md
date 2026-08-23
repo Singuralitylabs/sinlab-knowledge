@@ -170,6 +170,8 @@ AI が会話を通じて学んだプロジェクトの知見を、セッショ�
 
 ## 関連ページ
 
+- [ハーネスエンジニアリング](/themes/04-ai-driven-development/01-overview/harness-engineering) — AI の動作環境（コンテキスト・ツール・権限）の設計
+- [ループエンジニアリング](/themes/04-ai-driven-development/01-overview/loop-engineering) — 行動 → 検証 → 修正の回り方の設計
 - [メモリとコンテキスト管理](/themes/04-ai-driven-development/02-claude-code/memory) — Claude Code におけるメモリ機能と `/compact` の詳細
 - [Skills](/themes/04-ai-driven-development/02-claude-code/skills) — カスタムスラッシュコマンドによるプロンプトの定型化
 - [サブエージェント](/themes/04-ai-driven-development/02-claude-code/agents) — 分離（Isolate）の実践手段

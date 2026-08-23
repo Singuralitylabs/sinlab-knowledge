@@ -170,3 +170,9 @@ Claude / GPT / Gemini といった主要モデルは、コーディングタス�
 - 原則は **ガードレール優先・再現性・構成可能性・観測可能性・段階的自律**
 - 始め方は **CLAUDE.md → コマンド → Hooks → サブエージェント → MCP → 権限緩和** の順
 - 各構成要素の具体的な使い方は [Claude Code](/themes/04-ai-driven-development/02-claude-code) モジュールへ
+
+## 関連ページ
+
+- [コンテキストエンジニアリング](/themes/04-ai-driven-development/01-overview/context-engineering) — ハーネスの第 1 要素である前提情報の設計
+- [ループエンジニアリング](/themes/04-ai-driven-development/01-overview/loop-engineering) — ハーネス上で「どう回すか」（検証手段・完了条件・境界）
+- [Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) — ループのライフサイクルに決定論的処理を差し込む

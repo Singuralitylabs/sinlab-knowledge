@@ -1,7 +1,7 @@
 ---
 title: "生成AIベンチマークの読み方"
 description: "SWE-bench/GPQA/MMLU などの指標の意味、測定条件の落とし穴、信頼できる比較サイトの使い分けを体系的に整理する。"
-order: 6
+order: 7
 type: lecture
 difficulty: intermediate
 tags: [ai-coding, benchmarks, model-evaluation]
