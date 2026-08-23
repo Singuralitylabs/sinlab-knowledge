@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import {
+  buildCurlArgs,
   parseCurlWriteOut,
   resolveProxyUrl,
   selectFetchFn,
@@ -56,5 +57,23 @@ describe("selectFetchFn", () => {
 
   test("uses native fetch when no proxy is set", () => {
     expect(selectFetchFn({ env: {} }).via).toBe("native");
+  });
+});
+
+describe("buildCurlArgs", () => {
+  test("uses -I for HEAD instead of -X HEAD", () => {
+    const args = buildCurlArgs("https://example.com/x", { method: "HEAD" });
+    expect(args).toContain("-I");
+    expect(args).not.toContain("-X");
+    expect(args).not.toContain("HEAD");
+    expect(args.at(-2)).toBe("--");
+    expect(args.at(-1)).toBe("https://example.com/x");
+  });
+
+  test("keeps -X for GET", () => {
+    const args = buildCurlArgs("https://example.com/x", { method: "GET" });
+    expect(args).not.toContain("-I");
+    expect(args).toContain("-X");
+    expect(args).toContain("GET");
   });
 });

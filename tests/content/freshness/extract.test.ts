@@ -5,6 +5,7 @@ import {
   extractUrls,
   extractVersionClaims,
   isCheckableUrl,
+  isDisplayedImageUrl,
 } from "@/lib/content/freshness/extract";
 import { maskCodeRegions, paragraphRanges } from "@/lib/content/freshness/mask";
 
@@ -139,6 +140,15 @@ describe("extractUrls", () => {
     expect(
       extractUrls('<img src="https://placehold.co/200x100" alt="x">').map((c) => c.value),
     ).toEqual(["https://placehold.co/200x100"]);
+  });
+
+  test("does not treat a placeholder URL as an image just because another img is on the line", () => {
+    const line = 'https://via.placeholder.com/150 <img src="/real.png" alt="x">';
+    expect(extractUrls(line)).toHaveLength(0);
+    expect(isDisplayedImageUrl(line, "https://via.placeholder.com/150")).toBe(false);
+    expect(isDisplayedImageUrl('<img src="/real.png">', "https://via.placeholder.com/150")).toBe(
+      false,
+    );
   });
 
   // Regression: `\byour[-_]?` matched any word starting with "your", so the

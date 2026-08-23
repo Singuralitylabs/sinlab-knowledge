@@ -53,14 +53,23 @@ export function urlHost(url: string): string | null {
   }
 }
 
+function escapeRegExp(literal: string): string {
+  return literal.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /**
  * True when `url` on `line` is a markdown image or an HTML `<img>` that will
  * actually render — as opposed to a throwaway example link in prose.
+ *
+ * The URL must be the image destination itself (`![...](url)` / `src="url"`).
+ * Sharing a line with some other image is not enough.
  */
 export function isDisplayedImageUrl(line: string, url: string): boolean {
   if (!line.includes(url)) return false;
-  if (/!\[[^\]]*\]\(/.test(line) && line.includes(`](${url}`)) return true;
-  if (/<img\b/i.test(line) && /src\s*=/i.test(line) && line.includes(url)) return true;
+  const escaped = escapeRegExp(url);
+  if (new RegExp(`!\\[[^\\]]*\\]\\(${escaped}`).test(line)) return true;
+  if (new RegExp(`<img\\b[^>]*\\bsrc\\s*=\\s*(['"])${escaped}\\1`, "i").test(line)) return true;
+  if (new RegExp(`<img\\b[^>]*\\bsrc\\s*=\\s*${escaped}(?=[\\s>])`, "i").test(line)) return true;
   return false;
 }
 

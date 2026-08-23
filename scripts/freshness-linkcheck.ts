@@ -167,7 +167,7 @@ async function main(): Promise<void> {
 
   const { fetchFn, via } = selectFetchFn({});
   if (via === "curl") {
-    console.error("HTTPS_PROXY を検出したため、Bun の fetch ではなく curl でチェックします。");
+    console.error("プロキシ環境変数を検出したため、Bun の fetch ではなく curl でチェックします。");
   }
 
   const results = await checkUrls(entries, {

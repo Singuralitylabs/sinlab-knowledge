@@ -48,13 +48,12 @@ function headerValue(headers: HeadersInit | undefined, name: string): string | u
 }
 
 /**
- * `fetch`-compatible wrapper around `curl`. Honors `HTTPS_PROXY` via curl's
- * own environment handling. The URL is passed as a separate argv entry so it
- * cannot be interpreted as extra curl flags.
+ * Build the `curl` argv. HEAD uses `-I` rather than `-X HEAD`: curl's own
+ * manual says `-X HEAD` only changes the verb and still waits for a body,
+ * which hangs on keep-alive responses until the abort timeout.
  */
-export const curlFetch: FetchFn = async (url, init) => {
+export function buildCurlArgs(url: string, init: RequestInit): string[] {
   const method = (init.method ?? "GET").toUpperCase();
-  const timeoutSec = 120;
   const userAgent = headerValue(init.headers, "user-agent");
   const range = headerValue(init.headers, "range");
 
@@ -68,14 +67,27 @@ export const curlFetch: FetchFn = async (url, init) => {
     "-L",
     "--max-redirs",
     "10",
-    "-X",
-    method,
     "--max-time",
-    String(timeoutSec),
+    "120",
   ];
+  if (method === "HEAD") {
+    args.push("-I");
+  } else {
+    args.push("-X", method);
+  }
   if (userAgent) args.push("-A", userAgent);
   if (range) args.push("-H", `Range: ${range}`);
   args.push("--", url);
+  return args;
+}
+
+/**
+ * `fetch`-compatible wrapper around `curl`. Honors `HTTPS_PROXY` via curl's
+ * own environment handling. The URL is passed as a separate argv entry so it
+ * cannot be interpreted as extra curl flags.
+ */
+export const curlFetch: FetchFn = async (url, init) => {
+  const args = buildCurlArgs(url, init);
 
   const proc = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
 
