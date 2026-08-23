@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img" aria-labelledby="title-loop">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" width="720" height="440" role="img" aria-labelledby="title-loop">
   <title id="title-loop">エージェンティックループ：コンテキスト収集 → 行動 → 検証 → 繰り返し（または完了）</title>
   <defs>
     <marker id="loop-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
@@ -41,9 +41,9 @@
   <path d="M600,150 L600,98" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#loop-arrow-green)"/>
   <text class="sub" x="548" y="128" font-size="12" text-anchor="end">条件を満たす</text>
 
-  <!-- repeat arc -->
-  <path d="M600,238 C600,330 120,330 120,238" fill="none" stroke="#4f46e5" stroke-width="2" marker-end="url(#loop-arrow)"/>
-  <text class="again" x="360" y="318" font-size="15" text-anchor="middle">未達なら繰り返す</text>
+  <!-- repeat arc: control y=345 so the stroke stays above the label -->
+  <path d="M600,238 C600,345 120,345 120,238" fill="none" stroke="#4f46e5" stroke-width="2" marker-end="url(#loop-arrow)"/>
+  <text class="again" x="360" y="368" font-size="15" text-anchor="middle">未達なら繰り返す</text>
 
-  <text class="cap" x="360" y="392" font-size="15" text-anchor="middle">エージェンティックループ — 環境からのフィードバックで次の一手を決める</text>
+  <text class="cap" x="360" y="412" font-size="15" text-anchor="middle">エージェンティックループ — 環境からのフィードバックで次の一手を決める</text>
 </svg>
