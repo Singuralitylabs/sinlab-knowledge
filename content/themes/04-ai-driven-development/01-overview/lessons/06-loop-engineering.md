@@ -95,7 +95,7 @@ Claude Code では、プロンプトに「テストを走らせて通るまで�
 
 ### ③ 境界
 
-完了条件があっても、到達できない場合があります。公式側も、最大反復回数のような停止条件を置くのが一般的だとしています。Stop hook でターン終了をブロックする場合も、連続ブロックが続くとハーネス側が上書きして止めます（Claude Code では 8 回）。
+完了条件があっても、到達できない場合があります。[Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) も、最大反復回数のような停止条件を置くのが一般的だとしています。Stop hook でターン終了をブロックする場合も、連続ブロックが続くとハーネス側が上書きして止めます（Claude Code では 8 回。公式ベストプラクティスの [Give Claude a way to verify its work](https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work) に記載）。
 
 境界の典型は次の 3 つです。
 
