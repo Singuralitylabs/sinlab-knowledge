@@ -1,5 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { checkUrl, checkUrls, classifyStatus } from "@/lib/content/freshness/linkcheck";
+import {
+  checkUrl,
+  checkUrls,
+  classifyStatus,
+  highUnknownWarning,
+} from "@/lib/content/freshness/linkcheck";
 
 /** Minimal stand-in: checkUrl only reads `status` and `url`. */
 function response(status: number, url: string): Response {
@@ -220,5 +225,23 @@ describe("checkUrls", () => {
     });
 
     expect(Date.now() - began).toBeLessThan(200);
+  });
+});
+
+describe("highUnknownWarning", () => {
+  test("is silent when most URLs resolved", () => {
+    const results = [{ status: "alive" }, { status: "alive" }, { status: "unknown" }];
+    expect(highUnknownWarning(results)).toBeNull();
+  });
+
+  test("warns when almost every URL is unknown", () => {
+    const results = Array.from({ length: 10 }, () => ({ status: "unknown" }));
+    const warning = highUnknownWarning(results);
+    expect(warning).toContain("10/10");
+    expect(warning).toContain("ネットワーク");
+  });
+
+  test("treats an empty run as nothing to warn about", () => {
+    expect(highUnknownWarning([])).toBeNull();
   });
 });

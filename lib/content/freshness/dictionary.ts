@@ -12,6 +12,11 @@
  *
  * Most example URLs already live inside code fences and are removed by
  * `maskCodeRegions` before extraction; this list catches the ones written in prose.
+ *
+ * Placeholder image CDNs stay here so copy-paste example *links* are not
+ * link-checked. Markdown / HTML images that actually render in the article are
+ * re-included by {@link PLACEHOLDER_IMAGE_HOSTS} — a dead image is visible to
+ * readers even when the host is a "fake" CDN.
  */
 export const EXCLUDED_HOSTS: ReadonlySet<string> = new Set([
   "example.com",
@@ -29,6 +34,16 @@ export const EXCLUDED_HOSTS: ReadonlySet<string> = new Set([
   "username.github.io",
   "user.github.io",
   "yourname.github.io",
+]);
+
+/**
+ * Subset of {@link EXCLUDED_HOSTS} that may still appear as rendered images.
+ * `extractUrls` treats a URL on these hosts as checkable when the source line
+ * is a markdown image or an `<img src>`.
+ */
+export const PLACEHOLDER_IMAGE_HOSTS: ReadonlySet<string> = new Set([
+  "via.placeholder.com",
+  "placehold.co",
 ]);
 
 /** Host suffixes that mark a non-routable or reserved name. */
@@ -195,12 +210,16 @@ export const VERSION_STOPWORDS: ReadonlySet<string> = new Set([
   "Score",
 ]);
 
-/** Strong Japanese phrases that assert a point-in-time fact on their own. */
+/** Strong Japanese phrases that assert a point-in-time fact on their own.
+ *
+ * 「時点で」 alone is *not* included: it is a generic adverbial ("once X
+ * happens") and produced false positives such as 「手が空いた時点で」.
+ * Point-in-time intent is covered by 「現時点」 / 「執筆時点」 / year-month.
+ */
 export const STRONG_TEMPORAL_PHRASES: readonly string[] = [
   "現時点",
   "執筆時点",
   "本記事執筆",
-  "時点で",
   "最新版",
   "最新のバージョン",
   "最新モデル",

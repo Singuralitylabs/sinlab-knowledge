@@ -403,7 +403,7 @@ function hello() {
 
 **例：**
 ```markdown
-![サンプル画像](https://via.placeholder.com/150)
+![サンプル画像](https://placehold.co/150)
 ```
 
 **ポイント**

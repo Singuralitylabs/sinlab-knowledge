@@ -86,6 +86,29 @@ export function classifyStatus(
   return { status: "alive", reason: `HTTP ${httpStatus}` };
 }
 
+/** Share of results classified `unknown`. Empty input is 0, not NaN. */
+export function unknownShare(results: readonly { status: string }[]): number {
+  if (results.length === 0) return 0;
+  return results.filter((r) => r.status === "unknown").length / results.length;
+}
+
+/**
+ * Warn when almost every URL came back `unknown`. That pattern is the
+ * environment (proxy / allowlist), not the links — see docs/04-content-freshness.md.
+ */
+export const HIGH_UNKNOWN_SHARE = 0.8;
+
+export function highUnknownWarning(results: readonly { status: string }[]): string | null {
+  const share = unknownShare(results);
+  if (results.length === 0 || share < HIGH_UNKNOWN_SHARE) return null;
+  const unknown = results.filter((r) => r.status === "unknown").length;
+  const percent = Math.round(share * 100);
+  return (
+    `判定不能が ${unknown}/${results.length} 件（${percent}%）です。` +
+    "リンク切れではなく、実行環境のネットワーク（プロキシ未対応・許可リスト漏れ）を疑ってください。"
+  );
+}
+
 interface Attempt {
   httpStatus: number;
   finalUrl: string;

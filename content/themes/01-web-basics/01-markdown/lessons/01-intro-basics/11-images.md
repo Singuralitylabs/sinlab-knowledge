@@ -61,7 +61,7 @@ status: published
 ### 記法
 
 ```markdown
-![サンプル画像](https://via.placeholder.com/200x150 "これはサンプル画像です")
+![サンプル画像](https://placehold.co/200x150 "これはサンプル画像です")
 ```
 
 ### 表示結果
@@ -77,12 +77,12 @@ status: published
 ### 記法
 
 ```markdown
-[![クリックできる画像](https://via.placeholder.com/200x100)](https://www.google.com)
+[![クリックできる画像](https://placehold.co/200x100)](https://www.google.com)
 ```
 
 ### 表示結果
 
-[![クリックできる画像](https://via.placeholder.com/200x100)](https://www.google.com)
+[![クリックできる画像](https://placehold.co/200x100)](https://www.google.com)
 
 ### 構造
 
@@ -114,11 +114,11 @@ status: published
 ```markdown
 <!-- 中央寄せ（HTMLを使用） -->
 <p align="center">
-  <img src="https://via.placeholder.com/200x100" alt="中央寄せ画像">
+  <img src="https://placehold.co/200x100" alt="中央寄せ画像">
 </p>
 
 <!-- サイズ指定（HTMLを使用） -->
-<img src="https://via.placeholder.com/400x200" alt="サイズ指定" width="200">
+<img src="https://placehold.co/400x200" alt="サイズ指定" width="200">
 ```
 
 ### 表示結果
