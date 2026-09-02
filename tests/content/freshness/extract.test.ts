@@ -239,6 +239,39 @@ describe("extractVersionClaims", () => {
     expect(values("Express 4.18.2 を使う", "high")).toEqual(["Express 4.18.2"]);
     expect(values("Express 4.18.2 を使う", "low")).toEqual([]);
   });
+
+  // #48 and #63 both reported the same three floor-notation lines as staleness
+  // candidates. 「Git 2.23 以降」 stays true forever, so it must not reach the
+  // default (high-confidence-only) report.
+  test("drops a version with floor notation to low confidence", () => {
+    for (const [source, value] of [
+      ["Claude Code v2.1.225 以降で利用できます", "Claude Code v2.1.225"],
+      ["VS Code 1.96+ が必要です", "VS Code 1.96"],
+      ["Git 2.23 以降で使えます", "Git 2.23"],
+      ["Node.js 18以上が必要", "Node.js 18"],
+      ["Python 3.13 以後に対応", "Python 3.13"],
+      ["Git\u30002.23\u3000以降", "Git\u30002.23"],
+    ] as const) {
+      expect(values(source, "high")).toEqual([]);
+      expect(values(source, "low")).toEqual([value]);
+    }
+  });
+
+  test("carries the floor note so a reader knows why it was demoted", () => {
+    const [claim] = extractVersionClaims("Git 2.23 以降で使えます");
+    expect(claim?.note).toContain("下限表記");
+  });
+
+  test("keeps an exact version on the same line at high confidence", () => {
+    expect(values("Git 2.23 以降。Python 3.13 で確認", "high")).toEqual(["Python 3.13"]);
+    expect(values("Git 2.23 以降。Python 3.13 で確認", "low")).toEqual(["Git 2.23"]);
+  });
+
+  test("applies the floor rule to Tier B products too", () => {
+    const [claim] = extractVersionClaims("Fastify 4.26.0 以降が必要");
+    expect(claim?.confidence).toBe("low");
+    expect(claim?.note).toContain("下限表記");
+  });
 });
 
 describe("extractDateClaims", () => {

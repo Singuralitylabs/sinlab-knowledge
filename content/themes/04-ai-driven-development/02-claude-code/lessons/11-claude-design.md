@@ -15,7 +15,7 @@ status: published
 Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジュアル制作向けの AI プロダクトです。**クリック可能なインタラクティブプロトタイプ**、スライド、ワンページャー、モックアップなどを会話ベースで生成でき、完成したデザインを **Claude Code にハンドオフして実装まで一気通貫で進められる** のが特徴です。
 
 > [!NOTE]
-> 本記事の内容は **2026 年 6 月時点** のものです。Claude Design は beta（段階的ロールアウト）であり、UI・機能名・料金・利用枠は今後変更される可能性があります。実際に利用する際は最新の公式ドキュメントを併せて確認してください。
+> 本記事は **2026 年 6 月時点** の内容をもとに執筆し、**2026 年 9 月に外部リンクと機能名を再確認** しています。Claude Design は beta（段階的ロールアウト）であり、UI・機能名・料金・利用枠は今後変更される可能性があります。実際に利用する際は最新の公式ドキュメントを併せて確認してください。
 
 ## このページで学べること
 
@@ -54,7 +54,7 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 | Team | 可 | チームで共有可能。管理者が Capabilities でオン/オフ可能 |
 | Enterprise | 可（要管理者有効化） | デフォルト OFF。Capabilities からオン |
 
-利用量は **チャットや Claude Code とは別メーター** です。プランごとに週次の枠があり、枯渇時は [Extra usage](https://support.claude.com/en/articles/12429409-manage-extra-usage-for-paid-claude-plans) で追加できます（詳細は公式の利用量・料金ページを参照）。
+利用量は **チャットや Claude Code とは別メーター** です。プランごとに週次の枠があり、枯渇時は [usage credits](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) で追加できます（詳細は公式の利用量・料金ページを参照）。
 
 バックエンドは Anthropic の **Opus 系モデル** です（公式ドキュメントでは具体的なバージョンは明記されておらず、随時更新されます）。ハンドオフ時は **ハンドオフバンドル** に構造・コンポーネント・デザイントークン・実装指示がまとまるため、Claude Code がデザイン意図を解釈しやすくなります（Claude Code 側のモデルは Sonnet / Opus など切り替え可能）。
 
@@ -362,7 +362,7 @@ beta 段階のため、執筆時点で次の問題が報告されています。
 
 - Claude Design は「実装前のビジュアル設計」を担当する Anthropic Labs の新製品（**インタラクティブプロトタイプ**含む）
 - 入口は **[claude.ai/design](https://claude.ai/design)（ブラウザ）/ Claude デスクトップアプリのサイドバー**、UI は **左チャット + 右キャンバス**
-- 利用量は **チャット・Claude Code とは別メーター**（週次枠 + Extra usage）
+- 利用量は **チャット・Claude Code とは別メーター**（週次枠 + usage credits）
 - 推奨ワークフローは **作成 → コンテキスト → 要件 → レビュー → 反復** の 5 ステップ
 - プロンプトは **目標・レイアウト・コンテンツ・対象ユーザー** を含めて段階的に複雑さを足す
 - デザインシステムを組織にセットアップし、[Published] にすると全プロジェクトに自動適用（複数システムも可）
@@ -373,6 +373,6 @@ beta 段階のため、執筆時点で次の問題が報告されています。
 
 - [Get started with Claude Design (Claude Help Center)](https://support.claude.com/en/articles/14604416-get-started-with-claude-design)
 - [Set up your design system in Claude Design (Claude Help Center)](https://support.claude.com/en/articles/14604397-set-up-your-design-system-in-claude-design)
-- [Claude Design subscription usage and pricing (Claude Help Center)](https://support.claude.com/en/articles/14667344-claude-design-subscription-usage-and-pricing)
+- [Manage usage credits for paid Claude plans (Claude Help Center)](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans)
 - [Claude Design admin guide for Team and Enterprise plans (Claude Help Center)](https://support.claude.com/en/articles/14604406-claude-design-admin-guide-for-team-and-enterprise-plans)
 - [Introducing Claude Design by Anthropic Labs](https://www.anthropic.com/news/claude-design-anthropic-labs)

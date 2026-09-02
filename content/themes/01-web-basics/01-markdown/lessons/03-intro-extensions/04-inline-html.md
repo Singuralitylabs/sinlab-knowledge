@@ -159,7 +159,7 @@ Mac: <kbd>Cmd</kbd> + <kbd>S</kbd> で保存
 
 ### 記法
 
-```html
+````html
 <details>
 <summary>クリックして詳細を表示</summary>
 
@@ -175,7 +175,7 @@ print("Hello!")
 ```
 
 </details>
-```
+````
 
 ### 表示結果
 
@@ -238,7 +238,7 @@ Markdownの画像記法ではサイズを指定できませんが、HTMLなら�
 
 ### FAQセクション
 
-```html
+````html
 ## よくある質問
 
 <details>
@@ -259,7 +259,7 @@ npm install package-name
 - npm 9以上
 
 </details>
-```
+````
 
 ---
 

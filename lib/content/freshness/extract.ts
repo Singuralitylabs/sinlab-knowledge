@@ -32,6 +32,18 @@ const URL_SOURCE = 'https?://[^\\s<>()\\[\\]"`|]+';
 /** Punctuation that trails a URL in prose rather than belonging to it. */
 const TRAILING_PUNCT_RE = /[.,;:!?、。）」』】>]+$/;
 
+/**
+ * Floor ("at least") notation immediately after a version: 「Git 2.23 以降」,
+ * 「Node.js 18以上」, 「VS Code 1.96+」.
+ *
+ * These do not go stale. `Git 2.23 以降` stays true when Git ships 2.50, so a
+ * high-confidence claim here is a false positive that a human has to dismiss on
+ * every run — #48 and #63 both reported the same three lines. Dropping them to
+ * `low` keeps them out of the default report while leaving them visible under
+ * `--include-low`.
+ */
+const VERSION_FLOOR_SUFFIX = /^[\s\u3000]*(?:以降|以上|以後|\+)/;
+
 const YEAR_MONTH_SOURCE = "(?:19|20)\\d{2}\\s*年(?:\\s*\\d{1,2}\\s*月)?";
 const ISO_DATE_SOURCE = "\\b(?:19|20)\\d{2}-\\d{2}-\\d{2}\\b";
 
@@ -119,6 +131,8 @@ export function extractUrls(masked: string): Claim[] {
   return claims;
 }
 
+const FLOOR_NOTE = "「以降 / 以上 / +」を伴う下限表記。バージョンが上がっても記述は偽にならない";
+
 export function extractVersionClaims(masked: string): Claim[] {
   const claims: Claim[] = [];
   const tierA = buildProductVersionPattern();
@@ -133,13 +147,16 @@ export function extractVersionClaims(masked: string): Claim[] {
     tierA.lastIndex = 0;
     let a: RegExpExecArray | null = tierA.exec(text);
     while (a !== null) {
-      claimed.push([a.index, a.index + a[0].length]);
+      const end = a.index + a[0].length;
+      claimed.push([a.index, end]);
+      const isFloor = VERSION_FLOOR_SUFFIX.test(text.slice(end));
       claims.push({
         kind: "version",
         value: a[0],
         line: lineNo,
         context: text.trim(),
-        confidence: "high",
+        confidence: isFloor ? "low" : "high",
+        note: isFloor ? FLOOR_NOTE : undefined,
       });
       a = tierA.exec(text);
     }
@@ -158,7 +175,9 @@ export function extractVersionClaims(masked: string): Claim[] {
           line: lineNo,
           context: text.trim(),
           confidence: "low",
-          note: "製品名辞書に無い語。バージョン記述かどうかは要判断",
+          note: VERSION_FLOOR_SUFFIX.test(text.slice(end))
+            ? FLOOR_NOTE
+            : "製品名辞書に無い語。バージョン記述かどうかは要判断",
         });
       }
       b = tierB.exec(text);
