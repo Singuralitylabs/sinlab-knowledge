@@ -141,7 +141,7 @@ export function extractUrls(masked: string): Claim[] {
 }
 
 const FLOOR_NOTE =
-  "「以降 / +」を伴う下限表記。その版以降で使えるという記述はバージョンが上がっても偽にならない";
+  "「以降 / 以後 / +」を伴う下限表記。その版以降で使えるという記述はバージョンが上がっても偽にならない";
 
 export function extractVersionClaims(masked: string): Claim[] {
   const claims: Claim[] = [];
