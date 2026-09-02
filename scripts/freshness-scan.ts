@@ -315,8 +315,12 @@ async function main(): Promise<void> {
     recentlyChanged: scans[i].recentlyChanged,
   }));
 
+  // A lesson normally earns review by carrying at least one high-confidence
+  // claim. Under --include-low the caller has explicitly asked to see the
+  // low-confidence material, so a lesson whose only claims are low must survive
+  // here too — otherwise it is dropped before the formatter ever sees the flag.
   const candidates = withIgnores.filter(
-    (l) => !l.stub && l.claims.some((c) => c.confidence === "high"),
+    (l) => !l.stub && l.claims.some((c) => c.confidence === "high" || options.includeLow),
   );
 
   const weekIdx = weekIndex(now);
