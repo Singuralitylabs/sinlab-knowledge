@@ -241,20 +241,41 @@ describe("extractVersionClaims", () => {
   });
 
   // #48 and #63 both reported the same three floor-notation lines as staleness
-  // candidates. 「Git 2.23 以降」 stays true forever, so it must not reach the
-  // default (high-confidence-only) report.
-  test("drops a version with floor notation to low confidence", () => {
+  // candidates. 「Git 2.23 以降で使えます」 stays true forever, so it must not reach
+  // the default (high-confidence-only) report.
+  test("drops an availability floor to low confidence", () => {
     for (const [source, value] of [
       ["Claude Code v2.1.225 以降で利用できます", "Claude Code v2.1.225"],
-      ["VS Code 1.96+ が必要です", "VS Code 1.96"],
+      ["VS Code 1.96+ のインライン blame", "VS Code 1.96"],
       ["Git 2.23 以降で使えます", "Git 2.23"],
-      ["Node.js 18以上が必要", "Node.js 18"],
+      ["Git 2.23以降で使えます", "Git 2.23"],
       ["Python 3.13 以後に対応", "Python 3.13"],
       ["Git\u30002.23\u3000以降", "Git\u30002.23"],
     ] as const) {
       expect(values(source, "high")).toEqual([]);
       expect(values(source, "low")).toEqual([value]);
     }
+  });
+
+  // 「以上」 states a *requirement*, not availability: 「Node.js 18 以上」 becomes
+  // wrong the moment the minimum is raised to 20. Demoting it would drop a real
+  // compatibility regression out of the default report.
+  test("keeps a minimum-requirement floor at high confidence", () => {
+    for (const source of [
+      "Node.js 18 以上 (LTS 推奨)",
+      "Node.js 18以上が必要です",
+      "Node.js 18 以上の環境で実行してください",
+    ]) {
+      expect(values(source, "high")).toEqual(["Node.js 18"]);
+      expect(values(source, "low")).toEqual([]);
+    }
+  });
+
+  // The plus must be adjacent. In 「Node.js 18 + npm 9」 it joins two requirements
+  // rather than meaning "18 or later".
+  test("does not treat a detached plus as a floor marker", () => {
+    expect(values("Node.js 18 + npm 9 が必要", "high")).toEqual(["Node.js 18", "npm 9"]);
+    expect(values("Node.js 18 + npm 9 が必要", "low")).toEqual([]);
   });
 
   test("carries the floor note so a reader knows why it was demoted", () => {
@@ -268,7 +289,7 @@ describe("extractVersionClaims", () => {
   });
 
   test("applies the floor rule to Tier B products too", () => {
-    const [claim] = extractVersionClaims("Fastify 4.26.0 以降が必要");
+    const [claim] = extractVersionClaims("Fastify 4.26.0 以降で対応");
     expect(claim?.confidence).toBe("low");
     expect(claim?.note).toContain("下限表記");
   });
