@@ -1,0 +1,8 @@
+{
+  "slug": "06-ssh",
+  "title": "SSH",
+  "description": "SSH認証の仕組み・鍵ペアの生成・GitHub連携・~/.ssh/config による接続管理を1カテゴリで体系的に学習",
+  "icon": "Globe",
+  "order": 6,
+  "categories": []
+}
