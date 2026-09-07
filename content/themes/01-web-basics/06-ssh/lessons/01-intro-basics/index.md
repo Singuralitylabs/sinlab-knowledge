@@ -162,8 +162,16 @@ EOF
 # 5. config の内容を確認
 cat ~/.ssh/config
 
-# 6. 後片付け：練習用の鍵と config の追記を削除
+# 6. 後片付け：練習用の鍵を削除
 rm ~/.ssh/id_ed25519_practice ~/.ssh/id_ed25519_practice.pub
+```
+
+> [!WARNING]
+> 鍵ファイルを削除しただけでは `~/.ssh/config` に追記した `Host practice-host` ブロックは残ったままです。`nano ~/.ssh/config`（または任意のエディタ）を開き、手順4で追記した4行を削除して保存してください。
+
+```bash
+# 7. config からブロックを削除したことを確認
+cat ~/.ssh/config
 ```
 
 `practice-host` は実在のサーバーではないため `ssh practice-host` は接続エラーになりますが、`~/.ssh/config` の書き方と `IdentityFile` の指定方法を体験できます。

@@ -30,6 +30,7 @@ $ ssh dev-server
 | `User` | 接続するユーザー名 |
 | `Port` | 接続ポート（省略時は22） |
 | `IdentityFile` | 使用する秘密鍵のパス |
+| `IdentitiesOnly` | `yes` にすると `IdentityFile` で指定した鍵だけを使う（`ssh-agent` 上の他の鍵を試さない） |
 
 ---
 
@@ -52,12 +53,14 @@ Host github-personal
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_ed25519_personal
+    IdentitiesOnly yes
 
 # GitHub（仕事用アカウント）
 Host github-work
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_ed25519_work
+    IdentitiesOnly yes
 
 # 開発用Webサーバー
 Host dev-server
@@ -90,11 +93,13 @@ Host github-personal
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_ed25519_personal
+    IdentitiesOnly yes
 
 Host github-work
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_ed25519_work
+    IdentitiesOnly yes
 
 $ ssh -T github-work
 Hi username-work! You've successfully authenticated, but GitHub does not provide shell access.
@@ -153,6 +158,21 @@ $ chmod 600 ~/.ssh/config
    Host にはエイリアス名（自分で決める好きな名前）を書く
 ```
 
+### 5. 複数アカウントで `IdentitiesOnly yes` を付け忘れる
+
+```text
+❌ IdentityFile だけ指定して IdentitiesOnly を付けない
+   → ssh-agent に他アカウントの鍵が読み込まれていると、そちらが先に試され
+     意図しないアカウントで認証されてしまうことがある
+
+✅ 複数の鍵・複数アカウントを扱う Host ブロックには IdentitiesOnly yes を付ける
+Host github-work
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_work
+    IdentitiesOnly yes
+```
+
 ---
 
 ## 実用例
@@ -164,11 +184,13 @@ Host github-personal
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_ed25519_personal
+    IdentitiesOnly yes
 
 Host github-work
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_ed25519_work
+    IdentitiesOnly yes
 ```
 
 ```bash
@@ -179,7 +201,7 @@ git clone git@github-personal:taro/my-project.git
 git clone git@github-work:company/project.git
 ```
 
-同じ `github.com` でも、エイリアスを変えるだけで異なる鍵（＝異なるアカウント）を自動的に使い分けられます。
+同じ `github.com` でも、エイリアスを変えるだけで異なる鍵（＝異なるアカウント）を使い分けられます。ただし `IdentitiesOnly yes` を付けないと、`ssh-agent` に他アカウントの鍵が先に読み込まれている場合、OpenSSH は `IdentityFile` より先に agent 側の鍵を試してしまい、意図しないアカウントで認証されることがあります。複数の鍵・複数アカウントを扱う `Host` ブロックには必ず `IdentitiesOnly yes` を付けてください。
 
 ### 踏み台サーバー経由で内部サーバーに接続する
 
