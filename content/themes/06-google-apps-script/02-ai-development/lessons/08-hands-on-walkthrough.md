@@ -27,7 +27,7 @@ status: published
 ## 作成するアプリケーションの仕様
 
 ```text
-[Google フォーム] ──(回答送信)──> [スプレッドシート]
+[Google フォーム] ──(回答送信)──> [スプレッドシート（親コンテナ）]
                                          │
                                          ▼ (毎日 18:00 にトリガー実行)
                                   [集計スクリプト]
@@ -42,7 +42,7 @@ status: published
 ### 要件詳細
 
 1. **対象シート構造**:
-   - シート名: `フォームの回答 1`
+   - フォームの回答送信先として紐付けられたシート（通常タブ名: `フォームの回答 1`）
    - A 列: タイムスタンプ
    - B 列: 回答者名
    - C 列: 所属部署（営業部 / 開発部 / 人事部 等）
@@ -58,24 +58,65 @@ status: published
 
 ## ステップ 1: プロジェクトの初期設定
 
-ローカル環境にディレクトリを作成し、clasp と Claude Code の準備を整えます。
+実務では「既存の Google フォームの回答シート」に対してスクリプトを作成することが一般的です。ここでは、新規作成した親スプレッドシート（またはフォームの回答シート）を対象にローカル環境を立ち上げます。
 
 ```bash
 # プロジェクトフォルダを作成
 mkdir gas-form-automation
 cd gas-form-automation
 
-# npm 初期化と型定義のインストール
+# npm 初期化と型定義のインストール（Node.js >= 22 推奨）
 npm init -y
 npm install --save-dev @types/google-apps-script
 
-# clasp でスプレッドシートに紐づくスクリプトを新規作成
-clasp create-script --title "FormAutomation" --type sheets
+# ソースディレクトリを作成
+mkdir src
+
+# 方法 A: 既存のフォーム回答スプレッドシートに紐付ける場合（推奨）
+# （ブラウザでシートを開き、URL のスプレッドシート ID を指定）
+# clasp create-script --title "FormAutomation" --type sheets --parentId <SPREADSHEET_ID> --rootDir src
+
+# 方法 B: 新規にスプレッドシートとコンテナバインドスクリプトを作る場合
+clasp create-script --title "FormAutomation" --type sheets --rootDir src
+```
+
+このコマンドにより、`.clasp.json` 内に `"rootDir": "src"` が設定され、`src/appsscript.json` が生成されます。
+
+> [!NOTE]
+> スプレッドシート作成後、ブラウザで開き「ツール」>「新しいフォームを作成」をクリックすると、そのスプレッドシートに「フォームの回答 1」タブが自動生成され、フォーム送信とシートが連動します。
+
+### マニフェスト（src/appsscript.json）の確認とタイムゾーン設定
+
+生成された `src/appsscript.json` を開き、タイムゾーンと必要な OAuth スコープを確認・設定します。
+デフォルトでは `timeZone` が `"America/New_York"` になっている場合があるため、`"Asia/Tokyo"` に変更します。また、`oauthScopes` を明示してスプレッドシート操作とメール送信の権限を設定します。
+
+```json
+{
+  "timeZone": "Asia/Tokyo",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/spreadsheets.currentonly",
+    "https://www.googleapis.com/auth/gmail.send"
+  ]
+}
+```
+
+### .claspignore の準備
+
+プロジェクトルートに `.claspignore` を作成します（パターンは `rootDir` 相対で評価されます）。
+
+```text
+**/**
+!appsscript.json
+!**/*.js
+!**/*.html
 ```
 
 ### CLAUDE.md の準備
 
-プロジェクトルートに、前章で学んだ `CLAUDE.md` を配置します。
+プロジェクトルートに、レッスン 04 で学んだ `CLAUDE.md` を配置します。
 
 ```markdown
 # CLAUDE.md
@@ -189,25 +230,54 @@ function sendReportEmail(counts, total) {
 }
 
 /**
- * 動作確認用のテスト関数（未処理ダミーデータを作成して動作を検証する）
+ * 動作確認用のテスト関数
+ * 本番の回答シートを汚さないよう、検証用の別シート（タブ）を作成して動作を検証する
  */
 function testProcessFormResponses() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName("フォームの回答 1");
+  const testSheetName = "【検証用】フォーム回答テスト";
+  let testSheet = ss.getSheetByName(testSheetName);
 
-  // シートがなければ自動作成
-  if (!sheet) {
-    sheet = ss.insertSheet("フォームの回答 1");
-    sheet.appendRow(["タイムスタンプ", "回答者名", "所属部署", "処理ステータス"]);
+  // 既存の検証用シートがあれば一度削除して再作成
+  if (testSheet) {
+    ss.deleteSheet(testSheet);
   }
+  testSheet = ss.insertSheet(testSheetName);
+  testSheet.appendRow(["タイムスタンプ", "回答者名", "所属部署", "処理ステータス"]);
 
   // テスト用の未処理ダミー行を追加
-  sheet.appendRow([new Date(), "テスト花子", "開発部", ""]);
-  sheet.appendRow([new Date(), "テスト太郎", "営業部", ""]);
+  testSheet.appendRow([new Date(), "テスト花子", "開発部", ""]);
+  testSheet.appendRow([new Date(), "テスト太郎", "営業部", ""]);
 
-  console.log("テストデータを追加しました。processFormResponses を実行します...");
-  processFormResponses();
-  console.log("テスト実行が完了しました。シートのステータスと受信メールを確認してください。");
+  console.log(`検証用シート『${testSheetName}』を作成しました。テスト実行します...`);
+
+  // 本番関数と同様の集計ロジックをテスト用シートに対して実行
+  const lastRow = testSheet.getLastRow();
+  const range = testSheet.getRange(2, 1, lastRow - 1, 4);
+  const data = range.getValues();
+  const counts = {};
+  let processedCount = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    if (!row[3]) {
+      const dept = row[2] || "未指定";
+      counts[dept] = (counts[dept] || 0) + 1;
+      processedCount++;
+    }
+  }
+
+  // レポートメール送信テスト
+  sendReportEmail(counts, processedCount);
+
+  // 検証用シートのステータス更新
+  const nowString = Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyy/MM/dd HH:mm");
+  for (let i = 0; i < data.length; i++) {
+    if (!data[i][3]) data[i][3] = nowString;
+  }
+  range.setValues(data);
+
+  console.log("テスト実行完了: メールが届き、検証用シートの D 列が更新されたことを確認してください。");
 }
 ```
 
@@ -252,8 +322,8 @@ clasp open-script
 | トラブル | 原因 | 解決策 |
 | --- | --- | --- |
 | メールが届かない / 処理が中断する | `ADMIN_EMAIL` のスペルミス、またはスクリプトプロパティ未設定 | 「プロジェクトの設定」でプロパティ名と値が正しいか再確認する |
-| `TypeError: Cannot read properties of null` | シート名が一致していない | `getSheetByName("フォームの回答 1")` の名前がシートのタブ名と完全一致しているか確認 |
-| 実行すると権限エラーで落ちる | Gmail 送信権限が未承認 | 一度ブラウザのエディタ上で関数を手動実行し、認可ダイアログを完了させる |
+| シートが見つからないログが出る | シート名が一致していない | `getSheetByName("フォームの回答 1")` の名前がシートのタブ名と完全一致しているか確認する |
+| 実行すると権限エラーで落ちる | Gmail 送信権限が未承認 | 一度ブラウザのエディタ上で関数を手動実行し、認可ダイアログを完了させる（`appsscript.json` の `gmail.send` スコープも確認） |
 | 日時のフォーマットやタイムゾーンが意図と異なる | `Utilities.formatDate` の引数でタイムゾーン指定が誤っているか、`new Date()` の変換ミス | `Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyy/MM/dd HH:mm")` のように対象タイムゾーンを明示的に指定しているか確認する |
 
 ## 講座全体のまとめ
@@ -266,9 +336,9 @@ clasp open-script
 2. **生成 AI 前提の GAS 開発（モジュール 2）**:
    - なぜブラウザ完結型から脱却し、ローカル（clasp）に降りるべきなのか
    - clasp 3.x による環境構築とコマンド体系
-   - Claude Code と `clasp mcp` による自律エージェンティックループの実現
+   - Claude Code と `clasp mcp`（プロジェクト同期ツール）および CLI を組み合わせた自律エージェンティックループの実現
    - `CLAUDE.md` と型定義によるハルシネーションの徹底排除
-   - 実環境での結合テスト（`clasp run-function`）とローカル高速検証（`gas-fakes`）
+   - 実環境での結合テスト（`clasp run-function`）と純粋関数・ローカルテストによる高速検証
    - Gemini サイドパネルとの適切な使い分け
    - `PropertiesService` や Git、CI/CD を活用したセキュアな本番運用
 

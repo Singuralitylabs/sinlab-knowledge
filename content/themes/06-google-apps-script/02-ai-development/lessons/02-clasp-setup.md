@@ -33,11 +33,12 @@ clasp を使ってローカルからスクリプトを操作するには、Googl
 3. 設定を **「オン」** に切り替えます。
 
 > [!CAUTION]
-> この設定をオンにしていない状態で clasp のコマンドを実行すると、`Google Apps Script API has not been used in project... or it is disabled` というエラーが発生します。
+> この設定をオンにしていない状態で clasp のコマンドを実行すると、`User has not enabled the Apps Script API. Enable it by visiting https://script.google.com/home/usersettings then retry.` というエラーが発生します。
+> （※なお、Google Cloud プロジェクトを紐付けた後に `Google Apps Script API has not been used in project ... or it is disabled` と出る場合は、GCP 側の API ライブラリで「Google Apps Script API」が無効になっていることが原因です。）
 
 ## clasp 3.x のインストールとログイン
 
-Node.js がインストールされた環境で、以下のコマンドを実行します。
+Node.js（バージョン 22 以上推奨）がインストールされた環境で、以下のコマンドを実行します。
 
 ```bash
 # グローバルにインストールする場合
@@ -150,16 +151,22 @@ clasp がどの Apps Script プロジェクトと同期しているかを記録�
 
 - **`scriptId`**: 同期先スクリプトの一意な ID。
 - **`rootDir`**: 同期対象のソースコードを置くディレクトリ。`./src` を指定すると、`src/` 配下のファイルのみがクラウドに push され、プロジェクトルートの `README.md` や `package.json` は送信されません。
+- **マニフェストファイルの配置場所**: `rootDir` を指定した場合、**`appsscript.json` も `src/` 配下に配置する**必要があります（clasp は `rootDir` 内からマニフェストを探すためです）。
 
 ### `.claspignore`（除外設定）
 
-`.gitignore` と同様の文法で、クラウドへ push したくないローカル専用ファイルを指定します。
+`.gitignore` と同様の文法で、クラウドへ push したくないファイルを指定します。
+
+> [!IMPORTANT]
+> **`.claspignore` のパスは `rootDir` からの相対パス**として解釈されます。
+> `rootDir: "./src"` と設定している場合、対象パスは `src/Code.js` ではなく `Code.js` になります。そのため、除外解除ルール（`!`）に `src/` プレフィックスを付けるとマッチせず、すべてのファイルが除外されてしまうトラブルが頻発します。
 
 ```text
 **/**
 !appsscript.json
-!src/**/*.js
-!src/**/*.html
+!**/*.js
+!**/*.ts
+!**/*.html
 ```
 
 > [!TIP]

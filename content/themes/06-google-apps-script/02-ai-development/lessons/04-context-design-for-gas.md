@@ -72,8 +72,8 @@ Claude や GPT などのフロンティアモデルは、インターネット�
 
 ## 4. clasp コマンド規約 (clasp 3.x)
 - push: `clasp push`
-- 実行: `clasp run-function <関数名>`
-- ログ取得: `clasp tail-logs --simplified`
+- 実行: `clasp run-function <関数名>`（※自前クレデンシャル・デプロイ設定環境）
+- ログ取得: `clasp tail-logs --simplified`（※GCP プロジェクト紐付け環境）
 - エディタを開く: `clasp open-script`
 ```
 

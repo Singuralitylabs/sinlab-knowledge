@@ -93,12 +93,15 @@ function testLogging() {
 
 | 項目 | `Logger.log()` | `console.log()` |
 | --- | --- | --- |
-| 出力先 | エディタ下部の実行ログ | エディタ下部の実行ログ + **Google Cloud Logging** |
-| オブジェクト出力 | 文字列化される（`[object Object]` となり中身が見えないことがある） | JSON 構造として展開・閲覧可能 |
-| clasp CLI での取得 | エディタを開かないと見られない | `clasp tail-logs`（`clasp logs`）でターミナルから取得可能 |
-| 推奨用途 | 簡単な確認用 | **AI 駆動開発・ローカル開発での標準** |
+| 出力先 | エディタ下部の実行ログ + Cloud Logging | エディタ下部の実行ログ + Cloud Logging |
+| 構造化出力 | 文字列化（オブジェクトは `{key=val}` 形式） | JSON オブジェクトとして構造化ログに記録 |
+| ログレベル | 常に INFO レベル相当 | `log`, `info`, `warn`, `error` のレベルを付与可能 |
+| 推奨用途 | 簡易確認用 | **AI 駆動開発・ローカル開発での標準（エラー切り分けが容易）** |
 
-CLI や AI ツールからログを収集・解析させる場合は、Cloud Logging に記録される `console.log()` や `console.error()` を使うのがベストプラクティスです。
+現代の V8 ランタイムでは、`Logger.log()` も `console.log()` も内部的には同じ Google Cloud Logging（Stackdriver）に書き込まれます。ただし、`console.error()` や `console.warn()` を使えばログレベルが明示されるため、CLI や AI ツールでエラーを抽出・解析する際に格段に扱いやすくなります。
+
+> [!NOTE]
+> ターミナルから `clasp tail-logs`（または `clasp logs`）でログをリアルタイム取得するには、標準プロジェクトではなく GCP プロジェクトをスクリプトに紐付けておく必要があります。
 
 ## `appsscript.json`（マニフェストファイル）
 
@@ -138,6 +141,11 @@ CLI や AI ツールからログを収集・解析させる場合は、Cloud Log
 `oauthScopes` を明示しない場合、GAS はコード内の記述から広範なスコープ（例: `https://www.googleapis.com/auth/spreadsheets` ＝ ドライブ内の**全スプレッドシートへの読み書き権限**）を自動要求します。
 
 これに対し、`https://www.googleapis.com/auth/spreadsheets.currentonly`（**開いているスプレッドシートのみに限定**）を `appsscript.json` に明示的に設定することで、意図しない他ファイルへのアクセスを防ぎ、安全性を高めることができます。
+
+> [!NOTE]
+> **スコープ明示時の注意点**:
+> 1. `appsscript.json` で `oauthScopes` を明示すると、コード解析によるスコープ自動推測が無効化されます。新しく別のサービス（`GmailApp` など）をコードに追加した場合は、該当するスコープ（例: `https://www.googleapis.com/auth/gmail.send`）も忘れずにマニフェストへ追記する必要があります。
+> 2. `spreadsheets.currentonly` は「コンテナバインドされた現在アクティブなスプレッドシートのみ」を許可する権限です。別のスプレッドシートを `SpreadsheetApp.openById(...)` で開く処理を行う場合は `currentonly` では権限エラーになるため、通常の `spreadsheets` または Google ドライブの個別ファイルスコープが必要になります。用途に応じて適切に選択してください。
 
 ## まとめ
 

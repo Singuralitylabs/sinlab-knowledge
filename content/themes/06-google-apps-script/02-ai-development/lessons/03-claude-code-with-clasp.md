@@ -18,10 +18,10 @@ status: published
 
 ## このページで学べること
 
-- clasp 3.x に実験的に搭載された `clasp mcp` の役割と仕組み
-- Claude Code へのプラグイン・手動 MCP サーバー追加手順
+- **clasp 3.x に実験的に搭載された `clasp mcp` の役割と仕組み（提供ツール: `push_files`, `pull_files`, `create_project`, `clone_project`, `list_projects`）**
+- Claude Code への MCP サーバー追加手順（`claude mcp add` と設定ファイル）
 - 認証資格情報（`~/.clasprc.json`）の共有モデル
-- AI エージェントに push / run-function / ログ確認を任せる実演シナリオ
+- **AI エージェントに push / pull を任せ、テスト実行やログ確認を CLI コマンドで行う実践ワークフロー**
 - エージェントに任せる際の安全管理とスコープ
 
 ## clasp mcp とは何か
@@ -34,44 +34,50 @@ status: published
 |   (AI エージェント) | <=======> |   (MCP サーバー)   | <=======> |     (クラウド環境)      |
 +-------------------+           +-------------------+           +-----------------------+
     │                               │
-    ├─ ファイルの読み書き (ローカル)        ├─ clasp push の実行
-    └─ ツールの呼び出し ───────────────┼─ clasp run-function の実行
-                                    └─ ログ・ステータスの取得
+    ├─ ファイルの読み書き (ローカル)        ├─ push_files / pull_files
+    ├─ MCP ツール呼び出し ──────────────┼─ create_project / clone_project
+    │                               └─ list_projects
+    └─ シェルコマンド実行 ──────────────────> clasp run-function / tail-logs (CLI 実行)
 ```
 
-### なぜ MCP なのか？
+### clasp mcp が提供するツール
 
-Claude Code にシェルコマンド（`clasp push` など）を直接実行させることも可能ですが、MCP ツールとして定義されることで、以下のようなメリットが生まれます。
+clasp 3.x の MCP サーバー（`src/mcp/server.ts`）は実験的機能（EXPERIMENTAL）として提供されており、以下の **5 つのプロジェクト管理ツール** を公開しています。
 
-1. **ツールの明確な構造化**: 引数のスキーマ（関数名、パラメータなど）が厳密に定義され、AI の誤用やコマンド構文ミスが防げる。
+| ツール名 | 説明 |
+| --- | --- |
+| `push_files` | ローカルのコードファイルをリモートの Apps Script プロジェクトへ送信する |
+| `pull_files` | リモートの最新コードファイルをローカルへ取り込む |
+| `create_project` | 新規 Apps Script プロジェクトを作成する |
+| `clone_project` | 既存のスクリプト ID からプロジェクトをクローンする |
+| `list_projects` | ユーザーのアカウント内のスクリプト一覧を取得する |
+
+> [!NOTE]
+> 現在の `clasp mcp` には、スクリプト関数のリモート実行やログ取得の MCP ツールは含まれていません（公式 README でも一部ツールの先行提供と明記されています）。そのため、**コード同期（push/pull）は MCP 経由で AI が自律的に行い、テスト実行（`clasp run-function`）やログ監視（`clasp tail-logs`）は Claude Code の Bash 実行機能（CLI コマンド）を組み合わせるハイブリッド運用** が現在のベストプラクティスです。
+
+### なぜ MCP で連携するのか？
+
+ファイル同期を MCP ツールとして定義することで、以下のメリットが生まれます。
+
+1. **ツールの明確な構造化**: `push_files` や `create_project` の引数スキーマが厳密に定義され、AI のコマンド構文ミスや誤作動を防げる。
 2. **プロジェクト境界の分離**: MCP サーバーは起動ディレクトリに縛られず、ツール呼び出し時にプロジェクトパスを受け取って柔軟に動作する。
-3. **安全な権限管理**: 危険な破壊的操作に対して、確認プロンプト（承認ゲート）を制御しやすい。
+3. **安全な権限管理**: 破壊的な上書き操作に対して、確認プロンプト（承認ゲート）を制御しやすい。
 
 ## Claude Code への導入手順
 
-Claude Code に clasp mcp を組み込むには、以下の 2 つの方法があります。
+Claude Code に clasp mcp を組み込むには、以下の方法で登録します。
 
-### 方法 1: プラグインとしてインストール（推奨）
+### 方法 1: `claude mcp add` コマンドで追加（推奨）
 
-[Claude Code プラグイン](/themes/04-ai-driven-development/02-claude-code/plugins) 機能を使って、公式リポジトリからワンステップでインストールします。
-
-```bash
-# Claude Code のプロンプト内で実行
-/plugin install @google/clasp
-```
-
-プラグインとして導入すると、必要な MCP サーバー設定が自動的に環境に追加されます。
-
-### 方法 2: 手動で MCP サーバーを追加
-
-手動で `claude mcp add` コマンドを使って登録することも可能です。
+ターミナルで以下のコマンドを実行し、clasp の MCP サーバーをローカルツールとして登録します。
 
 ```bash
-# ターミナルで実行
 claude mcp add clasp -- npx -y @google/clasp mcp
 ```
 
-または、プロジェクト単位の `.mcp.json` やユーザー設定に以下のように記述します。
+### 方法 2: 設定ファイル（`.mcp.json`）で追加
+
+プロジェクトルートの `.mcp.json` やユーザー設定に以下のように記述することでも登録できます。
 
 ```json
 {
@@ -123,26 +129,26 @@ Claude Code と clasp mcp を組み合わせると、人間は自然言語で要
 2. **コードの実装**:
    - `SpreadsheetApp` のバッチ処理（`getRange().getValues()` と `setValues()`）を使った高速な送信処理を記述する。
    - テスト用関数 `testSendWelcomeEmails()` を併記する。
-3. **リモートへのプッシュ（clasp 連携）**:
-   - MCP ツール `clasp_push` を呼び出し、ローカルの変更を Apps Script クラウド環境へ即座に送信。
-4. **テスト実行と検証**:
-   - MCP ツール `clasp_run` を呼び出し、クラウド上で `testSendWelcomeEmails` を実行。
-   - 実行結果やログ出力を取得し、正常終了したかを確認する。
+3. **リモートへのプッシュ（MCP ツール連携）**:
+   - MCP ツール `push_files`（または `clasp push` コマンド）を呼び出し、ローカルの変更を Apps Script クラウド環境へ即座に送信。
+4. **テスト実行と検証（CLI 連携）**:
+   - ターミナルから `clasp run-function testSendWelcomeEmails` を実行（※実行可能設定済み環境）。
+   - 必要に応じて `clasp tail-logs --simplified` でログ出力を取得し、正常終了したかを確認する。
 5. **自己修正（エラーがあった場合）**:
    - ログにエラー（例: 列インデックスの範囲外アクセス）が出ていれば、コードの該当行を特定して修正し、再度 push して再実行する。
 
-人間はエディタを立ち上げてコピペしたり、ブラウザの実行ボタンを連打したりすることなく、Claude Code のターミナル画面を見守るだけで機能が完成します。
+人間はエディタを立ち上げてコピペしたり、ブラウザの実行ボタンを手動で連打したりすることなく、Claude Code の画面を見守るだけで機能が完成します。
 
 ## 安全運用のための注意点
 
 - **実行権限のスコープ**:
-  リモートで関数を実行する（`clasp run-function`）には、対象スクリプトの GCP プロジェクト設定や API 実行可能ファイルとしてのデプロイ設定が必要です。環境によっては実行権限の事前準備が必要となります（詳細は次章以降で解説）。
+  ファイルのプッシュやプル（`push_files` / `pull_files`）は通常の `clasp login` 資格情報で動作します。一方、リモートで関数を実行する（`clasp run-function`）には、Google Cloud プロジェクトの設定や自前 OAuth クライアントによる専用ログイン（`clasp login --creds ...`）、API 実行可能ファイルとしてのデプロイ設定が必要です（詳細はモジュール 2 レッスン 05 で解説）。
 - **破壊的変更の抑止**:
   テスト対象のスプレッドシートは、本番用の業務シートではなく、必ず開発・検証用のダミーシートを用意して ID を渡すようにしてください。
 
 ## まとめ
 
-- **clasp mcp**: clasp 3.x で実験的に追加された MCP サーバー機能。AI エージェントが直接スクリプトの push や関数実行を行える。
-- **導入方法**: Claude Code 内の `/plugin install @google/clasp`、または `claude mcp add` コマンドで簡単に追加可能。
+- **clasp mcp**: clasp 3.x で実験的に追加された MCP サーバー機能。`push_files` / `pull_files` / `create_project` / `clone_project` / `list_projects` の 5 つのプロジェクト管理ツールを提供。
+- **導入方法**: `claude mcp add clasp -- npx -y @google/clasp mcp` で簡単に追加可能。
 - **認証の仕組み**: `clasp login` で作成された `~/.clasprc.json` の認証情報をそのまま透過的に利用。
-- **ワークフローの変革**: コードの編集だけでなく、「push → 実行 → ログ確認 → 修正」のエージェンティックループを AI に丸ごと任せられるようになる。
+- **ワークフローの変革**: ファイル同期は MCP ツール、関数のリモート実行やログ監視は CLI コマンドを組み合わせることで、AI による「編集 → push → テスト実行 → 修正」のエージェンティックループが実現する。
