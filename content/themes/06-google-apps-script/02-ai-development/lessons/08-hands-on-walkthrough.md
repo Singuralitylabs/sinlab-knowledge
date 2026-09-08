@@ -141,7 +141,7 @@ function processFormResponses() {
   const departmentCounts = {};
   let processedCount = 0;
 
-  // 2. メモリ上で集計とフラグ更新
+  // 2. メモリ上で集計（まだシートは更新しない）
   for (let i = 0; i < data.length; i++) {
     const row = data[i];
     const status = row[3]; // D列
@@ -149,8 +149,6 @@ function processFormResponses() {
     if (!status) {
       const department = row[2] || "未指定"; // C列
       departmentCounts[department] = (departmentCounts[department] || 0) + 1;
-
-      row[3] = nowString; // D列に完了日時をセット
       processedCount++;
     }
   }
@@ -160,18 +158,24 @@ function processFormResponses() {
     return;
   }
 
-  // 3. 更新されたデータを一括書き戻し（バッチ更新）
-  range.setValues(data);
-
-  // 4. 管理者へメール送信
+  // 3. 先に管理者へメール送信（送信に失敗した場合はシートを更新せず次回再試行可能にする）
   sendReportEmail(departmentCounts, processedCount);
+
+  // 4. 送信成功後、メモリ上の D 列に完了日時をセットして一括書き戻し（バッチ更新）
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    if (!row[3]) {
+      row[3] = nowString;
+    }
+  }
+  range.setValues(data);
+  console.log(`集計完了: ${processedCount} 件のステータスを更新しました。`);
 }
 
 function sendReportEmail(counts, total) {
   const adminEmail = PropertiesService.getScriptProperties().getProperty("ADMIN_EMAIL");
   if (!adminEmail) {
-    console.warn("ADMIN_EMAIL が設定されていないため、メール送信をスキップしました。");
-    return;
+    throw new Error("ADMIN_EMAIL が設定されていないため、処理を中断しました。");
   }
 
   let body = `フォーム回答の集計が完了しました。\n\n新規回答総数: ${total} 件\n\n【部署別内訳】\n`;
@@ -183,6 +187,28 @@ function sendReportEmail(counts, total) {
   GmailApp.sendEmail(adminEmail, `【自動集計】フォーム新規回答レポート（${total}件）`, body);
   console.log(`レポートメールを ${adminEmail} 宛に送信しました。`);
 }
+
+/**
+ * 動作確認用のテスト関数（未処理ダミーデータを作成して動作を検証する）
+ */
+function testProcessFormResponses() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName("フォームの回答 1");
+
+  // シートがなければ自動作成
+  if (!sheet) {
+    sheet = ss.insertSheet("フォームの回答 1");
+    sheet.appendRow(["タイムスタンプ", "回答者名", "所属部署", "処理ステータス"]);
+  }
+
+  // テスト用の未処理ダミー行を追加
+  sheet.appendRow([new Date(), "テスト花子", "開発部", ""]);
+  sheet.appendRow([new Date(), "テスト太郎", "営業部", ""]);
+
+  console.log("テストデータを追加しました。processFormResponses を実行します...");
+  processFormResponses();
+  console.log("テスト実行が完了しました。シートのステータスと受信メールを確認してください。");
+}
 ```
 
 ### レビューチェックリスト
@@ -190,7 +216,9 @@ function sendReportEmail(counts, total) {
 - [x] `sheet.getRange(i, 4).setValue()` などのループ内通信が存在せず、`setValues(data)` で一括更新されているか？
 - [x] `async / await` が紛れ込んでいないか？
 - [x] 管理者のメールアドレスが直書きされず、`PropertiesService` から取得されているか？
+- [x] 通知送信（`sendReportEmail`）の成功後にステータスを更新し、送信失敗時に未集計行が消失しないよう考慮されているか？
 - [x] シートが存在しない場合やデータが 0 件の場合のエラーハンドリングが考慮されているか？
+- [x] 動作確認用のテスト関数（`testProcessFormResponses`）が実装されているか？
 
 ## ステップ 4: クラウド反映と初回認可
 
@@ -201,9 +229,9 @@ clasp open-script
 ```
 
 1. エディタの「プロジェクトの設定」を開き、スクリプトプロパティに `ADMIN_EMAIL`（あなたのメールアドレス）を設定します。
-2. エディタ上で `processFormResponses` を選択し、「**実行**」ボタンをクリックします。
+2. エディタ上で `testProcessFormResponses` を選択し、「**実行**」ボタンをクリックします。
 3. 初回実行時の **OAuth 権限承認ポップアップ**（スプレッドシートの操作と Gmail の送信権限）が表示されるので、画面の指示に従って「許可」します。
-4. スプレッドシートの D 列に日時が記録され、Gmail にレポートメールが届いたことを確認します。
+4. テストデータが追加された上で集計が走り、スプレッドシートの D 列に日時が記録され、Gmail にレポートメールが届いたことを確認します。本番関数 `processFormResponses` も同様に正常終了することを確認します。
 
 ## ステップ 5: 定期実行トリガーの設定
 
@@ -223,10 +251,10 @@ clasp open-script
 
 | トラブル | 原因 | 解決策 |
 | --- | --- | --- |
-| メールが届かない | `ADMIN_EMAIL` のスペルミス、またはプロパティ未設定 | 「プロジェクトの設定」でプロパティ名と値が正しいか再確認する |
+| メールが届かない / 処理が中断する | `ADMIN_EMAIL` のスペルミス、またはスクリプトプロパティ未設定 | 「プロジェクトの設定」でプロパティ名と値が正しいか再確認する |
 | `TypeError: Cannot read properties of null` | シート名が一致していない | `getSheetByName("フォームの回答 1")` の名前がシートのタブ名と完全一致しているか確認 |
 | 実行すると権限エラーで落ちる | Gmail 送信権限が未承認 | 一度ブラウザのエディタ上で関数を手動実行し、認可ダイアログを完了させる |
-| 日時が UTC（9時間ズレ）で記録される | タイムゾーン設定が未設定 | `appsscript.json` の `"timeZone": "Asia/Tokyo"` を確認する |
+| 日時のフォーマットやタイムゾーンが意図と異なる | `Utilities.formatDate` の引数でタイムゾーン指定が誤っているか、`new Date()` の変換ミス | `Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyy/MM/dd HH:mm")` のように対象タイムゾーンを明示的に指定しているか確認する |
 
 ## 講座全体のまとめ
 

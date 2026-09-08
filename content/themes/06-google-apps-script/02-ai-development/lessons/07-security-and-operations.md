@@ -68,6 +68,8 @@ GAS は、コード中で `DriveApp` や `GmailApp` を呼び出すと、デフ�
 
 ### スコープを絞り込む例
 
+たとえば、ドライブ全体へのアクセス（`https://www.googleapis.com/auth/drive`）のような広すぎる権限を避け、スクリプトが作成したファイルのみにアクセスできる `drive.file` や、開いているスプレッドシートのみに限定する `spreadsheets.currentonly`、外部 API リクエスト用の `script.external_request` に限定して定義します。
+
 ```json
 {
   "timeZone": "Asia/Tokyo",
@@ -75,16 +77,8 @@ GAS は、コード中で `DriveApp` や `GmailApp` を呼び出すと、デフ�
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8",
   "oauthScopes": [
-    // ❌ ドライブ全体へのアクセス（広すぎる）
-    // "https://www.googleapis.com/auth/drive",
-
-    // ✅ このスクリプトが作成したファイル、またはユーザーが個別に選択したファイルのみ
     "https://www.googleapis.com/auth/drive.file",
-
-    // ✅ 現在開いているスプレッドシートのみに限定
     "https://www.googleapis.com/auth/spreadsheets.currentonly",
-
-    // ✅ 外部 Web サービスへのリクエスト実行
     "https://www.googleapis.com/auth/script.external_request"
   ]
 }
