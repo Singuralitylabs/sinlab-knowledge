@@ -1,0 +1,8 @@
+{
+  "slug": "01-basics",
+  "title": "GAS の基本",
+  "description": "Google Apps Script の基礎知識、実行環境、主要サービスとデプロイの仕組みを学ぶ。",
+  "icon": "BookOpen",
+  "order": 1,
+  "categories": []
+}
