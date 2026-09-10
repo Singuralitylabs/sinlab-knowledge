@@ -1,7 +1,7 @@
 {
   "slug": "01-basics",
   "title": "GAS の基本",
-  "description": "Google Apps Script の基礎知識、実行環境、主要サービスとデプロイの仕組みを学ぶ。",
+  "description": "Google Apps Script の概要、エディタと権限、トリガーとデプロイなど、GAS の基本的な機能と設定を学ぶ。",
   "icon": "BookOpen",
   "order": 1,
   "categories": []

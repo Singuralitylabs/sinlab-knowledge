@@ -1,7 +1,7 @@
 ---
 title: "SpreadsheetApp の基本とバッチ処理"
 description: "SpreadsheetApp の基本操作（getRange、getValues、setValues）と、6 分制限を回避し高速化するためのバッチ処理の重要性を学ぶ。"
-order: 3
+order: 1
 type: lecture
 difficulty: beginner
 tags: [gas, google-apps-script, spreadsheet]
@@ -174,3 +174,4 @@ function fastProcess() {
   2. JavaScript の配列操作でメモリ上で高速に加工
   3. `range.setValues()` で一括書き戻し
 - **AI への指示**: 生成 AI にコードを書かせる際、「必ず `getValues` と `setValues` を使ったバッチ処理にすること」を前提条件として明記することが極めて重要です。
+- **次のステップ**: 次のモジュールでは、ローカルの CLI（clasp）と生成 AI（Claude Code）を組み合わせた開発ワークフローを学びます。
