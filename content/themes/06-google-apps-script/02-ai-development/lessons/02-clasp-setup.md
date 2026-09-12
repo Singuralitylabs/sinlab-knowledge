@@ -64,18 +64,7 @@ clasp login
 
 clasp によるローカル開発の基本サイクルは、以下の流れになります。
 
-```text
-[クラウドの GAS]
-      │
-      │  clasp clone-script (初回のダウンロード)
-      ▼
-[ローカル環境]
-  ファイル編集（VS Code や Claude Code でコード修正）
-      │
-      │  clasp push (または clasp push --watch)
-      ▼
-[クラウドの GAS] (即時更新)
-```
+![claspでGASを操作：クラウドとローカルを clasp clone-script / clasp push でつなぐ](/content-assets/06-google-apps-script/02-ai-development/images/clasp-local-workflow.png)
 
 ### 1. 新規プロジェクトの作成、または既存のクローン
 

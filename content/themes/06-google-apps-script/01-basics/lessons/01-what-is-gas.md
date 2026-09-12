@@ -66,13 +66,7 @@ GAS 自体には独立した課金体系が存在せず、**Google アカウン�
 
 生成 AI（Claude Code や ChatGPT など）に「GAS のコードを書いて」とだけ頼むと、Node.js などの標準的なサーバー環境のつもりでコードを出力してしまうことが多々あります。AI に適切な指示を与えるために、以下の 4 つの制約を把握しておく必要があります。
 
-```text
-[GAS の制約 4 つ]
-1. 6 分間の実行時間上限   ─── 長時間バッチは途中停止する（分割処理が必要）
-2. 同期 API 前提           ─── SpreadsheetApp 等は同期実行（async/await 不要）
-3. V8 ランタイムの制限     ─── Node.js 組み込みモジュール（fs, path 等）は使えない
-4. 各種クォータの上限     ─── ループ内で API を連打すると上限エラーになる
-```
+![GASの制約4つ：実行時間6分・同期API・V8制限・クォータ上限](/content-assets/06-google-apps-script/01-basics/images/gas-four-constraints.png)
 
 ### 1. 6 分間の実行時間上限
 

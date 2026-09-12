@@ -28,17 +28,7 @@ status: published
 
 `clasp mcp`（または `clasp start-mcp-server`）は、clasp を **MCP サーバー（標準入出力 STDIO トランスポート）** として起動するコマンドです。
 
-```text
-+-------------------+           +-------------------+           +-----------------------+
-|    Claude Code    |  STDIO    |     clasp mcp     |  REST API |  Google Apps Script   |
-|   (AI エージェント) | <=======> |   (MCP サーバー)   | <=======> |     (クラウド環境)      |
-+-------------------+           +-------------------+           +-----------------------+
-    │                               │
-    ├─ ファイルの読み書き (ローカル)        ├─ push_files / pull_files
-    ├─ MCP ツール呼び出し ──────────────┼─ create_project / clone_project
-    │                               └─ list_projects
-    └─ シェルコマンド実行 ──────────────────> clasp run-function / tail-logs (CLI 実行)
-```
+![clasp mcpでGASを操作：Claude Code・clasp mcp・GASクラウドとローカルCLIの役割分担](/content-assets/06-google-apps-script/02-ai-development/images/clasp-mcp-architecture.png)
 
 ### clasp mcp が提供するツール
 
