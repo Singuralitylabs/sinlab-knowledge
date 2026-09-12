@@ -1,8 +1,8 @@
 {
-  "slug": "03-ai-development",
+  "slug": "02-ai-development",
   "title": "生成 AI で GAS を開発する",
   "description": "clasp と Claude Code（clasp mcp）を軸に、ローカル環境で生成 AI を最大限に活かす GAS 開発ワークフローを実践する。",
   "icon": "Sparkles",
-  "order": 3,
+  "order": 2,
   "categories": []
 }

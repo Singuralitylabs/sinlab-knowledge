@@ -220,7 +220,7 @@ AI に自動実行を行わせる際、最も恐ろしいのは **「本番の�
 
 - **症状**: 実行が途中で突然タイムアウトする。
 - **原因**: 大量ループ内でセルを 1 つずつ操作しているか、無限ループが発生している。
-- **対策**: [SpreadsheetApp の基本](/themes/06-google-apps-script/02-spreadsheet/spreadsheet-basics) で学んだ `getValues` / `setValues` によるバッチ処理にリファクタリングするようエージェントに指示します。
+- **対策**: [SpreadsheetApp の基本](/themes/06-google-apps-script/03-spreadsheet/spreadsheet-basics) で学んだ `getValues` / `setValues` によるバッチ処理にリファクタリングするようエージェントに指示します。
 
 ## まとめ
 

@@ -174,4 +174,4 @@ function fastProcess() {
   2. JavaScript の配列操作でメモリ上で高速に加工
   3. `range.setValues()` で一括書き戻し
 - **AI への指示**: 生成 AI にコードを書かせる際、「必ず `getValues` と `setValues` を使ったバッチ処理にすること」を前提条件として明記することが極めて重要です。
-- **次のステップ**: 次のモジュールでは、ローカルの CLI（clasp）と生成 AI（Claude Code）を組み合わせた開発ワークフローを学びます。
+- **次のステップ**: 前のモジュールで学んだ clasp × Claude Code のワークフローと組み合わせて、バッチ処理を実践しましょう。今後のモジュールでは DriveApp や GmailApp など、他の Google サービス連携も扱います。

@@ -1,8 +1,8 @@
 {
-  "slug": "02-spreadsheet",
+  "slug": "03-spreadsheet",
   "title": "SpreadsheetApp",
   "description": "SpreadsheetApp の基本操作と、バッチ処理による高速・安全なスプレッドシート操作を学ぶ。",
   "icon": "FileText",
-  "order": 2,
+  "order": 3,
   "categories": []
 }
