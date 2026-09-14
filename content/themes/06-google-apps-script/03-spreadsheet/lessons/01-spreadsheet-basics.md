@@ -1,5 +1,5 @@
 ---
-title: "SpreadsheetApp の基本とバッチ処理"
+title: "スプレッドシート操作の基本とバッチ処理"
 description: "SpreadsheetApp の基本操作（getRange、getValues、setValues）と、6 分制限を回避し高速化するためのバッチ処理の重要性を学ぶ。"
 order: 1
 type: lecture
@@ -8,7 +8,7 @@ tags: [gas, google-apps-script, spreadsheet]
 status: draft
 ---
 
-# SpreadsheetApp の基本とバッチ処理
+# スプレッドシート操作の基本とバッチ処理
 
 Google スプレッドシートの操作は、GAS で最も頻繁に行われるタスクです。Google が提供する `SpreadsheetApp` サービスを使えば、シートの新規作成から値の読み書き、装飾、数式の挿入まであらゆる操作をコード化できます。
 

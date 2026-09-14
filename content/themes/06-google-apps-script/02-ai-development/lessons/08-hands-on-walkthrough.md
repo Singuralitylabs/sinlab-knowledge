@@ -341,7 +341,7 @@ clasp open-script
    - 実環境での結合テスト（`clasp run-function`）と純粋関数・ローカルテストによる高速検証
    - Gemini サイドパネルとの適切な使い分け
    - `PropertiesService` や Git、CI/CD を活用したセキュアな本番運用
-3. **SpreadsheetApp（モジュール 3）**:
+3. **スプレッドシート操作（モジュール 3）**:
    - オブジェクト階層と Range 操作
    - `getValues` / `setValues` によるバッチ処理
 
