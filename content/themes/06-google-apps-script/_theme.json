@@ -1,0 +1,12 @@
+{
+  "slug": "06-google-apps-script",
+  "title": "Google Apps Script",
+  "shortTitle": "GAS",
+  "description": "Google Apps Script の基本と、clasp × Claude Code による生成 AI 前提の GAS 開発ワークフローを体系的に学ぶ。",
+  "icon": "Wrench",
+  "color": "blue",
+  "order": 6,
+  "difficulty": "beginner",
+  "estimatedHours": 6,
+  "status": "published"
+}
