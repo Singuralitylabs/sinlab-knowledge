@@ -5,7 +5,7 @@ order: 6
 type: lecture
 difficulty: beginner
 tags: [gas, google-apps-script, gemini]
-status: published
+status: draft
 ---
 
 # エディタ内蔵 Gemini サイドパネルとの比較と使い分け

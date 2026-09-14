@@ -5,7 +5,7 @@ order: 7
 type: lecture
 difficulty: intermediate
 tags: [gas, google-apps-script, security, secrets, git, ci-cd]
-status: published
+status: draft
 ---
 
 # セキュリティと運用（シークレット管理・Git・CI/CD）

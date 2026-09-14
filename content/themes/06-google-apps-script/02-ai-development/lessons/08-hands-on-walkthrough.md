@@ -5,7 +5,7 @@ order: 8
 type: lecture
 difficulty: beginner
 tags: [gas, google-apps-script, clasp, claude-code, hands-on]
-status: published
+status: draft
 ---
 
 # 実践演習：フォーム回答集計・メール通知アプリを AI と作りきる

@@ -4,5 +4,6 @@
   "description": "SpreadsheetApp の基本操作と、バッチ処理による高速・安全なスプレッドシート操作を学ぶ。",
   "icon": "FileText",
   "order": 3,
-  "categories": []
+  "categories": [],
+  "status": "draft"
 }

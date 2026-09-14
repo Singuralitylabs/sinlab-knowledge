@@ -5,7 +5,7 @@ order: 1
 type: lecture
 difficulty: beginner
 tags: [gas, google-apps-script, spreadsheet]
-status: published
+status: draft
 ---
 
 # SpreadsheetApp の基本とバッチ処理

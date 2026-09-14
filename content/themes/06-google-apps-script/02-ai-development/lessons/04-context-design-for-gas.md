@@ -5,7 +5,7 @@ order: 4
 type: lecture
 difficulty: intermediate
 tags: [gas, google-apps-script, claude-code, context-engineering]
-status: published
+status: draft
 ---
 
 # GAS 向けコンテキスト設計（CLAUDE.md と型定義）

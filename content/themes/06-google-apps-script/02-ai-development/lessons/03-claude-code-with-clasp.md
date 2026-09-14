@@ -5,7 +5,7 @@ order: 3
 type: lecture
 difficulty: beginner
 tags: [gas, google-apps-script, clasp, claude-code, mcp]
-status: published
+status: draft
 ---
 
 # Claude Code と clasp mcp による開発ワークフロー

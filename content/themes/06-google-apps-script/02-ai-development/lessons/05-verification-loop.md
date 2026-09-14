@@ -5,7 +5,7 @@ order: 5
 type: lecture
 difficulty: intermediate
 tags: [gas, google-apps-script, claude-code, loop-engineering]
-status: published
+status: draft
 ---
 
 # GAS における検証ループの作り方
