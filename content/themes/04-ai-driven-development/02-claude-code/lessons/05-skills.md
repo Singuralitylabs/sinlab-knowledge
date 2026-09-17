@@ -252,12 +252,12 @@ $ARGUMENTS 環境にデプロイします：
 
 | フィールド | 説明 | デフォルト |
 | --- | --- | --- |
-| `name` | スラッシュコマンド名。省略するとディレクトリ名を使用（小文字・数字・ハイフン、最大 64 文字） | ディレクトリ名 |
+| `name` | スキル一覧での**表示名**。personal / project スキルではコマンド名はディレクトリ名から決まり、plugin スキルでは `name` がコマンドの最終セグメントになる（小文字・数字・ハイフン、最大 64 文字） | ディレクトリ名 |
 | `description` | Claude が自動呼び出しを判定する際に使用。`when_to_use` と合わせた一覧表示は 1,536 文字で切り詰められる | 推奨 |
 | `when_to_use` | 自動呼び出しの追加手がかり（トリガーフレーズや依頼例）。`description` に連結され、一覧では合計 1,536 文字で切り詰められる | （省略可） |
 | `argument-hint` | オートコンプリート時に表示される引数ヒント（例: `[filename] [format]`） | （省略可） |
 | `arguments` | スキル本文の `$name` 置換用の名前付き引数。スペース区切りか YAML リスト。並び順が引数の位置に対応する | （省略可） |
-| `disable-model-invocation` | `true` にすると Claude による自動呼び出しを無効化し、手動（`/name`）でのみ実行可能にする | `false` |
+| `disable-model-invocation` | `true` にすると Claude による自動呼び出しを無効化し、手動（`/name`）でのみ実行可能にする。v2.1.196 以降はスケジュールタスクからの実行も抑止する | `false` |
 | `user-invocable` | `false` にすると `/` メニューから非表示。Claude のみが呼び出せるバックグラウンド知識向け | `true` |
 | `allowed-tools` | スキル実行中に承認なしで使えるツール。スペース区切りで指定（例: `Bash(git *) Read`） | （省略可） |
 | `disallowed-tools` | スキル実行中に使えないようにするツール（例: 自律ループから `AskUserQuestion` を外す）。次のメッセージで解除される | （省略可） |
@@ -268,6 +268,10 @@ $ARGUMENTS 環境にデプロイします：
 | `background` | `context: fork` のときだけ有効。`false` にするとサブエージェントの完了をそのターンで待つ。Claude Code v2.1.218 以降 | `true` |
 | `paths` | スキルを自動起動するファイルパターン（glob）。対象ファイルを操作中のみ自動ロード | （省略可） |
 | `hooks` | このスキルのライフサイクルにスコープされた Hooks の定義 | （省略可） |
+| `shell` | スキル内のインラインシェル実行で使うシェル。`bash` または `powershell` | `bash` |
+| `metadata` | 自由形式の YAML マップ（自前ツール向けのカタログ情報など）。Claude Code は内容を解釈しない | （省略可） |
+| `license` | スキルのライセンス（Agent Skills 仕様）。Claude Code は受理するが動作には影響しない | （省略可） |
+| `compatibility` | 環境要件の記述（最大 500 文字、Agent Skills 仕様）。Claude Code は受理するが動作には影響しない | （省略可） |
 
 ## H. 発展機能：フォークコンテキスト
 

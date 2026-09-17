@@ -211,11 +211,11 @@ CLAUDE.md を生成しました。内容を確認してください。
 
 ### インストールと初期設定
 
-Claude Code は npm パッケージとして配布されています。Node.js 18 以上の環境で、以下のコマンドを実行するだけでセットアップが完了します。
+推奨は公式の **Native Install** です。macOS / Linux / WSL では次のコマンドでセットアップできます（Node.js は不要）。
 
 ```bash
-# グローバルインストール
-npm install -g @anthropic-ai/claude-code
+# Native Install（推奨）
+curl -fsSL https://claude.ai/install.sh | bash
 
 # プロジェクトディレクトリで起動
 cd your-project
@@ -225,9 +225,11 @@ claude
 # ブラウザで Anthropic アカウントにログイン → 認証完了
 ```
 
+Windows PowerShell では `irm https://claude.ai/install.ps1 | iex` を使います。npm で入れる場合は `npm install -g @anthropic-ai/claude-code`（**Node.js 22 以上**が必要）です。
+
 セットアップは次のような流れになります。
 
-1. `npm install -g @anthropic-ai/claude-code` で CLI をインストール
+1. Native Install（または npm / Homebrew / WinGet）で CLI をインストール
 2. プロジェクトディレクトリで `claude` を実行して起動
 3. ブラウザで Anthropic アカウントを認証
 4. 対話モードに入ったら `/init` を実行して `CLAUDE.md` を自動生成
