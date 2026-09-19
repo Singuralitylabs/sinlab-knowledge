@@ -82,7 +82,7 @@ status: published
 | 数学・論理 | AIME（FrontierMath） | [Artificial Analysis](https://artificialanalysis.ai/) / [Epoch AI](https://epoch.ai/) | 段階的推論。多数決（cons@k）など測定条件に注意 |
 | 長文脈の正確さ | RULER（Needle-in-a-Haystack） | 各社の公式レポート（[RULER](https://github.com/NVIDIA/RULER) は評価コード・手法） | 宣伝の最大トークン数でなく「実効的に拾える精度」を見る。中央集権的な順位表はない |
 | 文章・対話の体感 | LMArena（Elo） | [LMArena](https://lmarena.ai/) | 人間の選好。差が小さいときは誤差区間を見る |
-| 日本語性能 | Nejumi Leaderboard | [Nejumi（W&B, 最新版）](https://wandb.ai/wandb-japan/llm-leaderboard3/reports/Nejumi-LLM-Leaderboard3--Vmlldzo4NDkwODEy) | 英語ベンチが高くても日本語性能は別物 |
+| 日本語性能 | Nejumi Leaderboard | [Nejumi Leaderboard 4](https://nejumi.ai/) | 英語ベンチが高くても日本語性能は別物 |
 | 画像理解（マルチモーダル） | MMMU（MathVista） | [MMMU 公式](https://mmmu-benchmark.github.io/) / [Artificial Analysis](https://artificialanalysis.ai/) | 画像とテキストを統合して理解できるか |
 
 > [!TIP]
@@ -125,7 +125,7 @@ status: published
 - **[LMArena](https://lmarena.ai/)** — 人間の選好を表す Elo 系スコア（現在は Bradley–Terry ベースの Arena Score）。「体感の良さ」を測れる数少ない指標。
 - **[Epoch AI](https://epoch.ai/)** — 能力トレンドの長期分析・研究データ。
 - 各ベンチマークの **公式リーダーボード**（[SWE-bench](https://www.swebench.com/)、[ARC-AGI](https://arcprize.org/)、[GAIA](https://huggingface.co/spaces/gaia-benchmark/leaderboard)、[MMMU](https://mmmu-benchmark.github.io/) など）— その指標の一次情報。表で「◯◯ 公式」と書いた場合はこれを指します。ただし **SWE-bench のような提出制のボードは、ベンダー発表より掲載が遅れる**点に注意（最新モデルが未提出で載っていないことがある）。なお [RULER](https://github.com/NVIDIA/RULER) は順位表ではなく **評価コード／手法のリポジトリ** で、長文脈スコアは各社のレポートに散在します。
-- **[Nejumi Leaderboard（最新版）](https://wandb.ai/wandb-japan/llm-leaderboard3/reports/Nejumi-LLM-Leaderboard3--Vmlldzo4NDkwODEy)** — 日本語性能の定番（Weights & Biases 運営）。版が Neo / 3 / 4 と分かれているので、**最新版を開いているか**に注意（更新は月単位）。
+- **[Nejumi Leaderboard 4](https://nejumi.ai/)** — 日本語性能の定番（Weights & Biases Japan 運営）。入口は `nejumi.ai`。版が Neo / 3 / 4 と分かれているので、**開いている版番号**に注意（Leaderboard 3 のレポートは 2024 年 11 月以降更新停止）。
 
 **手軽な比較表（確認用、一次情報で裏取り前提）**
 

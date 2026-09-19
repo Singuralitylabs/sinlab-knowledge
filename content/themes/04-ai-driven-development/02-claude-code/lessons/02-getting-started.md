@@ -11,24 +11,31 @@ status: published
 ---
 # Claude Code を使い始める
 
-Claude Code を初めて使う人向けに、インストールから初回起動、初期プロンプト付き起動や権限モードの基本までをまとめます。npm で入れてターミナルから `claude` を叩くだけで、エディタを問わず AI との対話型開発が始められます。
+Claude Code を初めて使う人向けに、インストールから初回起動、初期プロンプト付き起動や権限モードの基本までをまとめます。公式の Native Install で入れてターミナルから `claude` を叩くだけで、エディタを問わず AI との対話型開発が始められます。
 
 ## 動作環境
 
-- Node.js 18 以上 (LTS 推奨)
-- macOS / Linux / Windows (WSL2 推奨)
-- Anthropic アカウント (`https://console.anthropic.com/`)
+- macOS 13+ / Linux（Ubuntu 20.04+ など）/ Windows 10+（ネイティブまたは WSL2）
+- 4 GB 以上の RAM、インターネット接続
+- Anthropic アカウント（`https://console.anthropic.com/` または claude.ai）
 
 > [!NOTE]
 > Claude Code はエディタに依存しません。VS Code、Vim、JetBrains 系など、普段お使いのエディタをそのまま併用できます。
+>
+> Native Install では Node.js は不要です。npm で入れる場合のみ **Node.js 22 以上**が必要です（v2.1.198 以降）。
 
 ## インストール
 
-Claude Code は npm パッケージとして配布されています。Node.js 18 以上の環境で、次のコマンドを実行するだけでセットアップが完了します。
+推奨は **Native Install** です。macOS / Linux / WSL では次のコマンドを実行します。
 
 ```bash
-# グローバルインストール
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Windows PowerShell では次のコマンドです。
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
 ```
 
 インストール後、任意のプロジェクトディレクトリで `claude` を実行すると対話モードが起動します。
@@ -38,11 +45,14 @@ cd your-project
 claude
 ```
 
+> [!TIP]
+> npm で入れたい場合は `npm install -g @anthropic-ai/claude-code` を使います（**Node.js 22 以上**が必要）。公式ドキュメントでは Advanced installation options に分類されています。Homebrew（`brew install --cask claude-code`）や WinGet も利用できます。
+
 ## セットアップの流れ
 
 初回セットアップの全体像は次の 4 ステップです。
 
-1. `npm install -g @anthropic-ai/claude-code` でグローバルインストール
+1. Native Install（上記の `curl | bash` または PowerShell の `irm | iex`）でインストール
 2. プロジェクトディレクトリに移動して `claude` を起動
 3. ブラウザが開くので Anthropic アカウントで認証
 4. `/init` を実行して `CLAUDE.md` を自動生成
