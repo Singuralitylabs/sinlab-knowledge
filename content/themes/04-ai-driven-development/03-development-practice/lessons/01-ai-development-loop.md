@@ -121,5 +121,6 @@ AI が各ステージを高速化しても、最終的な判断と責任は人�
 ## 関連ページ
 
 - [AIによるデバッグとリファクタリング](/themes/04-ai-driven-development/03-development-practice/ai-debugging-refactoring) — 次のレッスン（ツール機能・相互検証）
+- [AIコードレビューの導入と運用](/themes/04-ai-driven-development/03-development-practice/ai-code-review) — 観点別のレビュー方式・REVIEW.md・指摘の運用
 - [ソフトウェアエンジニアリング基礎](/themes/05-software-engineering) — デバッグ/リファクタの原理原則
 - [Claude Code の基本構造](/themes/04-ai-driven-development/02-claude-code/basics) — Claude Code の前提知識
