@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img">
+  <style>
+    .box { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+    .title { font-size: 22px; font-weight: bold; fill: #0f172a; font-family: sans-serif; }
+    .body { font-size: 15px; fill: #334155; font-family: sans-serif; }
+    .arrow { stroke: #64748b; stroke-width: 2; fill: none; }
+    .caption { font-size: 14px; fill: #64748b; font-family: sans-serif; }
+  </style>
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <text x="480" y="30" text-anchor="middle" class="title">AI Code Review: Three Layers</text>
+  <rect x="30" y="60" width="280" height="220" rx="12" class="box"/>
+  <text x="170" y="95" text-anchor="middle" class="title">1. Local</text>
+  <text x="170" y="125" text-anchor="middle" class="body">/code-review (before push)</text>
+  <text x="170" y="155" text-anchor="middle" class="body">Instant check on your machine</text>
+  <text x="170" y="180" text-anchor="middle" class="body">Targets: diff / PR / branch</text>
+  <text x="170" y="205" text-anchor="middle" class="body">Cost: normal usage quota</text>
+  <text x="170" y="235" text-anchor="middle" class="body">Start here</text>
+  <rect x="340" y="60" width="280" height="220" rx="12" class="box"/>
+  <text x="480" y="95" text-anchor="middle" class="title">2. Auto Review</text>
+  <text x="480" y="125" text-anchor="middle" class="body">Code Review (cloud)</text>
+  <text x="480" y="155" text-anchor="middle" class="body">Runs on PR open / push</text>
+  <text x="480" y="180" text-anchor="middle" class="body">Multi-agent parallel check</text>
+  <text x="480" y="205" text-anchor="middle" class="body">Cost: USD 15-25 / review</text>
+  <text x="480" y="235" text-anchor="middle" class="body">Check run is neutral</text>
+  <rect x="650" y="60" width="280" height="220" rx="12" class="box"/>
+  <text x="790" y="95" text-anchor="middle" class="title">3. Self-hosted CI</text>
+  <text x="790" y="125" text-anchor="middle" class="body">claude-code-action</text>
+  <text x="790" y="155" text-anchor="middle" class="body">Define your own workflow</text>
+  <text x="790" y="180" text-anchor="middle" class="body">Gating and conditions possible</text>
+  <text x="790" y="205" text-anchor="middle" class="body">Cost: runner time + usage</text>
+  <text x="790" y="235" text-anchor="middle" class="body">Use when you need control</text>
+  <line x1="310" y1="170" x2="336" y2="170" class="arrow" marker-end="url(#ah)"/>
+  <line x1="620" y1="170" x2="646" y2="170" class="arrow" marker-end="url(#ah)"/>
+  <text x="480" y="320" text-anchor="middle" class="caption">Lower layers give more control at higher cost and setup effort. Shared criteria: CLAUDE.md + REVIEW.md.</text>
+</svg>
