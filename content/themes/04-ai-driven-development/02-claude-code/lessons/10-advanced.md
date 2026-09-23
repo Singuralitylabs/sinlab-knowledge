@@ -20,7 +20,7 @@ status: published
 - `/model` コマンドと Effort レベルによるコストと精度の調整
 - Bash モード（`!` プレフィックス）と `@` ファイルメンションの使い方
 - Vim モード、プロンプトサジェスト、チェックポイント（Esc Esc）などの入力支援
-- セッション移動（`--resume` / `-c` / `/teleport` / `/desktop` / `--remote`）で作業を引き継ぐ方法
+- セッション移動（`--resume` / `-c` / `/teleport` / `/desktop` / `--cloud`）で作業を引き継ぐ方法
 
 ## 権限モード（4 種類）
 
