@@ -137,6 +137,8 @@ Knowledge Work 以外にも、Financial Services・Legal・Life Sciences など�
 
 「プロジェクト」は指示・コンテキスト・メモリを持つ永続的な作業スペースです。ローカルフォルダを指定するか、既存の Chat プロジェクトを取り込むか、新規に作成して使います。プロジェクト自体はデスクトップ・Web・モバイルいずれからも使えます。ただし**ローカルフォルダに紐づけたプロジェクト**での Cowork セッションはデスクトップ限定で、プロジェクトデータのクラウド同期やチームでの共有はできません。
 
+なお、Claude Code では 2026 年 9 月に、プロジェクトを作り直した新しい **Projects** がベータ公開されました。1 つの会話で Claude がクラウド上の並列セッション（スレッド）を起動・追跡する仕組みです。Cowork / chat の従来のプロジェクトは当面このまま動き、新しい体験は今後こちらにも順次展開される予定です。詳しくは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) を参照してください。
+
 ### スケジュールタスク
 
 毎朝メールを確認する、週次で指標を集計する、といった定型業務を繰り返し自動実行できます。ユーザーが端末をオフラインにしていても、クラウドセッション上でタスクが進行します。
@@ -185,6 +187,7 @@ Cowork が行った操作の結果（コンテンツの公開・金銭のやり�
 - [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — Claude Code 側の定期実行・自動起動の仕組み。Cowork のスケジュールタスクとの違いを解説
 - [Plugins](/themes/04-ai-driven-development/02-claude-code/plugins) — Cowork の「Knowledge Work」マーケットプレイスが乗っている、Claude Code 共通のプラグイン基盤
 - [Claude Design との連携](/themes/04-ai-driven-development/02-claude-code/claude-design) — 同じ「関連プロダクト紹介」枠の先行例
+- [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — 再設計された新しい Projects（Claude Code で先行ベータ）
 - [Get started with Claude Cowork (Claude Help Center)](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
 - [Use Claude Cowork safely (Claude Help Center)](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely)
 - [Use Claude Cowork on web, desktop, and mobile (Claude Help Center)](https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile)

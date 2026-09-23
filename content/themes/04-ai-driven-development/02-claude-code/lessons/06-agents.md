@@ -266,7 +266,7 @@ tools: Read, Write, Edit
 
 ## Agent Teams と Cowork
 
-複数のエージェントをチームとして編成する **Agent Teams** のような発展的な使い方も提案されています。また、同じエージェント基盤をコーディング以外の知識労働に拡張したプロダクトが **Claude Cowork** です。詳しくは [Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) のレッスンで解説しています。基本となるサブエージェントと `/plan` の使い方に慣れてから、必要に応じて学ぶのがおすすめです。
+複数のエージェントをチームとして編成する **Agent Teams** のような発展的な使い方も提案されています。また、同じエージェント基盤をコーディング以外の知識労働に拡張したプロダクトが **Claude Cowork** です。詳しくは [Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) のレッスンで解説しています。さらに、1 つの会話で Claude がクラウド上の並列セッション（スレッド）を起動・追跡し、数日〜数週間にわたる仕事を取りまとめる発展形として [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) もあります。基本となるサブエージェントと `/plan` の使い方に慣れてから、必要に応じて学ぶのがおすすめです。
 
 ## まとめ
 
@@ -276,5 +276,6 @@ tools: Read, Write, Edit
 
 ## 関連ページ
 
+- [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — Claude がクラウドの並列セッションを取りまとめる仕組み。サブエージェントとの違いを比較表で解説
 - [Subagents (公式ドキュメント)](https://code.claude.com/docs/en/sub-agents)
 - [Skills (`context: fork` によるサブエージェント連携)](https://code.claude.com/docs/en/skills)

@@ -463,6 +463,9 @@ Routines は通常のセッションと同じようにサブスクリプショ�
 
 Team / Enterprise では、オーナーが管理画面のトグルで組織全体の Routines を無効化できます。無効化すると既存の Routine も停止します。
 
+> [!NOTE]
+> Claude Code の **Projects** の中で定期的な仕事を頼むと、Claude がそのプロジェクトのスレッドとして動く Routine を作り、プロジェクトの **Routines** タブに表示されます。プロジェクトの外で作った Routine は、これまでどおり単独で動きます。詳しくは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) を参照してください。
+
 ## デスクトップスケジュールタスク
 
 手元のフォルダにあるファイルや、自分のパソコンにしか入っていないツールを使う必要がある場合は、こちらを使います。デスクトップアプリのサイドバーで **Routines** → **New routine** → **Local** を選ぶと作成できます（**Cloud** を選ぶと前述の Cloud Routines になります）。
@@ -692,6 +695,7 @@ Cloud Routines のプロンプトは、会話の履歴を持たない状態か�
 
 - [Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) — ツール実行の前後に決まった処理を差し込む仕組み。Routine で起動したセッションの中でも通常どおり発火する
 - [Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) — 開発以外の業務向けのスケジュールタスクはこちら
+- [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — プロジェクト内で作った Routine は **Routines** タブに表示される
 - [Automate work with routines（公式ドキュメント）](https://code.claude.com/docs/en/routines)
 - [Run prompts on a schedule（`/loop` 公式ドキュメント）](https://code.claude.com/docs/en/scheduled-tasks)
 - [Schedule recurring tasks in Claude Code Desktop（公式ドキュメント）](https://code.claude.com/docs/en/desktop-scheduled-tasks)
