@@ -175,7 +175,7 @@ claude --cloud "Update the API documentation"
 | **Full** | 任意のドメインへ通信可 |
 | **Custom** | 自分の許可リスト。必要なら「既定リストも含める」にチェック |
 
-許可外のホストへのリクエストは `403` エラー（`host_not_allowed`）で失敗します。自社 API など既定外のドメインが必要な場合のみ、**Custom** にして 1 行 1 ドメインで追加します（`*.internal.example.com` のように `*.` でサブドメイン全体を指定できます）。
+許可外のホストへのリクエストは `403` エラー（`x-deny-reason: host_not_allowed`）で失敗します。自社 API など既定外のドメインが必要な場合のみ、**Custom** にして 1 行 1 ドメインで追加します（`*.internal.example.com` のように `*.` でサブドメイン全体を指定できます）。
 
 なお、GitHub（専用プロキシ経由）・有効化した MCP コネクタ・API credentials に登録したホストへの通信は、この許可リストとは別経路のため、追加不要です。
 
@@ -218,7 +218,7 @@ apt update && apt install -y shellcheck
 VM 自体の追加ツールはセットアップスクリプト（キャッシュさせたい重い準備）、`bun install` のようなプロジェクト依存は SessionStart フック（後述）に分けます。
 
 > [!WARNING]
-> **Bun はプロキシ非互換が知られています。** Anthropic 管理環境では全ての外部通信がセキュリティプロキシを経由するため、`bun install` が失敗することがあります。本サイト自身が該当する実例です。失敗した場合は Node.js・npm/pnpm での取得に切り替えるか、セルフホスト環境を検討してください。`check-tools` で VM 上のツール versions を確認できます。
+> **Bun はプロキシ非互換が知られています。** Anthropic 管理環境では全ての外部通信がセキュリティプロキシを経由するため、`bun install` が失敗することがあります。本サイト自身が該当する実例です。失敗した場合は Node.js・npm/pnpm での取得に切り替えるか、セルフホスト環境を検討してください。
 
 ## リポジトリ側で用意するもの — SessionStartフック
 
@@ -270,7 +270,7 @@ exit 0
 
 - **GitHub proxy**: トークンは VM に入りません。`GH_TOKEN` は `proxy-injected` として見え、プロキシがサーバ側で付け替えます。`gh` はそのまま使え、push は作業ブランチ・API は紐づいたリポジトリに限定されます
 - **セキュリティプロキシ**: 外部への HTTP/HTTPS はすべてここを経由します
-- **Docker / PostgreSQL / Redis**: プリインストール済みですが起動はしていません。プロンプトで起動を頼みます（イメージ取得は環境のネットワークレベルに従います）。`check-tools` で VM 上の versions を確認できます
+- **Docker / PostgreSQL / Redis**: プリインストール済みですが起動はしていません。プロンプトで起動を頼みます（イメージ取得は環境のネットワークレベルに従います）。VM 上のツール構成は Claude に `check-tools` の実行を頼んで確認します（公式ドキュメント Configure cloud environments の Installed tools に記載の方法です）
 - **環境失効**: 一定時間アイドルになると VM は回収され、再開時は復元されます。バックグラウンド処理は消えるため、作業はこまめに commit & push して守ります
 
 ## ローカルとクラウドを往復する
@@ -283,7 +283,7 @@ CLI からの往復は 3 つの操作に整理できます。詳細な手順は 
 | `claude -p "..." --cloud <id>` | CLI → クラウド（追送） | 実行中のセッションにメッセージを 1 件送る（待たずに終了） |
 | `claude --teleport [id]` | クラウド → CLI（引き戻し） | クラウドのブランチと会話履歴をローカルに取り込む。以降の作業はローカルに残る |
 
-`--teleport` と `--resume` は別物です。`--resume` はこのマシンの履歴を開き直すだけで、クラウドの一覧には触れません。`--teleport` は作業ディレクトリが clean（未コミット変更なし）である必要があります。
+`--teleport` と `--resume` は別物です。`--resume` はこのマシンの履歴を開き直すだけで、クラウドの一覧には触れません。なお CLI の `claude --teleport` とセッション内の `/teleport` は、クラウドを引き戻すという同じ機能への別々の入口です。`--teleport` は作業ディレクトリが clean（未コミット変更なし）である必要があります。
 
 PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗やレビュー指摘への一次対応をクラウドに任せ、人間は方針と最終判断に集中します（→ [Routines](/themes/04-ai-driven-development/02-claude-code/routines)）。
 
@@ -301,7 +301,7 @@ PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗�
 
 各社の設定ファイル・設定場所は 1 行ずつ押さえておけば十分です。詳細は公式ドキュメントを参照してください。
 
-- Codex: 環境設定画面（セットアップ／メンテナンススクリプト・バージョン固定）。Copilot: `.github/workflows/copilot-setup-steps.yml`（59 分上限、単一リポジトリ・ブランチ・PR の制約あり）
+- Codex: 環境設定画面（セットアップ／メンテナンススクリプト・バージョン固定）。Copilot: `.github/workflows/copilot-setup-steps.yml`（実行時間の上限や単一リポジトリ・単一ブランチ・単一 PR といった制約あり。公式ドキュメントの Limitations に記載。詳細は公式ドキュメント参照）
 - Cursor: `.cursor/environment.json`（Build のスナップショットで事前ウォーム）。Jules: Configuration → Environment（セットアップスクリプト＋スナップショット）
 
 ## チームで導入するときの型
