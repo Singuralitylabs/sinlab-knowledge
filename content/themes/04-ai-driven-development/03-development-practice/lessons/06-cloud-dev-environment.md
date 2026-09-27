@@ -1,7 +1,7 @@
 ---
 title: "AI駆動開発はクラウド環境で行う"
 description: "AIコーディングエージェントを自分のPCではなくクラウドの隔離VMで動かす「クラウド開発環境」について、安全性・並列性・再現性・端末非依存の4つの利点、Claude Codeクラウドセッションでの設定手順（ネットワーク・環境変数・セットアップスクリプト・SessionStartフック）、Codex / Copilot / Cursor / Julesとの対応、ローカルとの使い分けを解説。"
-order: 7
+order: 6
 type: lecture
 difficulty: intermediate
 tags: [ai-coding, cloud, sandbox, claude-code, codex, copilot, security, best-practices]
@@ -49,7 +49,7 @@ AI に任せる時間が長くなるほど、「AI がどこで動いている�
   ←→ プロキシ（トークン・APIキーをサーバ側で付与） ←→ GitHub（リポジトリ・PR）
 ```
 
-Claude Code の場合、Anthropic 管理の VM は Ubuntu 24.04（おおむね 4 vCPU / 16 GB / 30 GB 程度。変更される可能性があります）で、リポジトリをクローンした状態から始まります。Node.js・Python・Docker・PostgreSQL・Redis・`gh` などがあらかじめ入っており、足りないものはセットアップスクリプトで追加します。
+Claude Code の場合、Anthropic 管理の VM は Ubuntu 24.04（おおむね 4 vCPU / 16 GB / 30 GB 程度。公式ドキュメントの Resource limits に記載の目安であり、変更される可能性があります）で、リポジトリをクローンした状態から始まります。Node.js・Python・Docker・PostgreSQL・Redis・`gh` などがあらかじめ入っており、足りないものはセットアップスクリプトで追加します。
 
 ### 似て非なるものとの違い
 
@@ -61,7 +61,7 @@ Claude Code の場合、Anthropic 管理の VM は Ubuntu 24.04（おおむね 4
 | **GitHub Codespaces** | ブラウザで使えるクラウド上の開発コンテナ | 人間が手を動かす場所。エージェントが自律的に作業して PR を返す仕組みではない |
 | **devcontainer** | コンテナ定義をコードで共有する仕組み | 環境定義の考え方は近いが、あくまでローカル／Codespaces 用の定義。エージェント実行基盤ではない |
 
-なお、Claude Code の Web 版 Cowork もクラウドで実行されますが、開発以外の業務向けの機能であり、本ページで扱う開発用のクラウドセッションとは別物です。
+なお、[Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) もクラウドで実行されますが、開発以外の業務向けの独立したプロダクトであり、本ページで扱う開発用のクラウドセッションとは別物です。
 
 ## なぜローカルではなくクラウドか — 4つの利点
 
@@ -105,8 +105,8 @@ Claude Code の場合、Anthropic 管理の VM は Ubuntu 24.04（おおむね 4
 | ローカルにしかないツール・実機・GUI を使う | VM にはそのデバイスもライセンスも無い | ローカルで動かす |
 | 大規模ビルド・メモリを大量に使う処理 | VM のリソース上限（おおむね 4 vCPU / 16 GB 程度）を超える | 自分のマシンかセルフホスト環境で動かす |
 | 対話的な設計・探索 | 計画モードで細かく往復する段階ではローカルの応答性が勝つ | 計画はローカルで、実行はクラウドで |
-| GitHub 以外のホスティング | クラウドは GitHub 前提の作り（バンドル送信は可能だが push できない場合がある） | ローカルで動かす |
-| レート制限を分けたい | クラウドセッションはレート制限を共有する | 混雑時はローカルに逃がす |
+| GitHub 以外のホスティング | クラウドは GitHub 前提。`CCR_FORCE_BUNDLE=1` でバンドル送信はできるが、結果をそのリモートに push できない | ローカルで動かす |
+| レート制限の消費 | クラウドもローカルも同じ上限を共有する | 並列に投げるほど同じ枠を比例して消費することに注意する |
 
 判断の型は **「クラウドを既定、ローカルを例外」** です。まずクラウドでできるかを考え、上の表のいずれかに当てはまるときだけローカルを選びます。
 
@@ -114,7 +114,7 @@ Claude Code の場合、Anthropic 管理の VM は Ubuntu 24.04（おおむね 4
 
 ### 前提
 
-クラウドセッションは Pro / Max / Team プラン、およびプレミアムシートを持つ Enterprise で利用できます。GitHub との接続が必須です（GitHub Enterprise Server は Team / Enterprise）。接続方法は 2 つあります。
+クラウドセッションは Pro / Max / Team プラン、およびプレミアムシートまたは Chat + Claude Code シートを持つ Enterprise で利用できます。GitHub との接続が必須です（GitHub Enterprise Server は Team / Enterprise）。接続方法は 2 つあります。
 
 | 方法 | 内容 | 向く場面 |
 | --- | --- | --- |
@@ -135,7 +135,7 @@ App を入れたリポジトリでは、PR の Auto-fix（CI 失敗・レビュ�
 | CLI（`claude --cloud "..."`） | ターミナルから新規クラウドセッションを作成 |
 | Routines | スケジュール・API・GitHub イベントをきっかけに自動起動（→ [Routines](/themes/04-ai-driven-development/02-claude-code/routines)） |
 
-初めての場合は、何も設定していない状態でも **Default** 環境（**Trusted** ネットワーク）が用意されます。まずは Default で小さなタスクを 1 件動かしてみてください。
+初めての場合は **Default** 環境（**Trusted** ネットワーク）が用意されます（プランにより自動作成される場合と、作成フォームへの入力を求められる場合があります）。まずは Default で小さなタスクを 1 件動かしてみてください。
 
 ### 「ローカルで計画、クラウドで実行」
 
@@ -158,7 +158,7 @@ claude --cloud "Fix the flaky test in auth.spec.ts"
 claude --cloud "Update the API documentation"
 ```
 
-クラウドはリモートのブランチをクローンするため、**ローカルにしかないコミットは見えません**。投げる前に push してください（リモートが無い場合のバンドル送信については落とし穴を参照）。
+クラウドは通常リモートのブランチをクローンするため、投げる前に push してください。ただし git リモートが無い場合や、Claude GitHub App を入れていない github.com リポジトリの場合は、ローカルのリポジトリがバンドルとして送られます（全ブランチの履歴＋追跡済みファイルの未コミット変更を含みます。未追跡ファイルは含まれないため `git add` してから扱います）。
 
 ## クラウド環境を設定する
 
@@ -213,12 +213,33 @@ apt update && apt install -y shellcheck
 
 5 分以内に完了したセットアップ結果は**おおむね 7 日間キャッシュ**され、次回以降のセッションはそこから始まるため高速です。スクリプトや許可ホストを変更すると再構築されます。キャッシュはファイルシステムのスナップショットであり、起動中のプロセス（DB・`docker compose up` のコンテナ等）は残らないため、起動自体はセッションごとに Claude に頼むかフックで行います。
 
-### 設定例 — 本サイト（Next.js + Bun）の場合
+### 設定例 — Next.js プロジェクトの場合
 
-VM 自体の追加ツールはセットアップスクリプト（キャッシュさせたい重い準備）、`bun install` のようなプロジェクト依存は SessionStart フック（後述）に分けます。
+Next.js プロジェクトを例に、具体的な中身を見ていきます。VM 側の準備はセットアップスクリプトに、プロジェクト依存の導入は SessionStart フックに分けます。
+
+```bash
+#!/bin/bash
+# セットアップスクリプト例 — VM 自体の準備（キャッシュされる）
+apt update && apt install -y shellcheck || true
+```
+
+```bash
+#!/bin/bash
+# scripts/install_pkgs.sh — プロジェクト依存の導入（SessionStart フックから呼ぶ）
+if [ "$CLAUDE_CODE_REMOTE" != "true" ]; then
+  exit 0
+fi
+
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm install --frozen-lockfile
+else
+  npm ci
+fi
+exit 0
+```
 
 > [!WARNING]
-> **Bun はプロキシ非互換が知られています。** Anthropic 管理環境では全ての外部通信がセキュリティプロキシを経由するため、`bun install` が失敗することがあります。本サイト自身が該当する実例です。失敗した場合は Node.js・npm/pnpm での取得に切り替えるか、セルフホスト環境を検討してください。
+> **Bun を使うプロジェクトは注意が必要です。** Anthropic 管理環境では全ての外部通信がセキュリティプロキシを経由するため、`bun install` が失敗することがあります（公式ドキュメント Configure cloud environments の Installed tools に記載の既知の問題です）。Bun プロジェクトでは上記のように npm／pnpm での取得に切り替えるか、セルフホスト環境を検討してください。
 
 ## リポジトリ側で用意するもの — SessionStartフック
 
@@ -271,7 +292,7 @@ exit 0
 - **GitHub proxy**: トークンは VM に入りません。`GH_TOKEN` は `proxy-injected` として見え、プロキシがサーバ側で付け替えます。`gh` はそのまま使え、push は作業ブランチ・API は紐づいたリポジトリに限定されます
 - **セキュリティプロキシ**: 外部への HTTP/HTTPS はすべてここを経由します
 - **Docker / PostgreSQL / Redis**: プリインストール済みですが起動はしていません。プロンプトで起動を頼みます（イメージ取得は環境のネットワークレベルに従います）。VM 上のツール構成は Claude に `check-tools` の実行を頼んで確認します（公式ドキュメント Configure cloud environments の Installed tools に記載の方法です）
-- **環境失効**: 一定時間アイドルになると VM は回収され、再開時は復元されます。バックグラウンド処理は消えるため、作業はこまめに commit & push して守ります
+- **環境失効**: 一定時間アイドルになると VM は回収されます。再開時は新しい VM に会話履歴だけが復元され、未 push のファイルや起動中のプロセスは戻りません。作業はこまめに commit & push して守ります
 
 ## ローカルとクラウドを往復する
 
@@ -285,7 +306,7 @@ CLI からの往復は 3 つの操作に整理できます。詳細な手順は 
 
 `--teleport` と `--resume` は別物です。`--resume` はこのマシンの履歴を開き直すだけで、クラウドの一覧には触れません。なお CLI の `claude --teleport` とセッション内の `/teleport` は、クラウドを引き戻すという同じ機能への別々の入口です。`--teleport` は作業ディレクトリが clean（未コミット変更なし）である必要があります。
 
-PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗やレビュー指摘への一次対応をクラウドに任せ、人間は方針と最終判断に集中します（→ [Routines](/themes/04-ai-driven-development/02-claude-code/routines)）。
+PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗やレビュー指摘への一次対応をクラウドに任せ、人間は方針と最終判断に集中します。Auto-fix の有効化には対象リポジトリへの Claude GitHub App のインストールが必要です。詳しい手順は[公式ドキュメントの Auto-fix pull requests](https://code.claude.com/docs/en/claude-code-on-the-web#auto-fix-pull-requests)を参照してください。
 
 ## 他ツールでの対応物
 
@@ -316,10 +337,10 @@ PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗�
 | --- | --- | --- |
 | `403 host_not_allowed` で外部 API に届かない | 環境の許可リスト外への通信 | Custom にして該当ドメインを追加する。MCP 経由・GitHub・API credentials 登録済みホストは対象外のため切り分ける |
 | `bun install` が失敗する | Bun のプロキシ非互換（既知の問題） | npm／pnpm での取得に切り替えるか、セルフホスト環境を検討する |
-| セットアップスクリプトが毎回走る | 5 分超でキャッシュされていない | 並列化（`&`＋`wait`）で 5 分以内に収める。重い単発ダウンロードは SessionStart フック側に逃がす |
-| ローカルにしかないコミットが見えない | `--cloud` はリモートをクローンする | 投げる前に push する。未追跡ファイルは `git add` してから扱う |
-| セッションが止まって見える | 環境失効（アイドルで VM 回収） | 再開して復元する。作業は commit & push で守る |
-| 組織 IP 許可リストで認証エラーになる | クラウド VM の出口 IP が許可されていない | セルフホスト環境か、許可リストの見直しを検討する |
+| セットアップスクリプトが毎回走る | 5 分超でキャッシュされていない | 並列化（`&`＋`wait`）で 5 分以内に収めるか、不要なインストールを削る |
+| ローカルのコミットがクラウドに見えない | 通常はリモートをクローンするため。ただし git リモートが無い場合や App 未導入の github.com リポジトリはバンドル送信される | 投げる前に push する。未追跡ファイルは `git add` してから扱う |
+| セッションが止まって見える | 環境失効（アイドルで VM 回収） | claude.ai/code から再開する（新しい VM に会話履歴だけが復元される）。作業は commit & push で守る |
+| 組織 IP 許可リストで認証エラーになる | クラウド VM の出口 IP が許可されていない | Anthropic サポートに連絡して Anthropic 管理サービスを許可リストの対象外にしてもらう（正規の対処）。代替としてセルフホスト環境も検討できる |
 | 環境変数に置いたトークンが全員に見えている | 環境変数は共有環境の全員が読める仕様 | すぐにローテーションし、API credentials（Pro／Max）等の安全な経路に移す |
 
 ## まとめ
