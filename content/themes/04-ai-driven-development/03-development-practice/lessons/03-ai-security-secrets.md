@@ -92,6 +92,9 @@ AI にコードを書かせ、コマンドを実行させ、`acceptEdits`（auto
 | 1 | 入口（ガードレール） | 怪しい命令が混ざっていないか検査する | ツール側 |
 | 2 | 権限（最小権限・承認） | 危険な操作をそもそもできなくする | ツール側＋**自分** |
 | 3 | 実行（サンドボックス） | 隔離して、勝手な外部通信を遮断する | ツール側 |
+
+> [!NOTE]
+> 第 3 層をクラウド開発環境で具体化する方法は [AI駆動開発はクラウド環境で行う](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) で解説しています。隔離 VM・ネットワーク許可リスト・資格情報プロキシをどう設定するかが中心です。
 | 4 | **データ（secrets 管理）** | **そもそも秘密を AI に見せない** | **★ 自分** |
 | 5 | 監視（可観測性） | 破られても後から気づけるようにする | 外部ツール |
 
@@ -249,6 +252,7 @@ keyway run -- npm run dev    # メモリに注入して実行
 ## 関連ページ
 
 - [AIによるデバッグとリファクタリング](/themes/04-ai-driven-development/03-development-practice/ai-debugging-refactoring) — 前のレッスン
+- [AI駆動開発はクラウド環境で行う](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) — 多層防御の第 3 層をクラウド環境で具体化する方法
 - [Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced) — 権限モード（acceptEdits / bypassPermissions）の詳細
 - [AI開発の基本ループ](/themes/04-ai-driven-development/03-development-practice/ai-development-loop) — 計画モードと差分承認の位置づけ
 
