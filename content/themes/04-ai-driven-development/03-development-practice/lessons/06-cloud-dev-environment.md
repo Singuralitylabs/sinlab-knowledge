@@ -158,7 +158,7 @@ claude --cloud "Fix the flaky test in auth.spec.ts"
 claude --cloud "Update the API documentation"
 ```
 
-クラウドは通常リモートのブランチをクローンするため、投げる前に push してください。ただし git リモートが無い場合や、Claude GitHub App を入れていない github.com リポジトリの場合は、ローカルのリポジトリがバンドルとして送られます（全ブランチの履歴＋追跡済みファイルの未コミット変更を含みます。未追跡ファイルは含まれないため `git add` してから扱います）。
+クラウドは通常リモートのブランチをクローンするため、投げる前に push してください。ただし git リモートが無い場合や、Claude GitHub App を入れていない github.com リポジトリの場合は、ローカルのリポジトリがバンドルとして送られます（全ブランチの履歴＋追跡済みファイルの未コミット変更を含みます。未追跡ファイルは含まれないため `git add` してから扱います。なお macOS / Linux / WSL では `.env`・`*.tfvars`・秘密鍵らしいファイルの未コミット変更は送られず、コミット済みの版かファイル無しで始まります。「秘密を見せない」仕様として覚えておくとよいでしょう）。
 
 ## クラウド環境を設定する
 
@@ -215,31 +215,10 @@ apt update && apt install -y shellcheck
 
 ### 設定例 — Next.js プロジェクトの場合
 
-Next.js プロジェクトを例に、具体的な中身を見ていきます。VM 側の準備はセットアップスクリプトに、プロジェクト依存の導入は SessionStart フックに分けます。
-
-```bash
-#!/bin/bash
-# セットアップスクリプト例 — VM 自体の準備（キャッシュされる）
-apt update && apt install -y shellcheck || true
-```
-
-```bash
-#!/bin/bash
-# scripts/install_pkgs.sh — プロジェクト依存の導入（SessionStart フックから呼ぶ）
-if [ "$CLAUDE_CODE_REMOTE" != "true" ]; then
-  exit 0
-fi
-
-if command -v pnpm >/dev/null 2>&1; then
-  pnpm install --frozen-lockfile
-else
-  npm ci
-fi
-exit 0
-```
+Next.js プロジェクトでは、VM 側の準備はセットアップスクリプトに、プロジェクト依存の導入は SessionStart フックに分けます。依存導入の具体例（`scripts/install_pkgs.sh`）は次の SessionStart フックの節にまとめています。
 
 > [!WARNING]
-> **Bun を使うプロジェクトは注意が必要です。** Anthropic 管理環境では全ての外部通信がセキュリティプロキシを経由するため、`bun install` が失敗することがあります（公式ドキュメント Configure cloud environments の Installed tools に記載の既知の問題です）。Bun プロジェクトでは上記のように npm／pnpm での取得に切り替えるか、セルフホスト環境を検討してください。
+> **Bun を使うプロジェクトは注意が必要です。** Anthropic 管理環境では全ての外部通信がセキュリティプロキシを経由するため、`bun install` が失敗することがあります（公式ドキュメント Configure cloud environments の Installed tools に記載の既知の問題です）。Bun プロジェクトでは次の節の例のように npm／pnpm での取得に切り替えるか、セルフホスト環境を検討してください。
 
 ## リポジトリ側で用意するもの — SessionStartフック
 
@@ -252,7 +231,7 @@ VM の準備（セットアップスクリプト）と、プロジェクトの�
 | 実行場所 | クラウドのみ | ローカル・クラウドの両方 |
 | 向く内容 | ツールチェーン・CLI など VM 自体の準備 | `npm install` のようなプロジェクト依存の導入 |
 
-クラウドでのみ依存を入れたい場合の最小例です。
+クラウドでのみ依存を入れたい場合の例です。ロックファイルの種類でコマンドを切り替え、失敗は終了コードで返します。
 
 ```json
 {
@@ -271,13 +250,20 @@ VM の準備（セットアップスクリプト）と、プロジェクトの�
 
 ```bash
 #!/bin/bash
-# scripts/install_pkgs.sh — クラウドでのみ実行し、ローカルでは何もしない
-if [ "$CLAUDE_CODE_REMOTE" != "true" ]; then
+# scripts/install_pkgs.sh — クラウドでのみ実行し、ロックファイルに合わせて依存を導入する
+set -euo pipefail
+if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
   exit 0
 fi
 
-npm install
-exit 0
+if [ -f pnpm-lock.yaml ]; then
+  pnpm install --frozen-lockfile
+elif [ -f package-lock.json ]; then
+  npm ci
+else
+  # bun.lock のみのプロジェクトなど。ロックファイルを使わずに取得する
+  npm install
+fi
 ```
 
 `CLAUDE_CODE_REMOTE` が `true` のときだけクラウドと判定して実行するのが定番の分岐です。注意点は 4 つあります。
@@ -296,7 +282,7 @@ exit 0
 
 ## ローカルとクラウドを往復する
 
-CLI からの往復は 3 つの操作に整理できます。詳細な手順は [Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced)のセッション移動節に譲り、ここでは関係だけ押さえます。
+CLI からの往復は 3 つの操作に整理できます。[Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced)のセッション移動節は `--resume`・`/desktop` を含む概要の一覧です。ここではクラウドとの往復を詳しく見ていきます。
 
 | 操作 | 方向 | 内容 |
 | --- | --- | --- |
@@ -350,13 +336,13 @@ PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗�
 - 合言葉は **「クラウドを既定、ローカルを例外」**。実機・GUI・大規模ビルド・対話的探索・非 GitHub はローカルに残す
 - Claude Code では Default（Trusted）から始め、ネットワーク・環境変数・API credentials・セットアップスクリプトの順に設定する。環境変数に secrets は置かない
 - VM の準備はセットアップスクリプト、プロジェクトの準備は SessionStart フック（`CLAUDE_CODE_REMOTE` で分岐）。`CLAUDE.md` を整えて前提を揃える
-- 往復は `--cloud`（新規）・`-p --cloud`（追送）・`--teleport`（引き戻し）の 3 つ。詳細手順は高度な機能、自動化は Routines へ
+- 往復は `--cloud`（新規）・`-p --cloud`（追送）・`--teleport`（引き戻し）の 3 つ。`--resume`・`/desktop` を含む一覧は高度な機能、自動化は Routines へ
 
 ## 関連ページ
 
 - [AI駆動開発のセキュリティとsecrets管理](/themes/04-ai-driven-development/03-development-practice/ai-security-secrets) — 多層防御と secrets 管理の原則（本ページは第 3 層「サンドボックス実行」の具体化）
 - [AI開発の基本ループ](/themes/04-ai-driven-development/03-development-practice/ai-development-loop) — 計画・実装・レビューの全体像
-- [Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced) — セッション移動（`--cloud`・`--teleport`）の詳細手順
+- [Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced) — セッション移動（`--resume`・`/desktop` を含む）の一覧
 - [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — クラウド環境の「利用者」としての自動実行
 - [開発ワークフローはどう変わるか](/themes/04-ai-driven-development/01-overview/workflow-changes) — 作業場所の変化という観点
 - [ハーネスエンジニアリング](/themes/04-ai-driven-development/01-overview/harness-engineering) — ツールを足しすぎない環境設計
