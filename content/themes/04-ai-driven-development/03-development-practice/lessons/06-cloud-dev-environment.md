@@ -43,11 +43,7 @@ AI に任せる時間が長くなるほど、「AI がどこで動いている�
 
 ローカルとクラウドの違いを図にすると、次のようになります。
 
-```text
-[ローカル] PC の中で同居: エージェント＋作業ファイル＋.env が同じ場所にある
-[クラウド] 分離: クラウドVM（エージェント＋作業ファイル、秘密情報なし）
-  ←→ プロキシ（トークン・APIキーをサーバ側で付与） ←→ GitHub（リポジトリ・PR）
-```
+![ローカルとクラウドの比較。ローカルではエージェント・作業ファイル・.env や秘密鍵が同じ PC に同居し、エージェントが秘密情報を読める。クラウドでは隔離 VM に秘密情報を置かず、外部への通信はすべてプロキシを経由して許可リストで制限され、トークンや API キーはサーバ側に保管した資格情報からプロキシが付与する。許可外のホストへの通信は 403 で拒否される](/content-assets/04-ai-driven-development/03-development-practice/images/cloud-dev-environment/local-vs-cloud.svg)
 
 Claude Code の場合、Anthropic 管理の VM は Ubuntu 24.04（おおむね 4 vCPU / 16 GB / 30 GB 程度。公式ドキュメントの Resource limits に記載の目安であり、変更される可能性があります）で、リポジトリをクローンした状態から始まります。Node.js・Python・Docker・PostgreSQL・Redis・`gh` などがあらかじめ入っており、足りないものはセットアップスクリプトで追加します。
 
@@ -231,6 +227,10 @@ VM の準備（セットアップスクリプト）と、プロジェクトの�
 | 実行場所 | クラウドのみ | ローカル・クラウドの両方 |
 | 向く内容 | ツールチェーン・CLI など VM 自体の準備 | `npm install` のようなプロジェクト依存の導入 |
 
+セッションの流れの中で見ると、両者の位置と「再開時に何が戻るか」は次のようになります。
+
+![クラウドセッションの流れ。1 VM を用意してリポジトリをクローン、2 セットアップスクリプト（Claude 起動前・root で実行、約 5 分以内なら約 7 日キャッシュされ、キャッシュがあればスキップ。設定は環境ダイアログ）、3 SessionStart フック（Claude 起動後、開始・再開のたびに毎回実行。設定はリポジトリ）、4 Claude が作業する、5 commit・push で成果をブランチと PR として残す。アイドルが続くと VM は回収され、claude.ai/code から再開すると新しい VM で 1 からやり直す。再開で戻るのは会話履歴と push 済みの変更で、未 push のファイルや起動中のプロセスは戻らない](/content-assets/04-ai-driven-development/03-development-practice/images/cloud-dev-environment/session-lifecycle.svg)
+
 クラウドでのみ依存を入れたい場合の例です。ロックファイルの種類でコマンドを切り替え、失敗は終了コードで返します。
 
 ```json
@@ -289,6 +289,8 @@ CLI からの往復は 3 つの操作に整理できます。[Claude Code の高
 | `claude --cloud "..."` | CLI → クラウド（新規） | 現在のリモート・ブランチから新規クラウドセッションを作成（旧 `--remote` は非推奨の別名） |
 | `claude -p "..." --cloud <id>` | CLI → クラウド（追送） | 実行中のセッションにメッセージを 1 件送る（待たずに終了） |
 | `claude --teleport [id]` | クラウド → CLI（引き戻し） | クラウドのブランチと会話履歴をローカルに取り込む。以降の作業はローカルに残る |
+
+![ローカルとクラウドの往復。ターミナルから claude --cloud でリモートをクローンした新しいクラウドセッションを作成し、claude -p と --cloud で実行中のセッションにメッセージを 1 件追送する。claude --teleport で実行中のセッションのブランチと会話履歴をターミナルに引き戻す。CLI からは一方通行で、実行中のローカルセッションをそのままクラウドへ移すことはできない](/content-assets/04-ai-driven-development/03-development-practice/images/cloud-dev-environment/local-cloud-roundtrip.svg)
 
 `--teleport` と `--resume` は別物です。`--resume` はこのマシンの履歴を開き直すだけで、クラウドの一覧には触れません。なお CLI の `claude --teleport` とセッション内の `/teleport` は、クラウドを引き戻すという同じ機能への別々の入口です。`--teleport` は作業ディレクトリが clean（未コミット変更なし）である必要があります。
 
