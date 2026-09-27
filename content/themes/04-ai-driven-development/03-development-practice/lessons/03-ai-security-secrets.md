@@ -96,7 +96,7 @@ AI にコードを書かせ、コマンドを実行させ、`acceptEdits`（auto
 | 5 | 監視（可観測性） | 破られても後から気づけるようにする | 外部ツール |
 
 > [!NOTE]
-> 第 3 層をクラウド開発環境で具体化する方法は [AI駆動開発はクラウド環境で行う](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) で解説しています。隔離 VM・ネットワーク許可リスト・資格情報プロキシをどう設定するかが中心です。
+> 第 3 層をクラウド開発環境で具体化する方法は [クラウド環境での開発](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) で解説しています。隔離 VM・ネットワーク許可リスト・資格情報プロキシをどう設定するかが中心です。
 
 良い知らせがあります。**外側の層（1・3・5）は、ツールやサービス側がかなり守ってくれます**。Cursor も Claude Code も各種エージェントも、入口チェックや承認フロー、サンドボックスを標準で備えていることが多い。あなたがやることは、基本的に次の 2 つだけです。
 
@@ -252,7 +252,7 @@ keyway run -- npm run dev    # メモリに注入して実行
 ## 関連ページ
 
 - [AIによるデバッグとリファクタリング](/themes/04-ai-driven-development/03-development-practice/ai-debugging-refactoring) — 前のレッスン
-- [AI駆動開発はクラウド環境で行う](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) — 多層防御の第 3 層をクラウド環境で具体化する方法
+- [クラウド環境での開発](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) — 多層防御の第 3 層をクラウド環境で具体化する方法
 - [Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced) — 権限モード（acceptEdits / bypassPermissions）の詳細
 - [AI開発の基本ループ](/themes/04-ai-driven-development/03-development-practice/ai-development-loop) — 計画モードと差分承認の位置づけ
 

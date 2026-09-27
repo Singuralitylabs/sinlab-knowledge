@@ -121,6 +121,6 @@ AI が各ステージを高速化しても、最終的な判断と責任は人�
 ## 関連ページ
 
 - [AIによるデバッグとリファクタリング](/themes/04-ai-driven-development/03-development-practice/ai-debugging-refactoring) — 次のレッスン（ツール機能・相互検証）
-- [AI駆動開発はクラウド環境で行う](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) — AI が動く場所をクラウドの隔離環境に移す実践
+- [クラウド環境での開発](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) — AI が動く場所をクラウドの隔離環境に移す実践
 - [ソフトウェアエンジニアリング基礎](/themes/05-software-engineering) — デバッグ/リファクタの原理原則
 - [Claude Code の基本構造](/themes/04-ai-driven-development/02-claude-code/basics) — Claude Code の前提知識
