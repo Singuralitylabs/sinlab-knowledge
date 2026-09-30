@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
 
-  // returnTo is set by google-login-button; only same-origin paths (leading "/") are accepted.
+  // returnTo is set by google-login-button; only values starting with "/" are accepted.
   const cookieStore = await cookies();
   const returnToRaw = cookieStore.get(RETURN_TO_COOKIE)?.value;
   const returnTo = returnToRaw ? safeDecode(returnToRaw) : null;
