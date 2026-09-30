@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createProxySupabaseClient } from "@/lib/supabase/proxy";
 
-// 認証必須ルート。ここに含まれないパスは認証チェックをスキップする。
+// Paths outside these prefixes skip the auth check.
 const protectedPrefixes = ["/themes"];
 
 function isProtected(pathname: string): boolean {
@@ -19,7 +19,7 @@ export async function proxy(request: NextRequest) {
 
   const { supabase, response } = createProxySupabaseClient(request);
 
-  // Supabase のベストプラクティス: cookie の自動更新のため必ず getUser() を呼ぶ。
+  // Always call getUser(): it also refreshes the session cookie (Supabase recommendation).
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -30,12 +30,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // 厳密な status チェックは Server Component (app/(protected)/layout.tsx) 側で行う。
-  // proxy は optimistic チェックに留める（Next.js 16 の推奨パターン）。
+  // The strict status check lives in app/(protected)/layout.tsx; proxy stays optimistic
+  // (Next.js 16 recommended pattern).
   return response;
 }
 
 export const config = {
-  // 認証チェックが必要なパスにのみ proxy を走らせる。
+  // Run the proxy only on paths that need the auth check.
   matcher: ["/themes/:path*"],
 };

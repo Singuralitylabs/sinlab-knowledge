@@ -1,143 +1,100 @@
-# Sinlab Knowledge — 設計ドキュメント (4) コンテンツ陳腐化チェック
+# Content freshness check: design
 
-## 0. このドキュメントの位置づけ
+Design decisions for the recurring review of whether learning articles have gone stale. Routine (cloud execution) settings are stored on claude.ai and are out of scope. Commands are in `CLAUDE.md`; options are in the header comments of `scripts/freshness-*.ts`.
 
-学習記事が古くなっていないかを定期的に精査する仕組みの設計を記録する。Routine（クラウド実行）の具体的な設定値は claude.ai 側に保存されるため本ドキュメントでは扱わず、**リポジトリ側に置くコードと、その前提となる設計判断**を扱う。
+## Background: staleness risks
 
-## 1. 背景
+- External URLs in article bodies. Claude-related docs sites reorganize URLs often.
+- Benchmark sites (`artificialanalysis.ai`, `epoch.ai`, `swebench.com`, `wandb.ai`, `lmarena.ai`): a link can be alive while its numbers are outdated.
+- Staleness concentrates in `04-ai-driven-development`: model names and benchmark figures change far faster than elsewhere.
+- `publishedAt` / `updatedAt` exist in `lib/content/schema.ts` but are unused, so there is no record of when an article was written or last verified.
 
-`content/themes/**` は 202 ファイル・約 133 万文字。以下が実測で確認された陳腐化リスクである。
+## Three stages
 
-- 外部 URL が本文中に 154 件（ユニーク 107）。うち `code.claude.com` 31 件と、Claude 系ドキュメントは URL 再編が起きやすい。
-- `artificialanalysis.ai` / `epoch.ai` / `swebench.com` / `wandb.ai` / `lmarena.ai` といったベンチマーク系は、**リンクが生きていても数値が古びる**。
-- 陳腐化スコア上位は `04-ai-driven-development` に集中する。AI モデル名（`Opus 4.7` / `Sonnet 4.6` / `Claude 3.5` / `Gemini 1.5`）とベンチマーク数値が散在しており、変化速度が桁違いに速い。
-- `publishedAt` / `updatedAt` は `lib/content/schema.ts` に定義されているが 202 ファイル全てで未使用。「いつ書かれ、いつ確認されたか」の情報が無い。
+**Everything that can be decided deterministically is handled outside the LLM.**
 
-## 2. 全体構成
-
-3 段構えとし、**決定的に判定できることは全て LLM の外側で処理する**。
-
-| Stage | 実装 | 内容 | トークン |
+| Stage | Implementation | Purpose | Tokens |
 |---|---|---|---|
-| 1 | `scripts/freshness-scan.ts` | 全記事を走査し、陳腐化しうる主張を抽出 | 0 |
-| 2 | `scripts/freshness-linkcheck.ts` | 外部 URL の生存確認 | 0 |
-| 3 | `.claude/skills/content-freshness-review/SKILL.md` | 内容の陳腐化判定と Issue 報告 | 課金あり |
+| 1 | `scripts/freshness-scan.ts` | Scan all articles, extract claims that can go stale | 0 |
+| 2 | `scripts/freshness-linkcheck.ts` | External URL liveness | 0 |
+| 3 | `.claude/skills/content-freshness-review/SKILL.md` | Judge content staleness, report to an Issue | billed |
 
-Stage 1・2 を LLM に混ぜない理由は 2 つある。**再現性**（リンクが 404 かどうかに推論は要らない）と、**攻撃面**（外部ページ本文を、リポジトリと Issue への書き込み権限を持つ自律セッションのコンテキストに入れない — §6）。
+Stages 1 and 2 stay out of the LLM for two reasons: **reproducibility** (a 404 needs no inference) and **attack surface** (external page bodies must not enter the context of an autonomous session that can write to the repo and Issues; see Security).
 
-### 2.1 絞り込みの効き方
+Masking code fences narrows candidates far more than domain exclusion lists: version-like strings drop from hundreds (`chmod 644`, `exit 0`) to a few dozen, and `github.com` hits are mostly example URLs (`git clone https://github.com/user/repo.git`). This shrinks Stage 3's token budget.
 
-コードフェンスのマスクが、ドメイン除外リストより遥かに効く。実測値:
+## Design decisions
 
-| シグナル | 素の正規表現 | フェンス除去後 |
+### Mask code fences, do not delete them
+
+`lib/content/freshness/mask.ts` replaces code lines with empty strings, **preserving line count**; deleting would shift reported `file:line` positions.
+
+Fence open/close follows CommonMark: **same character, at least the same length, no info string** for a closing fence. Articles about Markdown itself nest a ` ```javascript ` fence inside a ` ```markdown ` one, so a naive toggle breaks. Dropping the info-string condition fails in two directions: the inner fence closes the outer one early, and the prose after it is then treated as code and silently skipped (this happened in 3 files). An unclosed fence is treated as code until EOF (safe side).
+
+### Two-tier version detection
+
+- **Tier A (high)**: product-name dictionary x version number. Requiring an uppercase-initial word plus digits makes false positives from Japanese text (`第3章`, `2 スペース`) structurally impossible.
+- **Tier B (low)**: uppercase-initial word + **dotted** version. Requiring the dot removes `Top 10` / `Level 1` / `Hue 0`; remaining cases such as `CVSS 7.1` / `MMLU 92` are dropped via `VERSION_STOPWORDS`.
+
+Hard-coding the dictionary in `dictionary.ts` does not violate the "no hard-coded lists" rule: that rule is about lesson/module/theme lists derivable from `content/`, not about external-world vocabulary.
+
+### Japanese temporal expressions
+
+A bare 「現在」 appears often and mostly means "is in the state of", so it is useless alone. It is picked up (low confidence) **only when the same paragraph has a year, version or URL**.
+
+"Git was created in 2004" (permanent fact) vs. "as of June 2026" (time-dependent) cannot be separated deterministically; that is Stage 3's job. Only the recency of the year is recorded as a hint.
+
+### Rotation without a state file
+
+The week index is the **absolute week number since the epoch**. ISO week numbers break round-robin: ISO years have 52 or 53 weeks (2026 has 53), so `isoWeek % N` skips or double-selects buckets across year boundaries.
+
+Bucket assignment uses a **stable hash of the path string** (FNV-1a 32-bit). Indexing into a sorted array shifts every later file's bucket when one file is added, so one article gets reviewed two weeks in a row while another waits 2N weeks.
+
+**New-article lane**: files whose last git commit is within 7 days are always included regardless of bucket. New articles carry "latest as of writing" information and go stale sooner, so they should not wait at the back of the queue.
+
+### Remembering false positives: `content/.freshness-ignore`
+
+The fatal flaw of a stateless design is that it cannot remember "handled" or "false positive", so the same finding is re-reported every N weeks. Each finding gets a fingerprint, the first 8 hex digits of `sha1(filePath + ':' + claimText)`, and fingerprints listed in `content/.freshness-ignore` are suppressed. This file is **written by humans after review, not by a machine**: it fits the "content is the source of truth" principle and git history records why something was ignored.
+
+### Internal link validation
+
+Relative links of the form `](/themes/...)` were previously validated nowhere (unknown `::detail{slug}` already renders a red error). Checking is offline, deterministic and matters more than external links, so it runs on **all articles every time**, outside rotation. The first run found a real 404: a link that dropped the `NN-` prefix from theme and module directories. Only **lesson slugs** lose the prefix in URLs.
+
+## Pitfalls when scanning (reusing `lib/themes.ts`)
+
+Enumerate lessons with `getThemes()` (per the no-hard-coded-lists rule), but:
+
+1. **`Lesson.body` has frontmatter stripped.** Counting lines on it is off by the frontmatter length (10-14 lines). Scan `readFileSync(lesson.filePath)` raw content instead.
+2. **`React.cache` does not memoize in scripts.** Without a React request scope it passes through, so calling `getThemes()` in a loop re-walks all of `content/` each time. Call it once and pass the result to pure functions.
+3. **`NODE_ENV=production` excludes drafts.** `loader.ts` fixes this at module load time. Merely not setting it is not robust: a caller shell or CI that inherits `NODE_ENV=production` silently breaks the promise to scan drafts. `loadThemesIncludingDrafts()` in `scripts/freshness-scan.ts` temporarily unsets `NODE_ENV` inside its own process and then dynamically imports `getThemes()` (no effect on the site). If it was `production`, a note goes to `warnings`.
+
+## Link check classification
+
+| status | Condition | Handling |
 |---|---|---|
-| バージョン様文字列 | 数百件（`chmod 644` `delta 0` `exit 0` が支配的） | 30 件 |
-| `github.com` | 67 件 | 9 件（残りは `git clone https://github.com/user/repo.git` 等の例示） |
-| `img.shields.io` | 5 件 | 0 件 |
+| `dead` | 404 / 410 | individual Issue |
+| `moved` | reachable but final URL differs | content check in Stage 3 |
+| `unknown` | 403 / 429 / timeout / 5xx | **not necessarily broken** |
+| `alive` | 2xx / 3xx with matching final URL | no report |
 
-結果として **202 ファイル → 候補 57 ファイル**に絞り込まれる。これが Stage 3 のトークン量を決める。
+**Never report 403 / 429 as `dead`.** Cloudflare bot protection and rate limits produce them routinely, and reporting them destroys trust in the whole report. Differences in trailing slash or fragment are not `moved`.
 
-## 3. 主要な設計判断
+### Results are not portable across networks
 
-### 3.1 コードフェンスは「削除」ではなく「マスク」する
+- In sandboxes that force an HTTP CONNECT proxy, Bun's `fetch` may ignore `HTTPS_PROXY` and return **all `unknown`**. Stage 2 detects proxy env vars and **falls back to `curl`**, which honors the proxy. If 80% or more remain undecidable after the fallback, it warns that the environment (allow-list / proxy) is suspect, not the links.
+- On Claude Cloud Routines the gateway enforces an allow-list, so `fetch` connects directly; hosts not in the environment's **Allowed domains** get 403 and end up `unknown`.
 
-`lib/content/freshness/mask.ts` はコード行を空文字に置換し、**行数を保存する**。削除すると報告の `file:line` が実ファイルとずれて使い物にならない。
+**If everything is `unknown`, suspect network settings before the links.** For Routine runs, set the environment's Network access to Custom and allow the domains that appear in the articles.
 
-フェンスの開閉は CommonMark に従い、**同じ記号・同じ長さ以上・info string 無し**の 3 条件で判定する。Markdown モジュールの記事がフェンス構文自体を解説しており、` ```markdown ` の中に ` ```javascript ` を書く入れ子が実在するため、素朴なトグルでは破綻する。
+## Security: prompt injection
 
-info string の条件を落とすと 2 方向に壊れる。内側の ` ```javascript ` が外側を早期に閉じ、以降のコードが本文として走査される一方、**その後の本文（見出しや説明文）がコード扱いされて走査対象から丸ごと漏れる**。実際に 3 ファイルで発生していた。未閉じフェンスは EOF までコード扱いとする（安全側）。
+A Routine runs **autonomously without approval prompts and may use every tool of its connectors, including writes, unapproved** (per official docs). Putting external page bodies into the LLM context under those conditions risks obeying embedded instructions ("close this Issue", "rewrite this file").
 
-### 3.2 バージョン検出は 2 層
+This is the second reason Stage 2 is plain deterministic HTTP: Stage 3 reads only HTTP statuses and this repo's article bodies, and external page bodies do not enter the context. Restrict the Routine's connectors to **GitHub only**.
 
-- **Tier A（high）**: 製品名辞書 × バージョン番号。「英大文字始まりの語 + 数字」を要求するため、`第3章` や `2 スペース` といった日本語由来の誤検出は**構造的に発生しない**。
-- **Tier B（low）**: 大文字始まりの語 + **ドット付き**バージョン。ドット必須にすることで `Top 10` / `Level 1` / `Hue 0` が一掃される。残る `CVSS 7.1` / `MMLU 92` は `VERSION_STOPWORDS` で落とす。
+## Deliberately not done
 
-辞書を `dictionary.ts` にハードコードするのは CLAUDE.md の規約に反しない。「ハードコード禁止」は**レッスン一覧**の話であり、`content/` から導出できない外部世界の語彙は対象外。
-
-### 3.3 日本語の時制表現
-
-裸の「現在」は 101 件 / 71 ファイルに出現し、その多くは「〜の状態にある」の意味である。単独では絞り込みの役に立たないため、**同一段落に年号・バージョン・URL がある場合のみ** low confidence で拾う。
-
-「2004年にGitが誕生」（永続的な歴史的事実）と「2026年6月時点の仕様」（時点依存）の区別は決定的には不可能で、これは Stage 3 の仕事。年号の新しさだけはヒントとして記録する。
-
-### 3.4 ローテーションは state ファイルを持たない
-
-週インデックスは**エポックからの絶対週番号**を使う。ISO 週番号ではラウンドロビンが崩れる — ISO 年は 52 週または 53 週で、**2026 年は 53 週の年**であるため、`isoWeek % N` は年跨ぎでバケットを飛ばしたり二重に選んだりする。
-
-バケット割り当ては**パス文字列の安定ハッシュ**（FNV-1a 32bit）を使う。ソート済み配列のインデックスで割ると、ファイルを 1 つ追加した瞬間に以降の全ファイルの割当がずれ、ある記事が 2 週連続でレビューされ別の記事が 2N 週待たされる。
-
-**新着レーン**: git の最終コミットが直近 7 日以内のファイルはバケットに関係なく常に含める。新しい記事ほど「執筆時点の最新情報」を含んでいて陳腐化しやすく、待ち行列の最後尾に置くのは逆。
-
-### 3.5 誤検出の記憶 — `content/.freshness-ignore`
-
-state を持たない設計の唯一の本質的な欠陥は、「対応済み」「これは誤検出」を覚えられないことである。同じ指摘が N 週ごとに再報告される。
-
-対策として、所見ごとに `sha1(filePath + ':' + claimText)` の先頭 8 桁を fingerprint として発行し、`content/.freshness-ignore` に列挙されたものを抑制する。**機械が書く state ではなく、人がレビューして追記するファイル**である点が重要で、`content/` が真実のソースという原則に沿い、git 履歴に「なぜ無視したのか」が残る。
-
-### 3.6 内部リンク検証
-
-`](/themes/...)` 形式の相対リンクは従来どこでも検証されていなかった（`::detail{slug}` の未知スラグは既に赤エラー表示される）。外部通信不要・完全に決定的・実害は外部リンクより大きい。
-
-**ローテーション対象外で毎回全記事をチェックする**（コストが 0 なので絞る理由がない）。導入時点で 1 件の実際の 404 を検出した — `/themes/web-basics/vscode/...` のように、テーマとモジュールのディレクトリから `NN-` プレフィックスを落としたリンク。URL 上プレフィックスが落ちるのは**レッスンスラグだけ**である。
-
-## 4. 走査時の注意点（`lib/themes.ts` の再利用）
-
-レッスン列挙には `getThemes()` を使う（CLAUDE.md の「レッスン一覧をハードコードしない」規約に沿う）。ただし 3 点の落とし穴がある。
-
-1. **`Lesson.body` は frontmatter が剥がれている。** `body` に対して行番号を数えると frontmatter の行数分（本リポジトリで 10〜14 行）ずれる。**スキャン対象は `readFileSync(lesson.filePath)` で raw を読み直す。**
-2. **`React.cache` はスクリプト実行時にメモ化されない。** React のリクエストスコープが無いと素通しで元関数を呼ぶため、`getThemes()` をループ内で呼ぶと毎回 `content/` 全体を再走査する。**1 回だけ呼んで純粋関数に渡す。**
-3. **`NODE_ENV=production` だと draft が除外される。** `loader.ts` は `process.env.NODE_ENV === "production"` をモジュール読み込み時に固定するため、実行時の環境変数次第で挙動が変わる。**単に自分で設定しない**だけでは頑健でない — 呼び出し元のシェルや CI が `NODE_ENV=production` を継承していれば、ドキュメントの約束（draft も含めて走査する）が静かに破られる。`scripts/freshness-scan.ts` の `loadThemesIncludingDrafts()` が、自プロセス内でのみ `NODE_ENV` を一時的に外してから `getThemes()` を動的 import することでこれを保証する（サイト本体には影響しない）。`production` だった場合は `warnings` に記録する。
-
-## 5. リンクチェックの分類
-
-| status | 条件 | 扱い |
-|---|---|---|
-| `dead` | 404 / 410 | 個別 Issue |
-| `moved` | 到達したが最終 URL が異なる | Stage 3 で内容確認 |
-| `unknown` | 403 / 429 / タイムアウト / 5xx | **切れているとは限らない** |
-| `alive` | 2xx / 3xx で最終 URL が一致 | 報告不要 |
-
-**403 / 429 を `dead` として報告してはいけない。** Cloudflare のボット対策とレート制限で日常的に発生し、これを切れリンクとして報告するとレポート全体の信頼が失われる。末尾スラッシュとフラグメントの差は `moved` としない。
-
-### 5.1 ネットワーク環境による結果の違い
-
-**リンクチェックの結果は環境間で移植できない。**
-
-- HTTP CONNECT プロキシを強制するサンドボックスでは、Bun の `fetch` が `HTTPS_PROXY` を参照せず**全件 `unknown`** になることがある。Stage 2 はプロキシ環境変数を検出すると **`curl` にフォールバック**する（`curl` はプロキシを通る）。フォールバック後も判定不能率が 80% 以上なら、リンクではなく環境（許可リスト / プロキシ）を疑う warning を出す。
-- Claude Cloud Routine ではゲートウェイ側で許可リストが適用されるため `fetch` は直接接続する。ただし環境の **Allowed domains** に無いホストは 403 で拒否され、やはり `unknown` になる。
-
-**全件 `unknown` になったら、リンクを疑う前にネットワーク設定を疑うこと。** Routine 実行時は環境の Network access を Custom にし、記事に出現するドメインを許可リストに入れる必要がある。
-
-## 6. セキュリティ — プロンプトインジェクション
-
-Routine は**承認プロンプトなしで自律実行され、含めたコネクタの全ツール（書き込み含む）を無承認で使える**（公式ドキュメント記載）。この条件下で外部ページ本文を LLM のコンテキストに入れると、「この Issue をクローズしろ」「このファイルを書き換えろ」と埋め込まれたページに従うリスクがある。
-
-これが Stage 2 を決定的 HTTP にする 2 つ目の理由である。Stage 3 が読むのは HTTP ステータスと自リポジトリの記事本文だけで、外部ページ本文は原則コンテキストに入らない。
-
-Routine のコネクタは **GitHub のみに絞る**こと。
-
-## 7. 実行方法
-
-```bash
-# 今週のバケットを走査（既定 4 バケット・週次で約 1 か月一巡）
-bun run check:freshness
-
-# 全候補を走査して Markdown で出力
-bun run check:freshness -- --all --format=markdown
-
-# 特定テーマだけを全件（--all が無いと今週のバケット分しか見ない）
-bun run check:freshness -- --all --theme=04-ai-driven-development --format=markdown
-
-# リンク生存確認（scan の JSON を渡す）
-bun run check:freshness -- --all --out=scan.json
-bun run check:links -- --in=scan.json --format=markdown
-```
-
-**`bun run lint` には含めない。** 陳腐化チェックは PR ゲートではなく、外部サイトの障害で CI を赤くしてはいけない。
-
-## 8. 意図的にやっていないこと
-
-- **修正 PR の自動作成** — 誤検出がそのまま差分になる。まず Issue 運用で精度を見てから判断する。
-- **frontmatter `updatedAt` の自動付与** — 陳腐化検出とは別問題。202 ファイルへの機械コミットはレビュー不能な巨大 diff になり、CLAUDE.md のコミット方針に抵触する。何より `updatedAt` は「**人が内容を見直した日**」であるべきで、bot が付けた瞬間に意味を失う。
-- **テーマ別の頻度重み付け** — スコアが `04-ai-driven-development` に集中しているため、均等ローテーションは陳腐化しない記事に同じ予算を配ることになる。`_theme.json` に `freshnessInterval` を持たせる案が有力だが、まず均等ローテーションで実績を取ってから検討する。
-- **`publishedAt` / `updatedAt` のスキーマ厳格化** — 現在 `z.string().optional()` でフォーマット未検証。202 ファイル全てで未使用の今なら破壊的変更コストゼロで締められるが、この仕組みとは独立した判断。
+- **Auto-creating fix PRs**: false positives would become diffs. Evaluate accuracy through Issue-based operation first.
+- **Auto-setting frontmatter `updatedAt`**: a separate problem from staleness detection. Machine commits across all articles are an unreviewable diff and conflict with the commit policy in `CLAUDE.md`. `updatedAt` should mean "the day a human re-checked the content"; a bot-set value destroys that meaning.
+- **Per-theme frequency weighting**: scores concentrate in `04-ai-driven-development`, so uniform rotation spends equal budget on articles that do not go stale. A `freshnessInterval` in `_theme.json` is promising, but gather results with uniform rotation first.
+- **Tightening the `publishedAt` / `updatedAt` schema**: currently `z.string().optional()` with no format validation. Cheap to make strict while unused, but independent of this mechanism.

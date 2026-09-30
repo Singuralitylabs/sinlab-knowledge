@@ -31,7 +31,7 @@ export interface Claim {
   context: string;
   confidence: Confidence;
   /**
-   * Why this claim was flagged, in Japanese, for the report.
+   * Why this claim was flagged, shown in the report.
    * e.g. "統計・ベンチマーク系ドメイン（数値が古びやすい）".
    */
   note?: string;

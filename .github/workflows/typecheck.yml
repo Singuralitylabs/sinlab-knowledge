@@ -1,6 +1,6 @@
 name: Type Check
 
-# TypeScript による型安全性検証（tsc --noEmit）。
+# Type check (tsc --noEmit).
 
 on:
   push:

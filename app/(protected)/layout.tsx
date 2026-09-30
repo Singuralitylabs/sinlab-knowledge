@@ -8,8 +8,8 @@ export default async function ProtectedLayout({ children }: { children: React.Re
     redirect("/login");
   }
 
-  // allow-list 方式: "active" のみ保護コンテンツへ通す。
-  // "rejected" は専用ページへ、それ以外（pending / null / 想定外値）は pending に寄せる。
+  // Allow-list: only "active" passes. "rejected" gets its own page; everything else
+  // (pending / null / unexpected values) is routed to pending.
   if (status === "rejected") {
     redirect("/rejected");
   }

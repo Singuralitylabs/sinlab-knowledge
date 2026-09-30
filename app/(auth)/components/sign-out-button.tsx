@@ -18,7 +18,7 @@ export default function SignOutButton({
     setIsLoading(true);
     const supabase = createClientSupabaseClient();
     await supabase.auth.signOut();
-    // サインアウト後はトップに戻す（SSG のため再検証不要）
+    // Back to the top page after sign-out (static page, no revalidation needed).
     window.location.href = "/";
   };
 

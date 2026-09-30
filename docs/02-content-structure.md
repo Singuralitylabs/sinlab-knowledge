@@ -1,121 +1,96 @@
-# Sinlab Knowledge — 設計ドキュメント (2) コンテンツ執筆ルール
+# Content authoring rules
 
-本ドキュメントは、コンテンツ執筆者向けの**拡張ルール**（階層方針・追加手順・テンプレート・命名規約）を定義する。
+Authoring rules, templates and naming conventions. The actual theme/module/lesson list is whatever is under `content/themes/` (run `bun scripts/dev/print-tree.ts` to print the tree). Exact frontmatter and meta JSON fields are defined by the zod schemas in `lib/content/schema.ts`. The two lesson layouts are described in `CLAUDE.md`.
 
-実際のコンテンツ構成（テーマ・モジュール・レッスンの一覧）は `content/themes/` 自体が真実のソースであり、本ドキュメントには記載しない（`bun scripts/dev/print-tree.ts` でツリーを一覧できる）。frontmatter / メタ JSON の正確なフィールド定義は `lib/content/schema.ts` の zod スキーマを参照。
+The site is an explanatory reference: no step-by-step hands-on format, and themes are fully independent (no recommended reading order or audience notes).
 
-> **本サイトは「解説サイト」として構成する**。手順を追って手を動かすハンズオン形式は採用せず、読み物として完結する解説を主軸に据える。テーマは完全に独立管理とし、推奨閲覧順や対象者の案内は行わない。
+## 1. Lecture vs. detail
 
-## 1. 階層方針（前提）
+- **Lecture** (`type: lecture`): main content listed in the module TOC. File-type (`NN-slug.md`) or directory-type (`NN-slug/index.md` plus detail files).
+- **Detail** (`type: detail`): deep-dive page under a directory-type lecture (`NN-slug.md`).
 
-全テーマで次の 2 階層を採用する:
+Choose the directory type when the lecture has details. Link to details from the lecture body with the `::detail` directive by default. If details are self-contained cheat-sheet material (e.g. a Markdown syntax list), a summary table at the end of the lecture may be used instead.
 
-- **解説（`type: lecture`）** — モジュール TOC に並ぶメインコンテンツ。ファイル型（`NN-slug.md`）または**ディレクトリ型**（`NN-slug/index.md` + 配下に詳細ファイル群）
-- **詳細（`type: detail`）** — ディレクトリ型解説の配下に置く深掘りページ（`NN-slug.md`）
-
-詳細を持つかどうかで解説の形式（ファイル型 / ディレクトリ型）を選ぶ。詳細への導線は、本文中に `::detail` ディレクティブでカードリンクを埋め込む方式を既定とする。詳細が自己完結したチートシート的性質を持つ場合（例: Markdown 記法一覧）は、解説末尾に一覧表を置く方式に切り替えてもよい。
-
-### `::detail` ディレクティブ
-
-ディレクトリ型解説の本文（`index.md`）から配下の詳細ページへ、カード型リンクをレンダリングするカスタム remark ディレクティブ。
+### `::detail` directive
 
 ```markdown
 ::detail{slug="what-is-git"}
 ```
 
-- `slug` には詳細ファイルの `NN-` プレフィックスと拡張子を除いたスラグを指定する（`01-what-is-git.md` → `what-is-git`）
-- カードのタイトル・説明文は詳細ページの frontmatter（`title` / `description`）から自動生成される。詳細ページの **`description` は必ず書く**こと（カードの説明文に使われる）
-- 未知のスラグを指定すると赤いエラーブロックとして表示される。これは意図的な仕様で、執筆中にリンク切れを表面化させるためのもの
+- `slug` is the detail file name without the `NN-` prefix and extension (`01-what-is-git.md` -> `what-is-git`).
+- Card title and description come from the detail's frontmatter, so always write `description` on details.
+- An unknown slug renders a red error block. This is intentional, to surface broken links while authoring.
 
-## 2. 新レッスン追加（最頻ケース）
-
-### A. ファイル型解説を追加（詳細を持たない）
+## 2. Adding a lesson
 
 ```bash
-# content/themes/{theme}/{module}/lessons/NN-slug.md を作成し、
-# 下記テンプレートの frontmatter と本文を書く
-```
+# A. File-type lecture (no details)
+content/themes/{theme}/{module}/lessons/NN-slug.md
 
-### B. ディレクトリ型解説 + 詳細を新規作成
-
-```bash
+# B. Directory-type lecture with details
 mkdir -p content/themes/{theme}/{module}/lessons/NN-slug
-# NN-slug/index.md      … 解説本体 (type: lecture)
-# NN-slug/01-xxx.md     … 詳細 1 本目 (type: detail)
+#   NN-slug/index.md   lecture body (type: lecture)
+#   NN-slug/01-xxx.md  detail (type: detail)
+
+# C. Add a detail to an existing directory-type lecture
+content/themes/{theme}/{module}/lessons/NN-parent/NN-new-detail.md
 ```
 
-### C. 既存のディレクトリ型解説に詳細を追加
-
-```bash
-# content/themes/{theme}/{module}/lessons/NN-parent/NN-new-detail.md を作成
-```
-
-### frontmatter テンプレート
-
-frontmatter は zod で厳密検証されるため、空ファイルや必須フィールド欠落は `check:content` / ビルドでエラーになる。新規レッスンは次のテンプレートから始める:
+Frontmatter template (validation is strict; missing required fields fail `check:content` and the build):
 
 ```yaml
 ---
-title: タイトル
-description: 一覧や ::detail カードに表示される説明文
-order: 1                    # 必須。同一階層内の表示順
+title: Title
+description: Text shown in lists and ::detail cards
+order: 1                    # required; display order within the level
 type: lecture               # lecture | detail | reference | cheatsheet
-category: basics            # _module.json の categories[].key を参照（任意）
+category: basics            # optional; a key from _module.json categories[]
 difficulty: beginner        # beginner | intermediate | advanced
-tags: [git, fundamentals]   # 自由タグ（任意）
-estimatedMinutes: 5         # 任意
+tags: [git, fundamentals]   # optional
+estimatedMinutes: 5         # optional
 status: draft               # draft | published | deprecated
 ---
 ```
 
-- `order` は**必須**（省略すると検証エラー）
-- `type` は基本的に `lecture` / `detail` の 2 値を使い、**ファイル配置と一致させる**（トップレベルのファイル / `index.md` → `lecture`、ディレクトリ型解説の配下 → `detail`）。解説か詳細かの実際の判定はファイル配置で行われ、`type` は zod 検証されるメタデータ。`reference` は移行期に残る互換値、`cheatsheet` はチートシート用
-- `status: draft` は開発環境でのみ表示され、本番ビルドから除外される。公開時に `published` へ変更する
+- `order` is required. Normally keep it equal to the file name's `NN-` prefix.
+- Keep `type` consistent with placement: top-level file or `index.md` -> `lecture`; under a directory-type lecture -> `detail`. `reference` is a legacy value kept for compatibility; `cheatsheet` is for cheat sheets.
+- Start new content as `status: draft`, switch to `published` on release.
 
-### 検証・確認
-
-```bash
-bun run check:content   # frontmatter / メタ JSON の zod 検証
-bun run dev             # draft 含めてブラウザで表示確認
-```
-
-## 3. 新モジュール追加
+## 3. Adding a module
 
 ```bash
 mkdir -p content/themes/{theme}/NN-module-slug/lessons
-# _module.json を作成（下記テンプレート）
 ```
 
-`_module.json` テンプレート:
+`_module.json`:
 
 ```json
 {
   "slug": "NN-module-slug",
-  "title": "モジュール名",
-  "description": "モジュールの説明",
+  "title": "Module name",
+  "description": "Module description",
   "icon": "FileText",
   "order": 1,
   "categories": []
 }
 ```
 
-`categories` はレッスンをグルーピングしたい場合のみ `{ "key": "...", "label": "...", "description": "..." }` の配列を書く（不要なら空配列のまま）。
+`categories` is only needed to group lessons: `{ "key": "...", "label": "...", "description": "..." }`.
 
-## 4. 新テーマ追加
+## 4. Adding a theme
 
 ```bash
 mkdir -p content/themes/NN-theme-slug
-# _theme.json を作成（下記テンプレート）、配下にモジュールを追加
 ```
 
-`_theme.json` テンプレート:
+`_theme.json`:
 
 ```json
 {
   "slug": "NN-theme-slug",
-  "title": "テーマ名",
-  "shortTitle": "短縮名",
-  "description": "テーマの説明",
+  "title": "Theme name",
+  "shortTitle": "Short name",
+  "description": "Theme description",
   "icon": "BookOpen",
   "color": "blue",
   "order": 1,
@@ -125,32 +100,23 @@ mkdir -p content/themes/NN-theme-slug
 }
 ```
 
-`color` は `lib/theme-color.ts` が定義する 5 色（`blue` / `green` / `purple` / `orange` / `gray`）から選ぶ。執筆中は `status: "draft"` にしておき、公開時に `published` へ変更する（`status` を省略した場合は `published` 扱い）。
+`color` is one of the five colors in `lib/theme-color.ts` (`blue` / `green` / `purple` / `orange` / `gray`). Keep `status: "draft"` while writing; omitted `status` means `published`.
 
-## 5. 命名規約
+## 5. Naming
 
-- ディレクトリ・ファイル: `NN-kebab-case`（例: `01-markdown`、`03-javascript`、`01-intro-basics/`、`02-headings.md`）
-- ディレクトリ型解説のメインは `index.md` 固定（`NN-` プレフィックスは親ディレクトリ側に付ける）
-- **英語スラグを推奨**。日本語ローマ字表記は避ける
-  - ✅ `basics` / `advanced` / `practice` / `extensions`
-  - ❌ `kiso` / `ouyou` / `jissen` / `kakucho`
+- Directories and files: `NN-kebab-case` (`01-markdown`, `02-headings.md`).
+- The main file of a directory-type lecture is always `index.md`; the `NN-` prefix goes on the parent directory.
+- Prefer English slugs, never romanized Japanese (`basics` / `advanced` / `practice`, not `kiso` / `ouyou` / `jissen`).
 
-## 6. URL 構造
+## 6. URLs and ordering
 
-- テーマ・モジュールの URL セグメントは `NN-` プレフィックスを含む（`01-web-basics`、`01-markdown`）
-- **解説・詳細の URL セグメントは `NN-` を削除**して表示する
-- 例:
-  - 解説（ファイル型 / ディレクトリ型とも同じ URL）: `/themes/01-web-basics/02-git/intro-basics`
-  - 詳細: `/themes/01-web-basics/02-git/intro-basics/what-is-git`（ファイル `01-what-is-git.md`）
+- Theme and module URL segments **keep** the `NN-` prefix (`01-web-basics`, `01-markdown`). Only lecture/detail (lesson) segments **drop** it.
+- Lecture, file-type or directory-type: `/themes/01-web-basics/02-git/intro-basics`. Detail (file `01-what-is-git.md`): `/themes/01-web-basics/02-git/intro-basics/what-is-git`.
+- Order comes from the `NN-` prefix for default sorting and from the required frontmatter `order` for display (normally equal to the prefix).
 
-## 7. 順序制御
-
-- ディレクトリ・ファイル名の `NN-` プレフィックス → デフォルトソート
-- frontmatter の `order` が表示順を決める（`order` は必須フィールド。通常はファイル名の `NN-` と一致させる）
-
-## 8. 公開フロー
+## 7. Publishing flow
 
 ```bash
-bun run dev                 # draft 含めて表示確認
-# status: published に変更 → PR → Vercel Preview 確認 → main マージ → 自動デプロイ
+bun run dev   # verify in the browser (drafts visible)
+# set status: published -> PR -> check Vercel Preview -> merge to main -> auto deploy
 ```
