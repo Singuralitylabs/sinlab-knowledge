@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { resolveSupabaseEnv } from "./env";
 
 export function createProxySupabaseClient(request: NextRequest) {
-  // 認証ゲートの proxy では env 欠落を必ず検知したい（サイレントに通過させない）。
+  // The auth gate must fail loudly when env is missing, never pass silently.
   const { url, anonKey } = resolveSupabaseEnv();
 
   let response = NextResponse.next({

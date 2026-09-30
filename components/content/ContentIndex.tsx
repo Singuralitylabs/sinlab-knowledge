@@ -10,7 +10,7 @@ export interface ContentIndexProps {
 }
 
 /**
- * Site-wide content index: テーマ → モジュール（折りたたみ）→ レッスン。
+ * Site-wide content index: theme -> module (collapsible) -> lesson.
  * Used on the home page and on `/themes`, where every theme is listed at once.
  *
  * Server Component by design — the collapsing is native `<details>`/`<summary>`,

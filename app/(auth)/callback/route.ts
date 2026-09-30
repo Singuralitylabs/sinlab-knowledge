@@ -7,8 +7,7 @@ function safeDecode(value: string): string | null {
   try {
     return decodeURIComponent(value);
   } catch {
-    // cookie が書き換えられて不正な %XX シーケンスになっている場合も
-    // フォールバックで null 扱いとし 500 を返さない。
+    // A tampered cookie can hold a malformed %XX sequence; treat it as absent instead of 500.
     return null;
   }
 }
@@ -17,12 +16,12 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
 
-  // returnTo は Cookie から取り出す（google-login-button で保存される）
+  // returnTo is set by google-login-button; only same-origin paths (leading "/") are accepted.
   const cookieStore = await cookies();
   const returnToRaw = cookieStore.get(RETURN_TO_COOKIE)?.value;
   const returnTo = returnToRaw ? safeDecode(returnToRaw) : null;
   const safeReturnTo = returnTo?.startsWith("/") ? returnTo : "/themes";
-  // 使い終わったら消す（Max-Age で自動失効するが即座に削除する）
+  // One-shot: delete now instead of waiting for Max-Age expiry.
   cookieStore.delete(RETURN_TO_COOKIE);
 
   if (!code) {
