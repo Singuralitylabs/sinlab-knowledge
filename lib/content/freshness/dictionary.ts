@@ -1,7 +1,7 @@
 /**
  * Vocabulary tables for the freshness scanner.
  *
- * These are deliberately hard-coded: the AGENTS.md rule against hard-coded lists
+ * These are deliberately hard-coded: the CLAUDE.md rule against hard-coded lists
  * is about **lesson/module/theme listings**, which must stay derived from
  * `content/`. This file describes the *outside world* (product names, throwaway
  * example domains), which `content/` cannot tell us about.

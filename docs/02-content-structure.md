@@ -1,6 +1,6 @@
 # Content authoring rules
 
-Authoring rules, templates and naming conventions. The actual theme/module/lesson list is whatever is under `content/themes/` (run `bun scripts/dev/print-tree.ts` to print the tree). Exact frontmatter and meta JSON fields are defined by the zod schemas in `lib/content/schema.ts`. Layout rules (two lesson layouts, `NN-` prefixes, URL slugs, ordering) are in `AGENTS.md`.
+Authoring rules, templates and naming conventions. The actual theme/module/lesson list is whatever is under `content/themes/` (run `bun scripts/dev/print-tree.ts` to print the tree). Exact frontmatter and meta JSON fields are defined by the zod schemas in `lib/content/schema.ts`. The two lesson layouts are described in `CLAUDE.md`.
 
 The site is an explanatory reference: no step-by-step hands-on format, and themes are fully independent (no recommended reading order or audience notes).
 
@@ -108,7 +108,13 @@ mkdir -p content/themes/NN-theme-slug
 - The main file of a directory-type lecture is always `index.md`; the `NN-` prefix goes on the parent directory.
 - Prefer English slugs, never romanized Japanese (`basics` / `advanced` / `practice`, not `kiso` / `ouyou` / `jissen`).
 
-## 6. Publishing flow
+## 6. URLs and ordering
+
+- Theme and module URL segments **keep** the `NN-` prefix (`01-web-basics`, `01-markdown`). Only lecture/detail (lesson) segments **drop** it.
+- Lecture, file-type or directory-type: `/themes/01-web-basics/02-git/intro-basics`. Detail (file `01-what-is-git.md`): `/themes/01-web-basics/02-git/intro-basics/what-is-git`.
+- Order comes from the `NN-` prefix for default sorting and from the required frontmatter `order` for display (normally equal to the prefix).
+
+## 7. Publishing flow
 
 ```bash
 bun run dev   # verify in the browser (drafts visible)

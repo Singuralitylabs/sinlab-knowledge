@@ -5,6 +5,16 @@
  * Resolves external URLs from the `freshness-scan.ts` JSON over plain HTTP so
  * untrusted page bodies never reach the LLM stage (prompt-injection surface).
  *
+ * Run with:
+ *   bun scripts/freshness-scan.ts --all --out=scan.json
+ *   bun scripts/freshness-linkcheck.ts --in=scan.json
+ *
+ *   --in=<path>       Scan JSON (default: stdin)
+ *   --out=<path>      Write results to a file instead of stdout
+ *   --format=json|markdown
+ *   --concurrency=N   Parallel requests (default 6)
+ *   --timeout=N       Per-request timeout in ms (default 10000)
+ *
  * Exits 0 even when links are dead: this is a report, not a gate. A broken
  * external site must never turn CI red.
  *
