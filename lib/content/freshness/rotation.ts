@@ -9,15 +9,8 @@
 /**
  * Absolute week number since the Unix epoch.
  *
- * Deliberately **not** the ISO week number: ISO years are 52 or 53 weeks long, so
- * `isoWeek % bucketCount` stops being a round robin whenever a 53-week year
- * (2020, 2026, 2032, …) rolls over — a bucket gets visited twice running while
- * another is skipped. An epoch-based index increases monotonically forever, so
- * the modulo is always an exact round robin and no year-boundary handling exists
- * to get wrong.
- *
- * Week boundaries land on Thursday (1970-01-01 was a Thursday). That is
- * irrelevant to correctness — only the monotonic step matters.
+ * Deliberately **not** the ISO week number: 53-week ISO years break
+ * `isoWeek % bucketCount` round robin at the year boundary.
  */
 export function weekIndex(date: Date): number {
   const utcMidnight = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
@@ -38,14 +31,8 @@ export function fnv1a32(input: string): number {
 /**
  * Bucket for a file, from a stable hash of its path.
  *
- * Deliberately **not** an index into a sorted list: with `sortedFiles[i] % n`,
- * inserting one file shifts every later file's bucket, so one article gets
- * reviewed twice in a row while another waits 2n weeks. Hashing the path means
- * adding or deleting files never moves anything else. The cost is uneven bucket
- * sizes, which `--max` bounds.
- *
- * Renaming a file does move it, which is fine: a renamed article is a different
- * article as far as review scheduling is concerned.
+ * Deliberately **not** an index into a sorted list: inserting one file would shift
+ * every later file's bucket. Cost: uneven bucket sizes, bounded by `--max`.
  */
 export function bucketOf(filePath: string, bucketCount: number): number {
   if (bucketCount <= 0) throw new Error("bucketCount must be >= 1");

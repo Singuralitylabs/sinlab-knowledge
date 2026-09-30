@@ -2,36 +2,15 @@
  * Stage 2 of the content freshness pipeline: deterministic link resolution.
  * Costs no tokens.
  *
- * Reads the JSON produced by `freshness-scan.ts`, resolves every external URL in
- * it over HTTP, and classifies each one. Handing these URLs to the LLM stage
- * instead would pull whole page bodies into context and expose a session holding
- * repository write access to untrusted external content.
- *
- * Run with:
- *   bun scripts/freshness-scan.ts --all --out=scan.json
- *   bun scripts/freshness-linkcheck.ts --in=scan.json
- *
- *   --in=<path>       Scan JSON (default: stdin)
- *   --out=<path>      Write results to a file instead of stdout
- *   --format=json|markdown
- *   --concurrency=N   Parallel requests (default 6)
- *   --timeout=N       Per-request timeout in ms (default 10000)
+ * Resolves external URLs from the `freshness-scan.ts` JSON over plain HTTP so
+ * untrusted page bodies never reach the LLM stage (prompt-injection surface).
  *
  * Exits 0 even when links are dead: this is a report, not a gate. A broken
  * external site must never turn CI red.
  *
- * Network environment matters, and results are not portable between environments:
- *
- *   - In a sandbox that forces traffic through an HTTP CONNECT proxy, Bun's
- *     `fetch` does not honor `HTTPS_PROXY`. This script then falls back to
- *     `curl`, which does. If almost every URL still comes back `unknown`,
- *     the environment (allowlist / proxy) is the suspect, not the links.
- *   - A Claude Cloud Routine enforces its allowlist at the gateway instead, so
- *     `fetch` connects directly — but any host missing from the environment's
- *     **Allowed domains** is refused with 403 and lands in `unknown` too.
- *
- * If a run reports everything as `unknown`, suspect the network policy before
- * suspecting the links. See `docs/04-content-freshness.md`.
+ * Results are not portable across network environments. If everything comes back
+ * `unknown`, suspect the proxy / allow-list before the links. See
+ * `docs/04-content-freshness.md`.
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
