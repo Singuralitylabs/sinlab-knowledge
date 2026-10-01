@@ -61,6 +61,19 @@ console.groupEnd();
 
 ![Consoleでコマンドサンプルを実行した結果](/content-assets/01-web-basics/07-devtools/images/07-console-results.png)
 
+画像に表示されている内容は次のとおりです。
+
+1. `document.querySelectorAll("h2")`を実行すると、評価結果として`NodeList [h2.card-title]`が表示されます（このページの`h2`要素は1つです）。
+2. `const users = [...]`を実行すると、評価結果として`undefined`が表示されます。
+3. `console.table(users)`を実行すると、次の表が表示され、続けて`undefined`が表示されます。
+
+| (index) | id | name | role |
+|---------|----|------|------|
+| 0 | 1 | '田中' | 'Admin' |
+| 1 | 2 | '佐藤' | 'User' |
+
+4. `console.error("接続に失敗しました")`を実行すると、赤い背景の行に「接続に失敗しました」が表示され、続けて`undefined`が表示されます。
+
 入力した式の評価結果には行頭に`<·`が付き、何も返さない文や`console.table()`などの呼び出しでは`undefined`が表示されます。`console.error()`の行頭の▶をクリックすると、スタックトレースが展開されます。
 
 ---
