@@ -8,6 +8,28 @@
 
 - **コミット前には必ずユーザーに確認を取ること。** 明示的な承認を得るまで `git commit` を実行してはいけません。変更内容の要約とコミットメッセージ案を提示し、承認を得てからコミットしてください。
 
+### fallow コミットゲート
+
+エージェントの `git commit` / `git push` は `.claude/hooks/fallow-gate.sh` が `fallow audit` を実行してブロックします。判定は `new-only` — その変更で**新たに発生した**問題のみが対象で、既存の指摘ではブロックされません。
+
+グローバルオプションやサブシェルを挟んだ形（`git -C <dir> commit`、`git -c k=v commit`、`bash -c "git commit"`）でも同じくゲートが走ります。`--no-verify` は git 自身のフックを飛ばすだけで、このゲートは Claude Code の PreToolUse フックなので影響を受けません。
+
+ブロックされた場合の対処:
+
+- `npx fallow audit --explain` で原因を確認。`npx fallow explain <rule>` で指摘の意味を調べる
+- 未使用 export は **コードを削除せず `export` キーワードだけを外す**（同一ファイル内で使用されている場合がある）
+- 意図的に残すものは `// fallow-ignore-next-line <rule>` を理由とともに付与する
+- 解消できない場合はユーザーに報告する
+
+前提ツール（`jq` / `fallow` バイナリ）が見つからない場合、ゲートは素通りせず**ブロックします**。`bun install` でローカルの devDependency を復旧してください。一方、audit 自体の実行時エラーは stderr に通知を出したうえで通過します — 一過性の障害で全コミットが止まらないようにするためです。
+
+**禁止事項** — いずれもゲートの意味を失わせます:
+
+- `.claude/settings.json` やフック本体の編集による無効化
+- ゲート通過のみを目的としたコード削除
+- 指摘を黙らせるための `.fallowrc.json` への追記（`entry` / `ignoreDependencies` / `rules` の `off` 化）。設定変更が正当だと考える場合はユーザーに確認すること
+- 理由を書かない `// fallow-ignore-next-line` の付与
+
 ## ランタイムとツール
 
 - **Bun 1.x** はパッケージマネージャ **かつ** TS ランタイム — `bun install`、`bun run <script>`、`bun scripts/foo.ts` で TypeScript を直接実行できます（`tsx`/`ts-node` は不要）。
