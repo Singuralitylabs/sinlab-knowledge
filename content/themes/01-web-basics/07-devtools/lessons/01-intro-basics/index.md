@@ -42,7 +42,13 @@ Google Chrome・Edgeでは、以下の方法で起動できます。
 | ショートカットキー（Mac） | `Cmd` + `Option` + `I` |
 | 右クリックメニュー | ページ上の調べたい要素を右クリック ➔ **「検証（Inspect）」** を選択 |
 
+DevToolsを開くと、次のようにページの横にDevToolsが並んで表示されます。
+
+![ページの右側にDevToolsを開いたブラウザのウィンドウ](/content-assets/01-web-basics/07-devtools/images/01-devtools-window.webp)
+
 右クリックから「検証」で開くと、クリックした要素がElementsパネルで最初から選択された状態になるため、特定の要素を調べたいときに便利です。
+
+![ページ上で右クリックしたときのメニュー（一番下に「検証」がある）](/content-assets/01-web-basics/07-devtools/images/02-context-menu-inspect.png)
 
 ---
 

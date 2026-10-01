@@ -17,6 +17,8 @@ Networkパネルには、実際の低速回線を再現したり、ブラウザ�
 
 画面上部の**「No throttling」**ドロップダウンから**「Fast 4G」**・**「Slow 4G」**・**「3G」**などのプリセットを選択すると、通信速度が遅い環境での表示挙動やローディング表示の動作を検証できます。
 
+![Networkパネル上部の「Disable cache」チェックボックスとスロットリングのドロップダウン](/content-assets/01-web-basics/07-devtools/images/10-network-throttling.png)
+
 | 設定 | 想定する環境 | 主な用途 |
 |------|--------------|----------|
 | No throttling | 通常の開発環境 | 通常の動作確認 |
