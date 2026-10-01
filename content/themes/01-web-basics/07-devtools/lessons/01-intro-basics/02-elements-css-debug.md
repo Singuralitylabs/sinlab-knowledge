@@ -17,13 +17,19 @@ status: published
 
 その要素に適用されているCSSルールが、優先順位（詳細度）の高い順に一覧表示されます。プロパティ名や値をクリックすると直接書き換えられ、チェックボックスのオン/オフで一時的に無効化することもできます。取り消し線が引かれているプロパティは、より優先度の高い別のルールに上書きされていることを示します。
 
+![.site-header .titleのcolorに上書きされ、.titleのcolorに取り消し線が付いたStylesタブ](/content-assets/01-web-basics/07-devtools/images/04-styles-strikethrough.png)
+
 ### `Computed`タブ：最終的な数値を確認する
 
 複数のCSSルールが競合した結果、**最終的にどの値が適用されているか**を一つの数値として確認できます。ボックスモデル（`margin` → `border` → `padding` → `content`の入れ子構造）も図で表示されるため、余白のズレを調べるときに便利です。
 
+![Computedタブのボックスモデル図（margin・border・padding・contentの入れ子）](/content-assets/01-web-basics/07-devtools/images/05-computed-box-model.png)
+
 ### 擬似状態（`:hover`・`:focus`等）の強制適用
 
 通常、`:hover`は要素にマウスを乗せている間しかスタイルを確認できません。`Styles`タブ右上の**`:hov`ボタン**をクリックすると、`:hover` `:active` `:focus` `:visited`などの状態を疑似的にオンのままにでき、マウスを動かさずにスタイルを確認・編集できます。
+
+![:hovボタンで:hoverを固定し、.btn:hoverのスタイルが適用された状態](/content-assets/01-web-basics/07-devtools/images/06-hov-hover.png)
 
 ---
 

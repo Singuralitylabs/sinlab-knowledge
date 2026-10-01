@@ -24,9 +24,13 @@ status: published
 
 APIのデバッグ中は`Fetch/XHR`だけに絞ると、画像やCSSのノイズが消えて目的のリクエストを見つけやすくなります。フィルタータブの左にあるFilter欄にURLの一部を入力すれば、さらに絞り込めます。
 
+![Filter欄とフィルタータブ（All・Fetch/XHR・Doc など）の下に並ぶリクエスト一覧](/content-assets/01-web-basics/07-devtools/images/08-network-list.png)
+
 ### リクエスト詳細の確認
 
 一覧の中から通信行をクリックすると、右側に詳細パネルが開きます。
+
+![APIリクエストを選択し、Headersタブでステータスコードやヘッダーを確認している状態](/content-assets/01-web-basics/07-devtools/images/09-network-headers.png)
 
 | タブ | 確認できる内容 |
 |------|----------------|

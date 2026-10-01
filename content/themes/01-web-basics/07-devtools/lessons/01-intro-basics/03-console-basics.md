@@ -57,22 +57,11 @@ console.groupEnd();
 
 ## 実行結果
 
-```text
-> document.querySelectorAll("h2")
-NodeList(3) [h2, h2, h2]
+コマンドサンプルの一部をChromeのConsoleで実行すると、次のように表示されます。
 
-> console.table(users)
-┌─────────┬────┬──────┬───────┐
-│ (index) │ id │ name │ role  │
-├─────────┼────┼──────┼───────┤
-│    0    │ 1  │ "田中" │ "Admin" │
-│    1    │ 2  │ "佐藤" │ "User"  │
-└─────────┴────┴──────┴───────┘
+![Consoleでコマンドサンプルを実行した結果](/content-assets/01-web-basics/07-devtools/images/07-console-results.png)
 
-> console.error("接続に失敗しました")
-接続に失敗しました
-  at <anonymous>:1:9
-```
+入力した式の評価結果には行頭に`<·`が付き、何も返さない文や`console.table()`などの呼び出しでは`undefined`が表示されます。`console.error()`の行頭の▶をクリックすると、スタックトレースが展開されます。
 
 ---
 
