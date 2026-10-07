@@ -15,7 +15,7 @@ status: published
 Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジュアル制作向けの AI プロダクトです。**クリック可能なインタラクティブプロトタイプ**、スライド、ワンページャー、モックアップなどを会話ベースで生成でき、完成したデザインを **Claude Code にハンドオフして実装まで一気通貫で進められる** のが特徴です。
 
 > [!NOTE]
-> 本記事の手順・UI の記述は **2026 年 6 月時点** のものです。**2026 年 8 月末の定期リンクチェックで参考リンクの生存と機能名のみを確認し、`Extra usage` → `usage credits` の改称を反映しました**（本文そのものの再検証は行っていません）。Claude Design は beta（段階的ロールアウト）であり、UI・機能名・料金・利用枠は今後変更される可能性があります。実際に利用する際は最新の公式ドキュメントを併せて確認してください。
+> 本記事の手順・UI の記述は **2026 年 6 月時点** のものを基に、**2026 年 10 月の定期チェックで「Artifact のテンプレート化」に伴うアクセス経路と管理者設定の変更を反映** しています（それ以外の本文の再検証は行っていません。`Extra usage` → `usage credits` の改称は 8 月末に反映済み）。Claude Design は beta（段階的ロールアウト）であり、UI・機能名・料金・利用枠は今後変更される可能性があります。実際に利用する際は最新の公式ドキュメントを併せて確認してください。
 
 ## このページで学べること
 
@@ -43,16 +43,16 @@ Claude Design は、デザイン経験のないファウンダー・PM・エン�
 
 ## B. 利用できるプランとモデル
 
-Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。[claude.ai/design](https://claude.ai/design) からブラウザで利用するほか、2026 年 6 月のアップデートで **Claude デスクトップアプリのサイドバー** からも開けるようになりました（いずれも Claude Code とは別の画面です）。
+Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。Claude Design は **Artifact のテンプレートの 1 つ** として提供されており、[claude.ai/design](https://claude.ai/design) からブラウザで使えるほか、Claude デスクトップアプリのサイドバー、claude.ai の会話の中、Artifacts タブ、Claude Code（`/design`）、iOS / Android アプリなど複数の入口から利用できます（詳細は C 節）。
 
-Enterprise はデフォルトで無効化されています。Team / Enterprise ともに、管理者は **Organization settings > Capabilities** から有効化できます。
+Enterprise はデフォルトで無効化されています。Team は現在デフォルトで有効（ON）です。Team / Enterprise ともに、管理者は **Organization settings > Capabilities > Artifacts** から有効・無効を切り替えられます（以前は Capabilities 直下の設定でした）。
 
 | プラン | 利用可否 | 備考 |
 | --- | --- | --- |
 | Free | 不可 | — |
 | Pro / Max | 可 | 個人で利用可能 |
-| Team | 可 | チームで共有可能。管理者が Capabilities でオン/オフ可能 |
-| Enterprise | 可（要管理者有効化） | デフォルト OFF。Capabilities からオン |
+| Team | 可 | チームで共有可能。デフォルト ON。管理者が Capabilities > Artifacts でオン/オフ可能 |
+| Enterprise | 可（要管理者有効化） | デフォルト OFF。Capabilities > Artifacts からオン |
 
 利用量は **チャットや Claude Code とは別メーター** です。プランごとに週次の枠があり、枯渇時は [usage credits](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) で追加できます（詳細は公式の利用量・料金ページを参照）。
 
@@ -69,7 +69,9 @@ Enterprise はデフォルトで無効化されています。Team / Enterprise 
 
 - 直接 URL：[claude.ai/design](https://claude.ai/design)
 - claude.ai にログインし、アプリメニューから「Claude Design」を選択
-- Claude デスクトップアプリのサイドバーから「Claude Design」を開く（2026 年 6 月のアップデートで追加）
+- Claude デスクトップアプリのサイドバーから「Claude Design」を開く
+- claude.ai の会話の中や Artifacts タブから、Artifact のテンプレートとして Claude Design を起動する
+- Claude Code から `/design` コマンドで開く（I 節参照）、または iOS / Android アプリから利用する
 
 ![Claude Design のホーム画面。ステータスバッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
 
@@ -361,7 +363,7 @@ beta 段階のため、執筆時点で次の問題が報告されています。
 ## まとめ
 
 - Claude Design は「実装前のビジュアル設計」を担当する Anthropic Labs の新製品（**インタラクティブプロトタイプ**含む）
-- 入口は **[claude.ai/design](https://claude.ai/design)（ブラウザ）/ Claude デスクトップアプリのサイドバー**、UI は **左チャット + 右キャンバス**
+- Claude Design は **Artifact のテンプレート**。入口は **[claude.ai/design](https://claude.ai/design) / デスクトップアプリのサイドバー / 会話内・Artifacts タブ / Claude Code の `/design` / モバイルアプリ**、UI は **左チャット + 右キャンバス**
 - 利用量は **チャット・Claude Code とは別メーター**（週次枠 + usage credits）
 - 推奨ワークフローは **作成 → コンテキスト → 要件 → レビュー → 反復** の 5 ステップ
 - プロンプトは **目標・レイアウト・コンテンツ・対象ユーザー** を含めて段階的に複雑さを足す
