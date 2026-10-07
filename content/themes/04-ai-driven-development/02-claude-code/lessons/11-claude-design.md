@@ -45,7 +45,7 @@ Claude Design は、デザイン経験のないファウンダー・PM・エン�
 
 Claude Design は Artifact のテンプレートの 1 つで、無料プランでは利用できません。有料プランで利用でき、[claude.ai/design](https://claude.ai/design) のほか、デスクトップアプリや Claude Code など複数の入口から開けます（C 節）。
 
-Team / Enterprise では、管理者が **Organization settings > Capabilities > Artifacts** から有効・無効を切り替えます。Enterprise はデフォルトで無効です。
+Team / Enterprise では、管理者が設定で有効にする必要があります。Artifact のテンプレートとしての Claude Design は **Organization settings > Artifacts**、[claude.ai/design](https://claude.ai/design) の単体版は **Organization settings > Claude Design** で設定します。片方を有効にしても、もう片方は有効になりません。
 
 利用量は **チャットや Claude Code とは別メーター** です。プランごとに週次の枠があり、枯渇時は [usage credits](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) で追加できます（詳細は公式の利用量・料金ページを参照）。
 
