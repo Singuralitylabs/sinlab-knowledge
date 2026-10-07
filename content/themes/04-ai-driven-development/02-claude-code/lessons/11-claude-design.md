@@ -43,9 +43,9 @@ Claude Design は、デザイン経験のないファウンダー・PM・エン�
 
 ## B. 利用できるプランとモデル
 
-Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。Claude Design は **Artifact のテンプレートの 1 つ** として提供されており、[claude.ai/design](https://claude.ai/design) からブラウザで使えるほか、Claude デスクトップアプリのサイドバー、claude.ai の会話の中、Artifacts タブ、Claude Code（`/design`）、iOS / Android アプリなど複数の入口から利用できます（詳細は C 節）。
+Claude Design は **Claude Pro / Max / Team / Enterprise** で利用できます。同サービスは **Artifact のテンプレートの 1 つ** として提供されており、[claude.ai/design](https://claude.ai/design) からブラウザで使えるほか、Claude デスクトップアプリのサイドバー、claude.ai の会話の中、Artifacts タブ、Claude Code（`/design`）、iOS / Android アプリなど複数の入口から利用できます（詳細は C 節）。
 
-Enterprise はデフォルトで無効化されています。Team は現在デフォルトで有効（ON）です。Team / Enterprise ともに、管理者は **Organization settings > Capabilities > Artifacts** から有効・無効を切り替えられます（以前は Capabilities 直下の設定でした）。
+Enterprise はデフォルトで無効化されています。Team は現在デフォルトで有効（ON）です。Team / Enterprise ともに、管理者は **Organization settings > Capabilities > Artifacts** から有効・無効を切り替えられます。
 
 | プラン | 利用可否 | 備考 |
 | --- | --- | --- |
@@ -71,7 +71,8 @@ Enterprise はデフォルトで無効化されています。Team は現在デ�
 - claude.ai にログインし、アプリメニューから「Claude Design」を選択
 - Claude デスクトップアプリのサイドバーから「Claude Design」を開く
 - claude.ai の会話の中や Artifacts タブから、Artifact のテンプレートとして Claude Design を起動する
-- Claude Code から `/design` コマンドで開く（I 節参照）、または iOS / Android アプリから利用する
+- Claude Code から `/design` コマンドで開く（I 節参照）
+- iOS / Android アプリから利用する
 
 ![Claude Design のホーム画面。ステータスバッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
 
