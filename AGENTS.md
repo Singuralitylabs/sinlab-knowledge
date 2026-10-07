@@ -8,7 +8,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Working rules
 
-- **Ask the user before committing.** Never run `git commit` without explicit approval; present a change summary and a proposed commit message first.
 - Run `bun run lint` before committing.
 
 ## Runtime and tooling
