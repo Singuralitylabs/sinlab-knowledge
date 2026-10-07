@@ -1,7 +1,7 @@
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code (especially `01-app/02-guides/upgrading/version-16.md`). Heed deprecation notices.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
 # Agent guide
@@ -15,7 +15,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 - **Bun 1.x** is the package manager and the TS runtime (`bun scripts/foo.ts` runs TypeScript directly; no `tsx`/`ts-node`).
 - **Biome** owns lint + format (`biome.json`). Do not add ESLint or Prettier config. `app/globals.css` is excluded from Biome.
-- **Next.js 16 (App Router) + React 19.** `middleware.ts` was renamed to `proxy.ts`.
+- **Next.js 16 (App Router) + React 19.** `middleware.ts` was renamed to `proxy.ts`. Before writing Next-specific code, read `node_modules/next/dist/docs/01-app/02-guides/upgrading/version-16.md` (the block at the top of this file is managed by `next dev`; do not edit inside it).
 
 ## Commands
 
@@ -72,17 +72,17 @@ CI (`.github/workflows/`) runs lint / content / typecheck / test / build on ever
 - Public: `/`, `/about`. Auth routes live in the `app/(auth)/` route group. Lesson catch-all: `app/(protected)/themes/[themeSlug]/[...slug]/page.tsx`.
 - **`/themes/**` is protected by two layers; both are required:**
   1. `proxy.ts`: optimistic `supabase.auth.getUser()` check; redirects unauthenticated users to `/login?returnTo=<path>`. Matcher: `/themes/:path*`.
-  2. `app/(protected)/layout.tsx`: strict server-side check via `getServerAuth()`; only `status === "active"` passes, `"rejected"` → `/rejected`, anything else → `/pending`.
+  2. `app/(protected)/layout.tsx`: strict server-side check via `getServerAuth()`; no user → `/login`; only `status === "active"` passes; `"rejected"` → `/rejected`; any other status → `/pending`.
 - `getServerAuth()` (`lib/auth/server-auth.ts`) is `React.cache`d; call it freely. It reads the `users` table (`auth_id`, `status`, `is_deleted`); unknown `status` strings are coerced to `null` (≈ pending).
 - OAuth return URL round-trips through the `sk_auth_return_to` cookie (`lib/auth/constants.ts`), not a `redirectTo` query param, because Supabase's Redirect URL allow-list does not reliably accept query strings. The login button sets it; `app/(auth)/callback/route.ts` reads and deletes it, accepting only values starting with `/` (open-redirect guard).
-- Supabase clients are split by context and all go through `resolveSupabaseEnv()`: `lib/supabase/client.ts` (browser), `server.ts` (Server Components / Route Handlers / Actions; cookie writes from RSC fail silently), `proxy.ts` (cookie plumbing for `proxy.ts`).
+- Supabase clients are split by context and all go through `resolveSupabaseEnv()`: `lib/supabase/client.ts` (browser), `server.ts` (Server Components / Route Handlers / Actions; cookie writes from RSC fail silently), `lib/supabase/proxy.ts` (cookie plumbing for the root `proxy.ts`).
 
 ## Conventions
 
 - No ESLint/Prettier config (Biome only).
 - `@/*` path alias points at the repository root.
 - Code comments are in English and explain *why* (invariants, external constraints, pitfalls), not *what*. UI strings stay Japanese.
-- When changing architecture, update the relevant file under `docs/`. Do not duplicate facts between this file and `docs/`.
+- When changing architecture, update the relevant file under `docs/`. This file holds the invariants agents must always know; `docs/` holds authoring procedures and design rationale. Do not restate the same fact in both beyond a one-line pointer.
 
 ## Further reading (`docs/`)
 
