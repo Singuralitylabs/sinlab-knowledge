@@ -1,6 +1,6 @@
 ---
 name: lesson-authoring
-description: sinlab-knowledge リポジトリの学習コンテンツ（`content/themes/**`）に、新しいモジュール・カテゴリ・レッスン記事を本リポジトリの文体・構成・規約に沿って生成する。「〜のモジュールを作って」「〜のレッスンを追加して」「記事を生成して」「/lesson-authoring」などの指示で使用する。探索 → 構成設計 → 方針確認（AskUserQuestion）→ 執筆 → 検証（check:content / lint）までを一貫して行い、コミットは必ずユーザー承認後に実施する。
+description: sinlab-knowledge リポジトリの学習コンテンツ（`content/themes/**`）に、新しいモジュール・カテゴリ・レッスン記事を本リポジトリの文体・構成・規約に沿って生成する。「〜のモジュールを作って」「〜のレッスンを追加して」「記事を生成して」「/lesson-authoring」などの指示で使用する。探索 → 構成設計 → 方針確認（AskUserQuestion）→ 執筆 → 検証（check:content / lint）までを一貫して行う。
 ---
 
 ## 前提
@@ -12,7 +12,7 @@ description: sinlab-knowledge リポジトリの学習コンテンツ（`content
 - このスキルは「**本リポジトリで統一された文体・構成・規約**」を以下に明記している。新規執筆時はこれを正とし、実装変更が疑われる箇所のみ実ファイル（`lib/content/schema.ts` 等）で確認する。
 
 > [!IMPORTANT]
-> コミットは必ずユーザーの明示的承認を得てから実行する（`AGENTS.md` のコミット方針）。変更要約とコミットメッセージ案を提示し、承認後に `git commit`。作業はフィーチャーブランチで行う（main に直接コミットしない）。
+> 作業はフィーチャーブランチで行う（main に直接コミットしない）。
 
 ---
 
@@ -67,9 +67,9 @@ bun run lint            # biome check + check:content（コミット前必須）
 - `index.md` 欠落・スキーマ違反・未知の `::detail` スラグ（赤エラー表示）が無いか確認。
 - 可能なら `bun run dev` → `http://localhost:3000/themes/<theme>` でモジュール表示・TOC・`::detail` リンク・URL（`NN-` 除去）を目視確認。
 
-### Step 6: 報告とコミット提案
+### Step 6: 報告とコミット
 
-作成ファイル一覧と検証結果を報告。コミットが必要ならブランチ・コミットメッセージ案を提示し、**承認を得てから**コミットする。
+作成ファイル一覧と検証結果を報告し、フィーチャーブランチにコミットする。
 
 ---
 
