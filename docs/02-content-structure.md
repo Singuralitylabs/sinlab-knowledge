@@ -1,6 +1,6 @@
 # Content authoring rules
 
-Authoring rules, templates and naming conventions. The actual theme/module/lesson list is whatever is under `content/themes/` (run `bun scripts/dev/print-tree.ts` to print the tree). Exact frontmatter and meta JSON fields are defined by the zod schemas in `lib/content/schema.ts`. The two lesson layouts are described in `CLAUDE.md`.
+Authoring rules, templates and naming conventions. The actual theme/module/lesson list is whatever is under `content/themes/` (run `bun scripts/dev/print-tree.ts` to print the tree). Exact frontmatter and meta JSON fields are defined by the zod schemas in `lib/content/schema.ts`. Architectural invariants (loader behavior, status gate) are in `AGENTS.md`.
 
 The site is an explanatory reference: no step-by-step hands-on format, and themes are fully independent (no recommended reading order or audience notes).
 
