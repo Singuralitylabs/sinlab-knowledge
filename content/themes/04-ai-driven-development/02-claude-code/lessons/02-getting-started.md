@@ -15,9 +15,9 @@ Claude Code を初めて使う人向けに、インストールから初回起�
 
 ## 動作環境
 
-- macOS 13+ / Linux（Ubuntu 20.04+ など）/ Windows 10（1809 以降）/ Windows Server 2019+（ネイティブまたは WSL2）
+- macOS 13+ / Linux（Ubuntu 20.04+ など）/ Windows 10+（ネイティブまたは WSL2）
 - 4 GB 以上の RAM、インターネット接続
-- Claude Pro / Max / Team / Enterprise いずれかの有料プラン、または Console（API）アカウント（`https://console.anthropic.com/`）。**無料の claude.ai プランでは Claude Code を利用できません**
+- Claude の有料プラン、または Console（API）アカウント（無料プランでは利用できません）
 
 > [!NOTE]
 > Claude Code はエディタに依存しません。VS Code、Vim、JetBrains 系など、普段お使いのエディタをそのまま併用できます。
