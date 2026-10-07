@@ -1,6 +1,6 @@
 # Architecture: design rationale
 
-Commands, conventions and architectural invariants live in `CLAUDE.md`; schemas live in `lib/content/schema.ts`. This file only records design decisions and operational notes that cannot be read from the code.
+Commands, conventions and architectural invariants live in `AGENTS.md`; schemas live in `lib/content/schema.ts`. This file only records design decisions and operational notes that cannot be read from the code.
 
 ## Why filesystem-driven content
 

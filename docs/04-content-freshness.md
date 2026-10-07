@@ -1,6 +1,6 @@
 # Content freshness check: design
 
-Design decisions for the recurring review of whether learning articles have gone stale. Routine (cloud execution) settings are stored on claude.ai and are out of scope. Commands are in `CLAUDE.md`; options are in the header comments of `scripts/freshness-*.ts`.
+Design decisions for the recurring review of whether learning articles have gone stale. Routine (cloud execution) settings are stored on claude.ai and are out of scope. Commands are in `AGENTS.md`; options are in the header comments of `scripts/freshness-*.ts`.
 
 ## Background: staleness risks
 
@@ -95,6 +95,6 @@ This is the second reason Stage 2 is plain deterministic HTTP: Stage 3 reads onl
 ## Deliberately not done
 
 - **Auto-creating fix PRs**: false positives would become diffs. Evaluate accuracy through Issue-based operation first.
-- **Auto-setting frontmatter `updatedAt`**: a separate problem from staleness detection. Machine commits across all articles are an unreviewable diff and conflict with the commit policy in `CLAUDE.md`. `updatedAt` should mean "the day a human re-checked the content"; a bot-set value destroys that meaning.
+- **Auto-setting frontmatter `updatedAt`**: a separate problem from staleness detection. Machine commits across all articles are an unreviewable diff and conflict with the commit policy in `AGENTS.md`. `updatedAt` should mean "the day a human re-checked the content"; a bot-set value destroys that meaning.
 - **Per-theme frequency weighting**: scores concentrate in `04-ai-driven-development`, so uniform rotation spends equal budget on articles that do not go stale. A `freshnessInterval` in `_theme.json` is promising, but gather results with uniform rotation first.
 - **Tightening the `publishedAt` / `updatedAt` schema**: currently `z.string().optional()` with no format validation. Cheap to make strict while unused, but independent of this mechanism.

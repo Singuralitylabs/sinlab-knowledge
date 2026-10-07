@@ -19,7 +19,7 @@ bun install
 bun run dev                        # http://localhost:3000
 ```
 
-開発ルール・コマンド・アーキテクチャは [CLAUDE.md](./CLAUDE.md) を、コンテンツの書き方は [docs/02-content-structure.md](./docs/02-content-structure.md) を参照してください。
+開発ルール・コマンド・アーキテクチャは [AGENTS.md](./AGENTS.md) を、コンテンツの書き方は [docs/02-content-structure.md](./docs/02-content-structure.md) を参照してください。
 
 ## ライセンス
 
