@@ -43,7 +43,7 @@ Claude Design は、デザイン経験のないファウンダー・PM・エン�
 
 ## B. 利用条件とハンドオフバンドル
 
-Claude Design は、無料プランでは利用できません。有料プランで利用でき、[claude.ai/design](https://claude.ai/design) のほか、デスクトップアプリや Claude Code など複数の入口から開けます（C 節）。
+Claude Design は Artifact のテンプレートの 1 つで、無料プランでは利用できません。有料プランで利用でき、[claude.ai/design](https://claude.ai/design) のほか、デスクトップアプリや Claude Code など複数の入口から開けます（C 節）。
 
 Team / Enterprise では、管理者が **Organization settings > Capabilities > Artifacts** から有効・無効を切り替えます。Enterprise はデフォルトで無効です。
 
