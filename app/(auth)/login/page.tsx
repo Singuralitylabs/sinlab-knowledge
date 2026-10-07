@@ -31,8 +31,10 @@ export default async function LoginPage({ searchParams }: Props) {
         <div className="mx-auto max-w-md rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-gray-700">
           <p className="mb-1 font-semibold text-blue-900">ログイン時のご連絡</p>
           <p className="leading-relaxed">
-            Google アカウント選択画面では Supabase
-            認証の仕様上、下記ドメインが表示されます。本サイトへのログイン処理ですので、安心してお進みください。
+            Google アカウント選択画面では、認証基盤を Sinlab Portal と共有しているため「
+            <strong>Sinlab Portal</strong>
+            」と表示されます。本サイト（Sinlab
+            Knowledge）へのログイン処理ですので、安心してお進みください。
           </p>
         </div>
       </div>
