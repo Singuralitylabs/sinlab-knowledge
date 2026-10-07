@@ -51,12 +51,14 @@ CI (`.github/workflows/`) runs lint / content / typecheck / test / build on ever
 - Lecture vs. detail is decided by **file placement**. Frontmatter `type` is metadata that must match the placement; the loader ignores it.
 - Meta files start with `_` (`_site.json`, `_theme.json`, `_module.json`) and are skipped by directory traversal.
 - All frontmatter and meta JSON are validated by zod schemas in `lib/content/schema.ts`, used by both the loader (build time) and `scripts/check-content.ts`.
-- Status gate: `status: "draft"` is hidden only when `NODE_ENV === "production"` (visible in `bun run dev`). `deprecated` stays visible; the UI should mark it.
+- Status gate: lesson/module/theme `status: "draft"` is hidden only when `NODE_ENV === "production"` (visible in `bun run dev`). `deprecated` stays visible; the UI should mark it.
 - Never hard-code lesson/module/theme lists; derive them from `content/`.
 
 ### Rendering pipeline
 
 `renderMarkdown` in `lib/content/mdx.ts` is the single Markdown → HTML entry point.
+
+Chain: `remark-parse → remark-gfm → remark-directive → remarkDetailDirective → remark-github-blockquote-alert → (H2/H3 TOC collector) → remark-rehype (allowDangerousHtml) → rehype-raw → rehype-slug → rehypeExternalLinks → rehype-pretty-code (Shiki, github-light) → rehype-stringify`. Raw HTML and GitHub-style `> [!NOTE]` alerts are enabled.
 
 - TOC ids come from `GithubSlugger` and must mirror `rehype-slug` de-duplication exactly (a repeated heading text gets `-1`, `-2` suffixes in both TOC and heading). Keep them in sync when touching the pipeline.
 - `::detail{slug="..."}` is a custom remark directive rendering a card link to a detail sub-page; the page must pass a `Map<slug, DetailRef>` via the render context. An unknown slug renders a red error block on purpose, so content bugs surface while authoring.
@@ -69,7 +71,7 @@ CI (`.github/workflows/`) runs lint / content / typecheck / test / build on ever
 
 ### Routing and auth
 
-- Public: `/`, `/about`. Auth routes live in the `app/(auth)/` route group. Lesson catch-all: `app/(protected)/themes/[themeSlug]/[...slug]/page.tsx`.
+- Public: `/`, `/about`, and the auth pages in the `app/(auth)/` route group (`/login`, `/pending`, `/rejected`, `/callback`); a new unauthenticated page is added deliberately, not by default. Lesson catch-all: `app/(protected)/themes/[themeSlug]/[...slug]/page.tsx`.
 - **`/themes/**` is protected by two layers; both are required:**
   1. `proxy.ts`: optimistic `supabase.auth.getUser()` check; redirects unauthenticated users to `/login?returnTo=<path>`. Matcher: `/themes/:path*`.
   2. `app/(protected)/layout.tsx`: strict server-side check via `getServerAuth()`; no user → `/login`; only `status === "active"` passes; `"rejected"` → `/rejected`; any other status → `/pending`.
@@ -82,7 +84,7 @@ CI (`.github/workflows/`) runs lint / content / typecheck / test / build on ever
 - No ESLint/Prettier config (Biome only).
 - `@/*` path alias points at the repository root.
 - Code comments are in English and explain *why* (invariants, external constraints, pitfalls), not *what*. UI strings stay Japanese.
-- When changing architecture, update the relevant file under `docs/`. This file holds the invariants agents must always know; `docs/` holds authoring procedures and design rationale. Do not restate the same fact in both beyond a one-line pointer.
+- When changing architecture, update the relevant file under `docs/`. This file holds the invariants agents must always know; `docs/` holds authoring procedures and design rationale. Prefer a one-line pointer over restating a fact; where both files must carry it, this file is authoritative.
 
 ## Further reading (`docs/`)
 
