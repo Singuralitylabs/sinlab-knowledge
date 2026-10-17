@@ -204,7 +204,7 @@ claude --resume
 | `/desktop` | CLI ↔ Desktop | CLI での作業を Desktop アプリに移行。ビジュアルな diff レビューや複数セッションの並行確認に便利 |
 
 > [!TIP]
-> 短時間のスクラッチ作業は CLI、レビューや会議中は Desktop、出先での確認は Web と、シーンに応じて切り替えると生産性が上がります。クラウド環境そのものの設定（ネットワーク・環境変数・セットアップスクリプト）やローカルとの使い分けは [クラウド環境での開発](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) で解説しています。クラウドセッションを複数まとめて Claude に取りまとめさせる仕組みは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) で解説しています。
+> 短時間のスクラッチ作業は CLI、レビューや会議中は Desktop、出先での確認は Web と、シーンに応じて切り替えると生産性が上がります。クラウド環境そのものの設定（ネットワーク・環境変数・セットアップスクリプト）やローカルとの使い分けは [クラウド環境での開発](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) で解説しています。主にクラウド上で動くセッションを複数まとめて Claude に取りまとめさせる仕組みは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) で解説しています。
 
 ## まとめ: 場面に応じた使い分け
 

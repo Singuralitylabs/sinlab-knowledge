@@ -136,7 +136,7 @@ Knowledge Work 以外にも、Financial Services・Legal・Life Sciences など�
 
 「プロジェクト」は指示・コンテキスト・メモリを持つ永続的な作業スペースです。ローカルフォルダを指定するか、既存の Chat プロジェクトを取り込むか、新規に作成して使います。プロジェクト自体はデスクトップ・Web・モバイルいずれからも使えます。ただし**ローカルフォルダに紐づけたプロジェクト**での Cowork セッションはデスクトップ限定で、プロジェクトデータのクラウド同期やチームでの共有はできません。
 
-なお、Claude Code では 2026 年 9 月に、プロジェクトを作り直した新しい **Projects** がベータ公開されました。1 つの会話で Claude がクラウド上の並列セッション（スレッド）を起動・追跡する仕組みです。Cowork / chat の従来のプロジェクトは当面このまま動き、新しい体験は今後こちらにも順次展開される予定です。詳しくは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) を参照してください。
+なお、Claude Code では 2026 年 9 月に、プロジェクトを作り直した新しい **Projects** がベータ公開されました。1 つの会話で Claude が主にクラウド上で動く並列セッション（スレッド）を起動・追跡する仕組みです。Cowork / chat の従来のプロジェクトは当面このまま動き、新しい体験は今後こちらにも順次展開される予定です。詳しくは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) を参照してください。
 
 ### スケジュールタスク
 

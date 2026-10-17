@@ -279,6 +279,6 @@ tools: Read, Write, Edit
 
 ## 関連ページ
 
-- [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — Claude がクラウドの並列セッションを取りまとめる仕組み。サブエージェントとの違いを比較表で解説
+- [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — Claude が主にクラウド上で動く並列セッションを取りまとめる仕組み。サブエージェントとの違いを比較表で解説
 - [Subagents (公式ドキュメント)](https://code.claude.com/docs/en/sub-agents)
 - [Skills (`context: fork` によるサブエージェント連携)](https://code.claude.com/docs/en/skills)
