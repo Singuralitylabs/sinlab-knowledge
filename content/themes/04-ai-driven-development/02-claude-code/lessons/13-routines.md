@@ -99,6 +99,9 @@ Routine は、**プロンプト・対象リポジトリ・外部サービス連�
 | Web（[claude.ai/code/routines](https://claude.ai/code/routines)） | デスクトップアプリと同じフォーム |
 | CLI の `/schedule` コマンド | 会話しながら作る。手軽だが一部の設定は Web が必要 |
 
+> [!NOTE]
+> Claude Code の **Projects** の中で定期的な仕事を頼むと、Claude がそのプロジェクトのスレッドとして動く Routine を作り、プロジェクトの **Routines** タブに表示されます。プロジェクトの外で作った Routine は、これまでどおり単独で動きます。詳しくは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) を参照してください。
+
 > [!IMPORTANT]
 > Routine は **個人の claude.ai アカウントに紐づきます**。チームメンバーとは共有されません。また、Routine が GitHub や外部サービス経由で行った操作はすべて **あなたの名義** になります。コミットや PR はあなたの GitHub ユーザーとして作成され、Slack や Linear への書き込みもあなたの連携アカウントで実行されます。
 
@@ -463,6 +466,8 @@ Routines は通常のセッションと同じようにサブスクリプショ�
 
 Team / Enterprise では、オーナーが管理画面のトグルで組織全体の Routines を無効化できます。無効化すると既存の Routine も停止します。
 
+なお、Projects の中で作った Routine が起動したスレッドは、プランの使用上限に達すると **自動で待って再開せず、エラーで止まります**（通常のプロジェクトのスレッドは枠のリセット後に自動で再開します）。枠がリセットされた後に、そのスレッドへメッセージを送って続けます。
+
 ## デスクトップスケジュールタスク
 
 手元のフォルダにあるファイルや、自分のパソコンにしか入っていないツールを使う必要がある場合は、こちらを使います。デスクトップアプリのサイドバーで **Routines** → **New routine** → **Local** を選ぶと作成できます（**Cloud** を選ぶと前述の Cloud Routines になります）。
@@ -692,6 +697,7 @@ Cloud Routines のプロンプトは、会話の履歴を持たない状態か�
 
 - [Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) — ツール実行の前後に決まった処理を差し込む仕組み。Routine で起動したセッションの中でも通常どおり発火する
 - [Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) — 開発以外の業務向けのスケジュールタスクはこちら
+- [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — プロジェクト内で作った Routine は **Routines** タブに表示される
 - [Automate work with routines（公式ドキュメント）](https://code.claude.com/docs/en/routines)
 - [Run prompts on a schedule（`/loop` 公式ドキュメント）](https://code.claude.com/docs/en/scheduled-tasks)
 - [Schedule recurring tasks in Claude Code Desktop（公式ドキュメント）](https://code.claude.com/docs/en/desktop-scheduled-tasks)
