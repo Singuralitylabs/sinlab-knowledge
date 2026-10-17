@@ -47,7 +47,7 @@ JavaScriptの新しいオールインワン実行環境（Node.jsの代替）で
 | CIでの厳密インストール | `npm ci` | `yarn install --frozen-lockfile` | `pnpm install --frozen-lockfile` | `bun install --frozen-lockfile` |
 
 > [!NOTE]
-> 本リポジトリ（sinlab-knowledge）では **Bun** をパッケージマネージャー兼TSランタイムとして使用しています。詳細は `CLAUDE.md` を参照してください。
+> 本リポジトリ（sinlab-knowledge）では **Bun** をパッケージマネージャー兼TSランタイムとして使用しています。詳細は `AGENTS.md` を参照してください。
 
 ---
 

@@ -1,6 +1,6 @@
 name: Content Check
 
-# frontmatter / メタ JSON の整合性検証（本プロジェクトの要）。
+# Validates frontmatter / meta JSON integrity (the core safety net of this project).
 
 on:
   push:

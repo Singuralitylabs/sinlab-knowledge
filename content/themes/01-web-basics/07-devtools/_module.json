@@ -1,0 +1,8 @@
+{
+  "slug": "07-devtools",
+  "title": "DevTools",
+  "description": "ブラウザ開発者ツール（DevTools）の起動方法とElements・Console・Networkパネルの基本操作を1カテゴリで体系的に学習",
+  "icon": "Search",
+  "order": 7,
+  "categories": []
+}

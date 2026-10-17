@@ -20,7 +20,7 @@ status: published
 - `/model` コマンドと Effort レベルによるコストと精度の調整
 - Bash モード（`!` プレフィックス）と `@` ファイルメンションの使い方
 - Vim モード、プロンプトサジェスト、チェックポイント（Esc Esc）などの入力支援
-- セッション移動（`--resume` / `-c` / `/teleport` / `/desktop` / `--cloud`）で作業を引き継ぐ方法
+- セッション移動（`--resume` / `-c` / `--cloud` / `--teleport` / `/desktop`）で作業を引き継ぐ方法
 
 ## 権限モード（4 種類）
 
@@ -196,17 +196,15 @@ claude --resume
 
 ### CLI / Web / Desktop をまたいだ移動
 
-| コマンド | 方向 | ユースケース |
+| 操作 | 方向 | ユースケース |
 | --- | --- | --- |
-| `/teleport` / `claude --teleport [セッション ID]` | クラウド → CLI | Web（claude.ai）などクラウドで動いているセッションを、会話履歴とブランチごとローカル CLI に引き取る。ID を省くと一覧から選べる。ローカルのファイルシステムへ直接アクセスしたい場合に便利（手元の履歴を再開する `--resume` とは別物） |
+| `claude --cloud "..."` | CLI → クラウド（新規） | 長時間タスクを新しいクラウドセッションとして開始する（push 済みのブランチをクローンして始まる）。ターミナルを閉じても処理が継続するため、ビルドやテストの長時間実行に最適（旧 `--remote` は非推奨の別名） |
+| `claude -p "..." --cloud <id>` | CLI → クラウド（追送） | 実行中のクラウドセッションにメッセージを 1 件送る。待たずに終了する |
+| `/teleport` または `claude --teleport` | クラウド → CLI（引き戻し） | クラウドで始めた作業をローカル CLI に移行。ローカルのファイルシステムへ直接アクセスしたい場合に便利 |
 | `/desktop` | CLI ↔ Desktop | CLI での作業を Desktop アプリに移行。ビジュアルな diff レビューや複数セッションの並行確認に便利 |
-| `claude --cloud "タスク"` | CLI → クラウド | 現在のリポジトリを対象に、新しいクラウドセッションを作ってタスクを実行する。ターミナルを閉じても処理が継続するため、長時間のタスクに向く。実行中のターミナルのセッションをそのまま移すものではない |
-
-> [!NOTE]
-> `--cloud` は以前 `--remote` という名前でした。2026 年 9 月時点では `--remote` も `--cloud` の **非推奨エイリアス** として動きますが、新しく使う場合は `--cloud` と書いてください。クラウドセッションを複数まとめて Claude に取りまとめさせる仕組みは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) で解説しています。
 
 > [!TIP]
-> 短時間のスクラッチ作業は CLI、レビューや会議中は Desktop、出先での確認は Web と、シーンに応じて切り替えると生産性が上がります。
+> 短時間のスクラッチ作業は CLI、レビューや会議中は Desktop、出先での確認は Web と、シーンに応じて切り替えると生産性が上がります。クラウド環境そのものの設定（ネットワーク・環境変数・セットアップスクリプト）やローカルとの使い分けは [クラウド環境での開発](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) で解説しています。クラウドセッションを複数まとめて Claude に取りまとめさせる仕組みは [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) で解説しています。
 
 ## まとめ: 場面に応じた使い分け
 
@@ -220,7 +218,7 @@ claude --resume
 | 特定ファイルを参照させたい | `@` ファイルメンション |
 | 誤編集を戻したい | `Esc Esc`（チェックポイント） |
 | 前の会話を続けたい | `claude -c` / `--resume` |
-| 環境を変えて続けたい | `/teleport` / `/desktop` / `--cloud` |
+| 環境を変えて続けたい | `--cloud` / `--teleport` / `/desktop` |
 
 ## 関連ページ
 

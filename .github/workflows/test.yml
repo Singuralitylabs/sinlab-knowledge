@@ -1,6 +1,6 @@
 name: Unit Tests
 
-# bun test による純粋ロジックのユニットテスト。
+# Unit tests for pure logic (bun test).
 
 on:
   push:

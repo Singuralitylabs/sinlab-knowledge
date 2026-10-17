@@ -39,7 +39,7 @@ GAS は JavaScript（ECMAScript 2020 準拠の V8 ランタイム）で記述し
 
 ### Google Workspace Core Service 化
 
-Apps Script は、2026 年夏に Google Workspace の **Core Service（コアサービス）** に正式昇格しました。これにより、Gmail や Google ドライブなどと同様に、Google Workspace Terms of Service の対象となり、エンタープライズ水準のデータ保護、管理者による管理コントロール、標準テクニカルサポートの対象となりました。
+Apps Script は、2026 年 6 月に Google Workspace の **Core Service（コアサービス）** に正式昇格しました。これにより、Gmail や Google ドライブなどと同様に、Google Workspace Terms of Service の対象となり、エンタープライズ水準のデータ保護、管理者による管理コントロール、標準テクニカルサポートの対象となりました。
 
 組織内での利用においても、セキュリティポリシーやデータガバナンスの観点から安心して導入・運用できる環境が整っています。
 

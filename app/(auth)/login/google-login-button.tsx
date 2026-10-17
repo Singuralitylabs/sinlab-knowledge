@@ -14,10 +14,9 @@ export default function GoogleLoginButton({ returnTo }: Props) {
   const handleGoogleLogin = async () => {
     setIsSigningIn(true);
     try {
-      // returnTo は Cookie 経由で受け渡す。
-      // redirectTo に query string を含めると Supabase の Redirect URLs allowlist と
-      // マッチせず Site URL（ポータル URL）にフォールバックしてしまうため、
-      // redirectTo は必ず "${origin}/callback" 固定にする。
+      // returnTo travels via cookie: a query string in redirectTo would not match the Supabase
+      // Redirect URLs allow-list and fall back to the Site URL (the portal), so redirectTo
+      // must stay exactly "${origin}/callback".
       if (returnTo?.startsWith("/")) {
         document.cookie = `${RETURN_TO_COOKIE}=${encodeURIComponent(returnTo)}; Path=/; Max-Age=600; SameSite=Lax`;
       }

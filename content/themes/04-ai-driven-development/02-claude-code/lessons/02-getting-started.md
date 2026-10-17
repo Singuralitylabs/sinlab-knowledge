@@ -17,7 +17,7 @@ Claude Code を初めて使う人向けに、インストールから初回起�
 
 - macOS 13+ / Linux（Ubuntu 20.04+ など）/ Windows 10+（ネイティブまたは WSL2）
 - 4 GB 以上の RAM、インターネット接続
-- Anthropic アカウント（`https://console.anthropic.com/` または claude.ai）
+- Claude の有料プラン、または Console（API）アカウント（無料プランでは利用できません）
 
 > [!NOTE]
 > Claude Code はエディタに依存しません。VS Code、Vim、JetBrains 系など、普段お使いのエディタをそのまま併用できます。

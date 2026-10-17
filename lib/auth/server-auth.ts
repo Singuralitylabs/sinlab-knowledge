@@ -5,7 +5,7 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 export const USER_STATUSES = ["pending", "active", "rejected"] as const;
 export type UserStatus = (typeof USER_STATUSES)[number];
 
-/** DB から来た未知の status 値は null 扱い（= pending 相当）として弾く。 */
+/** Unknown status values from the DB become null (treated as pending). */
 export function toUserStatus(value: unknown): UserStatus | null {
   return typeof value === "string" && (USER_STATUSES as readonly string[]).includes(value)
     ? (value as UserStatus)
@@ -49,8 +49,7 @@ export async function resolveServerAuth(supabase: ServerSupabaseClient): Promise
   return { user, status: toUserStatus(userRow.status) };
 }
 
-// Server Component から同一レンダリング中に複数回呼ばれても、
-// Supabase への往復は 1 回で済むよう React.cache でメモ化する。
+// React.cache: callable many times per render with a single Supabase round trip.
 export const getServerAuth = cache(async (): Promise<ServerAuthResult> => {
   const supabase = await createServerSupabaseClient();
   return resolveServerAuth(supabase);

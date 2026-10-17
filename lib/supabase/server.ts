@@ -17,8 +17,8 @@ export async function createServerSupabaseClient() {
             cookieStore.set(name, value, options);
           });
         } catch {
-          // Server Component 内から呼ばれた場合は書き込めないため無視する。
-          // Route Handler / Server Action / proxy から呼ばれる際は書き込みが行われる。
+          // Server Components cannot write cookies, so ignore the failure there;
+          // writes succeed from Route Handlers, Server Actions and proxy.
         }
       },
     },

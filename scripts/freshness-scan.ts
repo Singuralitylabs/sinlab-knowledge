@@ -1,10 +1,7 @@
 /**
  * Stage 1 of the content freshness pipeline: deterministic scan. Costs no tokens.
  *
- * Walks every lesson, masks code regions, extracts claims that can go stale, and
- * emits the subset due for review this run. The LLM stage only ever sees this
- * output, which is what keeps the token cost bounded.
- *
+ * The LLM stage only ever sees this output, which keeps token cost bounded.
  * Run with: `bun scripts/freshness-scan.ts [options]`
  *
  *   --all                 Scan every candidate instead of this week's bucket
@@ -15,6 +12,8 @@
  *   --format=json|markdown
  *   --include-low         Include low-confidence claims in the Markdown report
  *   --out=<path>          Write to a file instead of stdout
+ *
+ * Design: `docs/04-content-freshness.md`.
  */
 
 import { execFileSync } from "node:child_process";

@@ -61,7 +61,7 @@ output_tokens                 … 出力
 この集計から、「会話に占めるツール実行結果の割合」「ファイル読み込みとコマンド実行のどちらが太いか」「キャッシュ読込・書込の比率」が数字で分かります。コーディングエージェントのセッションでは、**会話内容の大半をツール実行結果が占める**のが一般的ですが、その内訳はワークフローによって大きく異なります——ファイル読み込みが支配的な環境もあれば、テストやビルドの出力が太い環境もあります。そして、[次のレッスン](/themes/04-ai-driven-development/03-development-practice/token-efficiency)で紹介する削減ツールはそれぞれ効く場所が違うため、**どのレバーが自分に効くかは、この内訳で決まります**。だからこそ、対策より先に計測なのです。
 
 > [!WARNING]
-> トークン数の代わりに**文字数**を指標にして集計する場合は、**画像・バイナリを必ず除外**してください。transcript には画像が base64 文字列として埋め込まれており、1 枚で数十万文字に膨らむため、除外しないと画像が最大の消費源であるかのように見えます。実際の画像は文字数ではなく**画素数ベース**で課金され（大きな画像は自動ダウンスケールされます）、トークンに換算すると小さいことが多いです（→ [Vision — Claude Docs](https://platform.claude.com/docs/en/vision)）。
+> トークン数の代わりに**文字数**を指標にして集計する場合は、**画像・バイナリを必ず除外**してください。transcript には画像が base64 文字列として埋め込まれており、1 枚で数十万文字に膨らむため、除外しないと画像が最大の消費源であるかのように見えます。実際の画像は文字数ではなく**画素数ベース**で課金され（大きな画像は自動ダウンスケールされます）、トークンに換算すると小さいことが多いです（→ [Vision — Claude Docs](https://platform.claude.com/docs/en/build-with-claude/vision)）。
 
 ## 見落とされがちな消費源① — 同じファイルを何度も読む
 
@@ -242,4 +242,4 @@ FrameworkX/MODES.md ほか
 - [Hooks reference — Claude Docs](https://code.claude.com/docs/en/hooks)（PreToolUse の入出力と終了コード）
 - [Sessions — Claude Docs](https://code.claude.com/docs/en/sessions)（transcript の保存場所）
 - [Prompt caching — Claude Docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)（キャッシュの課金倍率）
-- [Vision — Claude Docs](https://platform.claude.com/docs/en/vision)（画像のトークン計算）
+- [Vision — Claude Docs](https://platform.claude.com/docs/en/build-with-claude/vision)（画像のトークン計算）

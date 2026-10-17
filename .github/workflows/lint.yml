@@ -1,6 +1,6 @@
 name: Lint & Format
 
-# Biome による lint / format / デバッグ出力（noConsole）検知。
+# Biome lint / format, including the noConsole rule.
 
 on:
   push:
