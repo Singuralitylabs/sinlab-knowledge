@@ -26,6 +26,8 @@ WebサイトやアプリがサーバーとどのようなJSONデータをやり�
 4. ページを更新する（またはボタン操作などでAPIを呼び出す）
 5. 一覧から確認したいリクエストをクリックし、**「Response」** や **「Preview」** タブを開く
 
+![Filter欄とフィルタータブ（All・Fetch/XHR・Doc など）の下に並ぶリクエスト一覧](/content-assets/01-web-basics/07-devtools/images/08-network-list.png)
+
 ### Response と Preview の違い
 
 | タブ | 表示形式 | 向いている用途 |
