@@ -1,0 +1,8 @@
+{
+  "slug": "08-json",
+  "title": "JSON",
+  "description": "JSONの基本構造・6つのデータ型と、DevToolsでのAPIレスポンス確認・VS Codeでの整形や折りたたみなどの実践的な扱い方を1カテゴリで体系的に学習",
+  "icon": "Code",
+  "order": 8,
+  "categories": []
+}
