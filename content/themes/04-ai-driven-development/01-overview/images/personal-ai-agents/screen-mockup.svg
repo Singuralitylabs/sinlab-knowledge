@@ -24,7 +24,7 @@
   <!-- morning brief -->
   <text class="s" x="210" y="106" font-size="11" text-anchor="middle">7:30</text>
   <rect x="36" y="114" width="340" height="132" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
-  <text class="h" x="52" y="140" font-size="14">☀️ 今日のブリーフ</text>
+  <text class="h" x="52" y="140" font-size="14">今日のブリーフ</text>
   <text class="t" x="52" y="166" font-size="13">・要返信のメール 3 件（うち 1 件は期限今日）</text>
   <text class="t" x="52" y="188" font-size="13">・10:00 定例会議 — 事前メモを用意しました</text>
   <text class="t" x="52" y="210" font-size="13">・15:00 の打ち合わせが移動時間と重なって</text>
