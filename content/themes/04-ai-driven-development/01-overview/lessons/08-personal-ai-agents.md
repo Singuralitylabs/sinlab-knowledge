@@ -1,6 +1,6 @@
 ---
 title: "常駐型AIアシスタント入門 — Grok Bot・Muse・Claude Duet ほか"
-description: "クラウド上で常時動き、頼まれる前に声をかけてくる個人向け AI エージェント（Grok Bot・Meta Muse・Claude Duet・OpenAI dots・Gemini Spark・Microsoft Scout）について、従来のチャット型 AI やスケジュール実行との違い、できること・嬉しいこと、各サービスの特徴、使う前の注意点を、まだ使ったことがない人向けに解説。"
+description: "クラウド上で常時動き、頼まれる前に声をかけてくる個人向け AI エージェント（Grok Bot・Meta Muse・Claude Duet・OpenAI dots・Gemini Spark・Microsoft Autopilot）について、従来のチャット型 AI やスケジュール実行との違い、できること・嬉しいこと、各サービスの特徴、使う前の注意点を、まだ使ったことがない人向けに解説。"
 order: 8
 type: lecture
 difficulty: beginner
@@ -67,7 +67,7 @@ status: published
 
 ### 見落としに気づかせてくれる
 
-忙しいときに一番困るのは、「やるべきことがあると気づかないこと」です。常駐型 AI アシスタントは、メール・チャット・カレンダーを横断して確認し、**自分では気づいていなかった対応漏れや予定の衝突** を知らせてくれます。Anthropic が紹介している利用者の声にも、「クライアントとの電話が自分の飛行機の時間と重なっていると教えてくれた」「内見の予約が別の日に入っていることに気づかせてくれた」といった例が挙がっています。
+忙しいときに一番困るのは、「やるべきことがあると気づかないこと」です。常駐型 AI アシスタントは、メール・チャット・カレンダーを横断して確認し、**自分では気づいていなかった対応漏れや予定の衝突** を知らせてくれます。Anthropic が紹介している利用者の声にも、「クライアントとの電話が自分の飛行機の時間と重なっていると教えてくれた」「内見の予約が別の日に入っていることに気づかせてくれた」といった例が挙がっています。Meta はゲストの食事制限を覚えたうえでディナーの招待状を用意する例を、Microsoft は Outlook や Teams で対応が必要なメールや予定を知らせる例を紹介しています。
 
 ### 頼んだあとは手を離せる
 
@@ -92,7 +92,7 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 | 会議の準備 | 予定・関連メール・資料をまとめ、出典付きの事前メモと返信案を用意する |
 | 事務作業 | 未払いの請求書を見つけて督促メールを下書きする、経費精算、会議日程の調整 |
 | 資料・成果物づくり | ダッシュボード、売上予測、スライド、簡単な Web アプリを作る |
-| 買い物・生活 | 保存したレシピ動画から買い物リストを作って注文する、旅行の手配、料金プランの見直し |
+| 買い物・生活 | 保存したレシピ動画から買い物リストを作る、旅行の手配、料金プランの見直し |
 | 定型業務の自動化 | 一度やり方を見せた作業を「ルーチン」として覚え、次から自動で繰り返す |
 | チームでの分担 | 営業・採用・経費などの役割ごとに AI を置き、AI 同士で仕事を受け渡す |
 
@@ -116,20 +116,20 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 ## 主要サービスの特徴
 
-ここからは、話題の 3 サービス（Grok Bot・Meta Muse・Claude Duet）を詳しく、同じカテゴリの OpenAI dots・Gemini Spark・Microsoft Scout を短めに紹介します。
+ここからは、話題の 3 サービス（Grok Bot・Meta Muse・Claude Duet）を詳しく、同じカテゴリの OpenAI dots・Gemini Spark・Microsoft Autopilot（旧 Scout）を短めに紹介します。
 
 > [!NOTE]
 > 各サービスの見出しに付けたバッジは、本サイトが独自に作成した目印です。各社の公式ロゴやアイコンではありません（ロゴは各社の商標で、利用には許可が必要な場合があるため使用していません）。
 
-### Grok Bot（xAI）— 職務ごとに置く「AI チームメイト」
+### Grok Bot（SpaceXAI）— 職務ごとに置く「AI チームメイト」
 
-![Grok Bot（xAI）：チーム向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-grok-bot.svg)
+![Grok Bot（SpaceXAI）：チーム向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-grok-bot.svg)
 
-- **提供元**：xAI（SpaceX 傘下の AI 部門。SpaceXAI とも表記されます）。2026 年 8 月 11 日に早期ベータとして公開
+- **提供元**：SpaceXAI（旧 xAI。2026 年に SpaceX と統合され、公式ドキュメントでは SpaceXSI の表記も使われています）。2026 年 8 月 11 日に早期ベータとして公開
 - **コンセプト**：1 体 1 役割の **Bot を何体も置く** のが特徴です。「営業リストの作成」「経費の処理」「バグの再現」のように仕事ごとに Bot を作り、Bot 同士がグループチャットで仕事を受け渡します
-- **できること**：各 Bot が専用のクラウドコンピュータ（ブラウザ・ターミナル付き）を持ち、API や連携機能がない Web サイトでも人と同じように画面を操作します。**一度やり方を実演して見せると、その手順を「ルーチン」として覚えて繰り返す** 機能があります
+- **できること**：アカウントごとに用意されるクラウドコンピュータ（ブラウザ・ファイル・ターミナル付き）を Bot 同士で共有し、Bot ごとに自分の画面を持って、API や連携機能がない Web サイトでも人と同じように画面を操作します。**一度やり方を実演して見せると、その手順をスキルとして保存し、スケジュール実行すればルーチンとして繰り返せます**
 - **ログインと承認**：パスワードは専用の保管庫（Vault）で扱い、Bot 自身には見えない設計です。各操作は自動チェック（**Auto Review**）を通り、必要と判断されたときに承認カードが表示されます。チャットで直接頼んだメールは、Auto Review が問題なしと判断すると承認カードなしで送信されるため、必ず確認したい操作には **Ask first** ルールを設定しておきます
-- **利用形態**：macOS・Windows・Linux のデスクトップアプリと iPhone・Android アプリ。SuperGrok や X の有料プラン、Cursor の Pro 以上・Teams プランなどで利用でき、Bot の利用量はプランとは別に計測されます
+- **利用形態**：macOS・Windows・Linux のデスクトップアプリと iPhone・Android アプリ。X の有料プラン（Premium・Super・Ultra）、SuperGrok 各プラン、Grok Business、Cursor の対象プランなどで利用でき、Bot の利用量はプランとは別に計測されます
 - **向いている人**：定型業務をいくつも抱える個人事業主や、営業・運用などの業務をチームで回している組織
 
 ### Meta Muse — 生活まわりを任せる消費者向けエージェント
@@ -138,9 +138,9 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 - **提供元**：Meta。2026 年 9 月 8 日に米国で発表。**2026 年 10 月 23 日に日本で提供開始**（北米以外で初）
 - **コンセプト**：技術的な知識がなくても使える、**一般の人の日常を手伝う** エージェントです。名前やアバター、話し方を自分好みに設定できます
-- **できること**：買い物、メールの下書きと送信、旅行の計画、フォームの入力、料金の交渉など。Instagram に保存したレシピ動画から買い物リストを作って注文する、ゲストの食事制限を覚えたうえでディナーの献立と招待状を用意する、といった例が紹介されています
+- **できること**：買い物、メールの下書きと送信、旅行の計画、フォームの入力、料金の交渉など。Instagram に保存したレシピ動画から買い物リストを作る、ゲストの食事制限を覚えたうえでディナーの献立と招待状を用意する、といった例が紹介されています
 - **安全の仕組み**：Muse とは別の監視役エージェント **Sentinel** が同じマシン上で動き、Muse がインターネットに出る操作を承認制にしています。パスワードや支払い方法は Muse から見えない設計です
-- **利用形態**：iOS・Android・Web（muse.ai）・WhatsApp。基本的な機能は無料で、より多く使いたい人向けに有料プランがあります
+- **利用形態**：iOS・Android・Web（muse.ai）。米国では WhatsApp からも使えます（日本での提供状況は別途案内とされています）。基本的な機能は無料で、より多く使いたい人向けに有料プランがあります
 - **日本での連携**：Gmail・Google カレンダー・Instagram などが使えるほか、メルカリ・マネーフォワード ME・チケットぴあとの連携を進めていると発表されています
 - **気をつけたい点**：やり取りは既定で AI の学習に使われます（設定でオフにできます）。また、米国では Amazon が Muse によるアクセスをブロックするなど、**相手先のサービスが AI エージェントの操作を認めないケース** も出ています
 
@@ -152,7 +152,7 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 - **コンセプト**：**専門職や小規模事業者** 向けに、「追いきれないほどの仕事」を抱える人の見落としを防ぐことに重点を置いています。モデルは Claude Opus 5.5 です
 - **できること**：毎朝のブリーフ、数時間ごとのアカウント確認と通知、会議日程の調整、ダッシュボード・売上予測・Web アプリの作成など。QuickBooks や Stripe で未払いの請求書を見つけて督促メールを下書きする、といった業務例が紹介されています
 - **特徴**：Claude アカウントの **メモリ・スキル・コネクタをそのまま引き継ぐ** ため、すでに Claude を使っている人はほとんど設定なしで始められます。6,000 以上のコネクタ・プラグインに対応しています
-- **承認と制限**：送信・支払い・署名・削除の前に承認を求めます（研究プレビュー時点の公式説明）。証券の売買や口座間の送金は、承認があっても実行しません。パスワードやログイン用のトークンは Duet から直接見えない設計です
+- **承認と制限**：送信・支払い・署名・削除の前に承認を求めます（研究プレビュー時点の公式説明）。証券の売買や口座間の送金は、承認があっても実行しません。パスワードは Duet から直接見えない設計です
 - **利用形態**：iOS・Android の専用アプリと claude.ai。Pro・Max・Ultra プランに追加料金なしで含まれますが、**バックグラウンドの確認作業もプランの利用上限を消費** します
 - **現時点の制限**：米国の Pro・Max・Ultra 利用者のみ、ウェイトリスト制です。Team・Enterprise プランでは使えません。作業中のブラウザ画面を見ることはできず、Microsoft 365 にもまだ対応していません
 
@@ -163,24 +163,24 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 - 2026 年 9 月 29 日に発表された、**ChatGPT の中で動く常駐エージェント** です。モデルは GPT-6 Astra
 - 予定調整・旅行手配・家計管理・コード作業などを担当し、Slack や Microsoft Teams、音声通話からも呼び出せます。重い開発作業は Codex に引き継げます
 - 操作の種類ごとに「確認なしで実行」「指示したときだけ実行」「実行前に確認」「人に引き継ぐ」の 4 段階で任せ方を決める **Custom Rules** が特徴です
-- ChatGPT Pro と Business Premium で利用でき、Free・Go・Plus では使えません。Pro プランでの提供は EEA・英国・スイスが対象外とされています
+- ChatGPT Pro と Business Premium で利用できます（最初の 1 体は追加料金なし。Enterprise・Edu などは管理者が有効化するベータ）。Pro プランでの提供は EEA・英国・スイスが対象外とされています
 
 ### Gemini Spark（Google）
 
 ![Gemini Spark（Google）：Google 連携](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-gemini-spark.svg)
 
-- 2026 年 5 月 19 日の Google I/O で発表された **24 時間稼働の個人向けエージェント** です。モデルは Gemini 3.5 Flash
+- 2026 年 5 月 19 日の Google I/O で発表された **24 時間稼働の個人向けエージェント** です。モデルは Gemini 3.5 です
 - Gmail・ドキュメント・スプレッドシートなど **Google のサービスとの連携が強み** で、提携アプリやカスタム MCP サーバーとも接続できます。手順を「スキル」として覚えて再利用できます
 - 日本では 2026 年 7 月 16 日に Google AI Ultra 向けに提供が始まり、その後 Google AI Pro にも拡大されました
 - 重要な操作の前にはユーザーに確認を求めます
 
-### Microsoft Scout
+### Microsoft Autopilot（旧 Scout）
 
-![Scout（Microsoft）：企業向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-scout.svg)
+![Autopilot（旧 Scout、Microsoft）：企業向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-scout.svg)
 
-- 2026 年 6 月 2 日の Microsoft Build で発表された、常駐型エージェント「Autopilots」の第 1 弾です
+- 2026 年 6 月 2 日の Microsoft Build で、常駐型エージェントの新カテゴリ「Autopilots」の第 1 弾 **Scout** として発表され、2026 年 9 月 25 日に製品名が **Autopilot** に変わりました
 - **Microsoft 365（Outlook・Teams）を見張り**、対応が必要なメールや予定を知らせ、会議の準備を手伝います
-- 企業向けで、組織のデータ保護やアクセス制御の仕組みをそのまま引き継ぐ点が特徴です。Microsoft の先行プログラム（Frontier）の参加者から試用が始まっています
+- 企業向けで、組織のデータ保護やアクセス制御の仕組みをそのまま引き継ぐ点が特徴です。Microsoft の先行プログラム（Frontier）で試験提供されており、Frontier への登録に加えて Intune のポリシー設定と GitHub Copilot ライセンスが必要です
 
 ## 比較表
 
@@ -188,12 +188,12 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 | サービス | 提供元 | 主な対象 | 得意なこと | 承認の仕組み | 利用形態 | 日本での提供 |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Grok Bot** | xAI | 個人事業主・チーム | 役割ごとの複数 Bot、実演によるルーチン化、API のない画面の操作 | Auto Review が必要と判断した操作と Ask first ルールに一致した操作で承認 | SuperGrok・X 有料プラン・Cursor の対象プラン（ベータ） | 公式に明記なし |
+| **Grok Bot** | SpaceXAI（旧 xAI） | 個人事業主・チーム | 役割ごとの複数 Bot、実演によるルーチン化、API のない画面の操作 | Auto Review が必要と判断した操作と Ask first ルールに一致した操作で承認 | SuperGrok・X 有料プラン・Cursor の対象プラン（ベータ） | 公式に明記なし |
 | **Meta Muse** | Meta | 一般消費者 | 買い物・旅行・生活の手配 | 監視役エージェント Sentinel、送信・購入前の確認 | 無料 + 有料プラン | **あり**（2026-10-23〜） |
 | **Claude Duet** | Anthropic | 専門職・小規模事業者 | 対応漏れの通知、業務の下準備、資料作成 | 送信・支払い・署名・削除の前に承認 | Claude Pro・Max・Ultra（研究プレビュー） | なし（米国のみ） |
 | **OpenAI dots** | OpenAI | 個人・ビジネス | ChatGPT・Slack・Teams からの依頼、開発作業の引き継ぎ | 操作ごとの Custom Rules | ChatGPT Pro・Business Premium | 公式に明記なし（Pro の除外地域には含まれない） |
 | **Gemini Spark** | Google | 個人・Google Workspace 利用者 | Google のサービス全体を横断した作業 | 重要な操作の前に確認 | Google AI Pro・Ultra | **あり**（2026-07〜） |
-| **Microsoft Scout** | Microsoft | 企業 | Outlook・Teams の監視と会議準備 | 組織のポリシーを継承 | Microsoft 365（先行プログラム） | 公式に明記なし |
+| **Microsoft Autopilot（旧 Scout）** | Microsoft | 企業 | Outlook・Teams の監視と会議準備 | 組織のポリシーを継承 | Microsoft 365（先行プログラム） | 公式に明記なし |
 
 > [!IMPORTANT]
 > 料金やプランは報道によって数字が食い違うことがあり、短期間で変わります。本表には料金を載せていません。導入を検討するときは、必ず各社の公式の料金ページで確認してください。
@@ -202,8 +202,8 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 どれが一番優れているかではなく、**自分の普段の環境に合うかどうか** で選ぶのが基本です。
 
-- **普段使っているサービスで選ぶ**：Gmail や Google ドキュメント中心なら Gemini Spark、Outlook や Teams 中心なら Microsoft Scout、すでに Claude や ChatGPT を使い込んでいるなら Claude Duet や dots が、連携や記憶の引き継ぎの点で有利です
-- **個人の生活か、仕事か**：買い物や旅行など生活まわりなら Muse、業務の対応漏れ防止なら Duet や Scout、定型業務を役割ごとに分担させたいなら Grok Bot が向いています
+- **普段使っているサービスで選ぶ**：Gmail や Google ドキュメント中心なら Gemini Spark、Outlook や Teams 中心なら Microsoft Autopilot、すでに Claude や ChatGPT を使い込んでいるなら Claude Duet や dots が、連携や記憶の引き継ぎの点で有利です
+- **個人の生活か、仕事か**：買い物や旅行など生活まわりなら Muse、業務の対応漏れ防止なら Duet や Autopilot、定型業務を役割ごとに分担させたいなら Grok Bot が向いています
 - **任せ方の細かさ**：操作ごとに任せ方を細かく決めたいなら dots の Custom Rules、監視役が別にいる安心感を重視するなら Muse の Sentinel、というように承認の仕組みも比べましょう
 - **データの扱い**：会話や連携データが AI の学習に使われるか、オフにできるかを確認します
 - **日本で使えるか**：2026 年 11 月時点で、日本で公式に提供されているのは Meta Muse と Gemini Spark です
@@ -262,9 +262,9 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 - [Get started with Claude Duet（Claude ヘルプセンター）](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet)
 - [Introducing Muse, a Personal AI Agent（Meta）](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent)
 - [パーソナル AI エージェント「Muse」日本で提供開始（Meta）](https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/)
-- [Grok Bot: Get started（xAI Docs）](https://docs.x.ai/grok-bot/get-started)
-- [Grok Bot: Approvals, security, and privacy（xAI Docs）](https://docs.x.ai/grok-bot/approvals-security-and-privacy)
-- [Grok Bot is now available on more plans（xAI）](https://x.ai/news/grok-bot-more-plans)
+- [Grok Bot: Get started（SpaceXAI Docs）](https://docs.x.ai/grok-bot/get-started)
+- [Grok Bot: Approvals, security, and privacy（SpaceXAI Docs）](https://docs.x.ai/grok-bot/approvals-security-and-privacy)
+- [Grok Bot is now available on more plans（SpaceXAI）](https://x.ai/news/grok-bot-more-plans)
 - [Introducing dots（OpenAI）](https://openai.com/index/introducing-dots/)
-- [Introducing Microsoft Scout, your always-on personal agent（Microsoft）](https://microsoft.com/en-us/microsoft-365/blog/2026/06/02/introducing-microsoft-scout-your-always-on-personal-agent)
+- [Introducing Microsoft Scout, your always-on personal agent（Microsoft。現在は Autopilot に改称）](https://microsoft.com/en-us/microsoft-365/blog/2026/06/02/introducing-microsoft-scout-your-always-on-personal-agent)
 - [Google「Gemini Spark」日本語で展開開始（Impress Watch）](https://www.watch.impress.co.jp/docs/news/2125584.html)

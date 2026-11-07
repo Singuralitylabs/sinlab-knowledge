@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" width="300" height="64" role="img" aria-labelledby="t">
-  <title id="t">Grok Bot（提供元: xAI、チーム向け）を示すバッジ</title>
+  <title id="t">Grok Bot（提供元: SpaceXAI〔旧 xAI〕、チーム向け）を示すバッジ</title>
   <style>.n{font-family:-apple-system, &quot;Segoe UI&quot;, &quot;Hiragino Sans&quot;, &quot;Noto Sans JP&quot;, sans-serif;font-weight:700;fill:#111827}.p{font-family:-apple-system, &quot;Segoe UI&quot;, &quot;Hiragino Sans&quot;, &quot;Noto Sans JP&quot;, sans-serif;fill:#6b7280}.g{font-family:-apple-system, &quot;Segoe UI&quot;, &quot;Hiragino Sans&quot;, &quot;Noto Sans JP&quot;, sans-serif;font-weight:700}</style>
   <rect x="1" y="1" width="298" height="62" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
   <g color="#0f766e"><rect x="10" y="10" width="44" height="44" rx="12" fill="#0f766e"/><g transform="translate(0,0) scale(1)" style="transform-origin:32px 32px"><circle cx="28" cy="27" r="6" fill="#fff"/><circle cx="40" cy="27" r="6" fill="#fff" fill-opacity="0.75"/><path d="M18 46c0-6 4.5-10 10-10s10 4 10 10z" fill="#fff"/><path d="M30 46c0-6 4.5-10 10-10s10 4 10 10z" fill="#fff" fill-opacity="0.75"/></g></g>
   <text class="n" x="66" y="29" font-size="17">Grok Bot</text>
-  <text class="p" x="66" y="49" font-size="12.5">xAI</text>
+  <text class="p" x="66" y="49" font-size="12.5">SpaceXAI（旧 xAI）</text>
   <rect x="205.0" y="20" width="83.0" height="24" rx="12" fill="#ccfbf1"/>
   <text class="g" x="246.5" y="37" font-size="12.5" text-anchor="middle" fill="#0f766e">チーム向け</text>
 </svg>
