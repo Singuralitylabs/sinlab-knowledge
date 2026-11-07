@@ -142,7 +142,7 @@ Knowledge Work 以外にも、Financial Services・Legal・Life Sciences など�
 
 毎朝メールを確認する、週次で指標を集計する、といった定型業務を繰り返し自動実行できます。ユーザーが端末をオフラインにしていても、クラウドセッション上でタスクが進行します。
 
-Claude Code 側にも同種の仕組みとして **Routines** があります。こちらはリポジトリを対象とし、スケジュールに加えて **API 呼び出しや GitHub イベント** でも起動できる点が異なります。「フォルダとコネクタに対する自動化」が Cowork のスケジュールタスク、「リポジトリに対する自動化」が Routines、という住み分けです。詳しくは [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) を参照してください。
+Claude Code 側にも同種の仕組みとして **クラウドスケジュールタスク**（旧 Routines）があります。こちらはリポジトリを対象とし、スケジュールに加えて **API 呼び出しや GitHub イベント** でも起動できる点が異なります。「フォルダとコネクタに対する自動化」が Cowork のスケジュールタスク、「リポジトリに対する自動化」が Claude Code のクラウドスケジュールタスク、という住み分けです。詳しくは [スケジュールタスク（旧 Routines）と定期実行](/themes/04-ai-driven-development/02-claude-code/routines) を参照してください。
 
 ## E. 活用例
 
@@ -183,7 +183,7 @@ Cowork が行った操作の結果（コンテンツの公開・金銭のやり�
 ## 関連ページ
 
 - [サブエージェント (Agents)](/themes/04-ai-driven-development/02-claude-code/agents) — Claude Code 内のサブエージェントの仕組み。Agent Teams と Cowork の位置づけを紹介
-- [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — Claude Code 側の定期実行・自動起動の仕組み。Cowork のスケジュールタスクとの違いを解説
+- [スケジュールタスク（旧 Routines）と定期実行](/themes/04-ai-driven-development/02-claude-code/routines) — Claude Code 側の定期実行・自動起動の仕組み。Cowork のスケジュールタスクとの違いを解説
 - [Plugins](/themes/04-ai-driven-development/02-claude-code/plugins) — Cowork の「Knowledge Work」マーケットプレイスが乗っている、Claude Code 共通のプラグイン基盤
 - [Claude Design との連携](/themes/04-ai-driven-development/02-claude-code/claude-design) — 同じ「関連プロダクト紹介」枠の先行例
 - [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — 再設計された新しい Projects（Claude Code で先行ベータ）
@@ -194,4 +194,4 @@ Cowork が行った操作の結果（コンテンツの公開・金銭のやり�
 - [Organize your tasks with projects in Claude Cowork (Claude Help Center)](https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork)
 - [Assign tasks from anywhere in Claude Cowork (Claude Help Center)](https://support.claude.com/en/articles/13947068-assign-tasks-from-anywhere-in-claude-cowork)
 - [Claude Cowork (製品ページ)](https://claude.com/product/cowork)
-- [Claude Cowork on web and mobile: hand off work anywhere](https://claude.com/blog/cowork-web-mobile)
+- [Claude Cowork on web and mobile: hand off work anywhere](https://claude.com/resources/articles/cowork-web-mobile)

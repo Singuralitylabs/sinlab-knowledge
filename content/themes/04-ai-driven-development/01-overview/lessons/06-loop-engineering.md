@@ -54,7 +54,7 @@ Claude Code の公式ドキュメントは、タスクを次の 3 相で進め�
 
 ![エージェンティックループ：コンテキスト収集 → 行動 → 検証 → 繰り返し（または完了）](/content-assets/04-ai-driven-development/01-overview/images/loop-engineering/agentic-loop.svg)
 
-Anthropic の [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) は、エージェントを「環境からのフィードバックを手がかりに、LLM が自分でツールを選んで回すループ」と捉えます。各ステップで必要なのは、モデルの自己申告ではなく、**ツール結果やコード実行といった環境からの根拠（ground truth）** です。タスクは完了で終わるのが基本ですが、最大反復回数のような停止条件を置くことも一般的だとしています。
+Anthropic の [Building effective agents](https://www.anthropic.com/research/building-effective-agents) は、エージェントを「環境からのフィードバックを手がかりに、LLM が自分でツールを選んで回すループ」と捉えます。各ステップで必要なのは、モデルの自己申告ではなく、**ツール結果やコード実行といった環境からの根拠（ground truth）** です。タスクは完了で終わるのが基本ですが、最大反復回数のような停止条件を置くことも一般的だとしています。
 
 Claude Code の用語では、この実行サイクルが **エージェンティックループ** です。拡張ポイントである Hooks / Skills / MCP は、このループの特定の相に差し込む部品です。[Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) の記事が言う「エージェントループ」も、同じ実行サイクルを指します。
 
@@ -95,7 +95,7 @@ Claude Code では、プロンプトに「テストを走らせて通るまで�
 
 ### ③ 境界
 
-完了条件があっても、到達できない場合があります。[Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) も、最大反復回数のような停止条件を置くのが一般的だとしています。Stop hook でターン終了をブロックする場合も、連続ブロックが続くとハーネス側が上書きして止めます（Claude Code では 8 回。公式ベストプラクティスの [Give Claude a way to verify its work](https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work) に記載）。
+完了条件があっても、到達できない場合があります。[Building effective agents](https://www.anthropic.com/research/building-effective-agents) も、最大反復回数のような停止条件を置くのが一般的だとしています。Stop hook でターン終了をブロックする場合も、連続ブロックが続くとハーネス側が上書きして止めます（Claude Code では 8 回。公式ベストプラクティスの [Give Claude a way to verify its work](https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work) に記載）。
 
 境界の典型は次の 3 つです。
 
@@ -196,4 +196,4 @@ UI ではスクリーンショット比較が検証手段になります。見�
 - [Hooks](/themes/04-ai-driven-development/02-claude-code/hooks) — エージェントループのイベントに決定論的処理を差し込む
 - [How Claude Code works](https://code.claude.com/docs/en/how-claude-code-works) — エージェンティックループの公式説明
 - [Give Claude a way to verify its work](https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work) — 検証手段の公式ベストプラクティス
-- [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — エージェント＝環境フィードバックを回すループ、という整理
+- [Building effective agents](https://www.anthropic.com/research/building-effective-agents) — エージェント＝環境フィードバックを回すループ、という整理

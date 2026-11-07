@@ -1,6 +1,6 @@
 ---
 title: "Claude Design との連携"
-description: "Anthropic Labs の Claude Design でデザイン・プロトタイプ・スライドを作成し、Claude Code に引き継いで実装するまでのワークフローを解説。"
+description: "Anthropic Labs の Claude Design でデザイン・プロトタイプを作成し、Claude Code に引き継いで実装するまでのワークフローを解説。スタンドアロン版 claude.ai/design の終了（2026-12-14）と移行にも対応。"
 order: 11
 type: lecture
 category: extension
@@ -12,15 +12,21 @@ status: published
 
 # Claude Design との連携
 
-Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジュアル制作向けの AI プロダクトです。**クリック可能なインタラクティブプロトタイプ**、スライド、ワンページャー、モックアップなどを会話ベースで生成でき、完成したデザインを **Claude Code にハンドオフして実装まで一気通貫で進められる** のが特徴です。
+Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジュアル制作向けの AI プロダクトです。**クリック可能なインタラクティブプロトタイプ**、ワンページャー、モックアップなどを会話ベースで生成でき、完成したデザインを **Claude Code にハンドオフして実装まで一気通貫で進められる** のが特徴です。
+
+当初は [claude.ai/design](https://claude.ai/design) の単体サイト（スタンドアロン版）として提供されていましたが、現在は **Claude の Artifact のテンプレートの 1 つ** として、普段のチャット・Artifacts タブ・Claude Code から使う形が基本になっています。
+
+> [!IMPORTANT]
+> **スタンドアロン版 [claude.ai/design](https://claude.ai/design) は 2026 年 12 月 14 日に終了します。** 終了後は読み取り専用になり、新しいプロジェクトは作れません。スタンドアロン版でデザインシステムやプロジェクトを作っている場合は、終了前に Claude へ移行してください（B 節の「スタンドアロン版からの移行」参照）。
 
 > [!NOTE]
-> 最終チェック：**2026 年 10 月**。Claude Design は beta（段階的ロールアウト）であり、UI・機能名・料金・利用枠は今後変わる可能性があります。実際に利用する際は最新の公式ドキュメントも確認してください。
+> 最終チェック：**2026 年 11 月**。Claude Design は提供形態の変化が速い製品です。UI・機能名・利用条件は今後も変わる可能性があるため、実際に利用する際は最新の公式ドキュメントも確認してください。なお、プレゼンテーション（スライド）作成は現在 **Claude Slides** という別のテンプレートに分かれています。
 
 ## このページで学べること
 
 - Claude Design がカバーする領域と Claude Code との役割分担
-- 利用条件・利用枠と有効化の方法
+- 利用条件・利用量の数え方と有効化の方法
+- スタンドアロン版 claude.ai/design の終了と Claude への移行
 - アクセスからオンボーディング・プロジェクト作成（Wireframe / High Fidelity）までの手順
 - 左右 2 ペイン UI（チャット ＋ キャンバス）の基本操作
 - 5 ステップで進めるデザイン制作ワークフロー
@@ -28,7 +34,7 @@ Claude Design は 2026 年 4 月に Anthropic Labs から発表されたビジ�
 - デザインシステムをセットアップしてチームで共有する手順
 - キャンバスの 4 つの編集モード（Mark up / Comments / Edit / Tweaks）とチャットの使い分け
 - エクスポート形式・組織内共有と Claude Code への引き継ぎ方
-- beta 段階としての制限・既知の不具合
+- 既知の制限事項
 
 ## A. Claude Design とは何か
 
@@ -37,22 +43,45 @@ Claude Design は、デザイン経験のないファウンダー・PM・エン�
 | 比較項目 | Claude Code | Claude Design |
 | --- | --- | --- |
 | 主な役割 | コードの実装・編集・運用 | デザイン・プロトタイプ・資料の作成 |
-| 主な成果物 | ソースコード・コミット・PR | インタラクティブプロトタイプ・画面モック・スライド・ワンページャー |
+| 主な成果物 | ソースコード・コミット・PR | インタラクティブプロトタイプ・画面モック・ワンページャー |
 | 利用シーン | 実装・リファクタ・デバッグ | アイデア共有・要件すり合わせ・社内資料 |
 | ハンドオフ | Claude Design からバンドルを受け取る | Claude Code へのエクスポートが可能 |
 
-## B. 利用条件とハンドオフバンドル
+## B. 利用条件とスタンドアロン版からの移行
 
-Claude Design は Artifact のテンプレートの 1 つで、無料プランでは利用できません。有料プランで利用でき、[claude.ai/design](https://claude.ai/design) のほか、デスクトップアプリや Claude Code など複数の入口から開けます（C 節）。
+### 利用できるプラン
 
-Team / Enterprise では、管理者が設定で有効にする必要があります。Artifact のテンプレートとしての Claude Design は **Organization settings > Artifacts**、[claude.ai/design](https://claude.ai/design) の単体版は **Organization settings > Claude Design** で設定します。片方を有効にしても、もう片方は有効になりません。
+Claude Design は Artifact のテンプレートの 1 つで、**Free・Pro・Max・Ultra・Team・Enterprise のすべてのプラン** で利用できます。チャット・Artifacts タブ・Claude Code・モバイルアプリなど複数の入口から開けます（C 節）。
 
-利用量は **チャットや Claude Code とは別メーター** です。プランごとに週次の枠があり、枯渇時は [usage credits](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) で追加できます（詳細は公式の利用量・料金ページを参照）。
+Team / Enterprise では、組織の設定で有効・無効を切り替えられます。
 
-ハンドオフ時は **ハンドオフバンドル** に構造・コンポーネント・デザイントークン・実装指示がまとまるため、Claude Code がデザイン意図を解釈しやすくなります。
+- **Team プラン**：既定でオンです。
+- **Enterprise プラン**：2026 年 10 月 15 日から既定でオンになりました（オーナーが無効にしている場合を除く）。
+- 設定場所は 2 つあり、それぞれ独立しています。Artifact のテンプレートとしての Claude Design は **Organization settings > Artifacts**、スタンドアロン版 [claude.ai/design](https://claude.ai/design) は **Organization settings > Claude Design** です。片方を有効にしても、もう片方は有効になりません。
+
+### 利用量の数え方
+
+Claude Design の利用量は **チャットや Claude Code と同じ、プラン共通の利用上限** にカウントされます。Claude Design 専用の枠はありません。上限に達すると、リセットされるまで Claude Design も使えなくなります。[usage credits](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) を有効にしていれば、上限を超えても作業を続けられます。大きなコードベースを読み込むプロジェクトや反復回数が多いプロジェクトほど、多く消費します。
+
+> [!NOTE]
+> 以前の Claude Design には、他の利用量とは別の週次枠がありました。現在はすべてプラン共通の上限に合算されています。
+
+### スタンドアロン版からの移行
+
+スタンドアロン版 [claude.ai/design](https://claude.ai/design) は **2026 年 12 月 14 日に終了** し、それ以降は読み取り専用になります。スタンドアロン版を使っていた場合は、次の対応が必要です。
+
+| 対象 | やること |
+| --- | --- |
+| デザインシステム | Claude の **Artifacts** ページのバナー（「Move team design systems」）から移行する。1 回の移行で組織内のデザインシステムがまとめて移り、誰が実行してもよい |
+| プロジェクト | スタンドアロン版でプロジェクトを開き、表示される案内から Claude へ移す（**プロジェクトのオーナーのみ**。有料プランから順次展開中）。移したプロジェクトは Artifact になり、スタンドアロン版の側は読み取り専用になる |
+| チャット・コメント | Claude へは移らない。スタンドアロン版の終了までは元のプロジェクトで読める |
 
 > [!WARNING]
-> 本記事執筆時点で Claude Design は **beta**（段階的ロールアウト）です。機能・UI・料金は変更される可能性があります。実運用に組み込む前に最新の公式ドキュメントを確認してください。
+> ゼロデータ保持（ZDR）の組織はプロジェクトを移行できません。HIPAA 対応構成の組織も現時点では移行できません。必要なプロジェクトは終了前に .zip でダウンロードしておきましょう。詳しくは公式の [Move from standalone Claude Design to Claude](https://support.claude.com/en/articles/17440474-move-from-standalone-claude-design-to-claude) を参照してください。
+
+### ハンドオフバンドル
+
+Claude Code へのハンドオフ時は **ハンドオフバンドル** に構造・コンポーネント・デザイントークン・実装指示がまとまるため、Claude Code がデザイン意図を解釈しやすくなります（I 節）。
 
 ## C. 使い始める：アクセスとオンボーディング
 
@@ -60,29 +89,24 @@ Team / Enterprise では、管理者が設定で有効にする必要があり�
 
 次のいずれかでアクセスします。
 
-- ブラウザ：[claude.ai/design](https://claude.ai/design)
-- claude.ai の会話の中や Artifacts タブ（Artifact のテンプレートとして起動）
-- Claude デスクトップアプリのサイドバー
-- Claude Code の `/design` コマンド（I 節参照）
+- **会話の中**：「この提案書からワンページャーを作って」のように頼むと、会話の横にデザインが作られます。メッセージ欄で **Output > Design** を選ぶこともできます。
+- **Artifacts タブ**：Design のテンプレートを選んで始めます。
+- **Claude Code**：アイデアをデザインにするよう頼むか、`/design` コマンドで作成・編集・同期します（I 節参照）。
+- **iOS / Android の Claude アプリ**：会話でデザインを頼み、Artifacts タブで全画面表示・編集できます（共有設定の変更は Web かデスクトップで行います）。
+- **スタンドアロン版 [claude.ai/design](https://claude.ai/design)**：**2026 年 12 月 14 日に終了** します。新しく始める場合は上の入口を使いましょう。
 
-![Claude Design のホーム画面。ステータスバッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
+> [!NOTE]
+> 本ページのスクリーンショットは、スタンドアロン版 claude.ai/design で撮影したものです。Claude の Artifact として開いた場合は、画面の配置やボタンの名称が異なることがあります。
 
-### オンボーディングの流れ
+![Claude Design のホーム画面（スタンドアロン版）。ステータスバッジ、Recent / Your designs / Examples / Design systems タブ、左に新規プロトタイプ作成パネルが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/FirstPage.png)
 
-初回起動時に、用途に応じた質問（役割の選択など）が表示されることがあります。UI は変更されうるため、ここでは公式ドキュメントで確実な流れだけ整理します。
+### 最初にやること
 
-**組織のデザインシステムを初めて整える場合**（G 節）は、次の順序がオンボーディングの中心です。
-
-1. 左下のプロジェクトピッカーで組織を選択 or 新規作成
-2. オンボーディングフローでブランド素材をアップロード
-3. 抽出された色・タイポ・コンポーネントを確認
-4. テストプロジェクトで検証し、問題なければ [Published] をオン
-
-デザインシステムが既に Published 済みなら、プロジェクト作成からすぐ作業を始められます（E 節参照）。
+組織のデザインシステムが用意されていれば、新しく作るデザインには自動でブランドの色・フォント・コンポーネントが使われるため、すぐに作業を始められます（E 節参照）。デザインシステムがまだない場合は、先に G 節の手順で用意しておくと、以降のアウトプットが安定します。
 
 ### プロジェクト作成時の忠実度（Wireframe / High Fidelity）
 
-プロトタイプのプロジェクトを作成するとき、プロジェクト名・デザインシステムのほかに **忠実度（fidelity）** を Wireframe / High Fidelity から選びます。生成されるデザインの作り込み度が変わります。
+スタンドアロン版でプロトタイプのプロジェクトを作成するときは、プロジェクト名・デザインシステムのほかに **忠実度（fidelity）** を Wireframe / High Fidelity から選びます。生成されるデザインの作り込み度が変わります。
 
 ![新規プロトタイプ作成ダイアログ。Project name 入力欄、Design system の選択、Wireframe と High fidelity の 2 択（Wireframe が選択中）、Create ボタンが並ぶ](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/CreateNewPrototype.png)
 
@@ -130,10 +154,10 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 ## E. ワークフロー：5 ステップで進める
 
-公式ドキュメントが推奨する基本フローは次の 5 ステップです。
+公式ドキュメントが推奨する基本フローを、5 ステップに整理すると次のとおりです。
 
 ```text
-1. プロジェクト作成
+1. 作成（会話・Artifacts タブから始め、デザインシステムを付ける）
        ↓
 2. コンテキスト追加（素材・参照・既存デザイン）
        ↓
@@ -146,7 +170,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 ### ステップ別のコツ
 
-- **1. プロジェクト作成**：左下のプロジェクトピッカーで組織を選んでから新規作成。組織のデザインシステム（公開済み）が自動で適用されます。
+- **1. 作成**：会話や Artifacts タブから始めます。組織の既定のデザインシステムが自動で適用され、別のデザインシステムを付けることもできます。
 - **2. コンテキスト追加**：競合プロダクトのスクリーンショット、既存 LP の URL、社内 PPTX / DOCX / XLSX、**Web キャプチャ**（既存サイトから要素を取り込む）などを最初にまとめて渡すと、トーンと文脈が安定します。
 - **3. 要件記述**：いきなり全機能を盛り込まず、**まず骨格だけ** を作るのが鉄則です（後述のプロンプトのコツ参照）。
 - **4. レビュー**：「コントラスト比」「情報階層」「アクセシビリティ」も Claude にレビューさせられます。
@@ -185,9 +209,22 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 ## G. デザインシステムをセットアップする
 
-組織のブランドに揃えたアウトプットを得るための、いちばん重要な準備です。
+組織のブランドに揃えたアウトプットを得るための、いちばん重要な準備です。デザインシステムは Pro・Max・Ultra・Team・Enterprise プランで使え（公式は beta 扱い）、Pro・Max・Ultra・Team では既定でオン、Enterprise ではオーナーが **Organization settings > Artifacts** で有効にする必要があります。
 
-### セットアップ手順
+### Claude の中で作る
+
+現在の作り方は次の 2 通りです。
+
+| 方法 | 向いているもの |
+| --- | --- |
+| **チャットで頼む** | 接続済みのアプリ・アップロードしたファイル・Figma ファイル・スライド・ロゴ・フォントから作る。フォントや色、ガイドラインが中心のブランド向け |
+| **Claude Code の `/design-sync`** | React コンポーネントなど、コードとして存在するデザインシステムのトークンとコンポーネントを直接読み込む。プロダクトのデザインシステム向け |
+
+作ったデザインシステムは **Settings > Capabilities** の Design systems の「Manage」から管理します。スタンドアロン版で作ったものは、B 節の手順で Claude へ移行できます（移行後、各デザインシステムに表示されるバナーの「Let Claude clean it up」で整理させられます）。
+
+### スタンドアロン版でのセットアップ手順
+
+以下はスタンドアロン版 claude.ai/design での手順です。**スタンドアロン版は 2026 年 12 月 14 日に終了** するため、新しく作る場合は上の「Claude の中で作る」方法を使ってください。
 
 ```text
 1. Claude Design を開く
@@ -226,7 +263,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 ### デザインシステムの一覧と公開
 
-作成したデザインシステムは「Design systems」タブで一覧管理します。各システムには **Published トグル** があり、オンにすると組織内の全プロジェクトに適用されます。`Make default` で既定システムも指定できます。
+スタンドアロン版では、作成したデザインシステムを「Design systems」タブで一覧管理します。各システムには **Published トグル** があり、オンにすると組織内の全プロジェクトに適用されます。`Make default` で既定システムも指定できます。
 
 ![Design systems タブの一覧画面。複数のデザインシステムが並び、それぞれに Published トグルと Make default ボタンが表示されている](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/DesignSystems.png)
 
@@ -286,13 +323,14 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | --- | --- |
 | PDF | 顧客提案・印刷物・ステークホルダー向けレビュー |
 | PPTX | 社内プレゼン・登壇資料 |
+| Google Slides | Google スライドでの共同編集 |
 | HTML | LP プレビュー・実機での確認 |
 | ZIP | コード化の起点として手元で扱う |
 | Canva | デザイナーによる仕上げ・チーム編集 |
 | **Handoff to Claude Code** | ハンドオフバンドルで実装に進む（経路は下表） |
 
 > [!NOTE]
-> Canva に加えて、**Adobe・Base44・Vercel・Replit・Gamma・Lovable・Miro・Wix** などの外部サービスへ直接送れます。連携先は今後変わる可能性があります。
+> Canva に加えて、**Adobe・Base44・Gamma・HubSpot・Lovable・Miro・Netlify・Replit・v0・Vercel・Wix** などの外部サービスへ直接送れます。連携先は今後変わる可能性があります。
 
 実装への引き継ぎは、[Share] メニューの **「Handoff to Claude Code…」** を選ぶと、続けて次の経路を選べます。
 
@@ -303,7 +341,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 ### 組織内での共有
 
-エクスポート以外に、組織内の **共有リンク**（閲覧のみ / コメント / 編集）でステークホルダーにレビューしてもらえます。実装前のすり合わせに使います。
+デザインは最初は自分だけが見られる状態で作られます。「Share」から共有相手と権限（閲覧 / コメント / 編集）を選ぶと、ステークホルダーにレビューしてもらえます。実装前のすり合わせに使います。
 
 ### Claude Code へのハンドオフ
 
@@ -341,27 +379,30 @@ Claude Design と Claude Code は **双方向に同期** できます。ハン�
 
 ## J. 既知の問題と落とし穴
 
-beta 段階のため、執筆時点で次の問題が報告されています。
+公式ドキュメントには、次の制限事項が挙げられています。
 
-| 症状 | 回避策 |
+| 症状・制限 | 回避策 |
 | --- | --- |
-| インラインコメントが消える | チャットに同じ内容を貼り直す |
-| コンパクトビューで保存エラー | ビューを標準に戻してから保存 |
-| 大規模コードベースのリンク時にラグ | 必要な範囲だけスコープを絞る |
-| チャットの上流エラー | 新しいタブでプロジェクトを開き直す |
+| インラインコメントがページ上に表示されないことがある | コメントビューを開けば確認できる。Claude に拾われない場合はチャットに同じ内容を貼り直す |
+| 大規模コードベースのリンク時にラグやブラウザの不調 | 大きなリポジトリは Claude Code から `/design-sync` で取り込む |
+| チャットの上流エラー（chat upstream error） | 同じプロジェクト内で新しいチャットタブを開く |
+| 複数人の同時編集がまだ基本的な機能のみ | 同時に編集する人数を絞る |
+| バージョン履歴がない | 「今の状態を保存して別案を試して」と Claude に頼み、途中の版を残す |
+| モバイルアプリで共有設定を変更できない | Web かデスクトップで変更する |
 
 本番プロダクトの納品物として依存させる前に、エクスポート結果と Claude Code 側の実装品質を **小さなプロジェクトで検証** することをおすすめします。
 
 ## まとめ
 
 - Claude Design は「実装前のビジュアル設計」を担当する Anthropic Labs の新製品（**インタラクティブプロトタイプ**含む）
-- 入口は **[claude.ai/design](https://claude.ai/design)・デスクトップアプリ・Claude Code の `/design`** など複数あり、UI は **左チャット + 右キャンバス**
-- 利用量は **チャット・Claude Code とは別メーター**（週次枠 + usage credits）
+- **Free を含む全プラン** で利用でき、入口は **会話・Artifacts タブ・Claude Code の `/design`・モバイルアプリ** など複数。UI は **左チャット + 右キャンバス**
+- スタンドアロン版 **claude.ai/design は 2026-12-14 に終了**。デザインシステムとプロジェクトは終了前に Claude へ移行する
+- 利用量は **チャット・Claude Code と共通のプラン上限** に合算（専用枠はなし。usage credits で継続可能）
 - 推奨ワークフローは **作成 → コンテキスト → 要件 → レビュー → 反復** の 5 ステップ
 - プロンプトは **目標・レイアウト・コンテンツ・対象ユーザー** を含めて段階的に複雑さを足す
-- デザインシステムを組織にセットアップし、[Published] にすると全プロジェクトに自動適用（複数システムも可）
+- デザインシステムはチャットか Claude Code の `/design-sync` で作り、組織の既定にすると新しいデザインに自動適用（複数システムも可）
 - エクスポートから **Claude Code へのハンドオフ**（ローカル / Web 経由含む）で実装まで一気通貫。`/design-sync`・`/design` によるデザイン⇔コードの双方向同期に対応
-- beta 段階のため、既知の不具合に留意して小規模検証から始める
+- 既知の制限事項（コメント表示・同時編集・バージョン履歴など）に留意して小規模検証から始める
 
 ## 関連リソース
 
@@ -369,4 +410,6 @@ beta 段階のため、執筆時点で次の問題が報告されています。
 - [Set up your design system in Claude Design (Claude Help Center)](https://support.claude.com/en/articles/14604397-set-up-your-design-system-in-claude-design)
 - [Manage usage credits for paid Claude plans (Claude Help Center)](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans)
 - [Claude Design admin guide for Team and Enterprise plans (Claude Help Center)](https://support.claude.com/en/articles/14604406-claude-design-admin-guide-for-team-and-enterprise-plans)
+- [Move from standalone Claude Design to Claude (Claude Help Center)](https://support.claude.com/en/articles/17440474-move-from-standalone-claude-design-to-claude)
+- [Artifacts admin guide for Team and Enterprise plans (Claude Help Center)](https://support.claude.com/en/articles/16994751-artifacts-admin-guide-for-team-and-enterprise-plans)
 - [Introducing Claude Design by Anthropic Labs](https://www.anthropic.com/news/claude-design-anthropic-labs)

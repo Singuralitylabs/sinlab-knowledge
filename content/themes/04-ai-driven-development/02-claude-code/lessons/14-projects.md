@@ -54,7 +54,7 @@ Projects のスレッドは、原則として **クラウドセッション** �
 | **プロジェクト会話**（コーディネーター） | 長く続く 1 本の会話。Claude が受け取った仕事を「その場で答える」「新しいスレッドにする」「既存スレッドに回す」に振り分け、起動したスレッドをすべて追跡する。見えるのはスレッドからの報告で、スレッドの一挙一動ではない |
 | **スレッド**（ワーカー） | 実際に作業する独立したクラウドセッション。自分のブランチ・クローン・コンテキストウィンドウを持ち、必要に応じて PR を開き、終わると会話に報告する |
 | **全スレッドが共有するもの** | プロジェクトのリポジトリとファイル、**プロジェクト指示**、**プロジェクトメモリ**／各リポジトリの `CLAUDE.md` と skills（リポジトリが 1 つなら permission rules と hooks も）／claude.ai アカウントのコネクタ／クラウド環境（ネットワーク・環境変数・API 認証情報・ツール） |
-| **Overview ペイン** | 全スレッドの状態を一覧する画面。**Threads**（状態別の一覧）/ **Library**（追加したファイルとスレッドが作ったファイル）/ **Pull requests** / **Routines** のタブを持つ |
+| **Overview ペイン** | 全スレッドの状態を一覧する画面。**Threads**（状態別の一覧）/ **Library**（追加したファイルとスレッドが作ったファイル）/ **Pull requests** / **Scheduled tasks**（旧 Routines）のタブを持つ |
 
 ![Projects の構成図。あなたがプロジェクト会話に仕事を送ると、コーディネーターの Claude がその場で答えるかスレッドを起動する。各スレッドは独自のブランチと PR を持つクラウドセッションで、リポジトリ・プロジェクト指示・プロジェクトメモリ・コネクタ・クラウド環境を共有する。Overview ペインはスレッドを状態別に一覧する](/content-assets/04-ai-driven-development/02-claude-code/images/projects/project-structure.png)
 
@@ -93,7 +93,7 @@ Projects のスレッドは、原則として **クラウドセッション** �
 | --- | --- |
 | 1 セッションで終わる単発の作業（「不安定なテストを直して」） | クラウドセッションを自分で 1 本起動する |
 | **すべての** タスクが手元のマシンを必要とする作業（ローカル DB・エミュレータ・VPN の内側の API） | ローカルセッション、または複数のローカルセッションを管理する **agent view**。手元のファイルだけが必要なら、プロジェクトにアップロードする |
-| 会話を伴わない定期実行（「毎週月曜に依存関係レポートを投稿」） | 単独の [Routine](/themes/04-ai-driven-development/02-claude-code/routines) |
+| 会話を伴わない定期実行（「毎週月曜に依存関係レポートを投稿」） | 単独の [クラウドスケジュールタスク](/themes/04-ai-driven-development/02-claude-code/routines)（旧 Routine） |
 | 複数人が Slack チャンネルで一緒に指示・操作したい | [Claude Tag](https://claude.com/docs/claude-tag/overview)（Team / Enterprise 向け） |
 
 ## プロジェクトを作る
@@ -136,7 +136,7 @@ GitHub の準備はプロジェクトごとではなく、基本的に 1 回で�
 > [!NOTE]
 > 表示言語が日本語の場合、画面上のボタンや項目名は日本語で表示されます（**New project** → 「新規プロジェクト」、**Goal** → 「目標」、**Overview** → 「スレッド」タブ、**Project settings** → 「設定」など）。本文では公式ドキュメントに合わせて英語の名称で書いています。
 
-**Create project** を押すと、プロジェクト会話が開きます。**初めてのプロジェクト** では、作成直後に Claude が自発的に 1 ターン動きます（このターンもプランの使用量を消費します。作成直後にこちらが先にメッセージを送った場合は動きません）。リポジトリがあれば **何も変更せずに探索して次の一手を提案するスレッド** を 1 本起動したり、最近のクラウドセッションをもとに **Setup recommendations**（追加すべきリポジトリ・作るべき Routine・始められるスレッド）を提示したりします。推薦されたリポジトリと Routine は最初からすべてオンになっているので、不要なものをオフにしてから **Update setup** を押します。
+**Create project** を押すと、プロジェクト会話が開きます。**初めてのプロジェクト** では、作成直後に Claude が自発的に 1 ターン動きます（このターンもプランの使用量を消費します。作成直後にこちらが先にメッセージを送った場合は動きません）。リポジトリがあれば **何も変更せずに探索して次の一手を提案するスレッド** を 1 本起動したり、最近のクラウドセッションをもとに **Setup recommendations**（追加すべきリポジトリ・作るべきスケジュールタスク・始められるスレッド）を提示したりします。推薦されたリポジトリとスケジュールタスクは最初からすべてオンになっているので、不要なものをオフにしてから **Update setup** を押します。
 
 > [!TIP]
 > プロジェクトの範囲は「継続的に仕事を足していく 1 つの流れ」に絞るのがコツです。リポジトリも、関係しそうなものを全部ではなく **ほとんどのタスクが触る 1〜2 個** に絞り、残りはプロジェクト指示に「どこに何があるか」を書いておきます。スレッドは必要なときに自分でリポジトリを追加できます（そのスレッドだけに追加されます）。プロジェクトにすでにリポジトリがある場合、Claude が追加できるのは同じ GitHub オーナーのリポジトリに限られ、別のオーナーのリポジトリは自分で **Project settings > Environment** から追加します。
@@ -323,7 +323,7 @@ Claude はこうした好みを自分でプロジェクトメモリに保存し�
 実行中のスレッドも、見張り中の PR も、新しいメッセージもないプロジェクトは、放置していても消費しません（アーカイブしたプロジェクトも同様）。
 
 > [!WARNING]
-> スレッドがプランの上限（5 時間枠・週枠）に達すると、**自動で再試行を続け、枠がリセットされたら作業を再開します**。放置していた作業が、次の利用枠を黙って使い始めるということです。次の枠を使わせたくない場合は、スレッドで **Stop** を押すか、**Project settings > General** の **Pause** でプロジェクト全体を止めます。**Project settings > General** には「使用量上限のリセット時に自動で続行」のトグルもあり、オフにするとプロジェクト内のすべてのスレッドが上限リセット後に自動で再開しなくなります。なお、Routine から起動したスレッドだけは待たずにエラーで止まります。
+> スレッドがプランの上限（5 時間枠・週枠）に達すると、**自動で再試行を続け、枠がリセットされたら作業を再開します**。放置していた作業が、次の利用枠を黙って使い始めるということです。次の枠を使わせたくない場合は、スレッドで **Stop** を押すか、**Project settings > General** の **Pause** でプロジェクト全体を止めます。**Project settings > General** には「使用量上限のリセット時に自動で続行」のトグルもあり、オフにするとプロジェクト内のすべてのスレッドが上限リセット後に自動で再開しなくなります。なお、スケジュールタスク（旧 Routine）から起動したスレッドだけは待たずにエラーで止まります。
 
 使用量は **Project settings > Usage** で、スレッド別・モデル別・会話分に分けて確認できます。減らすための主な方法は次の 3 つです。
 
@@ -353,7 +353,7 @@ Claude Code には、複数の作業を同時に進める方式が 5 つあり�
 | --- | --- |
 | **Worktree** | ローカルで並列セッションが同じファイルを上書きし合わないための仕組み。クラウドのスレッドはそれぞれ専用のクローンとブランチで動くため **不要**。自分のパソコンで動かすスレッドには、フォルダのオプションの **Worktree** か `claude remote-control --spawn worktree` で worktree を持たせられる。同じコードを触ったスレッド同士の衝突は、通常の PR と同じくマージコンフリクトとして解決する |
 | **Remote Control** | claude.ai と自分のマシン上の Claude Code セッションをつなぐ仕組み。プロジェクトでスレッドを自分のパソコンで動かすときに使われる |
-| **Routines** | プロジェクト内で定期的な仕事を頼むと、Claude がそのプロジェクトのスレッドとして動く Routine を作り、**Routines** タブに載せる。プロジェクト外で作った Routine はこれまでどおり単独で動く（[Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines)） |
+| **Scheduled tasks**（旧 Routines） | プロジェクト内で定期的な仕事を頼むと、Claude がそのプロジェクトのスレッドとして動くクラウドスケジュールタスクを作り、**Scheduled tasks** タブに載せる。プロジェクト外で作ったタスクはこれまでどおり単独で動く（[スケジュールタスク（旧 Routines）と定期実行](/themes/04-ai-driven-development/02-claude-code/routines)） |
 | **Claude Tag** | Team / Enterprise 向けの Slack 上の Claude。チャンネルの誰もが指示でき、全員が見られる。プロジェクトは **自分専用** で、自分の GitHub アクセスとコネクタを使う |
 | **claude.ai chat / Cowork の旧 Projects** | 会話と参考ファイルをまとめる **フォルダ型** の従来機能で、スレッドもコーディネーターもない。新しい Projects はこれを作り直したもので、新しい体験が届くまでは従来どおり動き、その後順次移行される予定（[Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork)） |
 | **CLI の `claude project` コマンド** | ディレクトリ単位のローカル状態を管理するコマンドで、Projects とは **無関係** |
@@ -390,7 +390,7 @@ Claude Code には、複数の作業を同時に進める方式が 5 つあり�
 ## 関連ページ
 
 - [サブエージェント](/themes/04-ai-driven-development/02-claude-code/agents) — セッション内で働く下請けの仕組み。スレッドとの違いの前提
-- [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — Cloud Routines の作り方。プロジェクト内で作った Routine は **Routines** タブに載る
+- [スケジュールタスク（旧 Routines）と定期実行](/themes/04-ai-driven-development/02-claude-code/routines) — クラウドスケジュールタスク（旧 Cloud Routines）の作り方。プロジェクト内で作ったタスクは **Scheduled tasks** タブに載る
 - [メモリとコンテキスト管理](/themes/04-ai-driven-development/02-claude-code/memory) — `CLAUDE.md` と手元の自動メモリ。プロジェクトメモリとの違い
 - [高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced) — `--cloud` / `--teleport` などセッションの移動
 - [Claude Cowork](/themes/04-ai-driven-development/02-claude-code/cowork) — Cowork 側の従来型プロジェクト
@@ -398,4 +398,4 @@ Claude Code には、複数の作業を同時に進める方式が 5 つあり�
 - [Run agents in parallel（並列化 5 方式の比較・公式ドキュメント）](https://code.claude.com/docs/en/agents)
 - [Use Claude Code in the cloud（クラウドセッション・公式ドキュメント）](https://code.claude.com/docs/en/claude-code-on-the-web)
 - [Configure cloud environments（公式ドキュメント）](https://code.claude.com/docs/en/cloud-environments)
-- [Projects redesigned: from folder to conversation（Anthropic Blog）](https://claude.com/blog/projects-redesigned)
+- [Projects redesigned: from folder to conversation（Anthropic Blog）](https://claude.com/resources/articles/projects-redesigned)
