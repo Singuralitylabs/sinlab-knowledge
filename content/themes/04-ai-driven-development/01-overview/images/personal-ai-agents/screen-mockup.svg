@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 640" width="420" height="640" role="img" aria-labelledby="title-mock">
+  <title id="title-mock">常駐型 AI アシスタントの画面イメージ（架空）：1 本のスレッドに朝のブリーフ、対応漏れの通知、承認待ちのカードが並ぶ</title>
+  <style>
+    .h { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-weight: 700; fill: #312e81; }
+    .t { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #374151; }
+    .s { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #6b7280; }
+    .w { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; font-weight: 700; fill: #ffffff; }
+  </style>
+
+  <!-- phone frame -->
+  <rect x="10" y="10" width="400" height="620" rx="36" fill="#1f2937"/>
+  <rect x="22" y="22" width="376" height="596" rx="26" fill="#f9fafb"/>
+
+  <!-- header -->
+  <rect x="22" y="22" width="376" height="62" rx="26" fill="#eef2ff"/>
+  <rect x="22" y="58" width="376" height="26" fill="#eef2ff"/>
+  <circle cx="58" cy="54" r="16" fill="#6366f1"/>
+  <text class="w" x="58" y="60" font-size="15" text-anchor="middle">AI</text>
+  <text class="h" x="84" y="50" font-size="16">アシスタント</text>
+  <text class="s" x="84" y="70" font-size="12">● 稼働中（クラウド）</text>
+  <text class="s" x="330" y="52" font-size="12">タスク</text>
+  <text class="s" x="330" y="70" font-size="12">成果物</text>
+
+  <!-- morning brief -->
+  <text class="s" x="210" y="106" font-size="11" text-anchor="middle">7:30</text>
+  <rect x="36" y="114" width="340" height="132" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
+  <text class="h" x="52" y="140" font-size="14">☀️ 今日のブリーフ</text>
+  <text class="t" x="52" y="166" font-size="13">・要返信のメール 3 件（うち 1 件は期限今日）</text>
+  <text class="t" x="52" y="188" font-size="13">・10:00 定例会議 — 事前メモを用意しました</text>
+  <text class="t" x="52" y="210" font-size="13">・15:00 の打ち合わせが移動時間と重なって</text>
+  <text class="t" x="64" y="230" font-size="13">います</text>
+
+  <!-- proactive alert -->
+  <text class="s" x="210" y="268" font-size="11" text-anchor="middle">13:05</text>
+  <rect x="36" y="276" width="340" height="72" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
+  <text class="t" x="52" y="302" font-size="13">A 社への返信が 2 日止まっています。</text>
+  <text class="t" x="52" y="324" font-size="13">返信の下書きを用意しました。</text>
+
+  <!-- approval card -->
+  <rect x="36" y="358" width="340" height="140" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5"/>
+  <text class="h" x="52" y="384" font-size="13" style="fill:#92400e">承認が必要です：メールを送信</text>
+  <text class="s" x="52" y="408" font-size="12">宛先：a-sha@example.com</text>
+  <text class="t" x="52" y="430" font-size="12">「先日はありがとうございました。ご依頼の…」</text>
+  <rect x="52" y="450" width="120" height="34" rx="17" fill="#4f46e5"/>
+  <text class="w" x="112" y="472" font-size="13" text-anchor="middle">承認して送信</text>
+  <rect x="184" y="450" width="120" height="34" rx="17" fill="#ffffff" stroke="#d1d5db"/>
+  <text class="t" x="244" y="472" font-size="13" text-anchor="middle">修正する</text>
+
+  <!-- user message -->
+  <rect x="140" y="514" width="246" height="50" rx="14" fill="#6366f1"/>
+  <text class="w" x="156" y="536" font-size="12" style="font-weight:400">来週の出張、予算内の便を</text>
+  <text class="w" x="156" y="554" font-size="12" style="font-weight:400">調べてまとめておいて</text>
+
+  <!-- composer -->
+  <rect x="36" y="578" width="348" height="30" rx="15" fill="#ffffff" stroke="#e5e7eb"/>
+  <text class="s" x="52" y="598" font-size="12">メッセージを入力…</text>
+</svg>

@@ -187,6 +187,7 @@ Cowork が行った操作の結果（コンテンツの公開・金銭のやり�
 - [Plugins](/themes/04-ai-driven-development/02-claude-code/plugins) — Cowork の「Knowledge Work」マーケットプレイスが乗っている、Claude Code 共通のプラグイン基盤
 - [Claude Design との連携](/themes/04-ai-driven-development/02-claude-code/claude-design) — 同じ「関連プロダクト紹介」枠の先行例
 - [Claude Code Projects](/themes/04-ai-driven-development/02-claude-code/projects) — 再設計された新しい Projects（Claude Code で先行ベータ）
+- [常駐型AIアシスタント入門](/themes/04-ai-driven-development/01-overview/personal-ai-agents) — 頼まれる前に動く Claude Duet などのサービスと、Cowork のスケジュールタスクとの違い
 - [Get started with Claude Cowork (Claude Help Center)](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
 - [Use Claude Cowork safely (Claude Help Center)](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely)
 - [Use Claude Cowork on web, desktop, and mobile (Claude Help Center)](https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile)

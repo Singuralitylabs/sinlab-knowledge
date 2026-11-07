@@ -255,6 +255,7 @@ keyway run -- npm run dev    # メモリに注入して実行
 - [クラウド環境での開発](/themes/04-ai-driven-development/03-development-practice/cloud-dev-environment) — 多層防御の第 3 層をクラウド環境で具体化する方法
 - [Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced) — 権限モード（acceptEdits / bypassPermissions）の詳細
 - [AI開発の基本ループ](/themes/04-ai-driven-development/03-development-practice/ai-development-loop) — 計画モードと差分承認の位置づけ
+- [常駐型AIアシスタント入門](/themes/04-ai-driven-development/01-overview/personal-ai-agents) — メールや各種アカウントに広くアクセスする AI エージェントを使うときの注意点
 
 ## 参考リソース
 
