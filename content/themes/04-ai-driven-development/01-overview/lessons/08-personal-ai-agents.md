@@ -118,7 +118,12 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 ここからは、話題の 3 サービス（Grok Bot・Meta Muse・Claude Duet）を詳しく、同じカテゴリの OpenAI dots・Gemini Spark・Microsoft Scout を短めに紹介します。
 
+> [!NOTE]
+> 各サービスの見出しに付けたバッジは、本サイトが独自に作成した目印です。各社の公式ロゴやアイコンではありません（ロゴは各社の商標で、利用には許可が必要な場合があるため使用していません）。
+
 ### Grok Bot（xAI）— 職務ごとに置く「AI チームメイト」
+
+![Grok Bot（xAI）：チーム向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-grok-bot.svg)
 
 - **提供元**：xAI（SpaceX 傘下の AI 部門。SpaceXAI とも表記されます）。2026 年 8 月 11 日に早期ベータとして公開
 - **コンセプト**：1 体 1 役割の **Bot を何体も置く** のが特徴です。「営業リストの作成」「経費の処理」「バグの再現」のように仕事ごとに Bot を作り、Bot 同士がグループチャットで仕事を受け渡します
@@ -128,6 +133,8 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 - **向いている人**：定型業務をいくつも抱える個人事業主や、営業・運用などの業務をチームで回している組織
 
 ### Meta Muse — 生活まわりを任せる消費者向けエージェント
+
+![Muse（Meta）：生活向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-muse.svg)
 
 - **提供元**：Meta。2026 年 9 月 8 日に米国で発表。**2026 年 10 月 23 日に日本で提供開始**（北米以外で初）
 - **コンセプト**：技術的な知識がなくても使える、**一般の人の日常を手伝う** エージェントです。名前やアバター、話し方を自分好みに設定できます
@@ -139,6 +146,8 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 ### Claude Duet（Anthropic）— 仕事の「見落とし」を拾う秘書
 
+![Claude Duet（Anthropic）：仕事向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-claude-duet.svg)
+
 - **提供元**：Anthropic。2026 年 10 月 21 日に研究プレビューとして公開
 - **コンセプト**：**専門職や小規模事業者** 向けに、「追いきれないほどの仕事」を抱える人の見落としを防ぐことに重点を置いています。モデルは Claude Opus 5.5 です
 - **できること**：毎朝のブリーフ、数時間ごとのアカウント確認と通知、会議日程の調整、ダッシュボード・売上予測・Web アプリの作成など。QuickBooks や Stripe で未払いの請求書を見つけて督促メールを下書きする、といった業務例が紹介されています
@@ -149,6 +158,8 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 ### OpenAI dots
 
+![dots（OpenAI）：ChatGPT 内](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-dots.svg)
+
 - 2026 年 9 月 29 日に発表された、**ChatGPT の中で動く常駐エージェント** です。モデルは GPT-6 Astra
 - 予定調整・旅行手配・家計管理・コード作業などを担当し、Slack や Microsoft Teams、音声通話からも呼び出せます。重い開発作業は Codex に引き継げます
 - 操作の種類ごとに「確認なしで実行」「指示したときだけ実行」「実行前に確認」「人に引き継ぐ」の 4 段階で任せ方を決める **Custom Rules** が特徴です
@@ -156,12 +167,16 @@ AI 専用のコンピュータで動くため、依頼したら PC を閉じて�
 
 ### Gemini Spark（Google）
 
+![Gemini Spark（Google）：Google 連携](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-gemini-spark.svg)
+
 - 2026 年 5 月 19 日の Google I/O で発表された **24 時間稼働の個人向けエージェント** です。モデルは Gemini 3.5 Flash
 - Gmail・ドキュメント・スプレッドシートなど **Google のサービスとの連携が強み** で、提携アプリやカスタム MCP サーバーとも接続できます。手順を「スキル」として覚えて再利用できます
 - 日本では 2026 年 7 月 16 日に Google AI Ultra 向けに提供が始まり、その後 Google AI Pro にも拡大されました
 - 重要な操作の前にはユーザーに確認を求めます
 
 ### Microsoft Scout
+
+![Scout（Microsoft）：企業向け](/content-assets/04-ai-driven-development/01-overview/images/personal-ai-agents/badge-scout.svg)
 
 - 2026 年 6 月 2 日の Microsoft Build で発表された、常駐型エージェント「Autopilots」の第 1 弾です
 - **Microsoft 365（Outlook・Teams）を見張り**、対応が必要なメールや予定を知らせ、会議の準備を手伝います
