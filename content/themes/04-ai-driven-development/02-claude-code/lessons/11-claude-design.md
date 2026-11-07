@@ -150,7 +150,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 | 全体方針を変える（トーン・構成・追加機能） | 左のチャット |
 | 個別要素をピンポイントで修正 | 右のキャンバス上の要素をクリック |
 | 素材を渡す（画像・PPTX・PDF・DOCX・XLSX・コードベース） | 左のチャットに添付 |
-| 共有・エクスポート | 右上の [Share] ボタン |
+| 共有・エクスポート | 右上の Share / Export ボタン |
 
 ## E. ワークフロー：5 ステップで進める
 
@@ -315,7 +315,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 
 ## I. 共有・エクスポートと Claude Code へのハンドオフ
 
-キャンバス右上の **[Share] ボタン**（以前は Export という名称でした）から、共有・エクスポート・ハンドオフをまとめて選べます。用途に応じて以下を選びます。
+Claude の Artifact として開いた場合は、右上の **Export** ボタンからエクスポート・ハンドオフを選び、共有は別の **Share** ボタンから行います（下のスクリーンショットのスタンドアロン版では、これらが **[Share]** メニューにまとまっています）。用途に応じて以下を選びます。
 
 ![Share メニューの展開状態。アクセス権（Teammates can comment）と Copy link、Duplicate project、Download project as .zip、Export as PDF / PPTX / standalone HTML、Send to Canva、Handoff to Claude Code の項目が並ぶ](/content-assets/04-ai-driven-development/02-claude-code/images/claude-design/ShareMenu.png)
 
@@ -332,7 +332,7 @@ Claude Design の UI は **左にチャット、右にキャンバス** の 2 �
 > [!NOTE]
 > Canva に加えて、**Adobe・Base44・Gamma・HubSpot・Lovable・Miro・Netlify・Replit・v0・Vercel・Wix** などの外部サービスへ直接送れます。連携先は今後変わる可能性があります。
 
-実装への引き継ぎは、[Share] メニューの **「Handoff to Claude Code…」** を選ぶと、続けて次の経路を選べます。
+実装への引き継ぎは、Export メニュー（スタンドアロン版では [Share] メニュー）の **「Handoff to Claude Code…」** を選ぶと、続けて次の経路を選べます。
 
 | 経路 | 向いている場面 |
 | --- | --- |
