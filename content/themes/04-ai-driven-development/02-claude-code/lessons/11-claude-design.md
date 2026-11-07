@@ -348,7 +348,7 @@ Claude の Artifact として開いた場合は、右上の **Export** ボタン
 上記のいずれかを選ぶと、デザインを再現するために必要な情報がまとまった **ハンドオフバンドル** が生成されます。
 
 ```text
-[Claude Design] Share → Claude Code（いずれかの経路）
+[Claude Design] Export（スタンドアロン版では Share）→ Claude Code（いずれかの経路）
        │
        ├─ ハンドオフバンドル（構造・コンポーネント・
        │   デザイントークン・実装指示）
