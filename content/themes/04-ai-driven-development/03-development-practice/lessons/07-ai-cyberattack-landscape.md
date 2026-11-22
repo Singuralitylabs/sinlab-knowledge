@@ -62,7 +62,7 @@ status: published
 
 これまで AI は、攻撃者にとって「調べものや文章作成を手伝う道具」でした。2025 年以降、そこから一歩進んで、**攻撃の作業そのものを AI エージェントが実行する**事例が報告されています。
 
-**2025 年 11 月、Anthropic** は「初めて報告された、AI が主導するサイバー諜報活動」として、同社が GTG-1002 と名付けた中国の国家支援グループ（国の後ろ盾があるとみられる攻撃者集団）による活動を[公表](https://assets.anthropic.com/m/ec212e6566a0d47/original/Disrupting-the-first-reported-AI-orchestrated-cyber-espionage-campaign.pdf)しました。諜報活動とは、相手の機密情報を盗み出すことを目的とした活動です。攻撃者は AI コーディングツールの Claude Code を悪用し、約 30 の組織を標的に、偵察（標的のシステム構成などの下調べ）・脆弱性の発見・侵入といった作業を進めさせていました。報告によれば、**戦術的な作業の 80〜90% を AI が独立して実行**しており、人間が判断したのは要所だけでした。一方で、侵入に成功したのは**少数**にとどまっています。Anthropic は関連アカウントを停止し、対象組織や当局へ通知しています。
+**2025 年 11 月、Anthropic** は「初めて報告された、AI が主導するサイバー諜報活動」として、同社が GTG-1002 と名付けた中国の国家支援グループ（国の後ろ盾があるとみられる攻撃者集団）による活動を[公表](https://assets.anthropic.com/m/ec212e6566a0d47/original/Disrupting-the-first-reported-AI-orchestrated-cyber-espionage-campaign.pdf)しました。諜報活動とは、相手の機密情報を盗み出すことを目的とした活動です。攻撃者は AI コーディングツールの Claude Code を悪用し、約 30 の組織を標的に、偵察（標的のシステム構成などの下調べ）・脆弱性の発見・侵入といった作業を進めさせていました。報告によれば、**戦術的な作業（個々の具体的な攻撃作業）の 80〜90% を AI が独立して実行**しており、人間が判断したのは要所だけでした。一方で、侵入に成功したのは**少数**にとどまっています。Anthropic は関連アカウントを停止し、対象組織や当局へ通知しています。
 
 **2026 年 11 月 16 日、GTIG** は AI を悪用した攻撃の動向をまとめる「AI Threat Tracker」の[最新報告](https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold)で、**自律型の攻撃フレームワーク**を取り上げました。これは、複数の AI エージェントが「下調べ役」「弱点探し役」「侵入役」のように役割を分担し、人の指示を細かく待たずに攻撃を進める道具一式のことです（報告では ARTEX、CAIRN、CyberStrikeAI、PentAGI などの名前が挙がっています）。このうち CAIRN と PentAGI は、実際の侵入活動での使用が確認されています。
 
@@ -92,7 +92,7 @@ Web 開発者にとっての意味ははっきりしています。
 
 フィッシング（偽のメールやページで ID・パスワードを盗む手口）も変わりました。以前は「日本語が不自然だから怪しい」と見抜けることが多かったのですが、生成 AI を使えば**自然な日本語の文面を大量に作れます**。
 
-GTIG の[報告](https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold)では、中国語で提供されているフィッシングのサービス **Jieyou** が、2026 年 6 月の更新で **LLM のチャットアシスタントを組み込んだ**ことが紹介されています。PhaaS（Phishing as a Service）とは、フィッシングに必要な道具一式（偽サイトのひな形や管理画面など）を、Web サービスのように攻撃者へ提供する商売のことで、Jieyou はその一つです。フィッシングの「道具」そのものに AI が入り、専門知識のない攻撃者でも偽ページや文面を整えやすくなっています。
+GTIG の[報告](https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold)では、中国語で提供されているフィッシングのサービス **Jieyou** が、2026 年 6 月の更新で **LLM のチャットアシスタントを組み込んだ**ことが紹介されています。このように、フィッシングに必要な道具一式（偽サイトのひな形や管理画面など）を Web サービスのように攻撃者へ提供する商売は PhaaS（Phishing as a Service）と呼ばれ、Jieyou はその一つです。フィッシングの「道具」そのものに AI が入り、専門知識のない攻撃者でも偽ページや文面を整えやすくなっています。
 
 ここから言えるのは、**「文面が自然かどうか」で見分ける方法には頼れない**ということです。人間の注意力に頼るのではなく、**パスワードを盗まれても突破されにくい仕組み**（後述のパスキーや多要素認証）を用意しておくことが、より重要になっています。
 
@@ -115,7 +115,7 @@ GTIG の[報告](https://cloud.google.com/blog/topics/threat-intelligence/agenti
 
 ### AIのAPIキーが盗まれ、転売される — LLMjacking
 
-GTIG の[報告](https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold)では、侵入した企業の環境から **LLM の認証情報（API キーなど）やクラウド資源を盗み、その利用権を転売する**動きも取り上げられています。こうした行為は、LLM と「乗っ取り」を意味する hijacking を組み合わせて **LLMjacking** と呼ばれます。報告によれば、一部のケースでは 1 日の不正利用額が 10 万ドルを超え、最も深刻なケースでは対処までの累計が 100 万ドルに達しました。
+GTIG の[報告](https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold)では、侵入した企業の環境から **LLM の認証情報（API キーなど）やクラウド資源（クラウド上のサーバーなどの計算資源）を盗み、その利用権を転売する**動きも取り上げられています。こうした行為は、LLM と「乗っ取り」を意味する hijacking を組み合わせて **LLMjacking** と呼ばれます。報告によれば、一部のケースでは 1 日の不正利用額が 10 万ドルを超え、最も深刻なケースでは対処までの累計が 100 万ドルに達しました。
 
 AI の API キーは「お金を払って使う権利」そのものです。個人開発者のキーでも、漏れれば不正利用の請求が自分に届きます。**「自分は小さいから狙われない」は、もう当てはまりません。** API キーなどの秘密情報を AI ツールからどう守るかは、[AI駆動開発のセキュリティとsecrets管理](/themes/04-ai-driven-development/03-development-practice/ai-security-secrets) で詳しく扱っています。
 
