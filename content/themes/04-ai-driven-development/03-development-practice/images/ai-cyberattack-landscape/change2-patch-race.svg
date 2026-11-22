@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="800" height="320" role="img" aria-labelledby="title-c2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="800" height="340" role="img" aria-labelledby="title-c2">
   <title id="title-c2">変化2のイメージ：パッチ公開から攻撃開始までの時間。以前は人手で差分を解析するため時間がかかったが、今はAIで自動解析するため短くなった。利用者が更新するまでの間が狙われる期間になる</title>
   <defs>
-    <marker id="c2a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <marker id="c2a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6b7280" stroke-width="1.5"/>
     </marker>
   </defs>
@@ -15,7 +15,7 @@
     .ok { font-weight: 700; fill: #065f46; font-size: 15px; }
     .ng { font-weight: 700; fill: #9a3412; font-size: 15px; }
   </style>
-  <rect width="800" height="320" fill="#ffffff"/>
+  <rect width="800" height="340" fill="#ffffff"/>
   <text x="400" y="38" text-anchor="middle" class="t h">変化2: パッチ公開から攻撃までが速くなった</text>
 
   <line x1="150" y1="70" x2="150" y2="250" stroke="#4f46e5" stroke-width="2" stroke-dasharray="5 4"/>
@@ -32,11 +32,12 @@
   <text x="235" y="175" text-anchor="middle" class="t s">AIで自動解析</text>
   <rect x="320" y="154" width="150" height="32" rx="6" fill="#f97316"/>
   <text x="395" y="175" text-anchor="middle" class="t w">攻撃開始</text>
-  <line x1="470" y1="170" x2="610" y2="170" stroke="#6b7280" stroke-width="2" marker-end="url(#c2a)"/>
-  <text x="540" y="160" text-anchor="middle" class="t s">早まった分</text>
+  <line x1="476" y1="170" x2="612" y2="170" stroke="#6b7280" stroke-width="2" marker-start="url(#c2a)" marker-end="url(#c2a)"/>
+  <text x="544" y="160" text-anchor="middle" class="t s">早まった分</text>
 
   <rect x="150" y="210" width="620" height="40" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5"/>
   <text x="460" y="236" text-anchor="middle" class="ng t">自分が更新するまでの間 ＝ 狙われる期間。更新が遅いほど危ない</text>
 
-  <text x="400" y="292" text-anchor="middle" class="t s">例: PaperCut の脆弱性では、公表から 1 日以内に研究者が LLM で攻撃コードを再現、4 日後に広範な攻撃（GTIG, 2026-11）</text>
+  <text x="400" y="290" text-anchor="middle" class="t s">例: PaperCut の脆弱性では、公表から 1 日以内に研究者が LLM で攻撃コードを再現し、</text>
+  <text x="400" y="312" text-anchor="middle" class="t s">4 日後には攻撃者による広範な攻撃が確認された（GTIG, 2026-11）</text>
 </svg>

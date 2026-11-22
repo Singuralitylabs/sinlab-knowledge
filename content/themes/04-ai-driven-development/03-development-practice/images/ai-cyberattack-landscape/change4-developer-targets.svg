@@ -2,7 +2,7 @@
   <title id="title-c4">変化4のイメージ：開発者のPCを中心に、汚染された依存パッケージが入り込んで開発ツールに居座る経路と、AIのAPIキーが盗まれて転売され、不正利用の請求が届く経路の2つを示す</title>
   <defs>
     <marker id="c4a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#f97316" stroke-width="1.5"/>
     </marker>
   </defs>
   <style>
@@ -30,7 +30,7 @@
   <text x="125" y="124" text-anchor="middle" class="t s">正規の署名付きでも</text>
   <text x="125" y="142" text-anchor="middle" class="t s">中身が乗っ取られている</text>
   <line x1="232" y1="120" x2="284" y2="168" stroke="#f97316" stroke-width="2" marker-end="url(#c4a)"/>
-  <text x="125" y="186" text-anchor="middle" class="t ng">入り口 ① 依存パッケージ</text>
+  <text x="125" y="186" text-anchor="middle" class="t ng">経路 ① 依存パッケージ</text>
   <text x="125" y="208" text-anchor="middle" class="t s">ツールに居座り、削除しても残る</text>
   <text x="125" y="228" text-anchor="middle" class="t s">（Mini Shai-Hulud）</text>
 
@@ -39,7 +39,7 @@
   <text x="675" y="124" text-anchor="middle" class="t s">他人が勝手に AI を使い</text>
   <text x="675" y="142" text-anchor="middle" class="t s">利用料はキーの持ち主へ</text>
   <line x1="513" y1="207" x2="566" y2="140" stroke="#f97316" stroke-width="2" marker-end="url(#c4a)"/>
-  <text x="675" y="186" text-anchor="middle" class="t ng">入り口 ② API キー</text>
+  <text x="675" y="186" text-anchor="middle" class="t ng">経路 ② API キーの流出</text>
   <text x="675" y="208" text-anchor="middle" class="t s">漏れたキーが不正利用される</text>
   <text x="675" y="228" text-anchor="middle" class="t s">（LLMjacking）</text>
 
