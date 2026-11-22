@@ -17,7 +17,7 @@
     <text x="82" y="106" text-anchor="middle" class="t n">変化1</text>
     <text x="50" y="146" class="t b">攻撃の「実行」をAIが担う</text>
     <text x="50" y="172" class="t s">偵察・脆弱性探し・侵入の作業をAIが代行</text>
-    <text x="50" y="192" class="t s">（攻撃者の事例では人が要所で判断）</text>
+    <text x="50" y="192" class="t s">（自動化される範囲が広がりつつある）</text>
   </g>
   <g>
     <rect x="410" y="70" width="360" height="130" rx="14" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>

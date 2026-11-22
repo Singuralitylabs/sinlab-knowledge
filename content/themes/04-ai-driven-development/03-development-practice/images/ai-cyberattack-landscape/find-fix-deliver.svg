@@ -40,5 +40,5 @@
   <rect x="225" y="190" width="550" height="34" rx="17" fill="#f97316"/>
   <text x="500" y="212" text-anchor="middle" class="t lab" fill="#ffffff">人の仕事 — ここの速度が守りの強さを決める</text>
 
-  <text x="400" y="268" text-anchor="middle" class="t s">例: Project Glasswing の初回報告では、オープンソースに報告した 530 件のうち修正済みは 75 件（2026-05-22 時点）</text>
+  <text x="400" y="268" text-anchor="middle" class="t s">例: Glasswing の初回報告では、OSS に報告した高深刻度以上の約 530 件のうち修正確認は 75 件（2026-05-22 時点）</text>
 </svg>
