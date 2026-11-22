@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300" role="img" aria-labelledby="title-find-fix-deliver">
+  <title id="title-find-fix-deliver">脆弱性が利用者の手元で直るまでの流れ：発見はAIで大きく速くなったが、修正・リリース・利用者の更新は人の仕事で、ここが遅いと守りは強くならない</title>
+  <defs>
+    <marker id="ffd-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <style>
+    .t { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; }
+    .h { font-weight: 700; fill: #312e81; font-size: 22px; }
+    .b { font-weight: 700; fill: #1f2937; font-size: 18px; }
+    .s { fill: #4b5563; font-size: 13px; }
+    .lab { font-weight: 700; font-size: 15px; }
+  </style>
+  <rect width="800" height="300" fill="#ffffff"/>
+  <text x="400" y="42" text-anchor="middle" class="t h">見つけるのはAI、直して届けるのは人</text>
+
+  <rect x="30" y="80" width="160" height="90" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="110" y="120" text-anchor="middle" class="t b">発見</text>
+  <text x="110" y="146" text-anchor="middle" class="t s">AIで大量・高速に</text>
+
+  <rect x="225" y="80" width="160" height="90" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="305" y="120" text-anchor="middle" class="t b">修正</text>
+  <text x="305" y="146" text-anchor="middle" class="t s">コードを直してテスト</text>
+
+  <rect x="420" y="80" width="160" height="90" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="500" y="120" text-anchor="middle" class="t b">リリース</text>
+  <text x="500" y="146" text-anchor="middle" class="t s">修正版を公開する</text>
+
+  <rect x="615" y="80" width="160" height="90" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="695" y="120" text-anchor="middle" class="t b">更新</text>
+  <text x="695" y="146" text-anchor="middle" class="t s">利用者が取り込む</text>
+
+  <line x1="192" y1="125" x2="221" y2="125" stroke="#6b7280" stroke-width="2" marker-end="url(#ffd-arrow)"/>
+  <line x1="387" y1="125" x2="416" y2="125" stroke="#6b7280" stroke-width="2" marker-end="url(#ffd-arrow)"/>
+  <line x1="582" y1="125" x2="611" y2="125" stroke="#6b7280" stroke-width="2" marker-end="url(#ffd-arrow)"/>
+
+  <rect x="30" y="190" width="160" height="34" rx="17" fill="#4f46e5"/>
+  <text x="110" y="212" text-anchor="middle" class="t lab" fill="#ffffff">AIが速くした</text>
+  <rect x="225" y="190" width="550" height="34" rx="17" fill="#f97316"/>
+  <text x="500" y="212" text-anchor="middle" class="t lab" fill="#ffffff">人の仕事 — ここの速度が守りの強さを決める</text>
+
+  <text x="400" y="268" text-anchor="middle" class="t s">例: Project Glasswing の初回報告では、オープンソースに報告した 530 件のうち修正済みは 75 件（2026-05-22 時点）</text>
+</svg>
