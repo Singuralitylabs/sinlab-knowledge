@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" width="800" height="350" role="img" aria-labelledby="title-c1">
+  <title id="title-c1">変化1のイメージ：以前はAIが調べものや文章作成を手伝い、攻撃の作業は人間が行っていた。今はAIエージェントが偵察・脆弱性探し・侵入の作業を実行し、人間は要所で判断する</title>
+  <defs>
+    <marker id="c1a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <style>
+    .t { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; }
+    .h { font-weight: 700; fill: #312e81; font-size: 22px; }
+    .lab { font-weight: 700; fill: #374151; font-size: 16px; }
+    .b { font-weight: 700; fill: #1f2937; font-size: 16px; }
+    .s { fill: #4b5563; font-size: 13px; }
+    .w { font-weight: 700; fill: #ffffff; font-size: 14px; }
+    .ok { font-weight: 700; fill: #065f46; font-size: 15px; }
+    .ng { font-weight: 700; fill: #9a3412; font-size: 15px; }
+  </style>
+  <rect width="800" height="350" fill="#ffffff"/>
+  <text x="400" y="38" text-anchor="middle" class="t h">変化1: 攻撃の「実行」をAIが担うようになった</text>
+
+  <rect x="20" y="62" width="90" height="28" rx="14" fill="#9ca3af"/>
+  <text x="65" y="81" text-anchor="middle" class="t w">以前</text>
+  <rect x="130" y="56" width="200" height="80" rx="12" fill="#f3f4f6" stroke="#9ca3af" stroke-width="2"/>
+  <text x="230" y="92" text-anchor="middle" class="t b">AI</text>
+  <text x="230" y="116" text-anchor="middle" class="t s">調べもの・文章作成を手伝う</text>
+  <line x1="332" y1="96" x2="366" y2="96" stroke="#6b7280" stroke-width="2" marker-end="url(#c1a)"/>
+  <rect x="370" y="56" width="410" height="80" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="575" y="92" text-anchor="middle" class="t b">人間の攻撃者が作業する</text>
+  <text x="575" y="116" text-anchor="middle" class="t s">偵察・脆弱性探し・侵入を一つずつ手作業で</text>
+
+  <rect x="20" y="182" width="90" height="28" rx="14" fill="#4f46e5"/>
+  <text x="65" y="201" text-anchor="middle" class="t w">今</text>
+  <rect x="130" y="176" width="200" height="80" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="230" y="212" text-anchor="middle" class="t b">人間の攻撃者</text>
+  <text x="230" y="236" text-anchor="middle" class="t s">目標を与え、要所で判断</text>
+  <line x1="332" y1="216" x2="366" y2="216" stroke="#6b7280" stroke-width="2" marker-end="url(#c1a)"/>
+  <rect x="370" y="166" width="410" height="100" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="575" y="192" text-anchor="middle" class="t b">AIエージェントが作業を実行する</text>
+  <rect x="388" y="206" width="116" height="44" rx="8" fill="#ffffff" stroke="#a5b4fc"/>
+  <text x="446" y="233" text-anchor="middle" class="t s">偵察</text>
+  <rect x="517" y="206" width="116" height="44" rx="8" fill="#ffffff" stroke="#a5b4fc"/>
+  <text x="575" y="233" text-anchor="middle" class="t s">脆弱性探し</text>
+  <rect x="646" y="206" width="116" height="44" rx="8" fill="#ffffff" stroke="#a5b4fc"/>
+  <text x="704" y="233" text-anchor="middle" class="t s">侵入</text>
+
+  <text x="400" y="300" text-anchor="middle" class="t s">例: GTG-1002 では戦術的な作業の 80〜90% を AI が実行（Anthropic, 2025-11）</text>
+  <text x="400" y="322" text-anchor="middle" class="t s">人手を介さずに攻撃の実行まで進める仕組みも確認されている（GTIG, 2026-11）</text>
+</svg>

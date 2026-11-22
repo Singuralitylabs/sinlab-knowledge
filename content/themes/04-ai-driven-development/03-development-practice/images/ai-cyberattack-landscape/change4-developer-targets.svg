@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="800" height="340" role="img" aria-labelledby="title-c4">
+  <title id="title-c4">変化4のイメージ：開発者のPCを中心に、汚染された依存パッケージが入り込んで開発ツールに居座る経路と、AIのAPIキーが盗まれて転売され、不正利用の請求が届く経路の2つを示す</title>
+  <defs>
+    <marker id="c4a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <style>
+    .t { font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; }
+    .h { font-weight: 700; fill: #312e81; font-size: 22px; }
+    .lab { font-weight: 700; fill: #374151; font-size: 16px; }
+    .b { font-weight: 700; fill: #1f2937; font-size: 16px; }
+    .s { fill: #4b5563; font-size: 13px; }
+    .w { font-weight: 700; fill: #ffffff; font-size: 14px; }
+    .ok { font-weight: 700; fill: #065f46; font-size: 15px; }
+    .ng { font-weight: 700; fill: #9a3412; font-size: 15px; }
+  </style>
+  <rect width="800" height="340" fill="#ffffff"/>
+  <text x="400" y="38" text-anchor="middle" class="t h">変化4: 開発者とAIツール自体が狙われる</text>
+
+  <rect x="275" y="120" width="250" height="110" rx="14" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="400" y="150" text-anchor="middle" class="t b">開発者のPC</text>
+  <rect x="289" y="162" width="222" height="26" rx="6" fill="#ffffff" stroke="#a5b4fc"/>
+  <text x="400" y="180" text-anchor="middle" class="t s">AI コーディングツール・エディタ</text>
+  <rect x="289" y="194" width="222" height="26" rx="6" fill="#ffffff" stroke="#a5b4fc"/>
+  <text x="400" y="212" text-anchor="middle" class="t s">AI サービスの API キー</text>
+
+  <rect x="20" y="70" width="210" height="80" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="125" y="100" text-anchor="middle" class="t b">汚染された依存パッケージ</text>
+  <text x="125" y="124" text-anchor="middle" class="t s">正規の署名付きでも</text>
+  <text x="125" y="142" text-anchor="middle" class="t s">中身が乗っ取られている</text>
+  <line x1="232" y1="120" x2="284" y2="168" stroke="#f97316" stroke-width="2" marker-end="url(#c4a)"/>
+  <text x="125" y="186" text-anchor="middle" class="t ng">入り口 ① 依存パッケージ</text>
+  <text x="125" y="208" text-anchor="middle" class="t s">ツールに居座り、削除しても残る</text>
+  <text x="125" y="228" text-anchor="middle" class="t s">（Mini Shai-Hulud）</text>
+
+  <rect x="570" y="70" width="210" height="80" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="675" y="100" text-anchor="middle" class="t b">盗まれたキーの転売</text>
+  <text x="675" y="124" text-anchor="middle" class="t s">他人が勝手に AI を使い</text>
+  <text x="675" y="142" text-anchor="middle" class="t s">利用料はキーの持ち主へ</text>
+  <line x1="513" y1="207" x2="566" y2="140" stroke="#f97316" stroke-width="2" marker-end="url(#c4a)"/>
+  <text x="675" y="186" text-anchor="middle" class="t ng">入り口 ② API キー</text>
+  <text x="675" y="208" text-anchor="middle" class="t s">漏れたキーが不正利用される</text>
+  <text x="675" y="228" text-anchor="middle" class="t s">（LLMjacking）</text>
+
+  <rect x="30" y="262" width="740" height="56" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="296" text-anchor="middle" class="t ok">「自分は小さいから狙われない」は通用しない。依存とキーの管理がそのまま防御になる</text>
+</svg>
