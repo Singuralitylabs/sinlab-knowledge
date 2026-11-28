@@ -57,12 +57,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:                 # 手順はシーケンスの中にマッピング
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install dependencies
         run: npm ci
       - name: Run tests
         run: npm test
 ```
+
+> [!NOTE]
+> [マッピングの解説](/themes/01-web-basics/09-yaml/intro-basics/mapping) で、古いYAML 1.1 では `on` が真偽値として扱われることがあると説明しました。GitHub Actions は `on:` をキーとして正しく読み込むため、ワークフローではクォートせずにそのまま書いて問題ありません。
 
 ### Docker Compose の構成ファイル
 
@@ -71,13 +74,13 @@ Webアプリとデータベースの2つのコンテナを起動する設定で�
 ```yaml
 services:
   web:
-    image: node:22
+    image: node:26
     ports:
-      - "3000:3000"        # 「:」を含むのでクォートで囲む
+      - "3000:3000"        # 60進数の数値と誤解釈されないようクォートで囲む
     depends_on:
       - db
   db:
-    image: postgres:17
+    image: postgres:19
     environment:
       POSTGRES_PASSWORD: example
 ```
@@ -109,13 +112,13 @@ tags: [yaml, data-format, config]
 
 ```text
 ❌ ports:
-     - 3000:3000
+     - 22:22
 
 ✅ ports:
-     - "3000:3000"
+     - "22:22"
 ```
 
-古いYAML 1.1 の仕様では、`:` 区切りの数字が **60進数** として数値に変換されることがあります（例：`22:22` が `1342` になる）。Docker Compose の公式ドキュメントでも、ポート指定は文字列で書くことが推奨されています。
+古いYAML 1.1 の仕様では、`:` 区切りの数字が **60進数** として数値に変換されることがあります。`22:22` は `22 × 60 + 22 = 1342` という数値になり、SSHのポート指定のつもりが別の値として渡されてしまいます。`:` の後ろが 0〜59 の場合にだけ起きるため、`3000:3000` のように問題が出ない値もありますが、Docker Compose の公式ドキュメントでは **ポート指定は常にクォートで囲んだ文字列で書く** ことが推奨されています。
 
 ### 2. フロントマターの区切り線を忘れる・位置がずれる
 
@@ -171,7 +174,7 @@ $ find . -name "*.yml" -o -name "*.yaml" | grep -v node_modules
 
 ### 課題1
 
-自分が使っているGitHubリポジトリ（またはこのサイトのリポジトリ）の `.github/workflows/` 配下のYAMLファイルを1つ開き、次の問いに答えてください。
+自分が使っているGitHubリポジトリ、またはGitHub上の公開リポジトリ（たとえば [actions/checkout](https://github.com/actions/checkout/tree/main/.github/workflows)）の `.github/workflows/` 配下のYAMLファイルを1つ開き、次の問いに答えてください。
 
 - `on:` の下には何が書かれていますか？（どのタイミングで実行されるか）
 - `steps:` の中にはいくつの要素（`- ` で始まる手順）がありますか？
@@ -179,7 +182,11 @@ $ find . -name "*.yml" -o -name "*.yaml" | grep -v node_modules
 
 ### 課題2
 
-次のフロントマターをYAMLの文法に注意して完成させてください。条件：タイトルは「はじめてのYAML: 入門」、タグは `yaml` と `beginner` の2つ、公開日は `2026-11-28`（文字列）。
+次の条件を満たすフロントマターを、YAMLの文法に注意して書いてください。
+
+- タイトル（`title`）は「はじめてのYAML: 入門」
+- タグ（`tags`）は `yaml` と `beginner` の2つ
+- 公開日（`publishedAt`）は `2026-11-28`（文字列として扱う）
 
 解答例：
 
@@ -191,4 +198,4 @@ publishedAt: "2026-11-28"
 ---
 ```
 
-タイトルに `: ` が含まれるため、クォートで囲む必要があります。
+タイトルに `: ` が含まれるため、クォートで囲む必要があります。また、`2026-11-28` のような日付をクォートせずに書くと、Markdown のフロントマターを読み込むライブラリによっては文字列ではなく **日付型** に自動変換されます。文字列として扱いたい場合はクォートで囲みましょう。
