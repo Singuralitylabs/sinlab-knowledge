@@ -1,0 +1,8 @@
+{
+  "slug": "09-yaml",
+  "title": "YAML",
+  "description": "YAMLのマッピング・シーケンス・ネストといった文法の基礎と、GitHub ActionsやDocker Compose、Markdownのフロントマターなど実際の用途を1カテゴリで体系的に学習",
+  "icon": "FileText",
+  "order": 9,
+  "categories": []
+}
