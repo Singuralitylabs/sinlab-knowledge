@@ -129,7 +129,7 @@ App を入れたリポジトリでは、PR の Auto-fix（CI 失敗・レビュ�
 | モバイル（Claude アプリの Code タブ） | 出先からの確認・指示に |
 | デスクトップアプリ | セッション開始時に **Cloud** を選ぶ（**Local** は自分の PC で動く） |
 | CLI（`claude --cloud "..."`） | ターミナルから新規クラウドセッションを作成 |
-| Routines | スケジュール・API・GitHub イベントをきっかけに自動起動（→ [Routines](/themes/04-ai-driven-development/02-claude-code/routines)） |
+| スケジュールタスク（旧 Routines） | スケジュール・API・GitHub イベントをきっかけに自動起動（→ [スケジュールタスク](/themes/04-ai-driven-development/02-claude-code/routines)） |
 
 初めての場合は **Default** 環境（**Trusted** ネットワーク）が用意されます（プランにより自動作成される場合と、作成フォームへの入力を求められる場合があります）。まずは Default で小さなタスクを 1 件動かしてみてください。
 
@@ -302,7 +302,7 @@ PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗�
 
 |  | 実行場所 | 起点 | 環境定義 | 資格情報 | ネットワーク既定 |
 | --- | --- | --- | --- | --- | --- |
-| **Claude Code** | Anthropic 管理の隔離 VM（Ubuntu 24.04）。セルフホストも可 | claude.ai/code・モバイル・デスクトップ・`claude --cloud`・Routines | クラウド環境（ネットワーク・環境変数・API credentials・セットアップスクリプト）＋ `.claude/settings.json` の SessionStart フック | GitHub proxy・API credentials がサーバ側で付与 | **Trusted**（許可リスト） |
+| **Claude Code** | Anthropic 管理の隔離 VM（Ubuntu 24.04）。セルフホストも可 | claude.ai/code・モバイル・デスクトップ・`claude --cloud`・スケジュールタスク | クラウド環境（ネットワーク・環境変数・API credentials・セットアップスクリプト）＋ `.claude/settings.json` の SessionStart フック | GitHub proxy・API credentials がサーバ側で付与 | **Trusted**（許可リスト） |
 | **Codex** | OpenAI 管理コンテナ（`universal` イメージ） | ChatGPT の Codex タブ・IDE・CLI | 環境設定（セットアップ／メンテナンススクリプト・環境変数・secrets・インターネット設定） | secrets はセットアップ段階のみでエージェント段階前に削除 | エージェント段階はオフが既定 |
 | **Copilot** | GitHub Actions ランナー（標準／大型／セルフホスト） | Issue のアサイン・Agents パネル・IDE | `.github/workflows/copilot-setup-steps.yml`＋`copilot` 環境の secrets＋ファイアウォール許可リスト | `copilot` 環境の secrets のみ露出 | 許可リスト付きファイアウォール |
 | **Cursor** | Cursor 管理の隔離 VM（デスクトップ・ブラウザ付き） | IDE・Web・モバイル・Slack | `.cursor/environment.json`（スナップショットまたは Dockerfile、install／start コマンド）＋ secrets | secret 管理（リポに置かない） | 設定に依存 |
@@ -338,14 +338,14 @@ PR ができたら、Auto-fix に引き継ぐ流れが定番です。CI 失敗�
 - 合言葉は **「クラウドを既定、ローカルを例外」**。実機・GUI・大規模ビルド・対話的探索・非 GitHub はローカルに残す
 - Claude Code では Default（Trusted）から始め、ネットワーク・環境変数・API credentials・セットアップスクリプトの順に設定する。環境変数に secrets は置かない
 - VM の準備はセットアップスクリプト、プロジェクトの準備は SessionStart フック（`CLAUDE_CODE_REMOTE` で分岐）。`CLAUDE.md` を整えて前提を揃える
-- 往復は `--cloud`（新規）・`-p --cloud`（追送）・`--teleport`（引き戻し）の 3 つ。`--resume`・`/desktop` を含む一覧は高度な機能、自動化は Routines へ
+- 往復は `--cloud`（新規）・`-p --cloud`（追送）・`--teleport`（引き戻し）の 3 つ。`--resume`・`/desktop` を含む一覧は高度な機能、自動化はスケジュールタスク（旧 Routines）へ
 
 ## 関連ページ
 
 - [AI駆動開発のセキュリティとsecrets管理](/themes/04-ai-driven-development/03-development-practice/ai-security-secrets) — 多層防御と secrets 管理の原則（本ページは第 3 層「サンドボックス実行」の具体化）
 - [AI開発の基本ループ](/themes/04-ai-driven-development/03-development-practice/ai-development-loop) — 計画・実装・レビューの全体像
 - [Claude Code の高度な機能](/themes/04-ai-driven-development/02-claude-code/advanced) — セッション移動（`--resume`・`/desktop` を含む）の一覧
-- [Routines とスケジュール実行](/themes/04-ai-driven-development/02-claude-code/routines) — クラウド環境の「利用者」としての自動実行
+- [スケジュールタスク（旧 Routines）と定期実行](/themes/04-ai-driven-development/02-claude-code/routines) — クラウド環境の「利用者」としての自動実行
 - [開発ワークフローはどう変わるか](/themes/04-ai-driven-development/01-overview/workflow-changes) — 作業場所の変化という観点
 - [ハーネスエンジニアリング](/themes/04-ai-driven-development/01-overview/harness-engineering) — ツールを足しすぎない環境設計
 

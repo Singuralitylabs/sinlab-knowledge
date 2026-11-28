@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" width="300" height="64" role="img" aria-labelledby="t">
+  <title id="t">dots（提供元: OpenAI、ChatGPT 内）を示すバッジ</title>
+  <style>.n{font-family:-apple-system, &quot;Segoe UI&quot;, &quot;Hiragino Sans&quot;, &quot;Noto Sans JP&quot;, sans-serif;font-weight:700;fill:#111827}.p{font-family:-apple-system, &quot;Segoe UI&quot;, &quot;Hiragino Sans&quot;, &quot;Noto Sans JP&quot;, sans-serif;fill:#6b7280}.g{font-family:-apple-system, &quot;Segoe UI&quot;, &quot;Hiragino Sans&quot;, &quot;Noto Sans JP&quot;, sans-serif;font-weight:700}</style>
+  <rect x="1" y="1" width="298" height="62" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <g color="#0369a1"><rect x="10" y="10" width="44" height="44" rx="12" fill="#0369a1"/><g transform="translate(0,0) scale(1)" style="transform-origin:32px 32px"><path d="M18 22h28a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H30l-7 6v-6h-5a3 3 0 0 1-3-3V25a3 3 0 0 1 3-3z" fill="#fff"/></g></g>
+  <text class="n" x="66" y="29" font-size="17">dots</text>
+  <text class="p" x="66" y="49" font-size="12.5">OpenAI</text>
+  <rect x="197.0" y="20" width="91.0" height="24" rx="12" fill="#e0f2fe"/>
+  <text class="g" x="242.5" y="37" font-size="12.5" text-anchor="middle" fill="#0369a1">ChatGPT 内</text>
+</svg>

@@ -15,8 +15,10 @@ Claude Code を初めて使う人向けに、インストールから初回起�
 
 ## 動作環境
 
-- macOS 13+ / Linux（Ubuntu 20.04+ など）/ Windows 10+（ネイティブまたは WSL2）
-- 4 GB 以上の RAM、インターネット接続
+- macOS 13+ / Linux（Ubuntu 20.04+・Debian 10+・Alpine Linux 3.19+）/ Windows 10 1809+ または Windows Server 2019+（ネイティブまたは WSL2）
+- 4 GB 以上の RAM（x64 または ARM64 プロセッサ）、インターネット接続
+- シェル：Bash・Zsh・PowerShell・CMD のいずれか
+- [Anthropic のサービス提供国](https://www.anthropic.com/supported-countries)からの利用
 - Claude の有料プラン、または Console（API）アカウント（無料プランでは利用できません）
 
 > [!NOTE]
